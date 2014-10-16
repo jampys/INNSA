@@ -20,11 +20,14 @@ class Login{
 
 
     function isAValidUser($login,$pass){
+        /*
+        Esta funcion deberia devolver en un array de la forma $user['habilitado']=1    $user['accesslevel']=xxx    return $user
+         */
 
         $pass=md5($pass);
 
         $obj_cliente=new sQuery();
-        $query="select * from usuarios where login ='$login' AND `pass`= '$pass'";
+        $query="select * from usuarios where login ='$login' and `pass`= '$pass'";
         $obj_cliente->executeQuery($query);
 
 

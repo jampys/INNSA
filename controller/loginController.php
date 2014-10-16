@@ -13,6 +13,9 @@ if (isset($_POST['stage']) && 'validaUsuario' == $_POST['stage']&& isset($_POST[
     if($id>=1){
         $_SESSION["ses_id"]=$id;
         $_SESSION["foto"]=$_POST["USUARIO"]; //ver si se va a usar foto o no
+        //tambien guardar en la sesion el perfil de usuario
+        //$_SESSION['accesslevel']= xxxxxxx;
+
         header("Location: ".Conexion::ruta()."?accion=index");
     }
     else

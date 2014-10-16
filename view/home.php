@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>INNSA Sistema de Capacitación</title>
     <link href="../public/css/estilos.css" type="text/css" rel="stylesheet" />
+    <script language="javascript" type="text/javascript" src="../public/js/efectos.js"></script>
 </head>
 
 
