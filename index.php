@@ -1,6 +1,6 @@
 <?php
 
-require_once("lib/config.php");
+require_once("lib/configObsoleto.php");
 //require_once("lib/Conection.php");
 
 if(isset($_SESSION["ses_id"])){

@@ -1,6 +1,6 @@
 <?php
 
-require_once("../lib/config.php");
+require_once("../lib/configObsoleto.php");
 
 /*esta clase debe incluir los metodos para:
  - validar al usuario

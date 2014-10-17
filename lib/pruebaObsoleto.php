@@ -1,9 +1,7 @@
 <?php
-require_once('config.php');
+require_once('configObsoleto.php');
 
-
-$f=new Factory();
-$s=$f->returnsQuery();
+$s=new sQueryOracle();
 $query="select * from cursos";
 $s->executeQuery($query);
 $r=$s->fetchAll();

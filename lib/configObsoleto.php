@@ -1,67 +1,10 @@
 <?php
 session_start();
 
-//Se configura el motor de BD que se usara. ORACLE o MYSQL
-define('TIPO_CONEXION', 'ORACLE');
 
-//Se utiliza el patron FACTORY para configurar el motor de BD a utilizar sin afectar al resto del codigo
+class Conexion  {// se declara una clase para hacer la conexion con la base de datos
 
-abstract class Conexion{
     var $con;
-    abstract function getConexion();
-    abstract function Close();
-
-    public static function ruta(){
-        return "http://localhost/innsa/";
-    }
-}
-
-abstract class sQuery{
-    var $coneccion;
-    var $consulta;
-    var $resultados;  //DARIO: no lo usa nunca
-    abstract function executeQuery($cons);
-
-    public function getResults(){
-        return $this->consulta;
-    }
-
-    public function Close(){
-        $this->coneccion->Close();
-    }
-    abstract function Clean();
-    abstract function getResultados();
-    abstract function getAffect();
-    abstract function fetchAll();
-}
-
-
-class Factory{
-    var $q;
-
-    public function __construct(){
-        switch(TIPO_CONEXION){
-            case 'ORACLE':
-                $this->q=new sQueryOracle();
-                break;
-            case 'MYSQL':
-                $this->q=new sQueryMYSQL();
-                break;
-            default:
-                $this->q=new sQueryOracle();
-        }
-    }
-
-    public function returnsQuery(){
-        return $this->q;
-    }
-}
-
-
-
-class ConexionMYSQL extends Conexion  {// se declara una clase para hacer la conexion con la base de datos
-
-    //hereda $con
 
     function __construct(){
         // se definen los datos del servidor de base de datos
@@ -89,21 +32,22 @@ class ConexionMYSQL extends Conexion  {// se declara una clase para hacer la con
         mysql_close($this->con);
     }
 
-    //Al metodo ruta() lo hereda
+    public static function ruta(){
+        return "http://localhost/innsa/";
+    }
 
 }
 
 
-class sQueryMYSQL extends sQuery   // se declara una clase para poder ejecutar las consultas, esta clase llama a la clase anterior
+class sQuery   // se declara una clase para poder ejecutar las consultas, esta clase llama a la clase anterior
 {
-    //hereda los atributos
-    //var $coneccion;
-    //var $consulta;
-    //var $resultados;  //DARIO: no lo usa nunca
+    var $coneccion;
+    var $consulta;
+    var $resultados;  //DARIO: no lo usa nunca
 
     function __construct()  // constructor, solo crea una conexion usando la clase "Conexion"
     {
-        $this->coneccion= new ConexionMYSQL();
+        $this->coneccion= new Conexion();
     }
     function executeQuery($cons)  // metodo que ejecuta una consulta y la guarda en el atributo $pconsulta
     {
@@ -111,9 +55,11 @@ class sQueryMYSQL extends sQuery   // se declara una clase para poder ejecutar l
         return $this->consulta;
     }
 
-    //Al metodo getResults() lo hereda
+    function getResults()   // retorna la consulta en forma de result.
+    {return $this->consulta;}
 
-    //Al metodo Close() lo hereda
+    function Close()		// cierra la conexion
+    {$this->coneccion->Close();}
 
     function Clean() // libera la consulta
     {mysql_free_result($this->consulta);}
@@ -164,16 +110,13 @@ class ConexionOracle extends Conexion{
 
     }
 
-    function getConexion(){ // devuelve la conexion
-        return $this->con;
+   //function getConexion() se hereda y no se modifica
+
+    function Close(){  // se redefine
+        oci_close($this->$con);
     }
 
-    function Close(){  // cierra la conexion
-        mysql_close($this->con);
-    }
-
-    //Al metodo ruta() lo hereda
-
+    //public static function ruta() se hereda y no se modifica
 
 }
 
@@ -199,9 +142,9 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
         return $this->consulta;
     }
 
-    //Al metodo getResults() lo hereda
+    //getResults() no se sobreescribe
 
-    //Al metodo Close() lo hereda
+   //Close()    no se sobrescribe
 
     function Clean() // libera la consulta
     {oci_free_statement($this->consulta);}
