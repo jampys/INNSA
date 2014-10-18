@@ -1,7 +1,7 @@
 
 body{ margin-left:0px; margin-top:0px; font-family:Arial;}
 
-#principal{ width:1200px; font-size:12px}
+#principal{ width:1200px; font-size:12px;}
 
 	#header{ width:1200px; height:100px; background-color: #f07c00; color:#FFFFFF; float:left; font-size: 20px; text-align: left; }
 
@@ -9,24 +9,17 @@ body{ margin-left:0px; margin-top:0px; font-family:Arial;}
 
 			
 
-		#content{ width:1200px; float:right; background-color: #e9f0ed
+		#content{ width:1200px; float:right; background-color: #e9f0ed;
         }
 
             #menu{ width:150px; float:left; background-color: #636d80; }
                 .boton{ width:150px; height:23px; float:left; color: #10c9ff;}
                 .url_boton{ text-decoration:none; color:#FFFFFF}
 
-			#contenedor{ width:820px; float:left; background-color: #e9f0ed; padding: 15px;}
+			#contenedor{ width:820px; float:left; background-color: #e9f0ed; padding: 15px; min-height: 440px;}
 				
 
-					#titulo_post{ width:820px; height:20px; float:left}
-						#titulo{ width:620px; height:20px; float:left; text-align:left; font-weight:bold}
-						#fecha{ width:200px; height:20px; float:left; text-align:right}
-					#texto_post{ width:800px; float:left; text-align:center;}
 
-
-
-					#div_entre_post{ width:600px; height:5px; float:left; background-color:#000000}	
 
 			#sidebar{ width:200px; float:right; background-color:#636d80; color:#FFFFFF; }
 

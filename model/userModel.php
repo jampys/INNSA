@@ -1,6 +1,6 @@
 <?php
 
-require_once("../lib/configObsoleto.php");
+require_once("lib/config.php");
 
 class User
 {
@@ -12,7 +12,8 @@ class User
 
 
     public static function getUsuarios(){
-        $obj_user=new sQuery();
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
         $obj_user->executeQuery("select * from usuarios"); // ejecuta la consulta para traer al cliente
 
         return $obj_user->fetchAll(); // retorna todos los clientes
@@ -94,6 +95,60 @@ class User
         return $obj_cliente->getAffect(); // retorna todos los registros afectados
 
     }
+
+    //*****************************************************************************************
+
+    /*esta clase debe incluir los metodos para:
+ - validar al usuario
+ - iniciar sesion
+ - cerrar sesion */
+
+    function isAValidUser($login,$pass){
+        /*
+        Esta funcion deberia devolver en un array de la forma $user['habilitado']=1    $user['accesslevel']=xxx    return $user
+         */
+
+        //No olvider despues de hacer la codificacionn a md5
+        //$pass=md5($pass);
+
+        $f=new Factory();
+        $s=$f->returnsQuery();
+        //$query="select * from usuarios where login ='$login' and password='$pass'";
+        $query="select * from usuarios, perfiles where login ='$login' and password='$pass' and usuarios.id_perfil=perfiles.id_perfil ";
+        $s->executeQuery($query);
+        $r=$s->fetchAll();
+        //print_r($r);
+        //echo $r[0]['HABILITADO'];
+
+        //echo "ESTO ES LO QUE ME DEVUELVE EL GETAFFECT ".$s->getAffect();
+        if ($s->getAffect()>=1) //en teoria devuelve la cantidad de filas afectadas. OJO controlar esta funcion
+        {
+            //lo trabajo de la manera porque a pesar de ser un solo registro el de la consulta
+            // lo devuelve en forma de un array bidimensional
+            $datos=array();
+            if($r[0]['HABILITADO']==1){
+                $datos[0]=$r[0]['ID_USUARIO'];
+                $datos[1]=$r[0]['LOGIN'];
+                $datos[2]=$r[0]['ACCESSLEVEL'];
+                return $datos;
+            }
+
+            else return 0;
+        }
+        else
+        { return -1;
+        }
+    }
+
+
+    public function salir(){
+        session_destroy();
+
+    }
+
+
+
+
 
 }
 

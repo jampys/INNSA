@@ -1,6 +1,6 @@
 <?php
 
-require_once("lib/configObsoleto.php");
+require_once("lib/config.php");
 //require_once("lib/Conection.php");
 
 if(isset($_SESSION["ses_id"])){
@@ -27,10 +27,12 @@ if(isset($_SESSION["ses_id"])){
         require_once("controller/errorController.php");
     }
     else{
-        require_once("controller/LoginController.php");
+        require_once("controller/loginController.php");
     }
 
 }
+
+require_once("view/layout.php");
 
 
 ?>

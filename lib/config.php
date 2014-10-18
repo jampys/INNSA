@@ -3,6 +3,9 @@ session_start();
 
 //Se configura el motor de BD que se usara. ORACLE o MYSQL
 define('TIPO_CONEXION', 'ORACLE');
+//Se configura la direccion IP del servidor donde se ejecuta la aplicacion
+define('SERVIDOR', 'http://localhost/INNSA/');
+//define('SERVIDOR', 'http://192.168.1.50/INNSA/');
 
 //Se utiliza el patron FACTORY para configurar el motor de BD a utilizar sin afectar al resto del codigo
 
@@ -12,7 +15,7 @@ abstract class Conexion{
     abstract function Close();
 
     public static function ruta(){
-        return "http://localhost/innsa/";
+        return SERVIDOR;
     }
 }
 
@@ -158,7 +161,7 @@ class ConexionOracle extends Conexion{
             echo $m['message'], "\n";
             exit;
         } else {
-            echo "Conexión con éxito a Oracle!";
+            //echo "Conexión con éxito a Oracle!";
             $this->con=$conect;
         }
 
@@ -188,7 +191,7 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
     function __construct()  { //se sobreescribe ...funciona ok
         //$c= new ConexionOracle();
         $this->coneccion=new ConexionOracle();
-        echo 'se ejecuto el constructor de la clase sQueryOracle';
+        //echo 'se ejecuto el constructor de la clase sQueryOracle';
     }
 
 
@@ -224,7 +227,7 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
         if ($this->consulta)
         {
             //la funcion oci_fetch_array devuelve cada fila de la consulta en forma de array
-            while($row = oci_fetch_array($this->consulta, OCI_ASSOC))
+            while($row = oci_fetch_array($this->consulta, OCI_BOTH))
             {   //luego cada fila (como un array) se agrega a otro array... creando un array de 2 dimsnesiones
                 $rows[]=$row;
             }
@@ -234,5 +237,9 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
 
 
 }
+
+
+//SE CREA UNA CLASE ESTANDAR PHP
+$view= new stdClass();
 
 ?>
