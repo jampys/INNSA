@@ -1,9 +1,9 @@
 
-body{ margin-left:0px; margin-top:0px; font-family:Arial;}
-
+/*body{ margin-left:0px; margin-top:0px; font-family:Arial;} */
+body{ font-family:Arial;}
 #principal{ width:1200px; font-size:12px;}
 
-	#header{ width:1200px; height:100px; background-color: #f07c00; color:#FFFFFF; float:left; font-size: 20px; text-align: left; }
+	#header{ width:1200px; height:100px; background-color: rgba(13, 12, 65, 0.79); float:left; font-size: 20px; text-align: left;}
 
 	#main{ width:1200px; height:100%; float:left; }
 
@@ -12,16 +12,16 @@ body{ margin-left:0px; margin-top:0px; font-family:Arial;}
 		#content{ width:1200px; float:right; background-color: #e9f0ed;
         }
 
-            #menu{ width:150px; float:left; background-color: #636d80; }
-                .boton{ width:150px; height:23px; float:left; color: #10c9ff;}
-                .url_boton{ text-decoration:none; color:#FFFFFF}
+            #menu{ width:150px; float:left; background-color: #636d80; text-align: center }
+                .boton{ width:150px; height:23px; float:left;}
+                .url_boton{ text-decoration:none;}
 
 			#contenedor{ width:820px; float:left; background-color: #e9f0ed; padding: 15px; min-height: 440px;}
 				
 
 
 
-			#sidebar{ width:200px; float:right; background-color:#636d80; color:#FFFFFF; }
+			#sidebar{ width:200px; float:right; background-color:#636d80; text-align: center}
 
 
-			#footer{ width:1200px; height:30px; float:left; text-align:center; background-color: #f07c00; padding-top: 7px; color:#FFFFFF}
+			#footer{ width:1200px; height:30px; float:left; text-align:center; background-color: rgba(13, 12, 65, 0.79); padding-top: 7px; color:#FFFFFF}

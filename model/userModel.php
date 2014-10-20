@@ -1,6 +1,6 @@
 <?php
 
-require_once("lib/config.php");
+//require_once("lib/config.php");
 
 class User
 {
@@ -14,8 +14,8 @@ class User
     public static function getUsuarios(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from usuarios"); // ejecuta la consulta para traer al cliente
-
+        //$obj_user->executeQuery("select * from usuarios"); // ejecuta la consulta para traer al cliente
+        $obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil=perfiles.id_perfil");
         return $obj_user->fetchAll(); // retorna todos los clientes
     }
 

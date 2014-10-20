@@ -9,7 +9,7 @@ if(isset($_SESSION["ses_id"])){
         $accion=$_GET["accion"];
     }else
     {
-        $accion="index";
+        //$accion="index";
     }
 
     if(is_file("controller/".$accion."Controller.php")){
