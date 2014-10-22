@@ -265,8 +265,8 @@
 
             $('.edit_link').click(function(){
                 globalOperacion=$(this).attr("media");
-                globalId=$(this).attr('title');
-                editar(globalId); //le mando el id del usuario a editar que esta en el atributo title
+                globalId=$(this).attr('id');
+                editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
 
                 return false;
@@ -276,7 +276,7 @@
             // Datepicker
             $('#fecha').datepicker({
                 inline: true
-                //dateFormat:"yy-mm-dd"
+                ,dateFormat:"dd/mm/yy"
             });
 
             //hover states on the static widgets
@@ -343,7 +343,7 @@
                                 <td><?php  echo $user["PASSWORD"]; ?></td>
                                 <td><?php  echo $user["FECHA_ALTA"]; ?></td>
                                 <td><?php  echo $user["PERFIL"]; ?></td>
-                                <td class="center"><a href="" media="edit" class="edit_link" title="<?php  echo $user["ID_USUARIO"];  ?>">Editar</a></td>
+                                <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>">Editar</a></td>
                                 <td class="center"><a href="">Eliminar</a></td>
                             </tr>
                         <?php }  ?>

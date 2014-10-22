@@ -102,8 +102,8 @@ class User
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$query="insert into clientes( nombre, apellido, fecha_nac,peso)values('$this->nombre', '$this->apellido','$this->fecha','$this->peso')";
-        $query="insert into usuarios(id_usuario, login, password, fecha_alta, id_perfil, habilitado) values(7, '$this->login', '$this->password', TO_DATE('14/04/2014','DD/MM/YYYY'), $this->id_perfil , 1)";
+        //$query="insert into usuarios(id_usuario, login, password, fecha_alta, id_perfil, habilitado) values(7, '$this->login', '$this->password', TO_DATE('$this->fecha_alta','DD/MM/YYYY'), $this->id_perfil , 1)";
+        $query="insert into usuarios(login, password, fecha_alta, id_perfil, habilitado) values('$this->login', '$this->password', TO_DATE('$this->fecha_alta','DD/MM/YYYY'), $this->id_perfil , 1)";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 

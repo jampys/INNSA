@@ -107,7 +107,8 @@
                  <!-- **** ACA VAN LOS CONTENIDOS************* -->
                 <?php
                 if(isset($view->content)){
-                    include_once("$view->content");
+                    //include_once("$view->content");
+                    include("$view->content");
                 }else{
                     echo "Bienvenido usuario ".$_SESSION['user'];
                 }
