@@ -4,11 +4,14 @@
 
 class User
 {
-    Var $id;
+    var $id_usuario;
     var $login;     //se declaran los atributos de la clase, que son los atributos del usuario
-    var $pass;
-    var $tipo;
+    var $password;
+    var $fecha_alta;
+    var $id_perfil;
+    var $id_empleado;
     var $habilitado;
+    var $fecha_baja;
 
 
     public static function getUsuarios(){
@@ -18,6 +21,16 @@ class User
         $obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil=perfiles.id_perfil");
         return $obj_user->fetchAll(); // retorna todos los clientes
     }
+
+    public function getUsuarioById($id){
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        //$obj_user->executeQuery("select * from usuarios where id_usuario=$id");
+        $obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil = perfiles.id_perfil and id_usuario=$id");
+        return $obj_user->fetchAll(); // retorna todos los clientes
+    }
+
+
 
     function User($nro=0) // declara el constructor, si trae el numero de cliente lo busca , si no, trae todos los clientes
     {
@@ -41,50 +54,58 @@ class User
     }
 
     // metodos que devuelven valores
-    function getID()
-    { return $this->id;}
-    function getNombre()
-    { return $this->nombre;}
-    function getApellido()
-    { return $this->apellido;}
-    function getFecha()
-    { return $this->fecha;}
-    function getPeso()
-    { return $this->peso;}
+    function getIdUsuario()
+    { return $this->id_usuario;}
+
+    function getLogin()
+    { return $this->login;}
+
+    function getPassword()
+    { return $this->password;}
+
+    function getFechaAlta()
+    { return $this->fecha_alta;}
+
+    function getIdPerfil()
+    { return $this->id_perfil;}
 
     // metodos que setean los valores
-    function setNombre($val)
-    { $this->nombre=$val;}
-    function setApellido($val)
-    {  $this->apellido=$val;}
-    function setFecha($val)
-    {  $this->fecha=$val;}
-    function setPeso($val)
-    {  $this->peso=$val;}
+    function setIdUsuario($val)
+    { $this->id_usuario=$val;}
 
-    function save(){
-        if($this->id)
-        {$this->updateCliente();}
-        else
-        {$this->insertCliente();}
+    function setLogin($val)
+    {  $this->login=$val;}
+
+    function setPassword($val)
+    {  $this->password=$val;}
+
+    function setFechaAlta($val)
+    {  $this->fecha_alta=$val;}
+
+    function setIdPerfil($val)
+    {  $this->id_perfil=$val;}
+
+
+
+
+    public function updateUsuario()	// actualiza el cliente cargado en los atributos
+    {
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil where id_usuario = $this->id_usuario   ";
+        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
+        //return $obj_cliente->getAffect(); // retorna todos los registros afectados
+
     }
 
-    private function updateCliente()	// actualiza el cliente cargado en los atributos
+    public function insertUsuario()	// inserta el cliente cargado en los atributos
     {
-        $obj_cliente=new sQuery();
-        $query="update clientes set nombre='$this->nombre', apellido='$this->apellido',fecha_nac='$this->fecha',peso='$this->peso' where id = $this->id";
-        $obj_cliente->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_cliente->getAffect(); // retorna todos los registros afectados
-
-    }
-
-    private function insertCliente()	// inserta el cliente cargado en los atributos
-    {
-        $obj_cliente=new sQuery();
-        $query="insert into clientes( nombre, apellido, fecha_nac,peso)values('$this->nombre', '$this->apellido','$this->fecha','$this->peso')";
-
-        $obj_cliente->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_cliente->getAffect(); // retorna todos los registros afectados
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        //$query="insert into clientes( nombre, apellido, fecha_nac,peso)values('$this->nombre', '$this->apellido','$this->fecha','$this->peso')";
+        $query="insert into usuarios(id_usuario, login, password, fecha_alta, id_perfil, habilitado) values(7, '$this->login', '$this->password', TO_DATE('14/04/2014','DD/MM/YYYY'), $this->id_perfil , 1)";
+        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
+        //return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
     function delete()	// elimina el cliente

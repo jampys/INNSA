@@ -5,8 +5,10 @@ require_once("lib/config.php");
 
 if(isset($_SESSION["ses_id"])){
 
-    if(!empty($_GET["accion"])){
-        $accion=$_GET["accion"];
+    //if(!empty($_GET["accion"])){
+    if(!empty($_REQUEST["accion"])){
+        //$accion=$_GET["accion"];
+        $accion=$_REQUEST["accion"];
     }else
     {
         //$accion="index";
