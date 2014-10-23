@@ -5,7 +5,7 @@
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>Curso Jquery Video 30</title>
@@ -78,6 +78,42 @@
     <script type="text/javascript">
     var globalOperacion="";
     var globalId;
+
+
+        function cargarCategorias(){
+            var categoria=$("#categoria option:selected").val();
+            //alert(categoria);
+
+            $.ajax({
+                url:"http://localhost/INNSA/index.php",
+                data:{"accion":"curso","operacion":"getTemas","id":categoria},
+                contentType:"application/x-www-form-urlencoded",
+                dataType:"json",//xml,html,script,json
+                error:function(){
+
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
+
+                },
+                ifModified:false,
+                processData:true,
+                success:function(datas){
+
+                    $("#tema").html('<option value="0">Ingrese un tema</option>');
+                    $.each(datas, function(indice, val){
+
+                        $("#tema").append("<option value='"+datas[indice]["ID_TEMA"]+"'>"+datas[indice]["NOMBRE"]+"</option>");
+
+
+                    });
+
+                },
+                type:"POST",
+                timeout:3000000,
+                crossdomain:true
+
+            });
+        }
 
         function editar(id_usuario){
             //alert(id_usuario);
@@ -277,10 +313,7 @@
             $('#fecha').datepicker({
                 inline: true
                 ,dateFormat:"dd/mm/yy"
-                ,disabled:true
             });
-            $('#fecha').datepicker('setDate', 'today');
-
 
             //hover states on the static widgets
             $('#dialog_link, ul#icons li').hover(
@@ -313,41 +346,38 @@
         <div class="grid_10">
             <div class="box">
                 <h2>
-                    <a href="#" id="toggle-list">Lista de Usuarios</a>
+                    <a href="#" id="toggle-list">Lista de Cursos</a>
                 </h2>
 
 
                 <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar Usuario</a>
+                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar Curso</a>
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                         <thead>
                         <tr>
-                            <th>Login</th>
-                            <th>Password</th>
-                            <th>Fecha alta</th>
-                            <th>Perfil</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Entidad</th>
                             <th width="12%">Editar</th>
                             <th width="12%">Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Login</th>
-                            <th>Password</th>
-                            <th>Fecha alta</th>
-                            <th>Perfil</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Entidad</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
-                        <?php foreach ($view->usuarios as $user) {?>
+                        <?php foreach ($view->cursos as $curso) {?>
                             <tr class="odd gradeA">
-                                <td><?php  echo $user["LOGIN"];  ?></td>
-                                <td><?php  echo $user["PASSWORD"]; ?></td>
-                                <td><?php  echo $user["FECHA_ALTA"]; ?></td>
-                                <td><?php  echo $user["PERFIL"]; ?></td>
-                                <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>">Editar</a></td>
+                                <td><?php  echo Conexion::corta_palabra($curso["NOMBRE"], 45);  ?></td>
+                                <td><?php  echo Conexion::corta_palabra($curso["DESCRIPCION"], 45); ?></td>
+                                <td><?php  echo $curso["ENTIDAD"]; ?></td>
+                                <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>">Editar</a></td>
                                 <td class="center"><a href="">Eliminar</a></td>
                             </tr>
                         <?php }  ?>
@@ -384,15 +414,14 @@
 
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Login: </label>
-                                    <input type="text" name="login" id="login"/>
+                                    <label>Nombre: </label>
+                                    <input type="text" name="nombre" id="nombre"/>
                                 </div>
                             </div>
 
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Password: </label>
-                                    <input type="text" name="password" id="password"/>
+
                                 </div>
                             </div>
 
@@ -401,8 +430,23 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Fecha alta: </label>
-                                    <input type="text" name="fecha" id="fecha">
+                                    <label>Descripcion: </label><br/>
+                                    <textarea name="descripcion" id="descripcion" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Comentarios: </label>
+                                    <textarea name="comentarios" id="comentarios" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Entidad: </label>
+                                    <input type="text" name="entidad" id="entidad"/>
                                 </div>
                             </div>
                             <div class="eight column">
@@ -415,17 +459,22 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Perfil: </label>
-                                    <select name="perfil" id="perfil">
-                                        <option value="0">Ingrese un perfil</option>
-                                        <option value="1">Administrador</option>
-                                        <option value="2">Operador</option>
+                                    <label>Categoria: </label>
+                                    <select name="categoria" id="categoria" onchange="cargarCategorias();">
+                                        <option value="0">Ingrese una categoria</option>
+                                        <option value="1">Habilidades soft</option>
+                                        <option value="2">Gestión</option>
+                                        <option value="3">Industria Oil</option>
+                                        <option value="4">Técnico</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-
+                                    <label>Tema: </label>
+                                    <select name="tema" id="tema">
+                                        <!-- select dependiente... se carga dinamicamente al seleccionar la categoria -->
+                                    </select>
                                 </div>
                             </div>
                         </div>

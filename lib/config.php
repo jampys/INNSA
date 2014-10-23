@@ -17,6 +17,13 @@ abstract class Conexion{
     public static function ruta(){
         return SERVIDOR;
     }
+
+    public static function corta_palabra($palabra,$num)
+    {
+        $largo=strlen($palabra);//indicarme el largo de una cadena
+        $cadena=substr($palabra,0,$num);
+        return $cadena." ...";
+    }
 }
 
 abstract class sQuery{
@@ -75,6 +82,7 @@ class ConexionMYSQL extends Conexion  {// se declara una clase para hacer la con
 
         // crea la conexion pasandole el servidor , usuario y clave
         $conect= mysql_connect($conection['server'],$conection['user'],$conection['pass']);
+        mysql_set_charset('utf8',$conect);
 
         if ($conect) {// si la conexion fue exitosa , selecciona la base
             mysql_select_db($conection['base']);
@@ -154,8 +162,8 @@ class ConexionOracle extends Conexion{
         $conection['pass']="dario";             //password
         $conection['base']="INNSADB";           //base de datos
 
-        $conect = oci_connect($conection['user'], $conection['pass'], $conection['server']);
-        //conexion oracle
+        $conect = oci_connect($conection['user'], $conection['pass'], $conection['server'],'AL32UTF8');
+        //el parametro 'AL32UTF8' soluciona todo el tema de los acentos
         if (!$conect) {
             $m = oci_error();
             echo $m['message'], "\n";

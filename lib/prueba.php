@@ -4,7 +4,7 @@ require_once('config.php');
 
 $f=new Factory();
 $s=$f->returnsQuery();
-$query="select * from usuarios";
+$query="select * from temas";
 $s->executeQuery($query);
 $r=$s->fetchAll();
 
@@ -29,9 +29,9 @@ echo 'Liberacion de la consulta:'.$s->clean();
         foreach ($r as $fila){
             ?>
             <tr>
-                <td><?php echo $fila['ID_USUARIO    ']; ?></td>
-                <td><?php echo $fila['LOGIN']; ?></td>
-                <td><?php echo $fila['PASSWORD']; ?></td>
+                <td><?php echo $fila['ID_TEMA']; ?></td>
+                <td><?php echo $fila['NOMBRE']; ?></td>
+                <td><?php echo $fila['OBJETIVO']; ?></td>
 
             </tr>
         <?php
