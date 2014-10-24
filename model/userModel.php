@@ -69,6 +69,9 @@ class User
     function getIdPerfil()
     { return $this->id_perfil;}
 
+    function getHabilitado()
+    { return $this->habilitado;}
+
     // metodos que setean los valores
     function setIdUsuario($val)
     { $this->id_usuario=$val;}
@@ -85,6 +88,9 @@ class User
     function setIdPerfil($val)
     {  $this->id_perfil=$val;}
 
+    function setHabilitado($val)
+    {  $this->habilitado=$val;}
+
 
 
 
@@ -92,7 +98,7 @@ class User
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil where id_usuario = $this->id_usuario   ";
+        $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, habilitado=$this->habilitado where id_usuario = $this->id_usuario   ";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_cliente->getAffect(); // retorna todos los registros afectados
 
@@ -103,7 +109,8 @@ class User
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         //$query="insert into usuarios(id_usuario, login, password, fecha_alta, id_perfil, habilitado) values(7, '$this->login', '$this->password', TO_DATE('$this->fecha_alta','DD/MM/YYYY'), $this->id_perfil , 1)";
-        $query="insert into usuarios(login, password, fecha_alta, id_perfil, habilitado) values('$this->login', '$this->password', TO_DATE('$this->fecha_alta','DD/MM/YYYY'), $this->id_perfil , 1)";
+        $query="insert into usuarios(login, password, fecha_alta, id_perfil, habilitado)".
+        "values('$this->login', '$this->password', TO_DATE('$this->fecha_alta','DD/MM/YYYY'), $this->id_perfil , $this->habilitado)";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 

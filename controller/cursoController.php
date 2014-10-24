@@ -17,16 +17,17 @@ switch($operacion){
 
     case 'update':
 
-        $contenido=$view->u->getUsuarioById($_POST['id']);
+        $contenido=$view->u->getCursoById($_POST['id']);
 
-        $respuesta[0]=$contenido[0]['LOGIN'];
-        $respuesta[1]=$contenido[0]['PASSWORD'];
-        $respuesta[2]=$contenido[0]['FECHA_ALTA'];
-        $respuesta[3]=$contenido[0]['ID_PERFIL'];
-
+        //$respuesta[0]=$contenido[0]['NOMBRE'];
+        $respuesta[0]=$contenido[0]['NOMBRE_CURSO'];
+        $respuesta[1]=$contenido[0]['DESCRIPCION_CURSO'];
+        $respuesta[2]=$contenido[0]['COMENTARIOS_CURSO'];
+        $respuesta[3]=$contenido[0]['ENTIDAD_CURSO'];
+        $respuesta[4]=$contenido[0]['ID_CATEGORIA'];
+        $respuesta[5]=$contenido[0]['ID_TEMA'];
         print_r(json_encode($respuesta));
         exit;
-
         break;
 
     case 'save':
@@ -40,10 +41,14 @@ switch($operacion){
 
     case 'getTemas':
         $rta=$view->u->getTemas($_POST['id']);
-
         print_r(json_encode($rta));
         exit;
+        break;
 
+    case 'refreshGrilla': //Por ehora no lo voy a usar
+        $rta=$view->u->getCursos();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     default:

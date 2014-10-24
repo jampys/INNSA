@@ -22,7 +22,7 @@ abstract class Conexion{
     {
         $largo=strlen($palabra);//indicarme el largo de una cadena
         $cadena=substr($palabra,0,$num);
-        return $cadena." ...";
+        return $cadena;
     }
 }
 

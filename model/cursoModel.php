@@ -19,12 +19,17 @@ class Curso
     public function getCursoById($id){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$obj_user->executeQuery("select * from usuarios where id_usuario=$id");
-        $obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil = perfiles.id_perfil and id_usuario=$id");
-        return $obj_user->fetchAll(); // retorna todos los clientes
+        /*$obj_user->executeQuery("select cu.nombre NOMBRE_CURSO, cu.descripcion DESCRIPCION_CURSO, cu.comentarios COMENTARIOS_CURSO, cu.entidad ENTIDAD_CURSO, ca.ID_CATEGORIA ID_CATEGORIA, te.ID_TEMA ID_TEMA".
+                                  "from cursos cu, categorias ca, temas te".
+                                  "where cu.id_tema=te.id_tema".
+                                  "and te.id_categoria=ca.id_categoria".
+                                  "and cu.id_curso=$id"); */
+        $obj_user->executeQuery("select cu.nombre NOMBRE_CURSO, cu.descripcion DESCRIPCION_CURSO, cu.comentarios COMENTARIOS_CURSO, cu.entidad ENTIDAD_CURSO, te.id_categoria ID_CATEGORIA, cu.id_tema ID_TEMA from cursos cu, temas te where cu.id_tema=te.id_tema and cu.id_curso=$id");
+        //$obj_user->executeQuery("select * from cursos where id_curso=$id");
+        return $obj_user->fetchAll();
     }
 
-    public static function getTemas($id){
+    public static function getTemas($id){  //funcion usada para cargar dinamicamente select con los temas de la categoria seleccionada
         $f=new Factory();
         $obj_curso=$f->returnsQuery();
         $obj_curso->executeQuery("select * from temas where id_categoria=$id");
@@ -78,12 +83,12 @@ class Curso
 
 
 
-    public function updateCurso()	// actualiza el cliente cargado en los atributos
+    public function updateCurso()
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil where id_usuario = $this->id_usuario   ";
-        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
+        $obj_user->executeQuery($query);
         //return $obj_cliente->getAffect(); // retorna todos los registros afectados
 
     }

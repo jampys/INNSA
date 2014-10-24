@@ -101,6 +101,7 @@
                     $("#password").val(datas[1]);
                     $("#fecha").val(datas[2]);
                     $("#perfil").val(datas[3]);
+                    $("#estado").val(datas[4]);
 
                 },
                 type:"POST",
@@ -138,13 +139,19 @@
                 return false;
             }
 
+            if($("#estado").val()==0){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar la habilitacion");
+                return false;
+            }
+
             if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
                 var url="http://localhost/INNSA/index.php";
-                var data={"accion":"user","operacion":"insert","login":$("#login").val(),"password":$("#password").val(),"fecha":$("#fecha").val(), "perfil":$("#perfil").val()};
+                var data={"accion":"user","operacion":"insert","login":$("#login").val(),"password":$("#password").val(),"fecha":$("#fecha").val(), "perfil":$("#perfil").val(), "estado":$("#estado").val()};
             }
             else{ //se va a guardar un usuario editado
                 var url="http://localhost/INNSA/index.php";
-                var data={"accion":"user","operacion":"save", "id":globalId, "login":$("#login").val(),"password":$("#password").val(),"fecha":$("#fecha").val(), "perfil":$("#perfil").val()};
+                var data={"accion":"user","operacion":"save", "id":globalId, "login":$("#login").val(),"password":$("#password").val(),"fecha":$("#fecha").val(), "perfil":$("#perfil").val(), "estado":$("#estado").val()};
             }
 
             $.ajax({
@@ -226,6 +233,8 @@
                 buttons: {
                     "Guardar": function() {
                         guardar();
+                        //Agregado por dario para recargar grilla al modificar o insertar
+                        self.parent.location.reload();
                     },
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar el formulario
@@ -240,13 +249,14 @@
                     effect: "explode",
                     duration: 1000
                 }
-                //Agregado por dario para recargar grilla al modificar o insertar
-               , close:function(){
-                    self.parent.location.reload();
-                }
 
                 //Agregado dario
-                /*,open: function(){
+                /*
+               , close:function(){
+
+                }
+
+               ,open: function(){
                     alert(globalOperacion);
                     alert(globalId);
                 }*/
@@ -263,7 +273,7 @@
 
             //Agregado por dario para editar
 
-            $('.edit_link').click(function(){
+            $(document).on("click", ".edit_link", function(){
                 globalOperacion=$(this).attr("media");
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
@@ -290,7 +300,7 @@
 
         });
     </script>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+
 </head>
 
 
@@ -425,7 +435,12 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-
+                                    <label>Habilitacion: </label>
+                                    <select name="estado" id="estado">
+                                        <option value="0">Ingrese un estado</option>
+                                        <option value="1">Habilitado</option>
+                                        <option value="2">Deshabilitado</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

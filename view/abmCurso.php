@@ -80,7 +80,7 @@
     var globalId;
 
 
-        function cargarCategorias(){
+        function cargarTemas(opcion){
             var categoria=$("#categoria option:selected").val();
             //alert(categoria);
 
@@ -101,11 +101,15 @@
 
                     $("#tema").html('<option value="0">Ingrese un tema</option>');
                     $.each(datas, function(indice, val){
-
-                        $("#tema").append("<option value='"+datas[indice]["ID_TEMA"]+"'>"+datas[indice]["NOMBRE"]+"</option>");
+                        //$("#tema").append("<option value='"+datas[indice]['ID_TEMA']+"'>"+datas[indice]['NOMBRE']+"</option>");
+                        $("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
 
 
                     });
+                    if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
+                        $("#tema").val(opcion);
+                    }
+
 
                 },
                 type:"POST",
@@ -115,12 +119,12 @@
             });
         }
 
-        function editar(id_usuario){
-            //alert(id_usuario);
+        function editar(id_curso){
+                //alert(id_curso);
 
             $.ajax({
                 url:"http://localhost/INNSA/index.php",
-                data:{"accion":"user","operacion":"update","id":id_usuario},
+                data:{"accion":"curso","operacion":"update","id":id_curso},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(){
@@ -133,10 +137,13 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#login").val(datas[0]);
-                    $("#password").val(datas[1]);
-                    $("#fecha").val(datas[2]);
-                    $("#perfil").val(datas[3]);
+                    $("#nombre").val(datas[0]);
+                    $("#descripcion").val(datas[1]);
+                    $("#comentarios").val(datas[2]);
+                    $("#entidad").val(datas[3]);
+                    $("#categoria").val(datas[4]);
+                    cargarTemas(datas[5]);
+                    //$("#tema option[value='datas[5]']").attr("selected", true);
 
                 },
                 type:"POST",
@@ -262,6 +269,8 @@
                 buttons: {
                     "Guardar": function() {
                         guardar();
+                        //Agregado por dario para recargar grilla al modificar o insertar
+                        self.parent.location.reload();
                     },
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar el formulario
@@ -276,13 +285,14 @@
                     effect: "explode",
                     duration: 1000
                 }
-                //Agregado por dario para recargar grilla al modificar o insertar
-               , close:function(){
-                    self.parent.location.reload();
-                }
 
                 //Agregado dario
-                /*,open: function(){
+                /*
+               , close:function(){
+
+                }
+
+                ,open: function(){
                     alert(globalOperacion);
                     alert(globalId);
                 }*/
@@ -299,11 +309,12 @@
 
             //Agregado por dario para editar
 
-            $('.edit_link').click(function(){
+            $(document).on("click", ".edit_link", function(){
                 globalOperacion=$(this).attr("media");
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
+                //alert("funciona el link edit");
 
                 return false;
             });
@@ -323,7 +334,7 @@
 
         });
     </script>
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+
 </head>
 
 
@@ -374,10 +385,10 @@
                         <tbody>
                         <?php foreach ($view->cursos as $curso) {?>
                             <tr class="odd gradeA">
-                                <td><?php  echo Conexion::corta_palabra($curso["NOMBRE"], 45);  ?></td>
-                                <td><?php  echo Conexion::corta_palabra($curso["DESCRIPCION"], 45); ?></td>
+                                <td><?php  echo Conexion::corta_palabra($curso["NOMBRE"], 35);  ?></td>
+                                <td><?php  echo Conexion::corta_palabra($curso["DESCRIPCION"], 35); ?></td>
                                 <td><?php  echo $curso["ENTIDAD"]; ?></td>
-                                <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>">Editar</a></td>
+                                <td class="center"><a href="javascript: void(0);" media="edit" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>">Editar</a></td>
                                 <td class="center"><a href="">Eliminar</a></td>
                             </tr>
                         <?php }  ?>
@@ -412,19 +423,12 @@
                         <legend>Datos Registro</legend>
                         <div class="sixteen_column section">
 
-                            <div class="eight column">
+                            <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Nombre: </label>
                                     <input type="text" name="nombre" id="nombre"/>
                                 </div>
                             </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-
-                                </div>
-                            </div>
-
                         </div>
 
                         <div class="sixteen_column section">
@@ -460,7 +464,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Categoria: </label>
-                                    <select name="categoria" id="categoria" onchange="cargarCategorias();">
+                                    <select name="categoria" id="categoria" onchange="cargarTemas();">
                                         <option value="0">Ingrese una categoria</option>
                                         <option value="1">Habilidades soft</option>
                                         <option value="2">Gestión</option>

@@ -12,6 +12,7 @@ switch($operacion){
         $view->u->setPassword($_POST['password']);
         $view->u->setFechaAlta($_POST['fecha']);
         $view->u->setIdPerfil($_POST['perfil']);
+        $view->u->setHabilitado($_POST['estado']);
         $view->u->insertUsuario();
         break;
 
@@ -23,6 +24,7 @@ switch($operacion){
         $respuesta[1]=$contenido[0]['PASSWORD'];
         $respuesta[2]=$contenido[0]['FECHA_ALTA'];
         $respuesta[3]=$contenido[0]['ID_PERFIL'];
+        $respuesta[4]=$contenido[0]['HABILITADO'];
 
         print_r(json_encode($respuesta));
         exit;
@@ -35,6 +37,7 @@ switch($operacion){
         $view->u->setPassword($_POST['password']);
         $view->u->setFechaAlta($_POST['fecha']);
         $view->u->setIdPerfil($_POST['perfil']);
+        $view->u->setHabilitado($_POST['estado']);
         $view->u->updateUsuario();
         break;
 

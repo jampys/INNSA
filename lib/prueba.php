@@ -4,7 +4,7 @@ require_once('config.php');
 
 $f=new Factory();
 $s=$f->returnsQuery();
-$query="select * from temas";
+$query="select te.nombre nom from temas te, categorias ca where te.id_categoria=ca.id_categoria";
 $s->executeQuery($query);
 $r=$s->fetchAll();
 
@@ -30,7 +30,7 @@ echo 'Liberacion de la consulta:'.$s->clean();
             ?>
             <tr>
                 <td><?php echo $fila['ID_TEMA']; ?></td>
-                <td><?php echo $fila['NOMBRE']; ?></td>
+                <td><?php echo $fila['NOM']; ?></td>
                 <td><?php echo $fila['OBJETIVO']; ?></td>
 
             </tr>
