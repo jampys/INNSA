@@ -3,7 +3,8 @@
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js" xmlns="http://www.w3.org/1999/html"> <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -119,12 +120,12 @@
             });
         }
 
-        function editar(id_curso){
-                //alert(id_curso);
+        function editar(id_plan){
+                //alert(id_plan);
 
             $.ajax({
                 url:"index.php",
-                data:{"accion":"curso","operacion":"update","id":id_curso},
+                data:{"accion":"cap_plan","operacion":"update","id":id_plan},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(){
@@ -136,14 +137,20 @@
                 ifModified:false,
                 processData:true,
                 success:function(datas){
+                    $("#curso").val(datas[0]['NOMBRE']);
+                    $("#periodo").val(datas[0]['PERIODO']);
+                    $("#objetivo").val(datas[0]['OBJETIVO']);
+                    $("#modalidad").val(datas[0]['MODALIDAD']);
+                    $("#fecha_desde").val(datas[0]['FECHA_DESDE']);
+                    $("#fecha_hasta").val(datas[0]['FECHA_HASTA']);
+                    $("#duracion").val(datas[0]['DURACION']);
+                    $("#unidad").val(datas[0]['UNIDAD']);
+                    $("#prioridad").val(datas[0]['PRIORIDAD']);
+                    $("#estado").val(datas[0]['ESTADO']);
+                    $("#importe").val(datas[0]['IMPORTE']);
+                    $("#moneda").val(datas[0]['MONEDA']);
+                    //cargarTemas(datas[5]);
 
-                    $("#nombre").val(datas[0]);
-                    $("#descripcion").val(datas[1]);
-                    $("#comentarios").val(datas[2]);
-                    $("#entidad").val(datas[3]);
-                    $("#categoria").val(datas[4]);
-                    cargarTemas(datas[5]);
-                    //$("#tema option[value='datas[5]']").attr("selected", true);
 
                 },
                 type:"POST",
@@ -321,8 +328,14 @@
             });
             //Fin agregado
 
-            // Datepicker
-            $('#fecha').datepicker({
+            // Datepicker fecha_desde
+            $('#fecha_desde').datepicker({
+                inline: true
+                ,dateFormat:"dd/mm/yy"
+            });
+
+            // Datepicker fecha_hasta
+            $('#fecha_hasta').datepicker({
                 inline: true
                 ,dateFormat:"dd/mm/yy"
             });
@@ -343,54 +356,79 @@
 
 <div id="principal">
 
-    <div class="container_10">
+    <div class="container_8">
 
         <header>
 
             <div class="clear"></div>
 
-            <div class="grid_10">
+            <div class="grid_8">
 
             </div>
 
         </header>
 
-        <div class="grid_10">
+        <div class="grid_8">
             <div class="box">
                 <h2>
-                    <a href="#" id="toggle-list">Lista de Cursos</a>
+                    <a href="#" id="toggle-list">Lista de Planes de Capacitación</a>
                 </h2>
 
 
                 <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar Curso</a>
+                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar plan capacitación</a>
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                         <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Entidad</th>
-                            <th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th>
+                            <th>Curso</th>
+                            <th>Periodo</th>
+                            <th>Fecha desde</th>
+                            <th>Fecha hasta</th>
+                            <th>Duracion</th>
+                            <th>Unidad</th>
+                            <th>Estado</th>
+                            <th>Importe</th>
+                            <th>Moneda</th>
+                            <th>Cantidad</th>
+
+                            <!--<th width="12%">Editar</th>
+                            <th width="12%">Eliminar</th> -->
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Entidad</th>
+                            <th>Curso</th>
+                            <th>Periodo</th>
+                            <th>Fecha desde</th>
+                            <th>Fecha hasta</th>
+                            <th>Duracion</th>
+                            <th>Unidad</th>
+                            <th>Estado</th>
+                            <th>Importe</th>
+                            <th>Moneda</th>
+                            <th>Cantidad</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
-                        <?php foreach ($view->cursos as $curso) {?>
+                        <?php foreach ($view->cp as $plan) {?>
                             <tr class="odd gradeA">
-                                <td><?php  echo Conexion::corta_palabra($curso["NOMBRE"], 35);  ?></td>
-                                <td><?php  echo Conexion::corta_palabra($curso["DESCRIPCION"], 35); ?></td>
-                                <td><?php  echo $curso["ENTIDAD"]; ?></td>
-                                <td class="center"><a href="javascript: void(0);" media="edit" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>">Editar</a></td>
-                                <td class="center"><a href="">Eliminar</a></td>
+                                <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 30);  ?></td>
+                                <td><?php  echo $plan["PERIODO"] ?></td>
+                                <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
+                                <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
+                                <td><?php  echo $plan["DURACION"]; ?></td>
+                                <td><?php  echo $plan["UNIDAD"]; ?></td>
+                                <td><?php  echo $plan["ESTADO"]; ?></td>
+                                <td><?php  echo $plan["IMPORTE"]; ?></td>
+                                <td><?php  echo $plan["MONEDA"]; ?></td>
+                                <td><?php  echo $plan["CANTIDAD"]; ?></td>
+                                <td class="center"><a href="javascript: void(0);" media="edit" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>">Editar</a></td>
+                                <td class="cen  ter"><a href="">Eliminar</a></td>
                             </tr>
                         <?php }  ?>
 
@@ -422,64 +460,200 @@
                 <form id="form" action="">
                     <fieldset>
                         <legend>Datos Registro</legend>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Curso: </label><br/>
+                                    <input type="text" name="curso" id="curso"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Periodo: </label>
+                                    <select name="periodo" id="periodo">
+                                        <option value="0">Ingrese el periodo</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2015">2015</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Objetivo: </label><br/>
+                                    <textarea name="objetivo" id="objetivo" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Modalidad: </label>
+                                    <select name="modalidad" id="modalidad">
+                                        <option value="0">Ingrese la modalidad</option>
+                                        <option value="presencial">Presencial</option>
+                                        <option value="a_distancia">A distancia</option>
+                                        <option value="e_learning">E Learning</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Fecha desde: </label><br/>
+                                    <input type="text" name="fecha_desde" id="fecha_desde">
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Fecha hasta: </label>
+                                    <input type="text" name="fecha_hasta" id="fecha_hasta">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Duración: </label><br/>
+                                    <input type="text" name="duracion" id="duracion"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Unidad: </label>
+                                    <select name="unidad" id="unidad">
+                                        <option value="0">Ingrese la unidad</option>
+                                        <option value="Horas">Horas</option>
+                                        <option value="Dias">Dias</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Prioridad: </label><br/>
+                                    <select name="prioridad" id="prioridad">
+                                        <option value="0">Ingrese la prioridad</option>
+                                        <option value="3">Baja</option>
+                                        <option value="2">Media</option>
+                                        <option value="1">Alta</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Estado: </label>
+                                    <select name="estado" id="estado">
+                                        <option value="0">Ingrese el estado</option>
+                                        <option value="Propuesto">Propuesto</option>
+                                        <option value="Cancelado">Cancelado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Importe: </label><br/>
+                                    <input type="text" name="importe" id="importe"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Moneda: </label>
+                                    <select name="moneda" id="moneda">
+                                        <option value="0">Ingrese la moneda</option>
+                                        <option value="$">$</option>
+                                        <option value="USD">USD</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Tipo cambio: </label><br/>
+                                    <input type="text" name="tipo_cambio" id="tipo_cambio"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Forma pago: </label><br/>
+                                    <select name="forma_pago" id="forma_pago">
+                                        <option value="0">Ingrese la forma pago</option>
+                                        <option value="tarjeta">Tarjeta</option>
+                                        <option value="cheque">Cheque</option>
+                                        <option value="transferencia">Transferencia</option>
+                                        <option value="rapipago">Rapipago</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Forma financiación: </label>
+                                    <select name="forma_financiacion" id="forma_financiacion">
+                                        <option value="0">Ingrese la financiación</option>
+                                        <option value="1">1 pago</option>
+                                        <option value="1">3 pagos</option>
+                                        <option value="1">6 pagos</option>
+                                        <option value="1">9 pagos</option>
+                                        <option value="1">12 pagos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Profesor 1: </label><br/>
+                                    <input type="text" name="profesor1" id="profesor1"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Profesor 2: </label>
+                                    <input type="text" name="profesor2" id="profesor2"/>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="sixteen_column section">
 
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Nombre: </label>
-                                    <input type="text" name="nombre" id="nombre"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Descripcion: </label><br/>
-                                    <textarea name="descripcion" id="descripcion" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
                                     <label>Comentarios: </label>
-                                    <textarea name="comentarios" id="comentarios" rows="5"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Entidad: </label>
-                                    <input type="text" name="entidad" id="entidad"/>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Categoria: </label>
-                                    <select name="categoria" id="categoria" onchange="cargarTemas();">
-                                        <option value="0">Ingrese una categoria</option>
-                                        <option value="1">Habilidades soft</option>
-                                        <option value="2">Gestión</option>
-                                        <option value="3">Industria Oil</option>
-                                        <option value="4">Técnico</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Tema: </label>
-                                    <select name="tema" id="tema">
-                                        <!-- select dependiente... se carga dinamicamente al seleccionar la categoria -->
-                                    </select>
+                                    <textarea type="text" name="comentarios" id="comentarios" rows="2"/></textarea>
                                 </div>
                             </div>
                         </div>

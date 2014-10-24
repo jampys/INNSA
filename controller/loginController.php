@@ -54,7 +54,7 @@ switch($operacion){
     case 'salir':
         $view->u->salir();
         //$view->content="view/login.php";
-        header("Location: ".Conexion::ruta());
+        header("Location: index.php");
         break;
 
     default:

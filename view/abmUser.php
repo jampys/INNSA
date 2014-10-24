@@ -76,14 +76,14 @@
 
 
     <script type="text/javascript">
-    var globalOperacion="";
+    var globalOperacion;
     var globalId;
 
         function editar(id_usuario){
             //alert(id_usuario);
 
             $.ajax({
-                url:"http://localhost/INNSA/index.php",
+                url:"index.php",
                 data:{"accion":"user","operacion":"update","id":id_usuario},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
@@ -170,6 +170,8 @@
                 success:function(datas){
 
                     $("#dialog").dialog("close");
+                    //Agregado por dario para recargar grilla al modificar o insertar
+                    self.parent.location.reload();
 
                 },
                 type:"POST",
@@ -233,8 +235,7 @@
                 buttons: {
                     "Guardar": function() {
                         guardar();
-                        //Agregado por dario para recargar grilla al modificar o insertar
-                        self.parent.location.reload();
+
                     },
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar el formulario
@@ -249,14 +250,13 @@
                     effect: "explode",
                     duration: 1000
                 }
-
                 //Agregado dario
                 /*
                , close:function(){
 
                 }
 
-               ,open: function(){
+                ,open: function(){
                     alert(globalOperacion);
                     alert(globalId);
                 }*/
@@ -273,7 +273,7 @@
 
             //Agregado por dario para editar
 
-            $(document).on("click", ".edit_link", function(){
+            $('.edit_link').click(function(){
                 globalOperacion=$(this).attr("media");
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id

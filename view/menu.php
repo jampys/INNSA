@@ -5,6 +5,9 @@
                 <a href="index.php?accion=curso" class="url_boton" title="Cursos">Cursos</a>
 			</div>
             <div class="boton">
+                <a href="index.php?accion=cap_plan" class="url_boton" title="Cursos">Plan capacitación</a>
+            </div>
+            <div class="boton">
 			    <a href="" class="url_boton" title="Asignacion plan" id="menu_3">Asignacion plan</a>
 			</div>
             <div class="boton">

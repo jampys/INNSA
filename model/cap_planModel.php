@@ -1,30 +1,34 @@
 <?php
 
-class Curso
+class Cap_Plan
 {
+    var $id_plan;
     var $id_curso;
-    var $nombre;
-    var $descripcion;
-    var $comentarios;
-    var $entidad;
-    var $id_tema;
+    var $periodo;
+    var $objetivo;
+    var $modalidad;
+    var $fecha_desde;
+    var $fecha_hasta;
+    var $duracion;
+    var $unidad;
+    var $prioridad;
+    var $estado;
+    var $importe;
+    var $moneda;
+    var $tipo_cambio;
 
-    public static function getCursos(){
+    public static function getCapPlan(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from cursos");
+        $obj_user->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso");
         return $obj_user->fetchAll(); // retorna todos los cursos
     }
 
-    public function getCursoById($id){
+    public function getCapPlanById($id){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        /*$obj_user->executeQuery("select cu.nombre NOMBRE_CURSO, cu.descripcion DESCRIPCION_CURSO, cu.comentarios COMENTARIOS_CURSO, cu.entidad ENTIDAD_CURSO, ca.ID_CATEGORIA ID_CATEGORIA, te.ID_TEMA ID_TEMA".
-                                  "from cursos cu, categorias ca, temas te".
-                                  "where cu.id_tema=te.id_tema".
-                                  "and te.id_categoria=ca.id_categoria".
-                                  "and cu.id_curso=$id"); */
-        $obj_user->executeQuery("select cu.nombre NOMBRE_CURSO, cu.descripcion DESCRIPCION_CURSO, cu.comentarios COMENTARIOS_CURSO, cu.entidad ENTIDAD_CURSO, te.id_categoria ID_CATEGORIA, cu.id_tema ID_TEMA from cursos cu, temas te where cu.id_tema=te.id_tema and cu.id_curso=$id");
+
+        $obj_user->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso");
         return $obj_user->fetchAll();
     }
 

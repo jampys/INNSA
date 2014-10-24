@@ -9,7 +9,7 @@
     <br/>
     <?php echo $_SESSION["user"]?>
     <br/>
-    <p><a href="<?php echo Conexion::ruta();?>?accion=login&operacion=salir">Cerrar Sesion</a></p>
+    <p><a href="index.php?accion=login&operacion=salir">Cerrar Sesion</a></p>
 </body>
 
 
