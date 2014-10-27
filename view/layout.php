@@ -81,18 +81,17 @@
 
 <body>
 
-<center>
-    <div id="principal">
+
+    <div id="principalLayout">
         <div id="header">
             <a href="index.php">INNSA Sistema de Capacitación</a>
         </div>
-        <div id="main">
 
 
 
             <div id="content">
 
-                <div id="menu">
+                <div id="menuIzq">
                     <?php
                     if(isset($_SESSION["ses_id"])){
                         include_once("menu.php");
@@ -109,8 +108,6 @@
                 if(isset($view->content)){
                     //include_once("$view->content");
                     include("$view->content");
-                }else{
-                    echo "Bienvenido usuario ".$_SESSION['user'];
                 }
                 ?>
 
@@ -127,16 +124,15 @@
 
 
 
-                <div id="footer">
-                    &copy; Desarrollado por Web DP 2014 - <?php echo date("Y");?>
-                </div>
-
             </div>
 
-        </div>
+            <div id="footer">
+                &copy; Desarrollado por Web DP 2014 - <?php echo date("Y");?>
+            </div>
+
 
     </div>
-</center>
+
 
 
 

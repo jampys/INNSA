@@ -35,15 +35,15 @@ switch($operacion){
             else
             {
                 //echo "EL USUARIO NO SE PUDO LOGUEAR";
-                if($id=0){
+                if($id==0){
                     $_SESSION["error"]="USUARIO DESHABILITADO";
                     //header("Location: ".Conexion::ruta()."?accion=error");
-                    $view->content="view/error.phtml";
+                    $view->content="view/error.php";
                 }
-                if($id=-1){
+                if($id==-1){
                     $_SESSION["error"]="DISCULPE, USUARIO O CONSTRASEÑA INVALIDOS";
                     //header("Location: ".Conexion::ruta()."?accion=error");
-                    $view->content="view/error.phtml";
+                    $view->content="view/error.php";
                 }
             }
 

@@ -1,27 +1,36 @@
 
 /*body{ margin-left:0px; margin-top:0px; font-family:Arial;} */
-body{ font-family:Arial;}
-#principal{ width:1300px; font-size:12px;}
+html,body{
+    font-family:Arial;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
 
-	#header{ width:1300px; height:100px; background-color: rgba(13, 12, 65, 0.79); float:left; font-size: 20px; text-align: left;}
+#principalLayout{
+    width: 100%;
+    height: 100%;
+    font-size:12px;
+}
 
-	#main{ width:1300px; height:100%; float:left; }
+	#header{ width:100%; height:100px; background-color: rgba(13, 12, 65, 0.79); float:left; font-size: 20px; text-align: left;}
 
-			
 
-		#content{ width:1300px; float:right; background-color: #e9f0ed;
-        }
+		#content{ width:100%; float:right; background-color: #e9f0ed; min-height:78.8% !important;}
 
-            #menu{ width:150px; float:left; background-color: #636d80; text-align: center }
-                .boton{ width:150px; height:23px; float:left;}
-                .url_boton{ text-decoration:none;}
+            #menuIzq{ width:165px; float:left; background-color: #f9f9f9; text-align: center }
 
-			#contenedor{ width:920px; float:left; background-color: #e9f0ed; padding: 15px; min-height: 440px;}
+
+			#contenedor{ width:920px; float:left; background-color: #e9f0ed; padding: 15px; }
 				
 
 
+    #footer{ width: 100%; height:30px; float:left; text-align:center; background-color: rgba(13, 12, 65, 0.79); padding-top: 7px; color:#FFFFFF}
 
-			#sidebar{ width:200px; float:right; background-color:#636d80; text-align: center}
 
-
-			#footer{ width:1300px; height:30px; float:left; text-align:center; background-color: rgba(13, 12, 65, 0.79); padding-top: 7px; color:#FFFFFF}
+#FormularioAcceso{
+    width: 33%;
+    margin: 0 auto;
+}

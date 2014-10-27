@@ -1,6 +1,6 @@
 <?php
 
-require_once("../lib/configObsoleto.php");
+//require_once("../lib/configObsoleto.php");
 
 class Cliente
 {

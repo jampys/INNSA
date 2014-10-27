@@ -36,7 +36,8 @@ class User
     {
         if ($nro!=0)
         {
-            $obj_user=new sQuery();
+            $f=new Factory();
+            $obj_user=$f->returnsQuery();
             $result=$obj_user->executeQuery("select * from usuarios where id = $nro"); // ejecuta la consulta para traer al cliente
             $row=mysql_fetch_array($result);
             $this->id=$row['id'];
@@ -117,7 +118,8 @@ class User
     }
     function delete()	// elimina el cliente
     {
-        $obj_cliente=new sQuery();
+        $f=new Factory();
+        $obj_cliente=$f->returnsQuery();
         $query="delete from clientes where id=$this->id";
         $obj_cliente->executeQuery($query); // ejecuta la consulta para  borrar el cliente
         return $obj_cliente->getAffect(); // retorna todos los registros afectados
