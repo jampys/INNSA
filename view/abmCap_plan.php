@@ -8,45 +8,6 @@
     var globalId;
 
 
-        function cargarTemas(opcion){
-            var categoria=$("#categoria option:selected").val();
-            //alert(categoria);
-
-            $.ajax({
-                url:"index.php",
-                data:{"accion":"curso","operacion":"getTemas","id":categoria},
-                contentType:"application/x-www-form-urlencoded",
-                dataType:"json",//xml,html,script,json
-                error:function(){
-
-                    $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
-
-                },
-                ifModified:false,
-                processData:true,
-                success:function(datas){
-
-                    $("#tema").html('<option value="0">Ingrese un tema</option>');
-                    $.each(datas, function(indice, val){
-                        //$("#tema").append("<option value='"+datas[indice]['ID_TEMA']+"'>"+datas[indice]['NOMBRE']+"</option>");
-                        $("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
-
-
-                    });
-                    if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
-                        $("#tema").val(opcion);
-                    }
-
-
-                },
-                type:"POST",
-                timeout:3000000,
-                crossdomain:true
-
-            });
-        }
-
         function editar(id_plan){
                 //alert(id_plan);
 
@@ -76,6 +37,12 @@
                     $("#estado").val(datas[0]['ESTADO']);
                     $("#importe").val(datas[0]['IMPORTE']);
                     $("#moneda").val(datas[0]['MONEDA']);
+                    $("#tipo_cambio").val(datas[0]['TIPO_CAMBIO']);
+                    $("#forma_pago").val(datas[0]['FORMA_PAGO']);
+                    $("#forma_financiacion").val(datas[0]['FORMA_FINANCIACION']);
+                    $("#profesor_1").val(datas[0]['PROFESOR_1']);
+                    $("#profesor_2").val(datas[0]['PROFESOR_2']);
+                    $("#comentarios").val(datas[0]['COMENTARIOS_PLAN']);
                     //cargarTemas(datas[5]);
 
 
@@ -90,38 +57,123 @@
 
 
         function guardar(){
-
-            if($("#nombre").val()==""){
+            if($("#curso").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un nombre");
+                $("#message").html("Ingresar un curso");
                 return false;
             }
 
-            if($("#entidad").val()==""){
+            if($("#periodo").val()==0){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una entidad");
+                $("#message").html("Ingresar un periodo");
                 return false;
             }
 
-            if($("#categoria").val()==0){
+            if($("#modalidad").val()==0){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una categoria");
+                $("#message").html("Ingresar una modalidad");
                 return false;
             }
 
-            if($("#tema").val()==0){
+            if($("#fecha_desde").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un tema");
+                $("#message").html("Ingresar la fecha de inicio");
+                return false;
+            }
+
+            if($("#fecha_hasta").val()==""){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar la fecha de finalización");
+                return false;
+            }
+
+            if($("#duracion").val()==""){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar la duración");
+                return false;
+            }
+
+            if($("#unidad").val()==0){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar la unidad de duración");
+                return false;
+            }
+
+            if($("#prioridad").val()==0){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar la prioridad");
+                return false;
+            }
+
+            if($("#estado").val()==0){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar el estado");
+                return false;
+            }
+
+            if($("#importe").val()==""){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar el importe");
+                return false;
+            }
+
+            if($("#moneda").val()==0){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar la moneda");
+                return false;
+            }
+
+            if($("#tipo_cambio").val()==""){
+                $("#dialog-msn").dialog("open");
+                $("#message").html("Ingresar el tipo de cambio");
                 return false;
             }
 
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
-                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val()};
+                var data={  "accion":"cap_plan",
+                            "operacion":"insert",
+                            "curso":$("#curso_id").val(),
+                            "periodo":$("#periodo").val(),
+                            "objetivo":$("#objetivo").val(),
+                            "modalidad":$("#modalidad").val(),
+                            "fecha_desde":$("#fecha_desde").val(),
+                            "fecha_hasta":$("#fecha_hasta").val(),
+                            "duracion":$("#duracion").val(),
+                            "unidad":$("#unidad").val(),
+                            "prioridad":$("#prioridad").val(),
+                            "estado":$("#estado").val(),
+                            "importe":$("#importe").val(),
+                            "moneda":$("#moneda").val(),
+                            "tipo_cambio":$("#tipo_cambio").val(),
+                            "forma_pago":$("#forma_pago").val(),
+                            "forma_financiacion":$("#forma_financiacion").val(),
+                            "profesor_1":$("#profesor_1").val(),
+                            "profesor_2":$("#profesor_2").val(),
+                            "comentarios":$("#comentarios").val()};
             }
             else{ //se va a guardar un curso editado
-                var url="index.php";
-                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val()};
+                var data={  "accion":"cap_plan",
+                            "operacion":"save",
+                            "id":globalId,
+                            //"curso":$("#curso").val(),
+                            "periodo":$("#periodo").val(),
+                            "objetivo":$("#objetivo").val(),
+                            "modalidad":$("#modalidad").val(),
+                            "fecha_desde":$("#fecha_desde").val(),
+                            "fecha_hasta":$("#fecha_hasta").val(),
+                            "duracion":$("#duracion").val(),
+                            "unidad":$("#unidad").val(),
+                            "prioridad":$("#prioridad").val(),
+                            "estado":$("#estado").val(),
+                            "importe":$("#importe").val(),
+                            "moneda":$("#moneda").val(),
+                            "tipo_cambio":$("#tipo_cambio").val(),
+                            "forma_pago":$("#forma_pago").val(),
+                            "forma_financiacion":$("#forma_financiacion").val(),
+                            "profesor_1":$("#profesor_1").val(),
+                            "profesor_2":$("#profesor_2").val(),
+                            "comentarios":$("#comentarios").val()};
             }
 
             $.ajax({
@@ -273,6 +325,35 @@
                 function() { $(this).removeClass('ui-state-hover'); }
             );
 
+            //Agregado dario para autocompletar cursos
+            $("#curso").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.NOMBRE,
+                                    id: item.ID_CURSO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    $('#curso_id').val(ui.item.id);
+                    $('#curso').val(ui.item.label);
+                }
+            });
+
+
+            //fin agregado
+
         });
     </script>
 
@@ -391,6 +472,7 @@
                                 <div class="column_content">
                                     <label>Curso: </label><br/>
                                     <input type="text" name="curso" id="curso"/>
+                                    <input type="hidden" name="curso_id" id="curso_id"/>
                                 </div>
                             </div>
                             <div class="eight column">
@@ -534,10 +616,10 @@
                                     <label>Forma pago: </label><br/>
                                     <select name="forma_pago" id="forma_pago">
                                         <option value="0">Ingrese la forma pago</option>
-                                        <option value="tarjeta">Tarjeta</option>
-                                        <option value="cheque">Cheque</option>
-                                        <option value="transferencia">Transferencia</option>
-                                        <option value="rapipago">Rapipago</option>
+                                        <option value="Tarjeta">Tarjeta</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="Transferencia">Transferencia</option>
+                                        <option value="Rapipago">Rapipago</option>
                                     </select>
                                 </div>
                             </div>
@@ -547,10 +629,10 @@
                                     <select name="forma_financiacion" id="forma_financiacion">
                                         <option value="0">Ingrese la financiación</option>
                                         <option value="1">1 pago</option>
-                                        <option value="1">3 pagos</option>
-                                        <option value="1">6 pagos</option>
-                                        <option value="1">9 pagos</option>
-                                        <option value="1">12 pagos</option>
+                                        <option value="3">3 pagos</option>
+                                        <option value="6">6 pagos</option>
+                                        <option value="9">9 pagos</option>
+                                        <option value="12">12 pagos</option>
                                     </select>
                                 </div>
                             </div>
@@ -561,13 +643,13 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Profesor 1: </label><br/>
-                                    <input type="text" name="profesor1" id="profesor1"/>
+                                    <input type="text" name="profesor_1" id="profesor_1"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Profesor 2: </label>
-                                    <input type="text" name="profesor2" id="profesor2"/>
+                                    <input type="text" name="profesor_2" id="profesor_2"/>
                                 </div>
                             </div>
                         </div>

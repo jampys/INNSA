@@ -38,3 +38,7 @@ echo 'Liberacion de la consulta:'.$s->clean();
         }
         ?>
 </table>
+
+
+
+

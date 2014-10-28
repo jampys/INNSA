@@ -103,7 +103,8 @@ class Curso
     }
     function deleteCurso()	// elimina el cliente
     {
-        $obj_cliente=new sQuery();
+        $f=new Factory();
+        $obj_cliente=$f->returnsQuery();
         $query="delete from clientes where id=$this->id";
         $obj_cliente->executeQuery($query); // ejecuta la consulta para  borrar el cliente
         return $obj_cliente->getAffect(); // retorna todos los registros afectados
