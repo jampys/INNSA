@@ -216,6 +216,7 @@
             // dataTable
             var uTable = $('#example').dataTable( {
                 "sScrollY": 200,
+                "scrollX": true,
                 "bJQueryUI": true,
                 "sPaginationType": "full_numbers"
             } );
@@ -271,14 +272,11 @@
                 hide: {
                     effect: "explode",
                     duration: 1000
+                },
+               close:function(){
+                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
                 }
-
-                //Agregado dario
                 /*
-               , close:function(){
-
-                }
-
                 ,open: function(){
                     alert(globalOperacion);
                     alert(globalId);
@@ -291,6 +289,7 @@
             $('#dialog_link').click(function(){
                 globalOperacion=$(this).attr("media");
                 $('#dialog').dialog('open');
+                $("#curso").attr("readonly", false);
                 return false;
             });
 
@@ -301,8 +300,8 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
+                $("#curso").attr("readonly", true); //para no permitir editar el curso
                 //alert("funciona el link edit");
-
                 return false;
             });
             //Fin agregado
@@ -397,7 +396,7 @@
                             <th>Estado</th>
                             <th>Importe</th>
                             <th>Moneda</th>
-                            <th>Cantidad</th>
+                            <th>Cant.</th>
 
                             <th width="12%">Editar</th>
                             <th width="12%">Eliminar</th>
@@ -415,7 +414,7 @@
                             <th>Estado</th>
                             <th>Importe</th>
                             <th>Moneda</th>
-                            <th>Cantidad</th>
+                            <th>Cant.</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
                         </tr>
@@ -423,7 +422,7 @@
                         <tbody>
                         <?php foreach ($view->cp as $plan) {?>
                             <tr class="odd gradeA">
-                                <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 30);  ?></td>
+                                <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 20)."...";  ?></td>
                                 <td><?php  echo $plan["PERIODO"] ?></td>
                                 <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
                                 <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
@@ -468,13 +467,18 @@
                         <legend>Datos Registro</legend>
 
                         <div class="sixteen_column section">
-                            <div class="eight column">
+                            <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Curso: </label><br/>
                                     <input type="text" name="curso" id="curso"/>
                                     <input type="hidden" name="curso_id" id="curso_id"/>
                                 </div>
                             </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Periodo: </label>
@@ -489,16 +493,6 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Objetivo: </label><br/>
-                                    <textarea name="objetivo" id="objetivo" rows="3"></textarea>
-                                </div>
-                            </div>
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Modalidad: </label>
@@ -507,10 +501,20 @@
                                         <option value="presencial">Presencial</option>
                                         <option value="a_distancia">A distancia</option>
                                         <option value="e_learning">E Learning</option>
-
                                     </select>
                                 </div>
                             </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Objetivo: </label><br/>
+                                    <textarea name="objetivo" id="objetivo" rows="3"></textarea>
+                                </div>
+                            </div>
+
                         </div>
 
 

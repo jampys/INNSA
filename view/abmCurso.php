@@ -214,14 +214,13 @@
                 hide: {
                     effect: "explode",
                     duration: 1000
+                },
+                close:function(){
+                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
                 }
 
                 //Agregado dario
                 /*
-               , close:function(){
-
-                }
-
                 ,open: function(){
                     alert(globalOperacion);
                     alert(globalId);
@@ -299,8 +298,10 @@
                             <th>Nombre</th>
                             <th>Descripcion</th>
                             <th>Entidad</th>
-                            <th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th>
+                            <!--<th width="12%">Editar</th>
+                            <th width="12%">Eliminar</th> -->
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>

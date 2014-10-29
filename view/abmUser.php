@@ -56,11 +56,6 @@
                 return false;
             }
 
-            if($("#fecha").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una fecha");
-                return false;
-            }
 
             if($("#perfil").val()==0){
                 $("#dialog-msn").dialog("open");
@@ -178,13 +173,13 @@
                 hide: {
                     effect: "explode",
                     duration: 1000
+                },
+                close:function(){
+                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
                 }
+
                 //Agregado dario
                 /*
-               , close:function(){
-
-                }
-
                 ,open: function(){
                     alert(globalOperacion);
                     alert(globalId);

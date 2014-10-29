@@ -71,7 +71,7 @@
     #menu {
         background: #f9f9f9;
         border-right: 3px solid #fff;
-        width: 100px;
+        /*width: 100px; */
         padding: 30px;
         position: fixed;
         z-index: 100000;
@@ -82,7 +82,7 @@
     }
 
     #menu {
-        right: 0; /* Change to right: 0; if you want the panel to display on the right side. */
+        right: -130px; /* Change to right: 0; if you want the panel to display on the right side. */
     }
 
     #menu:hover, #menu:focus {
@@ -147,7 +147,7 @@
 <!-----SLIDING PANEL DELAY AND HIDE----->
 <script type="text/javascript">
     $(document).ready(function() {
-        setTimeout( function(){$('#menu').css('right','-130px');},2000); <!-- Change 'left' to 'right' for panel to appear to the right -->
+        setTimeout( function(){$('#menu').css('right','-130px');},3000); <!-- Change 'left' to 'right' for panel to appear to the right -->
     });
 </script>
 
