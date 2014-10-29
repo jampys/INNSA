@@ -26,11 +26,11 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#login").val(datas[0]);
-                    $("#password").val(datas[1]);
-                    $("#fecha").val(datas[2]);
-                    $("#perfil").val(datas[3]);
-                    $("#estado").val(datas[4]);
+                    $("#login").val(datas[0]['LOGIN']);
+                    $("#password").val(datas[0]['PASSWORD']);
+                    $("#fecha").val(datas[0]['FECHA_ALTA']);
+                    $("#perfil").val(datas[0]['ID_PERFIL']);
+                    $("#estado").val(datas[0]['HABILITADO']);
 
                 },
                 type:"POST",
@@ -197,12 +197,11 @@
 
             //Agregado por dario para editar
 
-            $('.edit_link').click(function(){
+            $(document).on("click", ".edit_link", function(){
                 globalOperacion=$(this).attr("media");
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
-
                 return false;
             });
             //Fin agregado

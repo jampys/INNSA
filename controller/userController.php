@@ -19,14 +19,7 @@ switch($operacion){
     case 'update':
 
         $contenido=$view->u->getUsuarioById($_POST['id']);
-
-        $respuesta[0]=$contenido[0]['LOGIN'];
-        $respuesta[1]=$contenido[0]['PASSWORD'];
-        $respuesta[2]=$contenido[0]['FECHA_ALTA'];
-        $respuesta[3]=$contenido[0]['ID_PERFIL'];
-        $respuesta[4]=$contenido[0]['HABILITADO'];
-
-        print_r(json_encode($respuesta));
+        print_r(json_encode($contenido));
         exit;
 
         break;

@@ -35,7 +35,7 @@
 
 
     <nav class="nav">
-        <a href="#" title="Recursos">Recursos</a>
+        <a href="index.php?accion=empleado" title="Recursos">Recursos</a>
     </nav>
     <nav class="nav">
         <a href="index.php?accion=curso" title="Cursos">Cursos</a>

@@ -216,7 +216,7 @@
             // dataTable
             var uTable = $('#example').dataTable( {
                 "sScrollY": 200,
-                "scrollX": true,
+                //"scrollX": true,
                 "bJQueryUI": true,
                 "sPaginationType": "full_numbers"
             } );
@@ -397,7 +397,6 @@
                             <th>Importe</th>
                             <th>Moneda</th>
                             <th>Cant.</th>
-
                             <th width="12%">Editar</th>
                             <th width="12%">Eliminar</th>
 

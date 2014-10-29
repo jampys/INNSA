@@ -298,10 +298,9 @@
                             <th>Nombre</th>
                             <th>Descripcion</th>
                             <th>Entidad</th>
-                            <!--<th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th> -->
-                            <th>Editar</th>
-                            <th>Eliminar</th>
+                            <th width="12%">Editar</th>
+                            <th width="12%">Eliminar</th>
+
                         </tr>
                         </thead>
                         <tfoot>
