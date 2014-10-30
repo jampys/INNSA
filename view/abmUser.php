@@ -31,6 +31,8 @@
                     $("#fecha").val(datas[0]['FECHA_ALTA']);
                     $("#perfil").val(datas[0]['ID_PERFIL']);
                     $("#estado").val(datas[0]['HABILITADO']);
+                    $("#empleado").val(datas[0]['APELLIDO']+" "+datas[0]['NOMBRE']);
+                    $("#empleado_id").val(datas[0]['ID_EMPLEADO']);
 
                 },
                 type:"POST",
@@ -70,12 +72,29 @@
             }
 
             if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
-                var url="http://localhost/INNSA/index.php";
-                var data={"accion":"user","operacion":"insert","login":$("#login").val(),"password":$("#password").val(),"fecha":$("#fecha").val(), "perfil":$("#perfil").val(), "estado":$("#estado").val()};
+                var url="index.php";
+                var data={  "accion":"user",
+                            "operacion":"insert",
+                            "login":$("#login").val(),
+                            "password":$("#password").val(),
+                            "fecha":$("#fecha").val(),
+                            "perfil":$("#perfil").val(),
+                            "estado":$("#estado").val(),
+                            "empleado":$("#empleado_id").val()
+                        };
             }
             else{ //se va a guardar un usuario editado
-                var url="http://localhost/INNSA/index.php";
-                var data={"accion":"user","operacion":"save", "id":globalId, "login":$("#login").val(),"password":$("#password").val(),"fecha":$("#fecha").val(), "perfil":$("#perfil").val(), "estado":$("#estado").val()};
+                var url="index.php";
+                var data={  "accion":"user",
+                            "operacion":"save",
+                            "id":globalId,
+                            "login":$("#login").val(),
+                            "password":$("#password").val(),
+                            "fecha":$("#fecha").val(),
+                            "perfil":$("#perfil").val(),
+                            "estado":$("#estado").val(),
+                            "empleado":$("#empleado_id").val()
+                        };
             }
 
             $.ajax({
@@ -221,6 +240,37 @@
                 function() { $(this).removeClass('ui-state-hover'); }
             );
 
+
+            //Agregado dario para autocompletar cursos
+            $("#empleado").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"user", "operacion":"autocompletar_empleados"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.APELLIDO+" "+item.NOMBRE,
+                                    id: item.ID_EMPLEADO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    $('#empleado_id').val(ui.item.id);
+                    $('#empleado').val(ui.item.label);
+                }
+            });
+
+            //fin agregado
+
+
+
         });
     </script>
 
@@ -259,9 +309,12 @@
                             <th>Password</th>
                             <th>Fecha alta</th>
                             <th>Perfil</th>
+                            <th>Empleado</th>
                             <th>Estado</th>
-                            <th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th>
+                            <!--<th width="12%">Editar</th>
+                            <th width="12%">Eliminar</th> -->
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -270,6 +323,7 @@
                             <th>Password</th>
                             <th>Fecha alta</th>
                             <th>Perfil</th>
+                            <th>Empleado</th>
                             <th>Estado</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
@@ -282,6 +336,7 @@
                                 <td><?php  echo $user["PASSWORD"]; ?></td>
                                 <td><?php  echo $user["FECHA_ALTA"]; ?></td>
                                 <td><?php  echo $user["PERFIL"]; ?></td>
+                                <td><?php  echo $user["APELLIDO"]." ".$user["NOMBRE"]; ?></td>
                                 <td><?php  echo ($user["HABILITADO"]==1) ? 'HABILITADO' : 'DESHABILITADO'; ?></td>
                                 <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>">Editar</a></td>
                                 <td class="center"><a href="">Eliminar</a></td>
@@ -337,13 +392,15 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Fecha alta: </label>
-                                    <input type="text" name="fecha" id="fecha">
+                                    <label>Empleado: </label>
+                                    <input type="text" name="empleado" id="empleado"/>
+                                    <input type="hidden" name="empleado_id" id="empleado_id"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-
+                                    <label>Fecha alta: </label>
+                                    <input type="text" name="fecha" id="fecha">
                                 </div>
                             </div>
                         </div>

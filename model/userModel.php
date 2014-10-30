@@ -17,16 +17,16 @@ class User
     public static function getUsuarios(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$obj_user->executeQuery("select * from usuarios"); // ejecuta la consulta para traer al cliente
-        $obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil=perfiles.id_perfil");
+        //$obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil=perfiles.id_perfil");
+        $obj_user->executeQuery("select * from usuarios, perfiles, empleados where usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado=empleados.id_empleado");
         return $obj_user->fetchAll(); // retorna todos los clientes
     }
 
     public function getUsuarioById($id){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$obj_user->executeQuery("select * from usuarios where id_usuario=$id");
-        $obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil = perfiles.id_perfil and id_usuario=$id");
+        //$obj_user->executeQuery("select * from usuarios, perfiles where usuarios.id_perfil = perfiles.id_perfil and id_usuario=$id");
+        $obj_user->executeQuery("select * from usuarios, perfiles, empleados where usuarios.id_perfil = perfiles.id_perfil and usuarios.id_empleado=empleados.id_empleado and id_usuario=$id");
         return $obj_user->fetchAll(); // retorna todos los clientes
     }
 
@@ -70,6 +70,9 @@ class User
     function getIdPerfil()
     { return $this->id_perfil;}
 
+    function getIdEmpleado()
+    { return $this->id_empleado;}
+
     function getHabilitado()
     { return $this->habilitado;}
 
@@ -89,6 +92,9 @@ class User
     function setIdPerfil($val)
     {  $this->id_perfil=$val;}
 
+    function setIdEmpleado($val)
+    {  $this->id_empleado=$val;}
+
     function setHabilitado($val)
     {  $this->habilitado=$val;}
 
@@ -99,7 +105,7 @@ class User
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, habilitado=$this->habilitado where id_usuario = $this->id_usuario   ";
+        $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario   ";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_cliente->getAffect(); // retorna todos los registros afectados
 
@@ -109,8 +115,8 @@ class User
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="insert into usuarios(login, password, id_perfil, habilitado)".
-            "values('$this->login', '$this->password', $this->id_perfil , $this->habilitado)";
+        $query="insert into usuarios(login, password, id_perfil, id_empleado, habilitado)".
+            "values('$this->login', '$this->password', $this->id_perfil , $this->id_empleado, $this->habilitado)";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -123,6 +129,16 @@ class User
         $obj_cliente->executeQuery($query); // ejecuta la consulta para  borrar el cliente
         return $obj_cliente->getAffect(); // retorna todos los registros afectados
 
+    }
+
+    public function getEmpleados($term){  //funcion usada para autocompletar de empleados
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+        //$query="select * from empleados where nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')";
+        //La consulta trae solos los empleados que no tienen usuario asociado
+        $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and id_empleado not in (select id_empleado from usuarios)";
+        $obj_cp->executeQuery($query);
+        return $obj_cp->fetchAll(); // retorna todos los cursos
     }
 
     //*****************************************************************************************
