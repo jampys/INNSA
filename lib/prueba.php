@@ -39,6 +39,9 @@ echo 'Liberacion de la consulta:'.$s->clean();
         ?>
 </table>
 
+<hr/>
+<input type="checkbox">Auto </br>
+<input type="checkbox">Casa
 
 
 

@@ -32,8 +32,6 @@
 
 
 
-
-
     <nav class="nav">
         <a href="index.php?accion=empleado" title="Recursos">Recursos</a>
     </nav>
@@ -42,6 +40,9 @@
     </nav>
     <nav class="nav">
         <a href="index.php?accion=cap_plan" title="Cursos">Plan capacitación</a>
+    </nav>
+    <nav class="nav">
+        <a href="index.php?accion=cap_solic" title="Cursos">Solicitud capacitación</a>
     </nav>
     <nav class="nav">
         <a href="#" title="Asignacion plan" id="menu_3">Asignacion plan</a>

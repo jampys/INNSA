@@ -34,3 +34,45 @@ html,body{
     width: 33%;
     margin: 0 auto;
 }
+
+
+.checkboxes{
+    float: left;
+    width: 33%;
+    display: inline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 1px ;
+}
+
+.checkboxes .cbcheck{
+    clear: both;
+}
+
+.checkboxes .cbtitulo{
+    clear: both;
+    text-align: left;
+    padding-bottom: 5px;
+}
+.checkboxes .check{
+    float: left;
+    width: 15px;
+    height: 15px;
+}
+
+.checkboxes .lab{
+    float: left;
+    padding: 2px;
+    clear: right;
+}
+
+
+
+
+
+
+
+
+
+
+
