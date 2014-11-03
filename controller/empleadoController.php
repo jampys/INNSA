@@ -47,6 +47,12 @@ switch($operacion){
         $view->u->updateEmpleado();
         break;
 
+    case 'autocompletar_empleados':
+        $rta=$view->u->autocompletarEmpleados($_POST['term']);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
     default:
         $view->empleados=$view->u->getEmpleados();
         break;

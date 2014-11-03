@@ -2,8 +2,8 @@
 if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
-require_once("model/cap_planModel.php");
-$view->u=new Cap_Plan();
+require_once("model/cap_solicModel.php");
+$view->u=new Cap_Solic();
 
 
 switch($operacion){
@@ -67,10 +67,26 @@ switch($operacion){
         exit;
         break;
 
-    case 'autocompletar_cursos':
-        $rta=$view->u->getCursos($_POST['term']);
+
+    case 'autocompletar_planes':
+        $rta=$view->u->getPlanes($_POST['term']);
         print_r(json_encode($rta));
-        //echo json_encode($rta);
+        exit;
+        break;
+
+    case 'insert_planes':
+        $vector=json_decode($_POST["datos"]);
+        foreach ($vector as $v){
+            $u=new Cap_Solic();
+            $u->setIdPlan($v->id_plan);
+            $u->setObjetivo($v->objetivo);
+            $u->setComentarios($v->comentarios);
+            $u->setViaticos($v->viaticos);
+
+            $u->insertPlanes();
+        }
+        $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
+        print_r(json_encode($rta));
         exit;
         break;
 

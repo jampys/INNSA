@@ -35,8 +35,29 @@
                     duration: 1000
                 }
 
+            });
+
+            //validacion de formulario
+            $('#form').validate({
+                rules: {
+                    usuario: {
+                        required: true,
+                        maxlength: 20,
+                        minlength: 5
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    }
+                },
+                messages:{
+                    usuario: "Ingrese su usuario",
+                    password: "Ingrese su contraseña"
+                }
 
             });
+
+
         });
 
 
@@ -47,90 +68,45 @@
 
 <body>
 
-<!--
+<!-- ui-dialog -->
+<div id="dialog" >
 
-            <form id="FormularioAcceso" name="FormularioAcceso" method="post" action="">
-                <legend>Ingresa tus datos para acceder al sistema</legend>
-                <table>
-                    <tr>
-                        <td>
-                            USUARIO:
-                        </td>
-                        <td>
-                            <input name="usuario" type="text" id="usuario" size="25" maxlength="20"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            PASSWORD:
-                        </td>
-                        <td>
-                                <input name="password" type="password" id="password" size="25" maxlength="20"/>
+    <div class="grid_7">
+        <div class="clear"></div>
+        <div class="box">
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <input type="submit" name="Submit" value="Ingresar"/>
-                            <input type="hidden" name="operacion" value='login' />
-                        </td>
-                    </tr>
-                </table>
-            </form>
+            <div class="block" id="forms">
+                <form id="form" action="index.php" method="post">
+                    <fieldset>
+                        <legend>Ingrese sus datos</legend>
 
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Login: </label>
+                                    <input type="text" name="usuario" id="usuario"/>
+                                </div>
+                            </div>
 
-
--->
-
-
-            <!-- ui-dialog -->
-            <div id="dialog" >
-
-                <div class="grid_7">
-                    <div class="clear"></div>
-                    <div class="box">
-
-                        <div class="block" id="forms">
-                            <form id="form" action="index.php" method="post">
-                                <fieldset>
-                                    <legend>Ingrese sus datos</legend>
-                                    <div class="sixteen_column section">
-
-                                        <div class="eight column">
-                                            <div class="column_content">
-                                                <label>Login: </label>
-                                                <input type="text" name="usuario" id="usuario"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="eight column">
-                                            <div class="column_content">
-                                                <label>Password: </label>
-                                                <input type="password" name="password" id="password"/>
-                                                <input type="hidden" name="operacion" value='login' />
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                </fieldset>
-
-                            </form>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Password: </label>
+                                    <input type="password" name="password" id="password"/>
+                                    <input type="hidden" name="operacion" value='login' />
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
+                    </fieldset>
 
-                </div>
-
+                </form>
             </div>
+        </div>
 
 
+    </div>
 
-
-
-
-
+</div>
 
 
 

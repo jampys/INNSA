@@ -207,8 +207,9 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
     {
         $this->consulta=oci_parse($this->coneccion->getConexion(), $cons);
         oci_execute($this->consulta);
-        return $this->consulta;
+        return $this->consulta; //no es necesario que la devuelva
     }
+
 
     //Al metodo getResults() lo hereda
 
@@ -249,5 +250,52 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
 
 //SE CREA UNA CLASE ESTANDAR PHP
 $view= new stdClass();
+
+
+
+//******************************************* CONEXION PDO ********************************************************
+
+class ConexionPDO{
+
+    private $conn;
+
+
+
+    public function __construct()
+    {
+
+
+        $tns = "
+(DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = XE)
+    )
+  )
+       ";
+        $db_username = "dario";
+        $db_password = "dario";
+        try{
+            $conn = new PDO("oci:dbname=".$tns,$db_username,$db_password);
+            echo 'conexion exitosa';
+        }catch(PDOException $e){
+            echo ($e->getMessage());
+        }
+
+
+    }
+
+    public function getConexion(){
+        return $this->conn;
+    }
+
+
+
+
+}
+
+
 
 ?>

@@ -36,8 +36,8 @@ switch($operacion){
         $view->u->updateUsuario();
         break;
 
-    case 'autocompletar_empleados':
-        $rta=$view->u->getEmpleados($_POST['term']);
+    case 'autocompletar_empleados_sin_user':
+        $rta=$view->u->autocompletarEmpleadosSinUser($_POST['term']);
         print_r(json_encode($rta));
         exit;
         break;

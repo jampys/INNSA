@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="public/css/estilos.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="public/js/jquery.validate.js"></script>
 
     <script type="text/javascript">
     var globalOperacion="";
@@ -58,100 +59,61 @@
 
 
         function guardar(){
-            if($("#curso").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un curso");
-                return false;
-            }
-
+            /*
             if($("#periodo").val()==0){
                 $("#dialog-msn").dialog("open");
                 $("#message").html("Ingresar un periodo");
                 return false;
             }
 
-            if($("#modalidad").val()==0){
+            if($("#empleado").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una modalidad");
+                $("#message").html("Ingresar un empleado");
                 return false;
             }
 
-            if($("#fecha_desde").val()==""){
+            if($("#situacion_actual").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la fecha de inicio");
+                $("#message").html("Ingresar la situación actual");
                 return false;
             }
 
-            if($("#fecha_hasta").val()==""){
+            if($("#situacion_deseada").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la fecha de finalización");
+                $("#message").html("Ingresar la situación deseada");
                 return false;
             }
 
-            if($("#duracion").val()==""){
+            if($("#objetivo_medible_1").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la duración");
+                $("#message").html("Ingresar el objetivo medible 1");
                 return false;
             }
 
-            if($("#unidad").val()==0){
+            if($("#objetivo_medible_2").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la unidad de duración");
+                $("#message").html("Ingresar el objetivo medible 2");
                 return false;
             }
 
-            if($("#prioridad").val()==0){
+            if($("#objetivo_medible_3").val()==""){
                 $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la prioridad");
+                $("#message").html("Ingresar el objetivo medible 3");
                 return false;
             }
 
-            if($("#estado").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el estado");
-                return false;
-            }
+            */
 
-            if($("#importe").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el importe");
-                return false;
-            }
-
-            if($("#moneda").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la moneda");
-                return false;
-            }
-
-            if($("#tipo_cambio").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el tipo de cambio");
-                return false;
-            }
-
+            /*
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
                 var data={  "accion":"cap_plan",
                             "operacion":"insert",
                             "curso":$("#curso_id").val(),
                             "periodo":$("#periodo").val(),
-                            "objetivo":$("#objetivo").val(),
-                            "modalidad":$("#modalidad").val(),
-                            "fecha_desde":$("#fecha_desde").val(),
-                            "fecha_hasta":$("#fecha_hasta").val(),
-                            "duracion":$("#duracion").val(),
-                            "unidad":$("#unidad").val(),
-                            "prioridad":$("#prioridad").val(),
-                            "estado":$("#estado").val(),
-                            "importe":$("#importe").val(),
-                            "moneda":$("#moneda").val(),
-                            "tipo_cambio":$("#tipo_cambio").val(),
-                            "forma_pago":$("#forma_pago").val(),
-                            "forma_financiacion":$("#forma_financiacion").val(),
-                            "profesor_1":$("#profesor_1").val(),
-                            "profesor_2":$("#profesor_2").val(),
-                            "comentarios":$("#comentarios").val()};
+                            "objetivo":$("#objetivo").val()
+
+                        };
             }
             else{ //se va a guardar un curso editado
                 var data={  "accion":"cap_plan",
@@ -159,22 +121,9 @@
                             "id":globalId,
                             //"curso":$("#curso").val(),
                             "periodo":$("#periodo").val(),
-                            "objetivo":$("#objetivo").val(),
-                            "modalidad":$("#modalidad").val(),
-                            "fecha_desde":$("#fecha_desde").val(),
-                            "fecha_hasta":$("#fecha_hasta").val(),
-                            "duracion":$("#duracion").val(),
-                            "unidad":$("#unidad").val(),
-                            "prioridad":$("#prioridad").val(),
-                            "estado":$("#estado").val(),
-                            "importe":$("#importe").val(),
-                            "moneda":$("#moneda").val(),
-                            "tipo_cambio":$("#tipo_cambio").val(),
-                            "forma_pago":$("#forma_pago").val(),
-                            "forma_financiacion":$("#forma_financiacion").val(),
-                            "profesor_1":$("#profesor_1").val(),
-                            "profesor_2":$("#profesor_2").val(),
-                            "comentarios":$("#comentarios").val()};
+                            "objetivo":$("#objetivo").val()
+
+                        };
             }
 
             $.ajax({
@@ -201,7 +150,63 @@
                 timeout:3000000,
                 crossdomain:true
 
+            });     */
+
+            //****************************************************************************
+            //Codigo para insertar tabla dinamica
+
+            jsonObj = [];
+            $('#table_plan tbody tr').each(function () {
+                item = {};
+                item['id_plan']=$(this).attr('id_plan');
+                item['objetivo']= $(this).find('td').eq(1).html();
+                item['comentarios']= $(this).find('td').eq(2).html();
+                item['viaticos']= $(this).find('td').eq(3).html();
+                //alert(item['id_plan'])
+                jsonObj.push(item);
+
             });
+
+            $.ajax({
+                url:"index.php",
+                data:{"accion":"cap_solic","operacion":"insert_planes","datos":JSON.stringify(jsonObj)},
+                contentType:"application/x-www-form-urlencoded",
+                dataType:"json",//xml,html,script,json
+                error:function(){
+
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
+
+                },
+                ifModified:false,
+                processData:true,
+                success:function(datas){
+
+                    if(datas==1){
+                        alert("registros ingresados ok");
+                    }
+
+                    $("#dialog").dialog("close");
+                    //Agregado por dario para recargar grilla al modificar o insertar
+                    self.parent.location.reload();
+
+                },
+                type:"POST",
+                timeout:3000000,
+                crossdomain:true
+
+            });
+
+
+
+
+
+
+
+
+
+            //fin codigo insertar tabla dinamica
+            //-----------------------------------------------------------------------------
 
         }
 
@@ -209,6 +214,20 @@
 
 
         $(document).ready(function(){
+
+
+
+            $("#form_plan").validate({
+                rules: {
+                    np_plan_capacitacion: {required: true, minlength: 2}
+
+                },
+                messages: {
+                    name: "Debe introducir su nombre."
+
+                }
+            });
+
 
             // menu superfish
             $('#navigationTop').superfish();
@@ -291,15 +310,21 @@
             //Funcionalidad para la tabla de asignar planes
             $('#asignar_plan').dialog({
                 autoOpen: false,
-                width: 300,
+                width: 500,
                 modal:true,
                 title:"Agregar Registro",
                 buttons: {
                     "Agregar": function() {
+
+                        //validacion
+
+
                         //se agrega la funcionalidad
-                        $('#table_plan tr:last').after('<tr>' +
+                        //$('#table_plan tr:last').after('<tr>' +
+                        $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                                                             '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
                                                             '<td>'+$('#np_objetivo').val()+'</td>' +
+                                                            '<td>'+$('#np_comentarios').val()+'</td>' +
                                                             '<td>'+$('#np_viaticos').val()+'</td>' +
                                                             '<td><a class="eliminar" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                                         '</tr>');
@@ -332,8 +357,67 @@
                 $(parent).remove();
             });
 
+
+            //Agregado para autocompletar planes
+            $("#np_plan_capacitacion").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"cap_solic", "operacion":"autocompletar_planes"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.NOMBRE+' - '+item.FECHA_DESDE,
+                                    id: item.ID_PLAN
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    $('#np_plan_capacitacion_id').val(ui.item.id);
+                    $('#np_plan_capacitacion').val(ui.item.label);
+                }
+            });
+
+            //fin agregado autocompletar planes
+
             //Fin funcionalidad tabla asignar planes
-            //**********************************************************************************************
+            //---------------------------------------------------------------------------------------
+
+            //**************************************************************************************
+            //Agregado dario para autocompletar empleados
+            $("#empleado").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.APELLIDO+" "+item.NOMBRE,
+                                    id: item.ID_EMPLEADO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    $('#empleado_id').val(ui.item.id);
+                    $('#empleado').val(ui.item.label);
+                }
+            });
+
+            //fin agregado
+            //---------------------------------------------------------------------------------------------
 
             // Dialog Link
             $('#dialog_link').click(function(){
@@ -381,34 +465,7 @@
                 function() { $(this).removeClass('ui-state-hover'); }
             );
 
-            //Agregado dario para autocompletar cursos
-            $("#curso").autocomplete({
-                source: function( request, response ) {
-                    $.ajax({
-                        url: "index.php",
-                        type: "POST",
-                        dataType: "json",
-                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos"},
-                        success: function(data) {
-                            response($.map(data, function(item) {
-                                return {
-                                    label: item.NOMBRE,
-                                    id: item.ID_CURSO
 
-                                };
-                            }));
-                        }
-                    });
-                },
-                minLength: 2,
-                select: function(event, ui) {
-                    $('#curso_id').val(ui.item.id);
-                    $('#curso').val(ui.item.label);
-                }
-            });
-
-
-            //fin agregado
 
         });
     </script>
@@ -694,13 +751,16 @@
                                 <div class="column_content">
                                     <table id="table_plan">
                                         <thead>
-                                            <td>Plan</td>
-                                            <td>Objetivo</td>
-                                            <td>Viaticos</td>
-                                            <td>Eliminar</td>
+                                            <tr>
+                                                <td>Plan</td>
+                                                <td>Objetivo</td>
+                                                <td>Comentarios</td>
+                                                <td>Viaticos</td>
+                                                <td>Eliminar</td>
+                                            </tr>
                                         </thead>
                                         <tbody>
-
+                                        <!-- el cuerpo se genera dinamicamente con javascript -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -767,13 +827,18 @@
 </div>
 
 
+
+
+
+
+
 <div id="asignar_plan" >
 
 <div class="grid_7">
 
 
 
-<div class="block" id="forms">
+<div class="block" id="formus">
 <form id="form_plan" action="">
 <fieldset>
 <legend>Datos Registro</legend>
@@ -783,29 +848,25 @@
             <div class="column_content">
                 <label>Plan capacitación: </label><br/>
                 <input type="text" name="np_plan_capacitacion" id="np_plan_capacitacion"/>
+                <input type="hidden" name="np_plan_capacitacion_id" id="np_plan_capacitacion_id"/>
             </div>
         </div>
     </div>
 
-<div class="sixteen_column section">
-    <div class="sixteen_column">
-        <div class="column_content">
-            <label>Objetivo: </label><br/>
-            <textarea name="np_objetivo" id="np_objetivo" rows="3"></textarea>
+    <div class="sixteen_column section">
+        <div class="eight column">
+            <div class="column_content">
+                <label>Objetivo: </label><br/>
+                <textarea name="np_objetivo" id="np_objetivo" rows="5"></textarea>
+            </div>
+        </div>
+        <div class="eight column">
+            <div class="column_content">
+                <label>Comentarios: </label>
+                <textarea name="np_comentarios" id="np_comentarios" rows="5"></textarea>
+            </div>
         </div>
     </div>
-</div>
-
-
-<div class="sixteen_column section">
-    <div class="sixteen_column">
-        <div class="column_content">
-            <label>Comentarios: </label><br/>
-            <textarea name="np_comentarios" id="np_comentarios" rows="3"></textarea>
-        </div>
-    </div>
-
-</div>
 
 
 
@@ -824,11 +885,11 @@
 </div>
 
 
-
-
 </fieldset>
 
 </form>
+
+
 </div>
 
 
@@ -836,6 +897,13 @@
 </div>
 
 </div>
+
+
+
+
+
+
+
 
 
 

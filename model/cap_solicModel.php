@@ -1,27 +1,14 @@
 <?php
 
-class Cap_Plan
+class Cap_Solic
 {
-    var $id_plan;
-    var $id_curso;
-    var $periodo;
+    var $id_asignacion;
     var $objetivo;
-    var $modalidad;
-    var $fecha_desde;
-    var $fecha_hasta;
-    var $duracion;
-    var $unidad;
-    var $prioridad;
-    var $estado;
-    var $importe;
-    var $moneda;
-    var $tipo_cambio;
-    var $cantidad;
-    var $forma_pago;
-    var $forma_financiacion;
-    var $profesor_1;
-    var $profesor_2;
     var $comentarios;
+    var $viaticos;
+    var $id_solicitud;
+    var $id_plan;
+
 
     public static function getCapPlan(){
         $f=new Factory();
@@ -38,12 +25,11 @@ class Cap_Plan
         return $obj_cp->fetchAll();
     }
 
-    public static function getCursos($term){  //funcion usada para cargar dinamicamente select con los temas de la categoria seleccionada
+    public static function getPlanes($term){  //funcion usada para autocompletar planes
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        //$obj_cp->executeQuery("select * from cursos");
-        //$query="select * from cursos where nombre like '%".$term."%'";
-        $query="select * from cursos where nombre like UPPER ('%".$term."%')";
+        //$query="select * from cursos where nombre like UPPER ('%".$term."%')";
+        $query="select * from plan_capacitacion, cursos where plan_capacitacion.id_curso = cursos.id_curso and nombre like UPPER ('%".$term."%')";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll(); // retorna todos los cursos
     }
@@ -56,126 +42,44 @@ class Cap_Plan
     }
 
     // metodos que devuelven valores
-    function getIdPlan()
-    { return $this->id_plan;}
-
-    function getIdCurso()
-    { return $this->id_curso;}
-
-    function getPeriodo()
-    { return $this->periodo;}
+    function getIdAsignacion()
+    { return $this->id_asignacion;}
 
     function getObjetivo()
     { return $this->objetivo;}
 
-    function getModalidad()
-    { return $this->modalidad;}
-
-    function getFechaDesde()
-    { return $this->fecha_desde;}
-
-    function getFechaHasta()
-    { return $this->fecha_hasta;}
-
-    function getDuracion()
-    { return $this->duracion;}
-
-    function getUnidad()
-    { return $this->unidad;}
-
-    function getPrioridad()
-    { return $this->prioridad;}
-
-    function getEstado()
-    { return $this->estado;}
-
-    function getImporte()
-    { return $this->importe;}
-
-    function getMoneda()
-    { return $this->moneda;}
-
-    function getTipoCambio()
-    { return $this->tipo_cambio;}
-
-    function getCantidad()
-    { return $this->cantidad;}
-
-    function getFormaPago()
-    { return $this->forma_pago;}
-
-    function getFormaFinanciacion()
-    { return $this->forma_financiacion;}
-
-    function getProfesor1()
-    { return $this->profesor_1;}
-
-    function getProfesor2()
-    { return $this->profesor_2;}
-
     function getComentarios()
     { return $this->comentarios;}
 
+    function getViaticos()
+    { return $this->viaticos;}
+
+    function getIdSolicitud()
+    { return $this->id_solicitud;}
+
+    function getIdPlan()
+    { return $this->id_plan;}
+
+
+
     // metodos que setean los valores
-    function setIdPlan($val)
-    { $this->id_plan=$val;}
-
-    function setIdCurso($val)
-    {  $this->id_curso=$val;}
-
-    function setPeriodo($val)
-    {  $this->periodo=$val;}
+    function setIdAsignacion($val)
+    { $this->id_asignacion=$val;}
 
     function setObjetivo($val)
     {  $this->objetivo=$val;}
 
-    function setModalidad($val)
-    {  $this->modalidad=$val;}
-
-    function setFechaDesde($val)
-    {  $this->fecha_desde=$val;}
-
-    function setFechaHasta($val)
-    {  $this->fecha_hasta=$val;}
-
-    function setDuracion($val)
-    {  $this->duracion=$val;}
-
-    function setUnidad($val)
-    {  $this->unidad=$val;}
-
-    function setPrioridad($val)
-    {  $this->prioridad=$val;}
-
-    function setEstado($val)
-    {  $this->estado=$val;}
-
-    function setImporte($val)
-    {  $this->importe=$val;}
-
-    function setMoneda($val)
-    {  $this->moneda=$val;}
-
-    function setTipoCambio($val)
-    {  $this->tipo_cambio=$val;}
-
-    function setCantidad($val)
-    {  $this->cantidad=$val;}
-
-    function setFormaPago($val)
-    {  $this->forma_pago=$val;}
-
-    function setFormaFinanciacion($val)
-    {  $this->forma_financiacion=$val;}
-
-    function setProfesor1($val)
-    {  $this->profesor_1=$val;}
-
-    function setProfesor2($val)
-    {  $this->profesor_2=$val;}
-
     function setComentarios($val)
     {  $this->comentarios=$val;}
+
+    function setViaticos($val)
+    {  $this->viaticos=$val;}
+
+    function setIdSolicitud($val)
+    {  $this->id_solicitud=$val;}
+
+    function setIdPlan($val)
+    {  $this->id_plan=$val;}
 
 
 
@@ -208,6 +112,18 @@ class Cap_Plan
         return $obj_cp->getAffect(); // retorna todos los registros afectados
 
     }
+
+
+    public function insertPlanes()
+    {
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "insert into asignacion_plan (objetivo, comentarios, viaticos, id_plan) values('$this->objetivo', '$this->comentarios', $this->viaticos, $this->id_plan)";
+        $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
+        //return $obj_user->getAffect(); // retorna todos los registros afectados
+
+    }
+
 
 
 }

@@ -35,7 +35,7 @@ html,body{
     margin: 0 auto;
 }
 
-
+/* estilo usado para los checkboxes del abm cap_solic */
 .checkboxes{
     float: left;
     width: 33%;
@@ -67,9 +67,12 @@ html,body{
 }
 
 
+/*  estilo usaso para los errores del jquery validate  */
 
 
-
+.error {
+    color: red;
+}
 
 
 

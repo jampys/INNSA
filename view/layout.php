@@ -76,6 +76,8 @@
 
     <link href="public/css/estilos.css" type="text/css" rel="stylesheet" />
 
+    <script type="text/javascript" language="JavaScript" src="public/js/jquery.validate.js"></script>
+
 </head>
 
 

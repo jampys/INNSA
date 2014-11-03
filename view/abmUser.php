@@ -241,14 +241,14 @@
             );
 
 
-            //Agregado dario para autocompletar cursos
+            //Agregado dario para autocompletar empleados
             $("#empleado").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"user", "operacion":"autocompletar_empleados"},
+                        data: { "term": request.term, "accion":"user", "operacion":"autocompletar_empleados_sin_user"},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {

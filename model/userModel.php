@@ -131,7 +131,7 @@ class User
 
     }
 
-    public function getEmpleados($term){  //funcion usada para autocompletar de empleados
+    public function autocompletarEmpleadosSinUser($term){  //funcion usada para autocompletar de empleados
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
         //$query="select * from empleados where nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')";
