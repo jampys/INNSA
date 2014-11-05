@@ -46,31 +46,6 @@
 
         function guardar(){
 
-            if($("#login").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un login");
-                return false;
-            }
-
-            if($("#password").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un password");
-                return false;
-            }
-
-
-            if($("#perfil").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un perfil");
-                return false;
-            }
-
-            if($("#estado").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la habilitacion");
-                return false;
-            }
-
             if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
                 var url="index.php";
                 var data={  "accion":"user",
@@ -112,10 +87,9 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#dialog").dialog("close");
+                    //$("#dialog").dialog("close");
                     //Agregado por dario para recargar grilla al modificar o insertar
-                    self.parent.location.reload();
-
+                    //self.parent.location.reload();
                 },
                 type:"POST",
                 timeout:3000000,
@@ -177,11 +151,17 @@
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
-                        guardar();
+                        if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            guardar();
+                            $("#dialog").dialog("close");
+                            //Agregado por dario para recargar grilla al modificar o insertar
+                            self.parent.location.reload();
+                        }
 
                     },
                     "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar el formulario
+                        $("#form")[0].reset(); //para limpiar los campos del formulario
+                        $('#form').validate().resetForm(); //para limpiar los errores validate
                         $(this).dialog("close");
                     }
                 },
@@ -194,7 +174,8 @@
                     duration: 1000
                 },
                 close:function(){
-                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                    $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
 
                 //Agregado dario
@@ -266,12 +247,52 @@
                     $('#empleado').val(ui.item.label);
                 }
             });
-
             //fin agregado
 
+            //llamada a funcion validar
+            $.validar();
 
 
         });
+
+
+    //Declaracion de funcion para validar
+    $.validar=function(){
+        $('#form').validate({
+            rules: {
+                login: {
+                    required: true,
+                    maxlength: 20,
+                    minlength: 3
+                },
+                password: {
+                    required: true,
+                    maxlength: 20,
+                    minlength: 3
+                },
+                perfil: {
+                    required: true
+                },
+                estado: {
+                    required: true
+                },
+                empleado:{
+                    required: true
+                }
+            },
+            messages:{
+                login: "Ingrese un login",
+                password: "Ingrese un password",
+                perfil: "Seleccione un perfil",
+                estado: "Seleccione un estado",
+                empleado: "Seleccione un empleado"
+            }
+
+        });
+
+
+    };
+
     </script>
 
 </head>
@@ -410,7 +431,7 @@
                                 <div class="column_content">
                                     <label>Perfil: </label>
                                     <select name="perfil" id="perfil">
-                                        <option value="0">Ingrese un perfil</option>
+                                        <option value="">Ingrese un perfil</option>
                                         <option value="1">Administrador</option>
                                         <option value="2">Operador</option>
                                     </select>
@@ -420,7 +441,7 @@
                                 <div class="column_content">
                                     <label>Habilitacion: </label>
                                     <select name="estado" id="estado">
-                                        <option value="0">Ingrese un estado</option>
+                                        <option value="">Ingrese un estado</option>
                                         <option value="1">Habilitado</option>
                                         <option value="2">Deshabilitado</option>
                                     </select>

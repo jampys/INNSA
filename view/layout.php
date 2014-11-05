@@ -78,6 +78,8 @@
 
     <script type="text/javascript" language="JavaScript" src="public/js/jquery.validate.js"></script>
 
+    <script type="text/javascript" language="JavaScript" src="public/js/js_dario.js"></script>
+
 </head>
 
 

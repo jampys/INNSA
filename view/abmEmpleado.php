@@ -50,7 +50,7 @@
 
 
         function guardar(){
-
+            /*
             if($("#apellido").val()==""){
                 $("#dialog-msn").dialog("open");
                 $("#message").html("Ingresar el apellido ");
@@ -85,7 +85,7 @@
                 $("#dialog-msn").dialog("open");
                 $("#message").html("Ingresar la división");
                 return false;
-            }
+            } */
 
             if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
                 var url="index.php";
@@ -140,9 +140,9 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#dialog").dialog("close");
+                    //$("#dialog").dialog("close");
                     //Agregado por dario para recargar grilla al modificar o insertar
-                    self.parent.location.reload();
+                    //self.parent.location.reload();
 
                 },
                 type:"POST",
@@ -205,11 +205,17 @@
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
-                        guardar();
+                        if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            guardar();
+                            $("#dialog").dialog("close");
+                            //Agregado por dario para recargar grilla al modificar o insertar
+                            self.parent.location.reload();
+                        }
 
                     },
                     "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar el formulario
+                        $("#form")[0].reset(); //para limpiar los campos del formulario
+                        $('#form').validate().resetForm(); //para limpiar los errores validate
                         $(this).dialog("close");
                     }
                 },
@@ -222,16 +228,9 @@
                     duration: 1000
                 },
                 close:function(){
-                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                    $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
-
-                //Agregado dario
-                /*
-                ,open: function(){
-                    alert(globalOperacion);
-                    alert(globalId);
-                }*/
-                //fin agregado dario
 
             });
 
@@ -256,10 +255,10 @@
 
             // Datepicker
             $('#fecha').datepicker({
-                inline: true
-                ,dateFormat:"dd/mm/yy"
+                //inline: true,
+                dateFormat:"dd/mm/yy"
             });
-            $('#fecha').datepicker('setDate', 'today');
+            //$('#fecha').datepicker('setDate', 'today');
 
 
             //hover states on the static widgets
@@ -268,7 +267,59 @@
                 function() { $(this).removeClass('ui-state-hover'); }
             );
 
+            //llamada a funcion validar
+            $.validar();
+
         });
+
+
+    //Declaracion de funcion para validar
+    $.validar=function(){
+        $('#form').validate({
+            rules: {
+                apellido: {
+                    required: true
+                },
+                nombre: {
+                    required: true
+                },
+                cuil: {
+                    required: true,
+                    digits: true
+                },
+                lugar_trabajo: {
+                    //required: function(){return $('#lugar_trabajo').val()==''}
+                    required: true
+                },
+                empresa: {
+                    required: true
+                },
+                division: {
+                    required: true
+                },
+                fecha:{
+                    required: true
+                },
+                activo: {
+                    required: true
+                }
+            },
+            messages:{
+                apellido: "Ingrese el apellido",
+                nombre: "Ingrese el nombre",
+                cuil: "Ingrese el CUIL (sin guiones)",
+                lugar_trabajo: "Seleccione el lugar de trabajo",
+                empresa: "Seleccione la empresa",
+                division: "Seleccione la division",
+                fecha: "Seleccione la fecha de ingreso",
+                activo: "Seleccione el estado de habilitación"
+            }
+
+        });
+
+
+    };
+
     </script>
 
 </head>
@@ -407,7 +458,7 @@
                                 <div class="column_content">
                                     <label>Lugar de trabajo: </label>
                                     <select name="lugar_trabajo" id="lugar_trabajo">
-                                        <option value="0">Ingrese un lugar</option>
+                                        <option value="">Ingrese un lugar</option>
                                         <option value="BO">Bolivia</option>
                                         <option value="BUE">Buenos Aires</option>
                                         <option value="CH">Chubut</option>
@@ -422,7 +473,7 @@
                                 <div class="column_content">
                                     <label>Empresa: </label>
                                     <select name="empresa" id="empresa">
-                                        <option value="0">Ingrese una empresa</option>
+                                        <option value="">Ingrese una empresa</option>
                                         <option value="INNOVISION">Innovision</option>
                                     </select>
                                 </div>
@@ -457,7 +508,7 @@
                                 <div class="column_content">
                                     <label>División: </label>
                                     <select name="division" id="division">
-                                        <option value="0">Ingrese una división</option>
+                                        <option value="">Ingrese una división</option>
                                         <option value="SISTEMAS">Sistemas</option>
                                         <option value="ADMINISTRACION">Administración</option>
                                         <option value="RRHH">RRHH</option>
@@ -478,6 +529,7 @@
                                 <div class="column_content">
                                     <label>Estado: </label>
                                     <select name="activo" id="activo">
+                                        <option value="">Ingrese el estado</option>
                                         <option value="0">Inactivo</option>
                                         <option value="1">Activo</option>
                                     </select>

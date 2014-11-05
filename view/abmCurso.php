@@ -28,7 +28,7 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#tema").html('<option value="0">Ingrese un tema</option>');
+                    $("#tema").html('<option value="">Ingrese un tema</option>');
                     $.each(datas, function(indice, val){
                         //$("#tema").append("<option value='"+datas[indice]['ID_TEMA']+"'>"+datas[indice]['NOMBRE']+"</option>");
                         $("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
@@ -86,30 +86,6 @@
 
         function guardar(){
 
-            if($("#nombre").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un nombre");
-                return false;
-            }
-
-            if($("#entidad").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una entidad");
-                return false;
-            }
-
-            if($("#categoria").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una categoria");
-                return false;
-            }
-
-            if($("#tema").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un tema");
-                return false;
-            }
-
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
                 var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val()};
@@ -134,9 +110,6 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#dialog").dialog("close");
-                    //Agregado por dario para recargar grilla al modificar o insertar
-                    self.parent.location.reload();
 
                 },
                 type:"POST",
@@ -199,11 +172,17 @@
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
-                        guardar();
+                        if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            guardar();
+                            $("#dialog").dialog("close");
+                            //Agregado por dario para recargar grilla al modificar o insertar
+                            self.parent.location.reload();
+                        }
 
                     },
                     "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar el formulario
+                        $("#form")[0].reset(); //para limpiar los campos del formulario
+                        $('#form').validate().resetForm(); //para limpiar los errores validate
                         $(this).dialog("close");
                     }
                 },
@@ -216,7 +195,8 @@
                     duration: 1000
                 },
                 close:function(){
-                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                    $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
 
                 //Agregado dario
@@ -237,14 +217,11 @@
             });
 
             //Agregado por dario para editar
-
             $(document).on("click", ".edit_link", function(){
                 globalOperacion=$(this).attr("media");
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
-                //alert("funciona el link edit");
-
                 return false;
             });
             //Fin agregado
@@ -261,7 +238,46 @@
                 function() { $(this).removeClass('ui-state-hover'); }
             );
 
+            //llamada a funcion validar
+            $.validar();
+
+
         });
+
+    //Declaracion de funcion para validar
+    $.validar=function(){
+        $('#form').validate({
+            rules: {
+                nombre: {
+                    required: true,
+                    maxlength: 100,
+                    minlength: 5
+                },
+                entidad: {
+                    required: true
+                },
+                categoria: {
+                    required: true
+                },
+                tema: {
+                    required: true
+                }
+            },
+            messages:{
+                nombre: "Ingrese su nombre",
+                entidad: "Ingrese su entidad",
+                categoria: "Seleccione una categoria",
+                tema: "Seleccione un tema"
+            }
+
+        });
+
+
+    };
+
+
+
+
     </script>
 
 </head>
@@ -395,7 +411,7 @@
                                 <div class="column_content">
                                     <label>Categoria: </label>
                                     <select name="categoria" id="categoria" onchange="cargarTemas();">
-                                        <option value="0">Ingrese una categoria</option>
+                                        <option value="">Ingrese una categoria</option>
                                         <option value="1">Habilidades soft</option>
                                         <option value="2">Gestión</option>
                                         <option value="3">Industria Oil</option>

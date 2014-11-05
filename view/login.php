@@ -43,11 +43,11 @@
                     usuario: {
                         required: true,
                         maxlength: 20,
-                        minlength: 5
+                        minlength: 3
                     },
                     password: {
                         required: true,
-                        minlength: 5
+                        minlength: 3
                     }
                 },
                 messages:{
