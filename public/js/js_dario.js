@@ -3,6 +3,7 @@
  */
 
 //configura los datapicker de jquery ui en espanol
+/*
 $.datepicker.regional['es'] = {
     closeText: 'Cerrar',
     prevText: '<Ant',
@@ -22,3 +23,4 @@ $.datepicker.regional['es'] = {
 };
 $.datepicker.setDefaults($.datepicker.regional['es']);
 
+*/

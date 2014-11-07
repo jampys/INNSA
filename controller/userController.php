@@ -14,13 +14,15 @@ switch($operacion){
         $view->u->setIdPerfil($_POST['perfil']);
         $view->u->setIdEmpleado($_POST['empleado']);
         $view->u->setHabilitado($_POST['estado']);
-        $view->u->insertUsuario();
+        $rta=$view->u->insertUsuario();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'update':
 
-        $contenido=$view->u->getUsuarioById($_POST['id']);
-        print_r(json_encode($contenido));
+        $rta=$view->u->getUsuarioById($_POST['id']);
+        print_r(json_encode($rta));
         exit;
 
         break;
@@ -33,12 +35,20 @@ switch($operacion){
         $view->u->setIdPerfil($_POST['perfil']);
         $view->u->setIdEmpleado($_POST['empleado']);
         $view->u->setHabilitado($_POST['estado']);
-        $view->u->updateUsuario();
+        $rta=$view->u->updateUsuario();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'autocompletar_empleados_sin_user':
         $rta=$view->u->autocompletarEmpleadosSinUser($_POST['term']);
         print_r(json_encode($rta));
+        exit;
+        break;
+
+    case 'refreshGrid':
+        $view->usuarios=$view->u->getUsuarios();
+        include_once('view/abmUserGrid.php');
         exit;
         break;
 

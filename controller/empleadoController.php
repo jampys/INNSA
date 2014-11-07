@@ -20,7 +20,9 @@ switch($operacion){
         $view->u->setActivo($_POST['activo']);
         $view->u->setEmail($_POST['email']);
         $view->u->setCuil($_POST['cuil']);
-        $view->u->insertEmpleado();
+        $rta=$view->u->insertEmpleado();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'update':
@@ -44,12 +46,20 @@ switch($operacion){
         $view->u->setActivo($_POST['activo']);
         $view->u->setEmail($_POST['email']);
         $view->u->setCuil($_POST['cuil']);
-        $view->u->updateEmpleado();
+        $rta=$view->u->updateEmpleado();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'autocompletar_empleados':
         $rta=$view->u->autocompletarEmpleados($_POST['term']);
         print_r(json_encode($rta));
+        exit;
+        break;
+
+    case 'refreshGrid':
+        $view->empleados=$view->u->getEmpleados();
+        include_once('view/abmEmpleadoGrid.php');
         exit;
         break;
 

@@ -130,7 +130,7 @@ class Empleado
         $obj_user=$f->returnsQuery();
         $query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo=$this->n_legajo, empresa='$this->empresa', funcion='$this->funcion', categoria='$this->categoria', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
-        //return $obj_cliente->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
 
@@ -141,7 +141,7 @@ class Empleado
         $query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, categoria, division, fecha_ingreso, activo, email, cuil)".
             "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , $this->n_legajo, '$this->empresa', '$this->funcion', '$this->categoria', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')";
         $obj_emp->executeQuery($query); // ejecuta la consulta para traer al cliente
-        //return $obj_user->getAffect(); // retorna todos los registros afectados
+        return $obj_emp->getAffect(); // retorna todos los registros afectados
 
     }
     function delete()	// elimina el cliente

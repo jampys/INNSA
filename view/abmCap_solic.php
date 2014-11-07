@@ -9,6 +9,9 @@
     var globalOperacion="";
     var globalId;
 
+    var globalOperacionPlan="";
+    var globalIdPlan="";
+
 
         function editar(id_plan){
                 //alert(id_plan);
@@ -59,50 +62,6 @@
 
 
         function guardar(){
-            /*
-            if($("#periodo").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un periodo");
-                return false;
-            }
-
-            if($("#empleado").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un empleado");
-                return false;
-            }
-
-            if($("#situacion_actual").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la situación actual");
-                return false;
-            }
-
-            if($("#situacion_deseada").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la situación deseada");
-                return false;
-            }
-
-            if($("#objetivo_medible_1").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el objetivo medible 1");
-                return false;
-            }
-
-            if($("#objetivo_medible_2").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el objetivo medible 2");
-                return false;
-            }
-
-            if($("#objetivo_medible_3").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el objetivo medible 3");
-                return false;
-            }
-
-            */
 
             /*
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
@@ -235,10 +194,12 @@
 
             // dataTable
             var uTable = $('#example').dataTable( {
-                "sScrollY": 200,
-                //"scrollX": true,
+                "scrollY": "200px",
+                "scrollX": true,
+                "autoWidth": true,
                 "bJQueryUI": true,
                 "sPaginationType": "full_numbers"
+
             } );
             $(window).bind('resize', function () {
                 uTable.fnAdjustColumnSizing();
@@ -277,11 +238,17 @@
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
-                        guardar();
+                        if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            guardar();
+                            $("#dialog").dialog("close");
+                            //Llamada ajax para refrescar la grilla
+                            //$('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid"});
+                        }
 
                     },
                     "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar el formulario
+                        $("#form")[0].reset(); //para limpiar los campos del formulario
+                        $('#form').validate().resetForm(); //para limpiar los errores validate
                         $(this).dialog("close");
                     }
                 },
@@ -294,14 +261,10 @@
                     duration: 1000
                 },
                close:function(){
-                    $("#form")[0].reset(); //para limpiar el formulario cuando sale con x
+                   $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                   $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
-                /*
-                ,open: function(){
-                    alert(globalOperacion);
-                    alert(globalId);
-                }*/
-                //fin agregado dario
+
 
             });
 
@@ -316,19 +279,31 @@
                 buttons: {
                     "Agregar": function() {
 
-                        //validacion
+                        if(globalOperacionPlan=='editar'){
 
+                            //$('#np_plan_capacitacion_id').val($(this).parent().parent().attr('id_plan'));
+                            //$(this).parent().parent().find('td').eq(0).html(('#np_plan_capacitacion').val());
+                            $(this).child().child().find('td').eq(1).html(('#np_objetivo').val());
+                            //$('#np_comentarios').val($(this).parent().parent().find('td').eq(2).html());
+                            //$('#np_viaticos').val($(this).parent().parent().find('td').eq(3).html());
 
-                        //se agrega la funcionalidad
-                        //$('#table_plan tr:last').after('<tr>' +
-                        $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
-                                                            '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                                                            '<td>'+$('#np_objetivo').val()+'</td>' +
-                                                            '<td>'+$('#np_comentarios').val()+'</td>' +
-                                                            '<td>'+$('#np_viaticos').val()+'</td>' +
-                                                            '<td><a class="eliminar" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
-                                                        '</tr>');
-                        $("#form_plan")[0].reset();
+                        }
+                        else{
+
+                            //se agrega la funcionalidad
+                            //$('#table_plan tr:last').after('<tr>' +
+                            $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
+                            '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
+                            '<td>'+$('#np_objetivo').val()+'</td>' +
+                            '<td>'+$('#np_comentarios').val()+'</td>' +
+                            '<td>'+$('#np_viaticos').val()+'</td>' +
+                            '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                            '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                            '</tr>');
+                            $("#form_plan")[0].reset();
+
+                        }
+
 
                     },
                     "Cancelar": function() {
@@ -350,11 +325,28 @@
 
             });
 
-
-            $(document).on("click",".eliminar",function(){
+            //Al presionar la x para agregar planes a la solicitud
+            $(document).on("click",".eliminar_plan",function(){
                 var parent = $(this).parents().parents().get(0);
-                alert($(this).attr("id"));
+                //alert($(this).attr("id"));
                 $(parent).remove();
+            });
+
+            //Al presionar el lapiz para editar los planes de la solicitud
+            $(document).on("click",".editar_plan",function(){
+                $('#asignar_plan').dialog('open');
+
+                //probando
+                //subo hasta el tr
+                globalOperacionPlan='editar';
+                $('#np_plan_capacitacion_id').val($(this).parent().parent().attr('id_plan'));
+                $('#np_plan_capacitacion').val($(this).parent().parent().find('td').eq(0).html());
+                $('#np_objetivo').val($(this).parent().parent().find('td').eq(1).html());
+                $('#np_comentarios').val($(this).parent().parent().find('td').eq(2).html());
+                $('#np_viaticos').val($(this).parent().parent().find('td').eq(3).html());
+
+                return false;
+
             });
 
 
@@ -416,29 +408,27 @@
                 }
             });
 
-            //fin agregado
             //---------------------------------------------------------------------------------------------
 
             // Dialog Link
             $('#dialog_link').click(function(){
-                globalOperacion=$(this).attr("media");
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='insert';
                 $('#dialog').dialog('open');
                 $("#curso").attr("readonly", false);
                 return false;
             });
 
             //Agregado por dario para editar
-
             $(document).on("click", ".edit_link", function(){
-                globalOperacion=$(this).attr("media");
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
                 $("#curso").attr("readonly", true); //para no permitir editar el curso
-                //alert("funciona el link edit");
                 return false;
             });
-            //Fin agregado
 
 
             // new plan link
@@ -466,8 +456,61 @@
             );
 
 
+            //llamada a funcion validar
+            $.validar();
 
         });
+
+
+    //Declaracion de funcion para validar
+    $.validar=function(){
+        $('#form').validate({
+            rules: {
+                periodo: {
+                    required: true
+                },
+                empleado: {
+                    required: true
+                },
+                situacion_actual: {
+                    required: true
+                },
+                situacion_deseada: {
+                    required: true
+                },
+                objetivo_medible_1: {
+                    required: true
+                },
+                objetivo_medible_2: {
+                    required: true,
+                    number: true
+                },
+                objetivo_medible_3:{
+                    required: true
+                },
+                apr_solicito:{
+                    required: true
+                }
+
+            },
+            messages:{
+                periodo: "Seleccione el periodo",
+                empleado: "Ingrese el empleado",
+                situacion_actual: "Ingrese la situación actual",
+                situacion_deseada: "Ingrese la situacion deseada",
+                objetivo_medible_1: "Ingrese el objetivo medible 1",
+                objetivo_medible_2: "Ingrese el objetivo medible 2",
+                objetivo_medible_3: "Ingrese el objetivo medible 3",
+                apr_solicito: "Ingrese el solicitante"
+
+            }
+
+        });
+
+
+    };
+
+
     </script>
 
 </head>
@@ -483,13 +526,10 @@
 
             <div class="clear"></div>
 
-            <div class="grid_10">
-
-            </div>
 
         </header>
 
-        <div class="grid_10">
+
             <div class="box">
                 <h2>
                     <a href="#" id="toggle-list">Lista de Solicitudes de Capacitación</a>
@@ -497,55 +537,38 @@
 
 
                 <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar solicitud capacitación</a>
+                    <a href="javascript:void(0);" id="dialog_link">Agregar solicitud capacitación</a>
                     <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                         <thead>
                         <tr>
-                            <th>Curso</th>
+
+                            <th>Fecha solicitud</th>
                             <th>Periodo</th>
-                            <th>Fecha desde</th>
-                            <th>Fecha hasta</th>
-                            <th>Duracion</th>
-                            <th>Unidad</th>
-                            <th>Estado</th>
-                            <th>Importe</th>
-                            <th>Moneda</th>
-                            <th>Cant.</th>
-                            <th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th>
+                            <th>Empleado</th>
+                            <th>Solicitante</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
 
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Curso</th>
+                            <th>Fecha solicitud</th>
                             <th>Periodo</th>
-                            <th>Fecha desde</th>
-                            <th>Fecha hasta</th>
-                            <th>Duracion</th>
-                            <th>Unidad</th>
-                            <th>Estado</th>
-                            <th>Importe</th>
-                            <th>Moneda</th>
-                            <th>Cant.</th>
+                            <th>Empleado</th>
+                            <th>Solicitante</th>
                             <th>Editar</th>
                             <th>Eliminar</th>
                         </tr>
                         </tfoot>
                         <tbody>
-                        <?php foreach ($view->cp as $plan) {?>
+                        <?php foreach ($view->cs as $sol) {?>
                             <tr class="odd gradeA">
-                                <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 20)."...";  ?></td>
-                                <td><?php  echo $plan["PERIODO"] ?></td>
-                                <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
-                                <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
-                                <td><?php  echo $plan["DURACION"]; ?></td>
-                                <td><?php  echo $plan["UNIDAD"]; ?></td>
-                                <td><?php  echo $plan["ESTADO"]; ?></td>
-                                <td><?php  echo $plan["IMPORTE"]; ?></td>
-                                <td><?php  echo $plan["MONEDA"]; ?></td>
-                                <td><?php  echo $plan["CANTIDAD"]; ?></td>
-                                <td class="center"><a href="javascript: void(0);" media="edit" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>">Editar</a></td>
+                                <td><?php  echo $sol["FECHA_SOLICITUD"]; ?></td>
+                                <td><?php  echo $sol["PERIODO"]; ?></td>
+                                <td><?php  echo $sol["APELLIDO"]." ".$sol["NOMBRE"]; ?></td>
+                                <td><?php  echo $sol["APR_SOLICITO"]; ?></td>
+                                <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>">Editar</a></td>
                                 <td class="cen  ter"><a href="">Eliminar</a></td>
                             </tr>
                         <?php }  ?>
@@ -556,7 +579,7 @@
 
 
             </div>
-        </div>
+
 
     </div>
 
@@ -584,7 +607,7 @@
                                 <div class="column_content">
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
-                                        <option value="0">Ingrese el periodo</option>
+                                        <option value="">Ingrese el periodo</option>
                                         <option value="2010">2010</option>
                                         <option value="2011">2011</option>
                                         <option value="2012">2012</option>
@@ -756,6 +779,7 @@
                                                 <td>Objetivo</td>
                                                 <td>Comentarios</td>
                                                 <td>Viaticos</td>
+                                                <td>Editar</td>
                                                 <td>Eliminar</td>
                                             </tr>
                                         </thead>
@@ -772,13 +796,13 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Solicitó: </label><br/>
-                                    <input type="text" name="profesor_1" id="profesor_1"/>
+                                    <input type="text" name="apr_solicito" id="apr_solicito"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Gerencia de área: </label>
-                                    <input type="text" name="profesor_2" id="profesor_2"/>
+                                    <input type="text" name="" id=""/>
                                 </div>
                             </div>
                         </div>
@@ -787,13 +811,13 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Autorizó: </label><br/>
-                                    <input type="text" name="profesor_1" id="profesor_1"/>
+                                    <input type="text" name="apr_autorizo" id="apr_autorizo"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Gerencia de RRHH: </label>
-                                    <input type="text" name="profesor_2" id="profesor_2"/>
+                                    <input type="text" name="" id=""/>
                                 </div>
                             </div>
                         </div>
@@ -802,13 +826,13 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Aprobación: </label><br/>
-                                    <input type="text" name="profesor_1" id="profesor_1"/>
+                                    <input type="text" name="apr_aprobacion" id="apr_aprobacion"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Dirección: </label>
-                                    <input type="text" name="profesor_2" id="profesor_2"/>
+                                    <input type="text" name="" id=""/>
                                 </div>
                             </div>
                         </div>

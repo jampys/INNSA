@@ -27,7 +27,9 @@ switch($operacion){
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
 
-        $view->u->insertCapPlan();
+        $rta=$view->u->insertCapPlan();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'update':
@@ -58,7 +60,9 @@ switch($operacion){
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
 
-        $view->u->updateCapPlan();
+        $rta=$view->u->updateCapPlan();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'getTemas':
@@ -71,6 +75,12 @@ switch($operacion){
         $rta=$view->u->getCursos($_POST['term']);
         print_r(json_encode($rta));
         //echo json_encode($rta);
+        exit;
+        break;
+
+    case 'refreshGrid':
+        $view->cp=$view->u->getCapPlan();
+        include_once('view/abmCap_planGrid.php');
         exit;
         break;
 

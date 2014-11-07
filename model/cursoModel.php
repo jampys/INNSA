@@ -37,11 +37,6 @@ class Curso
 
 
 
-    function Curso($nro=0) //constructor... no hace nada
-    {
-
-    }
-
     // metodos que devuelven valores
     function getIdCurso()
     { return $this->id_curso;}
@@ -88,7 +83,7 @@ class Curso
         $obj_user=$f->returnsQuery();
         $query="update cursos set nombre='$this->nombre', descripcion='$this->descripcion', comentarios='$this->comentarios', entidad='$this->entidad', id_tema=$this->id_tema where id_curso = $this->id_curso   ";
         $obj_user->executeQuery($query);
-        //return $obj_cliente->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
 
@@ -98,7 +93,7 @@ class Curso
         $obj_curso=$f->returnsQuery();
         $query="insert into cursos(nombre, descripcion, comentarios, entidad, id_tema) values('$this->nombre', '$this->descripcion', '$this->comentarios', '$this->entidad' , $this->id_tema)";
         $obj_curso->executeQuery($query); // ejecuta la consulta para traer al cliente
-        //return $obj_user->getAffect(); // retorna todos los registros afectados
+        return $obj_curso->getAffect(); // retorna todos los registros afectados
 
     }
     function deleteCurso()	// elimina el cliente

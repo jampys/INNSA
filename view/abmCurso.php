@@ -66,12 +66,12 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#nombre").val(datas[0]);
-                    $("#descripcion").val(datas[1]);
-                    $("#comentarios").val(datas[2]);
-                    $("#entidad").val(datas[3]);
-                    $("#categoria").val(datas[4]);
-                    cargarTemas(datas[5]);
+                    $("#nombre").val(datas[0]['NOMBRE_CURSO']);
+                    $("#descripcion").val(datas[0]['DESCRIPCION_CURSO']);
+                    $("#comentarios").val(datas[0]['COMENTARIOS_CURSO']);
+                    $("#entidad").val(datas[0]['ENTIDAD_CURSO']);
+                    $("#categoria").val(datas[0]['ID_CATEGORIA']);
+                    cargarTemas(datas[0]['ID_TEMA']);
                     //$("#tema option[value='datas[5]']").attr("selected", true);
 
                 },
@@ -110,6 +110,8 @@
                 processData:true,
                 success:function(datas){
 
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("Registro actualizado en la BD");
 
                 },
                 type:"POST",
@@ -129,15 +131,7 @@
             $('#navigationTop').superfish();
 
 
-            // dataTable
-            var uTable = $('#example').dataTable( {
-                "sScrollY": 200,
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-            } );
-            $(window).bind('resize', function () {
-                uTable.fnAdjustColumnSizing();
-            } );
+            //Aca estaba el dataTable
 
 
 
@@ -175,8 +169,8 @@
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#dialog").dialog("close");
-                            //Agregado por dario para recargar grilla al modificar o insertar
-                            self.parent.location.reload();
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"curso", operacion: "refreshGrid"});
                         }
 
                     },
@@ -199,26 +193,14 @@
                     $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
 
-                //Agregado dario
-                /*
-                ,open: function(){
-                    alert(globalOperacion);
-                    alert(globalId);
-                }*/
-                //fin agregado dario
-
             });
 
-            // Dialog Link
-            $('#dialog_link').click(function(){
-                globalOperacion=$(this).attr("media");
-                $('#dialog').dialog('open');
-                return false;
-            });
+
 
             //Agregado por dario para editar
             $(document).on("click", ".edit_link", function(){
-                globalOperacion=$(this).attr("media");
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
@@ -287,67 +269,8 @@
 
 <div id="principal">
 
-    <div class="container_16">
-
-        <header>
-
-            <div class="clear"></div>
-
-            <div class="grid_16">
-
-            </div>
-
-        </header>
-
-        <div class="grid_16">
-            <div class="box">
-                <h2>
-                    <a href="#" id="toggle-list">Lista de Cursos</a>
-                </h2>
-
-
-                <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar Curso</a>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-                        <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Entidad</th>
-                            <th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th>
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripcion</th>
-                            <th>Entidad</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <?php foreach ($view->cursos as $curso) {?>
-                            <tr class="odd gradeA">
-                                <td><?php  echo Conexion::corta_palabra($curso["NOMBRE"], 35);  ?></td>
-                                <td><?php  echo Conexion::corta_palabra($curso["DESCRIPCION"], 35); ?></td>
-                                <td><?php  echo $curso["ENTIDAD"]; ?></td>
-                                <td class="center"><a href="javascript: void(0);" media="edit" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>">Editar</a></td>
-                                <td class="center"><a href="">Eliminar</a></td>
-                            </tr>
-                        <?php }  ?>
-
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-        </div>
-
-    </div>
+<!-- Aca se llama a la grilla ubicada en abmCursoGrid.php -->
+    <?php require_once('abmCursoGrid.php')?>
 
 </div>
 

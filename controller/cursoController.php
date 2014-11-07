@@ -13,21 +13,14 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
-        $view->u->insertCurso();
+        $rta=$view->u->insertCurso();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'update':
-
-        $contenido=$view->u->getCursoById($_POST['id']);
-
-        //$respuesta[0]=$contenido[0]['NOMBRE'];
-        $respuesta[0]=$contenido[0]['NOMBRE_CURSO'];
-        $respuesta[1]=$contenido[0]['DESCRIPCION_CURSO'];
-        $respuesta[2]=$contenido[0]['COMENTARIOS_CURSO'];
-        $respuesta[3]=$contenido[0]['ENTIDAD_CURSO'];
-        $respuesta[4]=$contenido[0]['ID_CATEGORIA'];
-        $respuesta[5]=$contenido[0]['ID_TEMA'];
-        print_r(json_encode($respuesta));
+        $rta=$contenido=$view->u->getCursoById($_POST['id']);
+        print_r(json_encode($rta));
         exit;
         break;
 
@@ -38,7 +31,9 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
-        $view->u->updateCurso();
+        $rta=$view->u->updateCurso();
+        print_r(json_encode($rta));
+        exit;
         break;
 
     case 'getTemas':
@@ -47,9 +42,9 @@ switch($operacion){
         exit;
         break;
 
-    case 'refreshGrilla': //Por ehora no lo voy a usar
-        $rta=$view->u->getCursos();
-        print_r(json_encode($rta));
+    case 'refreshGrid':
+        $view->cursos=$view->u->getCursos();
+        include_once('view/abmCursoGrid.php');
         exit;
         break;
 

@@ -57,78 +57,6 @@
 
 
         function guardar(){
-            /*
-            if($("#curso").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un curso");
-                return false;
-            }
-
-            if($("#periodo").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar un periodo");
-                return false;
-            }
-
-            if($("#modalidad").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar una modalidad");
-                return false;
-            }
-
-            if($("#fecha_desde").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la fecha de inicio");
-                return false;
-            }
-
-            if($("#fecha_hasta").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la fecha de finalización");
-                return false;
-            }
-
-            if($("#duracion").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la duración");
-                return false;
-            }
-
-            if($("#unidad").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la unidad de duración");
-                return false;
-            }
-
-            if($("#prioridad").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la prioridad");
-                return false;
-            }
-
-            if($("#estado").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el estado");
-                return false;
-            }
-
-            if($("#importe").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el importe");
-                return false;
-            }
-
-            if($("#moneda").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la moneda");
-                return false;
-            }
-
-            if($("#tipo_cambio").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el tipo de cambio");
-                return false;
-            } */
 
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
@@ -181,7 +109,7 @@
                 url:url,
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
-                //dataType:"json",//xml,html,script,json
+                dataType:"json",//xml,html,script,json
                 error:function(){
 
                     $("#dialog-msn").dialog("open");
@@ -192,9 +120,8 @@
                 processData:true,
                 success:function(datas){
 
-                    //$("#dialog").dialog("close");
-                    //Agregado por dario para recargar grilla al modificar o insertar
-                    //self.parent.location.reload();
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("Registro actualizado en la BD");
 
                 },
                 type:"POST",
@@ -214,16 +141,7 @@
             $('#navigationTop').superfish();
 
 
-            // dataTable
-            var uTable = $('#example').dataTable( {
-                "sScrollY": 200,
-                //"scrollX": true,
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-            } );
-            $(window).bind('resize', function () {
-                uTable.fnAdjustColumnSizing();
-            } );
+            //Aca estaba llamada a dataTable
 
 
 
@@ -261,8 +179,8 @@
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#dialog").dialog("close");
-                            //Agregado por dario para recargar grilla al modificar o insertar
-                            self.parent.location.reload();
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid"});
                         }
 
                     },
@@ -287,18 +205,13 @@
 
             });
 
-            // Dialog Link
-            $('#dialog_link').click(function(){
-                globalOperacion=$(this).attr("media");
-                $('#dialog').dialog('open');
-                $("#curso").attr("readonly", false);
-                return false;
-            });
+            //Aca estaba la llamada al dialog link
 
             //Agregado por dario para editar
 
             $(document).on("click", ".edit_link", function(){
-                globalOperacion=$(this).attr("media");
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
@@ -322,6 +235,8 @@
                 ,dateFormat:"dd/mm/yy"
             });
             */
+
+
             //Date picker modificados con validacion de fecha desde y hasta
             $("#fecha_desde").datepicker({
                 dateFormat:"dd/mm/yy",
@@ -329,7 +244,6 @@
                     $("#fecha_hasta").datepicker("change", { minDate: $('#fecha_desde').val()}
                     );
                 }
-
             });
             $("#fecha_hasta").datepicker({
                 dateFormat:"dd/mm/yy",
@@ -337,7 +251,6 @@
                     $("#fecha_desde").datepicker("change", { maxDate: $('#fecha_hasta').val()}
                     );
                 }
-
             });
 
 
@@ -372,7 +285,6 @@
                     $('#curso').val(ui.item.label);
                 }
             });
-            //fin agregado
 
             //llamada a funcion validar
             $.validar();
@@ -454,88 +366,8 @@
 
 <div id="principal">
 
-    <div class="container_10">
-
-        <header>
-
-            <div class="clear"></div>
-
-            <div class="grid_10">
-
-            </div>
-
-        </header>
-
-        <div class="grid_10">
-            <div class="box">
-                <h2>
-                    <a href="#" id="toggle-list">Lista de Planes de Capacitación</a>
-                </h2>
-
-
-                <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar plan capacitación</a>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-                        <thead>
-                        <tr>
-                            <th>Curso</th>
-                            <th>Periodo</th>
-                            <th>Fecha desde</th>
-                            <th>Fecha hasta</th>
-                            <th>Duracion</th>
-                            <th>Unidad</th>
-                            <th>Estado</th>
-                            <th>Importe</th>
-                            <th>Moneda</th>
-                            <th>Cant.</th>
-                            <th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th>
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Curso</th>
-                            <th>Periodo</th>
-                            <th>Fecha desde</th>
-                            <th>Fecha hasta</th>
-                            <th>Duracion</th>
-                            <th>Unidad</th>
-                            <th>Estado</th>
-                            <th>Importe</th>
-                            <th>Moneda</th>
-                            <th>Cant.</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <?php foreach ($view->cp as $plan) {?>
-                            <tr class="odd gradeA">
-                                <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 20)."...";  ?></td>
-                                <td><?php  echo $plan["PERIODO"] ?></td>
-                                <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
-                                <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
-                                <td><?php  echo $plan["DURACION"]; ?></td>
-                                <td><?php  echo $plan["UNIDAD"]; ?></td>
-                                <td><?php  echo $plan["ESTADO"]; ?></td>
-                                <td><?php  echo $plan["IMPORTE"]; ?></td>
-                                <td><?php  echo $plan["MONEDA"]; ?></td>
-                                <td><?php  echo $plan["CANTIDAD"]; ?></td>
-                                <td class="center"><a href="javascript: void(0);" media="edit" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>">Editar</a></td>
-                                <td class="cen  ter"><a href="">Eliminar</a></td>
-                            </tr>
-                        <?php }  ?>
-
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-        </div>
-
-    </div>
+<!-- Se llama a la grilla en abmCap_planGrid.php -->
+    <?php  require_once('abmCap_planGrid.php');?>
 
 </div>
 
@@ -722,7 +554,7 @@
                                     <label>Forma financiación: </label>
                                     <select name="forma_financiacion" id="forma_financiacion">
                                         <option value="">Ingrese la financiación</option>
-                                        <option value="1">1 pago</option>
+                                        <option value="1" selected>1 pago</option>
                                         <option value="3">3 pagos</option>
                                         <option value="6">6 pagos</option>
                                         <option value="9">9 pagos</option>

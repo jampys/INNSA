@@ -32,28 +32,6 @@ class User
 
 
 
-    function User($nro=0) // declara el constructor, si trae el numero de cliente lo busca , si no, trae todos los clientes
-    {
-        if ($nro!=0)
-        {
-            $f=new Factory();
-            $obj_user=$f->returnsQuery();
-            $result=$obj_user->executeQuery("select * from usuarios where id = $nro"); // ejecuta la consulta para traer al cliente
-            $row=mysql_fetch_array($result);
-            $this->id=$row['id'];
-            $this->nombre=$row['nombre'];
-            $this->apellido=$row['apellido'];
-            $this->fecha=$row['fecha_nac'];
-            $this->peso=$row['peso'];
-
-            /*//DARIO: OJO para una buena separacion en capas no deberia estar el llamado al metodo de mysql fetch array, sino utilizar
-            directamente un metodo de la clase sQuery, dado que cuando cambie a una conexion ORACLE esta parte va a fallar
-             *
-             *
-             *  */
-        }
-    }
-
     // metodos que devuelven valores
     function getIdUsuario()
     { return $this->id_usuario;}
@@ -107,7 +85,7 @@ class User
         $obj_user=$f->returnsQuery();
         $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario   ";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
-        //return $obj_cliente->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
 
@@ -118,7 +96,7 @@ class User
         $query="insert into usuarios(login, password, id_perfil, id_empleado, habilitado)".
             "values('$this->login', '$this->password', $this->id_perfil , $this->id_empleado, $this->habilitado)";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
-        //return $obj_user->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
     function delete()	// elimina el cliente

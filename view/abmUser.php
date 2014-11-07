@@ -18,8 +18,8 @@
                 dataType:"json",//xml,html,script,json
                 error:function(){
 
-                $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
 
                 },
                 ifModified:false,
@@ -76,7 +76,7 @@
                 url:url,
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
-                //dataType:"json",//xml,html,script,json
+                dataType:"json",//xml,html,script,json
                 error:function(){
 
                     $("#dialog-msn").dialog("open");
@@ -87,9 +87,9 @@
                 processData:true,
                 success:function(datas){
 
-                    //$("#dialog").dialog("close");
-                    //Agregado por dario para recargar grilla al modificar o insertar
-                    //self.parent.location.reload();
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("Registro actualizado en la BD");
+
                 },
                 type:"POST",
                 timeout:3000000,
@@ -108,16 +108,7 @@
             $('#navigationTop').superfish();
 
 
-            // dataTable
-            var uTable = $('#example').dataTable( {
-                "sScrollY": 200,
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-            } );
-            $(window).bind('resize', function () {
-                uTable.fnAdjustColumnSizing();
-            } );
-
+            //Aqui se cargaban el dataTable
 
 
             // Dialog mensaje
@@ -143,19 +134,19 @@
             });
 
 
-            // Dialog
+            // Dialog para insert y edit
             $('#dialog').dialog({
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title: "Registro de usuarios",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#dialog").dialog("close");
-                            //Agregado por dario para recargar grilla al modificar o insertar
-                            self.parent.location.reload();
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"user", operacion: "refreshGrid"});
                         }
 
                     },
@@ -178,33 +169,19 @@
                     $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
 
-                //Agregado dario
-                /*
-                ,open: function(){
-                    alert(globalOperacion);
-                    alert(globalId);
-                }*/
-                //fin agregado dario
-
             });
 
-            // Dialog Link
-            $('#dialog_link').click(function(){
-                globalOperacion=$(this).attr("media");
-                $('#dialog').dialog('open');
-                return false;
-            });
+            //ACA ESTABA EL DIALOG LINK. SE COLOCO EN abmUserGrid.php
 
-            //Agregado por dario para editar
-
+            //Al hacer click en editar
             $(document).on("click", ".edit_link", function(){
-                globalOperacion=$(this).attr("media");
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
                 return false;
             });
-            //Fin agregado
 
             // Datepicker
             $('#fecha').datepicker({
@@ -241,9 +218,10 @@
                         }
                     });
                 },
+                delay: 0,
                 minLength: 2,
-                select: function(event, ui) {
-                    $('#empleado_id').val(ui.item.id);
+                change: function(event, ui) {
+                    $('#empleado_id').val(ui.item? ui.item.id : '');
                     $('#empleado').val(ui.item.label);
                 }
             });
@@ -259,6 +237,7 @@
     //Declaracion de funcion para validar
     $.validar=function(){
         $('#form').validate({
+            ignore:"",
             rules: {
                 login: {
                     required: true,
@@ -278,6 +257,9 @@
                 },
                 empleado:{
                     required: true
+                },
+                empleado_id:{
+                    required: function(item){return $('#empleado').val().length>0;}
                 }
             },
             messages:{
@@ -285,7 +267,8 @@
                 password: "Ingrese un password",
                 perfil: "Seleccione un perfil",
                 estado: "Seleccione un estado",
-                empleado: "Seleccione un empleado"
+                empleado: "Seleccione un empleado",
+                empleado_id: "Seleccione un empleado sugerido"
             }
 
         });
@@ -302,77 +285,8 @@
 
 <div id="principal">
 
-    <div class="container_16">
-
-        <header>
-
-            <div class="clear"></div>
-
-            <div class="grid_16">
-
-            </div>
-
-        </header>
-
-        <div class="grid_16">
-            <div class="box">
-                <h2>
-                    <a href="#" id="toggle-list">Lista de Usuarios</a>
-                </h2>
-
-
-                <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar Usuario</a>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-                        <thead>
-                        <tr>
-                            <th>Login</th>
-                            <th>Password</th>
-                            <th>Fecha alta</th>
-                            <th>Perfil</th>
-                            <th>Empleado</th>
-                            <th>Estado</th>
-                            <!--<th width="12%">Editar</th>
-                            <th width="12%">Eliminar</th> -->
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Login</th>
-                            <th>Password</th>
-                            <th>Fecha alta</th>
-                            <th>Perfil</th>
-                            <th>Empleado</th>
-                            <th>Estado</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <?php foreach ($view->usuarios as $user) {?>
-                            <tr class="odd gradeA">
-                                <td><?php  echo $user["LOGIN"];  ?></td>
-                                <td><?php  echo $user["PASSWORD"]; ?></td>
-                                <td><?php  echo $user["FECHA_ALTA"]; ?></td>
-                                <td><?php  echo $user["PERFIL"]; ?></td>
-                                <td><?php  echo $user["APELLIDO"]." ".$user["NOMBRE"]; ?></td>
-                                <td><?php  echo ($user["HABILITADO"]==1) ? 'HABILITADO' : 'DESHABILITADO'; ?></td>
-                                <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>">Editar</a></td>
-                                <td class="center"><a href="">Eliminar</a></td>
-                            </tr>
-                        <?php }  ?>
-
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-        </div>
-
-    </div>
+<!-- Llamada al archivo abmUserGrid.php -->
+    <?php require_once('abmUserGrid.php');?>
 
 </div>
 

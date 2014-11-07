@@ -50,42 +50,6 @@
 
 
         function guardar(){
-            /*
-            if($("#apellido").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el apellido ");
-                return false;
-            }
-
-            if($("#nombre").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el nombre");
-                return false;
-            }
-
-            if($("#cuil").val()==""){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el CUIL");
-                return false;
-            }
-
-            if($("#lugar_trabajo").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar el lugar de trabajo");
-                return false;
-            }
-
-            if($("#empresa").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la empresa");
-                return false;
-            }
-
-            if($("#division").val()==0){
-                $("#dialog-msn").dialog("open");
-                $("#message").html("Ingresar la división");
-                return false;
-            } */
 
             if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
                 var url="index.php";
@@ -140,9 +104,8 @@
                 processData:true,
                 success:function(datas){
 
-                    //$("#dialog").dialog("close");
-                    //Agregado por dario para recargar grilla al modificar o insertar
-                    //self.parent.location.reload();
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("Registro actualizado en la BD");
 
                 },
                 type:"POST",
@@ -162,17 +125,7 @@
             $('#navigationTop').superfish();
 
 
-            // dataTable
-            var uTable = $('#example').dataTable( {
-                "sScrollY": 200,
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-            } );
-            $(window).bind('resize', function () {
-                uTable.fnAdjustColumnSizing();
-            } );
-
-
+            //Aca estaba el dataTable
 
             // Dialog mensaje
             $('#dialog-msn').dialog({
@@ -208,8 +161,8 @@
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#dialog").dialog("close");
-                            //Agregado por dario para recargar grilla al modificar o insertar
-                            self.parent.location.reload();
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"empleado", operacion: "refreshGrid"});
                         }
 
                     },
@@ -234,24 +187,19 @@
 
             });
 
-            // Dialog Link
-            $('#dialog_link').click(function(){
-                globalOperacion=$(this).attr("media");
-                $('#dialog').dialog('open');
-                return false;
-            });
+            //Aca estaba el llamado al dialog link
 
-            //Agregado por dario para editar
-
+            //Agregado para editar
             $(document).on("click", ".edit_link", function(){
-                globalOperacion=$(this).attr("media");
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
 
                 return false;
             });
-            //Fin agregado
+
 
             // Datepicker
             $('#fecha').datepicker({
@@ -329,79 +277,8 @@
 
 <div id="principal">
 
-    <div class="container_10">
-
-        <header>
-
-            <div class="clear"></div>
-
-            <div class="grid_10">
-
-            </div>
-
-        </header>
-
-        <div class="grid_10">
-            <div class="box">
-                <h2>
-                    <a href="#" id="toggle-list">Lista de Empleados</a>
-                </h2>
-
-
-                <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link" media="insert">Agregar Empleado</a>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-                        <thead>
-                        <tr>
-                            <th>Apellido</th>
-                            <th>Nombre</th>
-                            <th>Lugar</th>
-                            <th>Legajo</th>
-                            <th>Empresa</th>
-                            <th>Función</th>
-                            <th>Categoria</th>
-                            <th>División</th>
-                            <!--<th width="12%">Editar</th> -->
-                            <th>Editar</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Apellido</th>
-                            <th>Nombre</th>
-                            <th>Lugar</th>
-                            <th>Legajo</th>
-                            <th>Empresa</th>
-                            <th>Función</th>
-                            <th>Categoria</th>
-                            <th>División</th>
-                            <th>Editar</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <?php foreach ($view->empleados as $emp) {?>
-                            <tr class="odd gradeA">
-                                <td><?php  echo $emp["APELLIDO"]; ?></td>
-                                <td><?php  echo $emp["NOMBRE"];  ?></td>
-                                <td><?php  echo $emp["LUGAR_TRABAJO"]; ?></td>
-                                <td><?php  echo $emp["N_LEGAJO"]; ?></td>
-                                <td><?php  echo $emp["EMPRESA"]; ?></td>
-                                <td><?php  echo $emp["FUNCION"]; ?></td>
-                                <td><?php  echo $emp["CATEGORIA"]; ?></td>
-                                <td><?php  echo $emp["DIVISION"]; ?></td>
-                                <td class="center"><a href="" media="edit" class="edit_link" id="<?php  echo $emp["ID_EMPLEADO"];  ?>">Editar</a></td>
-                            </tr>
-                        <?php }  ?>
-
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-        </div>
-
-    </div>
+<!-- Aca se llama a la grilla en el archivo abmEmpleadoGrid.php -->
+    <?php require_once('abmEmpleadoGrid.php') ?>
 
 </div>
 

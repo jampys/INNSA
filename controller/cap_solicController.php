@@ -77,13 +77,13 @@ switch($operacion){
     case 'insert_planes':
         $vector=json_decode($_POST["datos"]);
         foreach ($vector as $v){
-            $u=new Cap_Solic();
+            $u=new Asignacion_plan();
             $u->setIdPlan($v->id_plan);
             $u->setObjetivo($v->objetivo);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
 
-            $u->insertPlanes();
+            $u->insertAsignacionPlan();
         }
         $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
         print_r(json_encode($rta));
@@ -91,7 +91,7 @@ switch($operacion){
         break;
 
     default:
-        $view->cp=$view->u->getCapPlan();
+        $view->cs=$view->u->getCapSolic();
         break;
 
 }
