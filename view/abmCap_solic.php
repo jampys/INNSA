@@ -9,16 +9,12 @@
     var globalOperacion="";
     var globalId;
 
-    var globalOperacionPlan="";
-    var globalIdPlan="";
-
 
         function editar(id_plan){
-                //alert(id_plan);
 
             $.ajax({
                 url:"index.php",
-                data:{"accion":"cap_plan","operacion":"update","id":id_plan},
+                data:{"accion":"cap_solic","operacion":"update","id":id_plan},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(){
@@ -30,25 +26,44 @@
                 ifModified:false,
                 processData:true,
                 success:function(datas){
-                    $("#curso").val(datas[0]['NOMBRE']);
-                    $("#periodo").val(datas[0]['PERIODO']);
-                    $("#objetivo").val(datas[0]['OBJETIVO']);
-                    $("#modalidad").val(datas[0]['MODALIDAD']);
-                    $("#fecha_desde").val(datas[0]['FECHA_DESDE']);
-                    $("#fecha_hasta").val(datas[0]['FECHA_HASTA']);
-                    $("#duracion").val(datas[0]['DURACION']);
-                    $("#unidad").val(datas[0]['UNIDAD']);
-                    $("#prioridad").val(datas[0]['PRIORIDAD']);
-                    $("#estado").val(datas[0]['ESTADO']);
-                    $("#importe").val(datas[0]['IMPORTE']);
-                    $("#moneda").val(datas[0]['MONEDA']);
-                    $("#tipo_cambio").val(datas[0]['TIPO_CAMBIO']);
-                    $("#forma_pago").val(datas[0]['FORMA_PAGO']);
-                    $("#forma_financiacion").val(datas[0]['FORMA_FINANCIACION']);
-                    $("#profesor_1").val(datas[0]['PROFESOR_1']);
-                    $("#profesor_2").val(datas[0]['PROFESOR_2']);
-                    $("#comentarios").val(datas[0]['COMENTARIOS_PLAN']);
-                    //cargarTemas(datas[5]);
+                    $("#periodo").val(datas['solicitud'][0]['PERIODO']);
+                    $("#empleado").val(datas['solicitud'][0]['APELLIDO']+" "+datas['solicitud'][0]['NOMBRE']);
+                    $("#empleado_id").val(datas['solicitud'][0]['ID_EMPLEADO']);
+                    $("#situacion_actual").val(datas['solicitud'][0]['SITUACION_ACTUAL']);
+                    $("#situacion_deseada").val(datas['solicitud'][0]['SITUACION_DESEADA']);
+                    $("#objetivo_medible_1").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_1']);
+                    $("#objetivo_medible_2").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_2']);
+                    $("#objetivo_medible_3").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_3']);
+
+                    $("#dp_ingreso").attr('checked', (datas['solicitud'][0]['DP_INGRESO']==1)? true:false);
+                    $("#dp_crecimiento").attr('checked', (datas['solicitud'][0]['DP_CRECIMIENTO']==1)? true:false);
+                    $("#dp_promocion").attr('checked', (datas['solicitud'][0]['DP_PROMOCION']==1)? true:false);
+                    $("#dp_futura_transfer").attr('checked', (datas['solicitud'][0]['DP_FUTURA_TRANSFER']==1)? true:false);
+                    $("#dp_sustitucion_temp").attr('checked', (datas['solicitud'][0]['DP_SUSTITUCION_TEMP']==1)? true:false);
+
+                    $("#di_nuevas_tecnicas").attr('checked', (datas['solicitud'][0]['DI_NUEVAS_TECNICAS']==1)? true:false);
+                    $("#di_crecimiento").attr('checked', (datas['solicitud'][0]['DI_CRECIMIENTO']==1)? true:false);
+                    $("#di_competencias_emp").attr('checked', (datas['solicitud'][0]['DI_COMPETENCIAS_EMP']==1)? true:false);
+
+                    $("#rp_falta_comp").attr('checked', (datas['solicitud'][0]['RP_FALTA_COMP']==1)? true:false);
+                    $("#rp_no_conformidad").attr('checked', (datas['solicitud'][0]['RP_NO_CONFORMIDAD']==1)? true:false);
+                    $("#rp_req_externo").attr('checked', (datas['solicitud'][0]['RP_REQ_EXTERNO']==1)? true:false);
+                    $("#apr_solicito").val(datas['solicitud'][0]['APR_SOLICITO']);
+
+                    //Se construye la tabla de asignaciones de planes
+                    $.each(datas['planes'], function(indice, val){
+
+                        $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+'>' +
+                        '<td>'+datas['planes'][indice]['NOMBRE']+" "+datas['planes'][indice]['FECHA_DESDE']+'</td>' +
+                        '<td>'+datas['planes'][indice]['OBJETIVO']+'</td>' +
+                        '<td>'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
+                        '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
+                        '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '</tr>');
+
+
+                    });
 
 
                 },
@@ -63,57 +78,8 @@
 
         function guardar(){
 
-            /*
-            if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
-                var url="index.php";
-                var data={  "accion":"cap_plan",
-                            "operacion":"insert",
-                            "curso":$("#curso_id").val(),
-                            "periodo":$("#periodo").val(),
-                            "objetivo":$("#objetivo").val()
 
-                        };
-            }
-            else{ //se va a guardar un curso editado
-                var data={  "accion":"cap_plan",
-                            "operacion":"save",
-                            "id":globalId,
-                            //"curso":$("#curso").val(),
-                            "periodo":$("#periodo").val(),
-                            "objetivo":$("#objetivo").val()
-
-                        };
-            }
-
-            $.ajax({
-                url:url,
-                data:data,
-                contentType:"application/x-www-form-urlencoded",
-                //dataType:"json",//xml,html,script,json
-                error:function(){
-
-                    $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
-
-                },
-                ifModified:false,
-                processData:true,
-                success:function(datas){
-
-                    $("#dialog").dialog("close");
-                    //Agregado por dario para recargar grilla al modificar o insertar
-                    self.parent.location.reload();
-
-                },
-                type:"POST",
-                timeout:3000000,
-                crossdomain:true
-
-            });     */
-
-            //****************************************************************************
-            //Codigo para insertar tabla dinamica
-
+            //Codigo para recoger todas las filas de la tabla dinamica de planes
             jsonObj = [];
             $('#table_plan tbody tr').each(function () {
                 item = {};
@@ -126,9 +92,48 @@
 
             });
 
+
+            if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
+                var data={  "accion":"cap_solic",
+                            "operacion":"insert",
+                            "datos":JSON.stringify(jsonObj),
+                            "periodo": $("#periodo").val(),
+                            "empleado": $("#empleado_id").val(),
+                            "situacion_actual": $("#situacion_actual").val(),
+                            "situacion_deseada": $("#situacion_deseada").val(),
+                            "objetivo_medible_1": $("#objetivo_medible_1").val(),
+                            "objetivo_medible_2": $("#objetivo_medible_2").val(),
+                            "objetivo_medible_3": $("#objetivo_medible_3").val(),
+
+                            "dp_ingreso": $('#dp_ingreso').prop('checked')? 1:0,
+                            "dp_crecimiento": $('#dp_crecimiento').prop('checked')? 1:0,
+                            "dp_promocion": $('#dp_promocion').prop('checked')? 1:0,
+                            "dp_futura_transfer": $('#dp_futura_transfer').prop('checked')? 1:0,
+                            "dp_sustitucion_temp": $('#dp_sustitucion_temp').prop('checked')? 1:0,
+                            "di_nuevas_tecnicas": $('#di_nuevas_tecnicas').prop('checked')? 1:0,
+                            "di_crecimiento": $('#di_crecimiento').prop('checked')? 1:0,
+                            "di_competencias_emp": $('#di_competencias_emp').prop('checked')? 1:0,
+                            "rp_falta_comp": $('#rp_falta_comp').prop('checked')? 1:0,
+                            "rp_no_conformidad": $('#rp_no_conformidad').prop('checked')? 1:0,
+                            "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
+
+                            "apr_solicito": $("#apr_solicito").val()
+
+
+                        };
+            }
+            else{ //se va a guardar un curso editado
+                var data={  "accion":"cap_solic",
+                            "operacion":"save",
+                            "id":globalId
+
+
+                        };
+                }
+
             $.ajax({
                 url:"index.php",
-                data:{"accion":"cap_solic","operacion":"insert_planes","datos":JSON.stringify(jsonObj)},
+                data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(){
@@ -147,7 +152,7 @@
 
                     $("#dialog").dialog("close");
                     //Agregado por dario para recargar grilla al modificar o insertar
-                    self.parent.location.reload();
+                    //self.parent.location.reload();
 
                 },
                 type:"POST",
@@ -157,15 +162,6 @@
             });
 
 
-
-
-
-
-
-
-
-            //fin codigo insertar tabla dinamica
-            //-----------------------------------------------------------------------------
 
         }
 
@@ -249,6 +245,8 @@
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
+                        //limpiar la tabla de asignaciones de planes
+                        $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                         $(this).dialog("close");
                     }
                 },
@@ -263,6 +261,8 @@
                close:function(){
                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                    $('#form').validate().resetForm(); //para limpiar los errores validate
+                   //limpiar la tabla de asignaciones de planes
+                   $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                 }
 
 
@@ -277,20 +277,24 @@
                 modal:true,
                 title:"Agregar Registro",
                 buttons: {
-                    "Agregar": function() {
-
-                        if(globalOperacionPlan=='editar'){
-
-                            //$('#np_plan_capacitacion_id').val($(this).parent().parent().attr('id_plan'));
-                            //$(this).parent().parent().find('td').eq(0).html(('#np_plan_capacitacion').val());
-                            $(this).child().child().find('td').eq(1).html(('#np_objetivo').val());
-                            //$('#np_comentarios').val($(this).parent().parent().find('td').eq(2).html());
-                            //$('#np_viaticos').val($(this).parent().parent().find('td').eq(3).html());
+                    "Guardar": function() {
+                        // si se trata de un update
+                        if($('#asignar_plan').data('operacion')=='editar'){
+                            var row_index=$('#asignar_plan').data('row_index');
+                            //console.log($('#asignar_plan').data('operacion'));
+                            //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
+                            $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
+                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
+                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
+                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
+                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(3).html($('#np_viaticos').val());
+                            $("#form_plan")[0].reset();
+                            $(this).dialog("close");
 
                         }
-                        else{
+                        else{  //si se trata de un insert
 
-                            //se agrega la funcionalidad
+                            //Se agrega fila a la tabla de planes
                             //$('#table_plan tr:last').after('<tr>' +
                             $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                             '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
@@ -307,7 +311,7 @@
 
                     },
                     "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar el formulario
+                        $("#form_plan")[0].reset(); //para limpiar el formulario
                         $(this).dialog("close");
                     }
                 },
@@ -327,26 +331,32 @@
 
             //Al presionar la x para agregar planes a la solicitud
             $(document).on("click",".eliminar_plan",function(){
-                var parent = $(this).parents().parents().get(0);
-                //alert($(this).attr("id"));
-                $(parent).remove();
+                $(this).closest('tr').remove();
             });
 
             //Al presionar el lapiz para editar los planes de la solicitud
             $(document).on("click",".editar_plan",function(){
-                $('#asignar_plan').dialog('open');
 
-                //probando
-                //subo hasta el tr
-                globalOperacionPlan='editar';
-                $('#np_plan_capacitacion_id').val($(this).parent().parent().attr('id_plan'));
-                $('#np_plan_capacitacion').val($(this).parent().parent().find('td').eq(0).html());
-                $('#np_objetivo').val($(this).parent().parent().find('td').eq(1).html());
-                $('#np_comentarios').val($(this).parent().parent().find('td').eq(2).html());
-                $('#np_viaticos').val($(this).parent().parent().find('td').eq(3).html());
+                $('#np_plan_capacitacion_id').val($(this).closest('tr').attr('id_plan'));
+                $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
+                $('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
+                $('#np_comentarios').val($(this).closest('tr').find('td').eq(2).html());
+                $('#np_viaticos').val($(this).closest('tr').find('td').eq(3).html());
+                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
+                //con el metodo .data() en formato json.
+                var row_index=$(this).closest('tr').index();
+                $('#asignar_plan').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
 
                 return false;
 
+            });
+
+
+            // new plan link
+            $('#new-plan-link').click(function(){
+                //$('#asignar_plan').dialog('open');
+                $('#asignar_plan').data('operacion', 'insert').dialog('open');
+                return false;
             });
 
 
@@ -431,11 +441,6 @@
             });
 
 
-            // new plan link
-            $('#new-plan-link').click(function(){
-                $('#asignar_plan').dialog('open');
-                return false;
-            });
 
             // Datepicker fecha_desde
             $('#fecha_desde').datepicker({
@@ -482,8 +487,7 @@
                     required: true
                 },
                 objetivo_medible_2: {
-                    required: true,
-                    number: true
+                    required: true
                 },
                 objetivo_medible_3:{
                     required: true
@@ -634,27 +638,27 @@
                                 <div class="cbtitulo">Desarrollo personal:</div>
 
                                     <div class="cbcheck">
-                                        <div class="check"><input type="checkbox" /></div>
+                                        <div class="check"><input type="checkbox" id="dp_ingreso" name="dp_ingreso" /></div>
                                         <div class="lab">Ingreso</div>
                                     </div>
 
                                     <div class="cbcheck">
-                                        <div class="check"><input type="checkbox" /></div>
+                                        <div class="check"><input type="checkbox" id="dp_crecimiento" name="dp_crecimiento" /></div>
                                         <div class="lab">Crecimiento</div>
                                     </div>
 
                                     <div class="cbcheck">
-                                        <div class="check"><input type="checkbox" /></div>
+                                        <div class="check"><input type="checkbox" id="dp_promocion" name="dp_promocion" /></div>
                                         <div class="lab">Promoción</div>
                                     </div>
 
                                     <div class="cbcheck">
-                                        <div class="check"><input type="checkbox" /></div>
+                                        <div class="check"><input type="checkbox" id="dp_futura_transfer" name="dp_futura_transfer" /></div>
                                         <div class="lab">Futura transfer.</div>
                                     </div>
 
                                     <div class="cbcheck">
-                                        <div class="check"><input type="checkbox" /></div>
+                                        <div class="check"><input type="checkbox" id="dp_sustitucion_temp" name="dp_sustitucion_temp" /></div>
                                         <div class="lab">Sustitución temporal</div>
                                     </div>
                             </div>
@@ -664,17 +668,17 @@
                                 <div class="cbtitulo">Desarrollo institucional:</div>
 
                                 <div class="cbcheck">
-                                    <div class="check"><input type="checkbox" /></div>
+                                    <div class="check"><input type="checkbox" id="di_nuevas_tecnicas" name="di_nuevas_tecnicas" /></div>
                                     <div class="lab">Nuevas tecnicas/procesos</div>
                                 </div>
 
                                 <div class="cbcheck">
-                                    <div class="check"><input type="checkbox" /></div>
+                                    <div class="check"><input type="checkbox" id="di_crecimiento" name="di_crecimiento" /></div>
                                     <div class="lab">Crecimiento/diversificación</div>
                                 </div>
 
                                 <div class="cbcheck">
-                                    <div class="check"><input type="checkbox" /></div>
+                                    <div class="check"><input type="checkbox" id="di_competencias_emp" name="di_competencias_emp" /></div>
                                     <div class="lab">Des. cometencias empresa</div>
                                 </div>
                             </div>
@@ -684,17 +688,17 @@
                                 <div class="cbtitulo">Respuesta a problema:</div>
 
                                 <div class="cbcheck">
-                                    <div class="check"><input type="checkbox" /></div>
+                                    <div class="check"><input type="checkbox" id="rp_falta_comp" name="rp_falta_comp" /></div>
                                     <div class="lab">Falta de competencias</div>
                                 </div>
 
                                 <div class="cbcheck">
-                                    <div class="check"><input type="checkbox" /></div>
+                                    <div class="check"><input type="checkbox" id="rp_no_conformidad" name="rp_no_conformidad" /></div>
                                     <div class="lab">No conformidad</div>
                                 </div>
 
                                 <div class="cbcheck">
-                                    <div class="check"><input type="checkbox" /></div>
+                                    <div class="check"><input type="checkbox" id="rp_req_externo" name="rp_req_externo" /></div>
                                     <div class="lab">Req. externo</div>
                                 </div>
                             </div>

@@ -145,7 +145,7 @@ class Cap_Solic
     function setDpFuturaTransfer($val)
     {  $this->dp_futura_transfer=$val;}
 
-    function setDpSustitucion($val)
+    function setDpSustitucionTemp($val)
     {  $this->dp_sustitucion_temp=$val;}
 
     function setDiNuevasTecnicas($val)
@@ -184,11 +184,11 @@ class Cap_Solic
         return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
     }
 
-    public function getCapPlanById($id){
+    public function getCapSolicById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
 
-        $obj_cp->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso and plan_capacitacion.id_plan=$id");
+        $obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.id_empleado = em.id_empleado and sc.id_solicitud=$id");
         return $obj_cp->fetchAll();
     }
 
@@ -216,16 +216,23 @@ class Cap_Solic
 
     }
 
-    public function insertCapPlan()
+    public function insertCapSolic()
     {
-        $f=new Factory();
-        $obj_cp=$f->returnsQuery();
-        $query="insert into plan_capacitacion (id_curso, periodo, objetivo, modalidad, fecha_desde, fecha_hasta, duracion, unidad, prioridad, estado, importe, moneda, tipo_cambio, forma_pago, forma_financiacion, profesor_1, profesor_2, comentarios_plan)".
-        "values($this->id_curso, $this->periodo, '$this->objetivo', '$this->modalidad', TO_DATE('$this->fecha_desde','DD/MM/YYYY'), TO_DATE('$this->fecha_hasta','DD/MM/YYYY'), $this->duracion , '$this->unidad', $this->prioridad, '$this->estado', $this->importe, '$this->moneda', $this->tipo_cambio, '$this->forma_pago', $this->forma_financiacion, '$this->profesor_1', '$this->profesor_2', '$this->comentarios')";
-        $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
-        //return $obj_user->getAffect(); // retorna todos los registros afectados
+        $conn=oci_connect('dario', 'dario', 'localhost');
+        $sql="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, apr_solicito)".
+            "values('$this->situacion_actual', '$this->situacion_deseada', '$this->objetivo_medible_1', '$this->objetivo_medible_2', '$this->objetivo_medible_3', SYSDATE, '$this->periodo' , $this->id_empleado, $this->dp_ingreso, $this->dp_crecimiento, $this->dp_promocion, $this->dp_futura_transfer, $this->dp_sustitucion_temp, $this->di_nuevas_tecnicas, $this->di_crecimiento, $this->di_competencias_emp, $this->rp_falta_comp, $this->rp_no_conformidad, $this->rp_req_externo, '$this->apr_solicito') returning id_solicitud into :id";
+
+        $consulta=oci_parse($conn, $sql);
+        oci_bind_by_name($consulta,':id',$id);
+        oci_execute($consulta);
+        return $id;
+
+
+
+
 
     }
+
     function deleteCurso()	// elimina el cliente
     {
         $f=new Factory();
@@ -297,14 +304,21 @@ class Asignacion_plan{
     {  $this->id_plan=$val;}
 
 
-    public function insertAsignacionPlan()
+    public function insertAsignacionPlan($id_solicitud)
     {
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "insert into asignacion_plan (objetivo, comentarios, viaticos, id_plan) values('$this->objetivo', '$this->comentarios', $this->viaticos, $this->id_plan)";
+        $query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, id_plan) values($id_solicitud, '$this->objetivo', '$this->comentarios', $this->viaticos, $this->id_plan)";
         $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 
+    }
+
+    public static function getAsignacionPlanBySolicitud($id){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE from asignacion_plan ap, plan_capacitacion pc, cursos cu where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and id_solicitud=$id");
+        return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 
 
