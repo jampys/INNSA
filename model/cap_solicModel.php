@@ -206,11 +206,16 @@ class Cap_Solic
 
 
 
-    public function updateCapPlan()
+    public function updateCapSolic()
     {
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="update plan_capacitacion set periodo=$this->periodo, objetivo='$this->objetivo', modalidad='$this->modalidad', fecha_desde=TO_DATE('$this->fecha_desde','DD/MM/YYYY'), fecha_hasta=TO_DATE('$this->fecha_hasta','DD/MM/YYYY'), duracion=$this->duracion, unidad='$this->unidad', prioridad=$this->prioridad, estado='$this->estado', importe=$this->importe, moneda='$this->moneda', tipo_cambio=$this->tipo_cambio, forma_pago='$this->forma_pago', forma_financiacion=$this->forma_financiacion, profesor_1='$this->profesor_1', profesor_2='$this->profesor_2', comentarios_plan='$this->comentarios' where id_plan = $this->id_plan";
+        $query="update solicitud_capacitacion set situacion_actual='$this->situacion_actual', situacion_deseada='$this->situacion_deseada', objetivo_medible_1='$this->objetivo_medible_1', objetivo_medible_2='$this->objetivo_medible_2', objetivo_medible_3='$this->objetivo_medible_3'".
+               ", periodo='$this->periodo', dp_ingreso=$this->dp_ingreso, dp_crecimiento=$this->dp_crecimiento, dp_promocion=$this->dp_promocion, dp_futura_transfer=$this->dp_futura_transfer, dp_sustitucion_temp=$this->dp_sustitucion_temp,".
+               "di_nuevas_tecnicas=$this->di_nuevas_tecnicas, di_crecimiento=$this->di_crecimiento, di_competencias_emp=$this->di_competencias_emp,".
+               "rp_falta_comp=$this->rp_falta_comp, rp_no_conformidad=$this->rp_no_conformidad, rp_req_externo=$this->rp_req_externo,".
+               "apr_solicito='$this->apr_solicito'".
+               "where id_solicitud = $this->id_solicitud";
         $obj_cp->executeQuery($query);
         //return $obj_cliente->getAffect(); // retorna todos los registros afectados
 
@@ -313,6 +318,17 @@ class Asignacion_plan{
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
+
+
+    //update
+
+
+
+    //delete
+
+
+
+
 
     public static function getAsignacionPlanBySolicitud($id){
         $f=new Factory();

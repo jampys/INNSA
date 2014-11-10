@@ -124,11 +124,32 @@
             }
             else{ //se va a guardar un curso editado
                 var data={  "accion":"cap_solic",
-                            "operacion":"save",
-                            "id":globalId
+                        "operacion":"save",
+                        "id": globalId, //id de solicitud de capacitacion
+                        "datos":JSON.stringify(jsonObj),
+                        "periodo": $("#periodo").val(),
+                        "empleado": $("#empleado_id").val(),
+                        "situacion_actual": $("#situacion_actual").val(),
+                        "situacion_deseada": $("#situacion_deseada").val(),
+                        "objetivo_medible_1": $("#objetivo_medible_1").val(),
+                        "objetivo_medible_2": $("#objetivo_medible_2").val(),
+                        "objetivo_medible_3": $("#objetivo_medible_3").val(),
 
+                        "dp_ingreso": $('#dp_ingreso').prop('checked')? 1:0,
+                        "dp_crecimiento": $('#dp_crecimiento').prop('checked')? 1:0,
+                        "dp_promocion": $('#dp_promocion').prop('checked')? 1:0,
+                        "dp_futura_transfer": $('#dp_futura_transfer').prop('checked')? 1:0,
+                        "dp_sustitucion_temp": $('#dp_sustitucion_temp').prop('checked')? 1:0,
+                        "di_nuevas_tecnicas": $('#di_nuevas_tecnicas').prop('checked')? 1:0,
+                        "di_crecimiento": $('#di_crecimiento').prop('checked')? 1:0,
+                        "di_competencias_emp": $('#di_competencias_emp').prop('checked')? 1:0,
+                        "rp_falta_comp": $('#rp_falta_comp').prop('checked')? 1:0,
+                        "rp_no_conformidad": $('#rp_no_conformidad').prop('checked')? 1:0,
+                        "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
 
-                        };
+                        "apr_solicito": $("#apr_solicito").val()
+                    };
+
                 }
 
             $.ajax({
@@ -425,7 +446,7 @@
                 //globalOperacion=$(this).attr("media");
                 globalOperacion='insert';
                 $('#dialog').dialog('open');
-                $("#curso").attr("readonly", false);
+                $("#empleado").attr("readonly", false);
                 return false;
             });
 
@@ -436,7 +457,7 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
-                $("#curso").attr("readonly", true); //para no permitir editar el curso
+                $("#empleado").attr("readonly", true); //para no permitir editar el empleado
                 return false;
             });
 
