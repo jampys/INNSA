@@ -53,7 +53,7 @@
                     //Se construye la tabla de asignaciones de planes
                     $.each(datas['planes'], function(indice, val){
 
-                        $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+'>' +
+                        $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" "+datas['planes'][indice]['FECHA_DESDE']+'</td>' +
                         '<td>'+datas['planes'][indice]['OBJETIVO']+'</td>' +
                         '<td>'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
@@ -87,9 +87,12 @@
                 item['objetivo']= $(this).find('td').eq(1).html();
                 item['comentarios']= $(this).find('td').eq(2).html();
                 item['viaticos']= $(this).find('td').eq(3).html();
-                //alert(item['id_plan'])
+                //agregado
+                item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
+                item['operacion_asignacion']=$(this).attr('operacion_asignacion');
+                //fin agregados
                 jsonObj.push(item);
-
+                //alert(item['id_asignacion']);
             });
 
 
@@ -168,12 +171,9 @@
                 success:function(datas){
 
                     if(datas==1){
-                        alert("registros ingresados ok");
+                        $("#dialog-msn").dialog("open");
+                        $("#message").html("Registro actualizado en la BD");
                     }
-
-                    $("#dialog").dialog("close");
-                    //Agregado por dario para recargar grilla al modificar o insertar
-                    //self.parent.location.reload();
 
                 },
                 type:"POST",
@@ -183,14 +183,12 @@
             });
 
 
-
         }
 
 
 
 
         $(document).ready(function(){
-
 
 
             $("#form_plan").validate({
@@ -209,19 +207,7 @@
             $('#navigationTop').superfish();
 
 
-            // dataTable
-            var uTable = $('#example').dataTable( {
-                "scrollY": "200px",
-                "scrollX": true,
-                "autoWidth": true,
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-
-            } );
-            $(window).bind('resize', function () {
-                uTable.fnAdjustColumnSizing();
-            } );
-
+            //Se envia llamada a dataTable a abmCap_solicGrid.php
 
 
             // Dialog mensaje
@@ -259,7 +245,7 @@
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            //$('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"cap_solic", operacion: "refreshGrid"});
                         }
 
                     },
@@ -352,12 +338,23 @@
 
             //Al presionar la x para agregar planes a la solicitud
             $(document).on("click",".eliminar_plan",function(){
-                $(this).closest('tr').remove();
+                //pregunta si la fila tiene el atributo id_asignacion.
+                //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
+                if($(this).closest('tr').attr('id_asignacion')){
+                    //alert('esta fila viene de la BD');
+                    $(this).closest('tr').attr('operacion_asignacion', 'delete');
+                    $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
+                }else{
+
+                    $(this).closest('tr').remove(); //elimina la fila
+                }
+
             });
 
             //Al presionar el lapiz para editar los planes de la solicitud
             $(document).on("click",".editar_plan",function(){
-
+                //alert($(this).closest('tr').attr('id_asignacion'));
+                $(this).closest('tr').attr('operacion_asignacion', 'update');
                 $('#np_plan_capacitacion_id').val($(this).closest('tr').attr('id_plan'));
                 $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
                 $('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
@@ -441,14 +438,7 @@
 
             //---------------------------------------------------------------------------------------------
 
-            // Dialog Link
-            $('#dialog_link').click(function(){
-                //globalOperacion=$(this).attr("media");
-                globalOperacion='insert';
-                $('#dialog').dialog('open');
-                $("#empleado").attr("readonly", false);
-                return false;
-            });
+            //Se envia llamada a dialogLink a abmCap_solicGrid.php
 
             //Agregado por dario para editar
             $(document).on("click", ".edit_link", function(){
@@ -545,68 +535,8 @@
 
 <div id="principal">
 
-    <div class="container_10">
-
-        <header>
-
-            <div class="clear"></div>
-
-
-        </header>
-
-
-            <div class="box">
-                <h2>
-                    <a href="#" id="toggle-list">Lista de Solicitudes de Capacitación</a>
-                </h2>
-
-
-                <div class="block" id="list">
-                    <a href="javascript:void(0);" id="dialog_link">Agregar solicitud capacitación</a>
-                    <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
-                        <thead>
-                        <tr>
-
-                            <th>Fecha solicitud</th>
-                            <th>Periodo</th>
-                            <th>Empleado</th>
-                            <th>Solicitante</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Fecha solicitud</th>
-                            <th>Periodo</th>
-                            <th>Empleado</th>
-                            <th>Solicitante</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        <?php foreach ($view->cs as $sol) {?>
-                            <tr class="odd gradeA">
-                                <td><?php  echo $sol["FECHA_SOLICITUD"]; ?></td>
-                                <td><?php  echo $sol["PERIODO"]; ?></td>
-                                <td><?php  echo $sol["APELLIDO"]." ".$sol["NOMBRE"]; ?></td>
-                                <td><?php  echo $sol["APR_SOLICITO"]; ?></td>
-                                <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>">Editar</a></td>
-                                <td class="cen  ter"><a href="">Eliminar</a></td>
-                            </tr>
-                        <?php }  ?>
-
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
-
-
-    </div>
+<!-- Se incluye llamada a abmCapSolicGrid.php -->
+    <?php require_once('abmCap_solicGrid.php');?>
 
 </div>
 

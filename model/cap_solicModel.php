@@ -321,10 +321,27 @@ class Asignacion_plan{
 
 
     //update
+    public function updateAsignacionPlan()
+    {
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "update asignacion_plan set objetivo='$this->objetivo', comentarios='$this->comentarios', viaticos=$this->viaticos, id_plan=$this->id_plan where id_asignacion=$this->id_asignacion";
+        $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
+        //return $obj_user->getAffect(); // retorna todos los registros afectados
 
+    }
 
 
     //delete
+    function deleteAsignacionPlan()
+    {
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+        $query="delete from asignacion_plan where id_asignacion=$this->id_asignacion";
+        $obj_cp->executeQuery($query); // ejecuta la consulta para  borrar la asignacion
+        //return $obj_cp->getAffect(); // retorna todos los registros afectados
+
+    }
 
 
 
@@ -333,7 +350,7 @@ class Asignacion_plan{
     public static function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE from asignacion_plan ap, plan_capacitacion pc, cursos cu where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and id_solicitud=$id");
+        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE from asignacion_plan ap, plan_capacitacion pc, cursos cu where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and id_solicitud=$id");
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 

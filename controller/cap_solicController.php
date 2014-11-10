@@ -92,20 +92,29 @@ switch($operacion){
 
         $view->u->updateCapSolic();
 
-        /*
         //Update asignacion plan
         $vector=json_decode($_POST["datos"]);
         foreach ($vector as $v){
             $u=new Asignacion_plan();
-            $u->setIdAsignacion();
+            $u->setIdAsignacion($v->id_asignacion);
             $u->setIdPlan($v->id_plan);
             $u->setObjetivo($v->objetivo);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
 
-            $u->insertAsignacionPlan($_POST['id']);
+            if($v->id_asignacion==""){ //si no tiene id_asignacion=> es un insert
+                $u->insertAsignacionPlan($_POST['id']); //le paso parametro id_solicitud
+            }
+            else{
+                if($v->operacion_asignacion=="update"){
+                    $u->updateAsignacionPlan();
+                }
+                if($v->operacion_asignacion=="delete"){
+                    $u->deleteAsignacionPlan();
+                }
+            }
         }
-        */
+
         //*****************************
         $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
         print_r(json_encode($rta));
@@ -122,6 +131,12 @@ switch($operacion){
     case 'autocompletar_planes':
         $rta=$view->u->getPlanes($_POST['term']);
         print_r(json_encode($rta));
+        exit;
+        break;
+
+    case 'refreshGrid':
+        $view->cs=$view->u->getCapSolic();
+        include_once('view/abmCap_solicGrid.php');
         exit;
         break;
 
