@@ -285,35 +285,42 @@
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
-                        // si se trata de un update
-                        if($('#asignar_plan').data('operacion')=='editar'){
-                            var row_index=$('#asignar_plan').data('row_index');
-                            //console.log($('#asignar_plan').data('operacion'));
-                            //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
-                            $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
-                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
-                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
-                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
-                            $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(3).html($('#np_viaticos').val());
-                            $("#form_plan")[0].reset();
-                            $(this).dialog("close");
+                        if($("#form_plan").valid()){
+                            alert('form plan');
+
+                            // si se trata de un update
+                            if($('#asignar_plan').data('operacion')=='editar'){
+                                var row_index=$('#asignar_plan').data('row_index');
+                                //console.log($('#asignar_plan').data('operacion'));
+                                //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
+                                $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(3).html($('#np_viaticos').val());
+                                $("#form_plan")[0].reset();
+                                $(this).dialog("close");
+
+                            }
+                            else{  //si se trata de un insert
+
+                                //Se agrega fila a la tabla de planes
+                                //$('#table_plan tr:last').after('<tr>' +
+                                $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
+                                '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
+                                '<td>'+$('#np_objetivo').val()+'</td>' +
+                                '<td>'+$('#np_comentarios').val()+'</td>' +
+                                '<td>'+$('#np_viaticos').val()+'</td>' +
+                                '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                                '</tr>');
+                                $("#form_plan")[0].reset();
+
+                            }
 
                         }
-                        else{  //si se trata de un insert
 
-                            //Se agrega fila a la tabla de planes
-                            //$('#table_plan tr:last').after('<tr>' +
-                            $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
-                            '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                            '<td>'+$('#np_objetivo').val()+'</td>' +
-                            '<td>'+$('#np_comentarios').val()+'</td>' +
-                            '<td>'+$('#np_viaticos').val()+'</td>' +
-                            '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                            '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
-                            '</tr>');
-                            $("#form_plan")[0].reset();
 
-                        }
 
 
                     },
@@ -474,6 +481,7 @@
 
             //llamada a funcion validar
             $.validar();
+            $.validarPlan();
 
         });
 
@@ -518,6 +526,33 @@
                 objetivo_medible_3: "Ingrese el objetivo medible 3",
                 apr_solicito: "Ingrese el solicitante"
 
+            }
+
+        });
+
+
+    };
+
+
+    $.validarPlan=function(){
+        $('#form_plan').validate({
+            rules: {
+                np_plan_capacitacion: {
+                    required: true
+                },
+                np_objetivo: {
+                    required: true
+                },
+                np_viaticos: {
+                    required: true,
+                    number: true
+                }
+
+            },
+            messages:{
+                np_plan_capacitacion: "Seleccione un plan de capacitación",
+                np_objetivo: "Ingrese el objetivo",
+                np_viaticos: "Ingrese los viaticos"
             }
 
         });
@@ -818,7 +853,7 @@
 
 
 <div class="block" id="formus">
-<form id="form_plan" action="">
+<form id="form_plan" name="form_plan" action="">
 <fieldset>
 <legend>Datos Registro</legend>
 
