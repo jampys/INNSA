@@ -267,6 +267,9 @@ class Asignacion_plan{
     var $id_solicitud;
     var $id_plan;
 
+    var $estado;
+    var $reemplazo;
+
 
     // metodos que devuelven valores
     function getIdAsignacion()
@@ -286,6 +289,12 @@ class Asignacion_plan{
 
     function getIdPlan()
     { return $this->id_plan;}
+
+    function getEstado()
+    { return $this->estado;}
+
+    function getReemplazo()
+    { return $this->reemplazo;}
 
 
 
@@ -308,6 +317,25 @@ class Asignacion_plan{
     function setIdPlan($val)
     {  $this->id_plan=$val;}
 
+    function setEstado($val)
+    {  $this->estado=$val;}
+
+    function setReemplazo($val)
+    {  $this->reemplazo=$val;}
+
+
+
+
+    public function getAsignacionPlan()
+    {
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "select * from asignacion_plan ap, solicitud_capacitacion sc, empleados em where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado";
+        //$query="select * from asignacion_plan";
+        $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
+        return $obj_cp->fetchAll(); // retorna todos los cursos
+
+    }
 
     public function insertAsignacionPlan($id_solicitud)
     {
@@ -364,7 +392,7 @@ class Asignacion_plan{
 
 //Definicion de clase Propuestas
 
-class Propuestas{
+class Propuesta{
 
     //Atributos
     var $id_propuesta;
@@ -398,7 +426,7 @@ class Propuestas{
     {
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "insert into propuestas (id_solicitud, id_curso) values($$this->id_solicitud, $this->id_curso)";
+        $query = "insert into propuestas (id_solicitud, id_curso) values($this->id_solicitud, $this->id_curso)";
         $obj_cp->executeQuery($query);
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -422,7 +450,7 @@ class Propuestas{
     public static function getPropuestaBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select * from propuestas pro, cursos cu where pro.id_curso = cu.id_curso and id_propuesta=$id");
+        $obj_sp->executeQuery("select * from propuestas, cursos where propuestas.id_curso = cursos.id_curso and id_solicitud=$id");
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 

@@ -42,9 +42,19 @@ switch($operacion){
             $u->setObjetivo($v->objetivo);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
-
             $u->insertAsignacionPlan($id_solicitud);
         }
+
+        //Insert cursos propuestos
+        $vectorCursos=json_decode($_POST["datosCursos"]);
+        foreach ($vectorCursos as $v){
+            $c=new Propuesta();
+            $c->setIdSolicitud($id_solicitud);
+            $c->setIdCurso($v->id_curso);
+            $c->insertPropuesta();
+        }
+
+
         $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
         print_r(json_encode($rta));
         exit;
@@ -58,7 +68,10 @@ switch($operacion){
         $view->p=new Asignacion_plan();
         $planes=$view->p->getAsignacionPlanBySolicitud($_POST['id']);
 
-        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes)));
+        $view->pro=new Propuesta();
+        $propuestas=$view->pro->getPropuestaBySolicitud($_POST['id']);
+
+        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'propuestas'=>$propuestas)));
         //print_r(json_encode($rta));
         exit;
         break;
@@ -112,6 +125,24 @@ switch($operacion){
                 if($v->operacion_asignacion=="delete"){
                     $u->deleteAsignacionPlan();
                 }
+            }
+        }
+
+
+        //Update cursos propuestos
+        $vectorCursos=json_decode($_POST["datosCursos"]);
+        foreach ($vectorCursos as $v){
+            $c=new Propuesta();
+            $c->setIdPropuesta($v->id_propuesta);
+            //$c->setIdSolicitud($v->id_solicitud);
+            $c->setIdSolicitud($_POST['id']);
+            $c->setIdCurso($v->id_curso);
+
+            if($v->id_propuesta==""){ //si no tiene id_propuesta=> es un insert
+                $c->insertPropuesta();
+            }
+            else if($v->operacion_asignacion=="delete"){
+                $c->deletePropuesta();
             }
         }
 

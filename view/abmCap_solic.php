@@ -67,6 +67,16 @@
                     $(".ocultar").toggle();
 
 
+                    //Se construye la tabla de cursos propuestos
+                    $.each(datas['propuestas'], function(indice, val){
+
+                        $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
+                        '<td>'+datas['propuestas'][indice]['NOMBRE']+'</td>' +
+                        '<td><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '</tr>');
+                    });
+
+
                 },
                 type:"POST",
                 timeout:3000000,
@@ -94,11 +104,21 @@
                 //alert(item['id_asignacion']);
             });
 
+            //Codigo para recoger todas las filas de la tabla dinamica de propuestas
+            jsonObjCursos = [];
+            $('#table_curso tbody tr').each(function () {
+                item = {};
+                item['id_curso']=$(this).attr('id_curso');
+                item['id_propuesta']=($(this).attr('id_propuesta'))? $(this).attr('id_propuesta') : "";
+                jsonObjCursos.push(item);
+            });
+
 
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var data={  "accion":"cap_solic",
                             "operacion":"insert",
                             "datos":JSON.stringify(jsonObj),
+                            "datosCursos":JSON.stringify(jsonObjCursos),
                             "periodo": $("#periodo").val(),
                             "empleado": $("#empleado_id").val(),
                             "situacion_actual": $("#situacion_actual").val(),
@@ -123,11 +143,12 @@
 
                         };
             }
-            else{ //se va a guardar un curso editado
+            else{ //se va a guardar una solicitud editada
                 var data={  "accion":"cap_solic",
                         "operacion":"save",
                         "id": globalId, //id de solicitud de capacitacion
                         "datos":JSON.stringify(jsonObj),
+                        "datosCursos":JSON.stringify(jsonObjCursos),
                         "periodo": $("#periodo").val(),
                         "empleado": $("#empleado_id").val(),
                         "situacion_actual": $("#situacion_actual").val(),
@@ -254,8 +275,9 @@
                close:function(){
                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                    $('#form').validate().resetForm(); //para limpiar los errores validate
-                   //limpiar la tabla de asignaciones de planes
+                   //limpiar la tabla de asignaciones de planes y tabla de cursos propuestos
                    $('#table_plan tbody tr').each(function(){ $(this).remove(); });
+                   $('#table_curso tbody tr').each(function(){ $(this).remove(); });
                 }
 
 
@@ -331,7 +353,7 @@
 
             });
 
-            //Al presionar la x para agregar planes a la solicitud
+            //Al presionar la x para eliminar planes de la solicitud
             $(document).on("click",".eliminar_plan",function(){
                 //pregunta si la fila tiene el atributo id_asignacion.
                 //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
@@ -443,9 +465,9 @@
 
             //Al presionar la x para eliminar cursos propuestos de la solicitud
             $(document).on("click",".eliminar_curso",function(){
-                //pregunta si la fila tiene el atributo id_asignacion.
+                //pregunta si la fila tiene el atributo id_propuesta.
                 //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
-                if($(this).closest('tr').attr('id_asignacion')){
+                if($(this).closest('tr').attr('id_propuesta')){
                     $(this).closest('tr').attr('operacion_asignacion', 'delete');
                     $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
                 }else{
