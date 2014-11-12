@@ -350,7 +350,79 @@ class Asignacion_plan{
     public static function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE from asignacion_plan ap, plan_capacitacion pc, cursos cu where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and id_solicitud=$id");
+        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and id_solicitud=$id");
+        return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
+    }
+
+
+
+}
+
+
+
+
+
+//Definicion de clase Propuestas
+
+class Propuestas{
+
+    //Atributos
+    var $id_propuesta;
+    var $id_solicitud;
+    var $id_curso;
+
+
+    // metodos que devuelven valores
+    function getIdPropuesta()
+    { return $this->id_propuesta;}
+
+    function getIdSolicitud()
+    { return $this->id_solicitud;}
+
+    function getIdCurso()
+    { return $this->id_curso;}
+
+
+    // metodos que setean los valores
+    function setIdPropuesta($val)
+    {  $this->id_propuesta=$val;}
+
+    function setIdSolicitud($val)
+    {  $this->id_solicitud=$val;}
+
+    function setIdCurso($val)
+    {  $this->id_curso=$val;}
+
+
+    public function insertPropuesta()
+    {
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "insert into propuestas (id_solicitud, id_curso) values($$this->id_solicitud, $this->id_curso)";
+        $obj_cp->executeQuery($query);
+        //return $obj_user->getAffect(); // retorna todos los registros afectados
+
+    }
+
+
+
+    //delete
+    function deletePropuesta()
+    {
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+        $query="delete from propuestas where id_propuesta=$this->id_propuesta";
+        $obj_cp->executeQuery($query);
+        //return $obj_cp->getAffect(); // retorna todos los registros afectados
+
+    }
+
+
+
+    public static function getPropuestaBySolicitud($id){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $obj_sp->executeQuery("select * from propuestas pro, cursos cu where pro.id_curso = cu.id_curso and id_propuesta=$id");
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 

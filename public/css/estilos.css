@@ -68,7 +68,7 @@ html,body{
 
 
 /* estilo para tabla donde se cargan los planes de capacitacion. Archivo abmCap_solic.php */
-#table_plan tbody tr td{
+.tablaSolicitud tbody tr td{
     background-color: #ffffff;
     text-align: center;
 }

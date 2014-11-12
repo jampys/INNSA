@@ -54,16 +54,17 @@
                     $.each(datas['planes'], function(indice, val){
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
-                        '<td>'+datas['planes'][indice]['NOMBRE']+" "+datas['planes'][indice]['FECHA_DESDE']+'</td>' +
-                        '<td>'+datas['planes'][indice]['OBJETIVO']+'</td>' +
-                        '<td>'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
+                        '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
+                        '<td class="ocultar">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
+                        '<td class="ocultar">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
+                        '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
+                        '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
-                        '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                        '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-
-
                     });
+                    $(".ocultar").toggle();
 
 
                 },
@@ -86,11 +87,9 @@
                 item['id_plan']=$(this).attr('id_plan');
                 item['objetivo']= $(this).find('td').eq(1).html();
                 item['comentarios']= $(this).find('td').eq(2).html();
-                item['viaticos']= $(this).find('td').eq(3).html();
-                //agregado
+                item['viaticos']= $(this).find('td').eq(5).html();
                 item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
                 item['operacion_asignacion']=$(this).attr('operacion_asignacion');
-                //fin agregados
                 jsonObj.push(item);
                 //alert(item['id_asignacion']);
             });
@@ -121,7 +120,6 @@
                             "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
 
                             "apr_solicito": $("#apr_solicito").val()
-
 
                         };
             }
@@ -189,18 +187,6 @@
 
 
         $(document).ready(function(){
-
-
-            $("#form_plan").validate({
-                rules: {
-                    np_plan_capacitacion: {required: true, minlength: 2}
-
-                },
-                messages: {
-                    name: "Debe introducir su nombre."
-
-                }
-            });
 
 
             // menu superfish
@@ -286,7 +272,7 @@
                 buttons: {
                     "Guardar": function() {
                         if($("#form_plan").valid()){
-                            alert('form plan');
+                            //alert('form plan');
 
                             // si se trata de un update
                             if($('#asignar_plan').data('operacion')=='editar'){
@@ -297,7 +283,7 @@
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(3).html($('#np_viaticos').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
 
@@ -308,14 +294,16 @@
                                 //$('#table_plan tr:last').after('<tr>' +
                                 $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                                 '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                                '<td>'+$('#np_objetivo').val()+'</td>' +
-                                '<td>'+$('#np_comentarios').val()+'</td>' +
+                                '<td class="ocultame">'+$('#np_objetivo').val()+'</td>' +
+                                '<td class="ocultame">'+$('#np_comentarios').val()+'</td>' +
+                                '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
+                                '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
                                 '<td>'+$('#np_viaticos').val()+'</td>' +
                                 '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                                 '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
                                 $("#form_plan")[0].reset();
-
+                                $('.ocultame').toggle();
                             }
 
                         }
@@ -366,7 +354,7 @@
                 $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
                 $('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
                 $('#np_comentarios').val($(this).closest('tr').find('td').eq(2).html());
-                $('#np_viaticos').val($(this).closest('tr').find('td').eq(3).html());
+                $('#np_viaticos').val($(this).closest('tr').find('td').eq(5).html());
                 //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
                 //con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
@@ -396,9 +384,10 @@
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
-                                    label: item.NOMBRE+' - '+item.FECHA_DESDE,
-                                    id: item.ID_PLAN
-
+                                    label: item.NOMBRE+' - '+item.FECHA_DESDE+' - '+item.MODALIDAD,
+                                    id: item.ID_PLAN,
+                                    duracion: item.DURACION+' '+item.UNIDAD,
+                                    costo: item.MONEDA+' '+item.IMPORTE
                                 };
                             }));
                         }
@@ -408,13 +397,66 @@
                 select: function(event, ui) {
                     $('#np_plan_capacitacion_id').val(ui.item.id);
                     $('#np_plan_capacitacion').val(ui.item.label);
+                    $('#np_plan_capacitacion_duracion').val(ui.item.duracion);
+                    $('#np_plan_capacitacion_costo').val(ui.item.costo);
                 }
             });
 
-            //fin agregado autocompletar planes
 
             //Fin funcionalidad tabla asignar planes
             //---------------------------------------------------------------------------------------
+
+
+            //********************************************************************************************
+            //Funcionalidad para la tabla cursos propuestos
+
+            //Agregado dario para autocompletar cursos
+            $("#curso").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.NOMBRE,
+                                    id: item.ID_CURSO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    //$('#cursos_propuestos').append(ui.item.curso);
+                    $('#table_curso tbody').append('<tr id_curso='+ui.item.id+'><td>'+ui.item.label+'</td>'+
+                    '<td><a class="eliminar_curso" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                    '</tr>');
+
+                    $('#curso').clear(); //no funciona del todo bien
+                }
+            });
+
+
+            //Al presionar la x para eliminar cursos propuestos de la solicitud
+            $(document).on("click",".eliminar_curso",function(){
+                //pregunta si la fila tiene el atributo id_asignacion.
+                //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
+                if($(this).closest('tr').attr('id_asignacion')){
+                    $(this).closest('tr').attr('operacion_asignacion', 'delete');
+                    $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
+                }else{
+                    $(this).closest('tr').remove(); //elimina la fila
+                }
+
+            });
+
+
+            //-------------------------------------------------------------------------------------------------------
+
 
             //**************************************************************************************
             //Agregado dario para autocompletar empleados
@@ -447,7 +489,7 @@
 
             //Se envia llamada a dialogLink a abmCap_solicGrid.php
 
-            //Agregado por dario para editar
+            //Para editar una solicitud de capacitacion
             $(document).on("click", ".edit_link", function(){
                 //globalOperacion=$(this).attr("media");
                 globalOperacion='edit';
@@ -458,19 +500,6 @@
                 return false;
             });
 
-
-
-            // Datepicker fecha_desde
-            $('#fecha_desde').datepicker({
-                inline: true
-                ,dateFormat:"dd/mm/yy"
-            });
-
-            // Datepicker fecha_hasta
-            $('#fecha_hasta').datepicker({
-                inline: true
-                ,dateFormat:"dd/mm/yy"
-            });
 
             //hover states on the static widgets
             $('#dialog_link, ul#icons li').hover(
@@ -540,9 +569,6 @@
                 np_plan_capacitacion: {
                     required: true
                 },
-                np_objetivo: {
-                    required: true
-                },
                 np_viaticos: {
                     required: true,
                     number: true
@@ -551,7 +577,6 @@
             },
             messages:{
                 np_plan_capacitacion: "Seleccione un plan de capacitación",
-                np_objetivo: "Ingrese el objetivo",
                 np_viaticos: "Ingrese los viaticos"
             }
 
@@ -583,7 +608,8 @@
 <!-- ui-dialog -->
 <div id="dialog" >
 
-    <div class="grid_7">
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
         <div class="clear"></div>
         <div class="box">
 
@@ -743,11 +769,44 @@
                         </div>
 
 
-
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Capacitaciones propuestas: </label><br/>
+                                    <input type="text" name="curso" id="curso"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <table id="table_curso" class="tablaSolicitud">
+                                        <thead>
+                                        <tr>
+                                            <td>Curso</td>
+                                            <td>Eliminar</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- el cuerpo se genera dinamicamente con javascript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Asignación de planes: </label><br/>
                                     <a id="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
                                 </div>
                             </div>
@@ -762,12 +821,12 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <table id="table_plan">
+                                    <table id="table_plan" class="tablaSolicitud">
                                         <thead>
                                             <tr>
                                                 <td>Plan</td>
-                                                <td>Objetivo</td>
-                                                <td>Comentarios</td>
+                                                <td>Duración</td>
+                                                <td>Costo</td>
                                                 <td>Viaticos</td>
                                                 <td>Editar</td>
                                                 <td>Eliminar</td>
@@ -785,44 +844,28 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Solicitó: </label><br/>
+                                    <label>Solicitó - Gerencia de área: </label><br/>
                                     <input type="text" name="apr_solicito" id="apr_solicito"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Gerencia de área: </label>
-                                    <input type="text" name="" id=""/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Autorizó: </label><br/>
+                                    <label>Autorizó - Gerencia de RRHH: </label><br/>
                                     <input type="text" name="apr_autorizo" id="apr_autorizo"/>
                                 </div>
                             </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Gerencia de RRHH: </label>
-                                    <input type="text" name="" id=""/>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Aprobación: </label><br/>
+                                    <label>Aprobó - Dirección: </label><br/>
                                     <input type="text" name="apr_aprobacion" id="apr_aprobacion"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Dirección: </label>
-                                    <input type="text" name="" id=""/>
+
                                 </div>
                             </div>
                         </div>
@@ -843,83 +886,66 @@
 
 
 
-
-
-
 <div id="asignar_plan" >
 
-<div class="grid_7">
+    <div class="grid_7">
+
+        <div class="block" id="formus">
+            <form id="form_plan" name="form_plan" action="">
+                <fieldset>
+                    <legend>Datos Registro</legend>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Plan capacitación: </label><br/>
+                                    <input type="text" name="np_plan_capacitacion" id="np_plan_capacitacion"/>
+                                    <input type="hidden" name="np_plan_capacitacion_id" id="np_plan_capacitacion_id"/>
+                                    <input type="hidden" name="np_plan_capacitacion_duracion" id="np_plan_capacitacion_duracion"/>
+                                    <input type="hidden" name="np_plan_capacitacion_costo" id="np_plan_capacitacion_costo"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Objetivo: </label><br/>
+                                    <textarea name="np_objetivo" id="np_objetivo" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Comentarios: </label>
+                                    <textarea name="np_comentarios" id="np_comentarios" rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
 
 
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Viaticos: </label><br/>
+                                    <input type="text" name="np_viaticos" id="np_viaticos"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
 
-<div class="block" id="formus">
-<form id="form_plan" name="form_plan" action="">
-<fieldset>
-<legend>Datos Registro</legend>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="sixteen_column section">
-        <div class="sixteen_column">
-            <div class="column_content">
-                <label>Plan capacitación: </label><br/>
-                <input type="text" name="np_plan_capacitacion" id="np_plan_capacitacion"/>
-                <input type="hidden" name="np_plan_capacitacion_id" id="np_plan_capacitacion_id"/>
-            </div>
+                </fieldset>
+
+            </form>
+
         </div>
+
     </div>
 
-    <div class="sixteen_column section">
-        <div class="eight column">
-            <div class="column_content">
-                <label>Objetivo: </label><br/>
-                <textarea name="np_objetivo" id="np_objetivo" rows="5"></textarea>
-            </div>
-        </div>
-        <div class="eight column">
-            <div class="column_content">
-                <label>Comentarios: </label>
-                <textarea name="np_comentarios" id="np_comentarios" rows="5"></textarea>
-            </div>
-        </div>
-    </div>
-
-
-
-<div class="sixteen_column section">
-    <div class="eight column">
-        <div class="column_content">
-            <label>Viaticos: </label><br/>
-            <input type="text" name="np_viaticos" id="np_viaticos"/>
-        </div>
-    </div>
-    <div class="eight column">
-        <div class="column_content">
-
-        </div>
-    </div>
 </div>
-
-
-</fieldset>
-
-</form>
-
-
-</div>
-
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-
-
 
 
 

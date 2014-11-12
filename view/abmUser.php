@@ -298,7 +298,9 @@
 <!-- ui-dialog -->
 <div id="dialog" >
 
-    <div class="grid_7">
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
+
         <div class="clear"></div>
         <div class="box">
 
