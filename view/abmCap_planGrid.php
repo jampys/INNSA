@@ -13,6 +13,7 @@
                 { "width": "30%", "targets": 0 }
             ]
         } );
+
         $(window).bind('resize', function () {
             uTable.fnAdjustColumnSizing();
         } );

@@ -70,8 +70,8 @@
                 <?php foreach ($view->asignacion as $asig) {?>
                     <tr class="odd gradeA">
                         <td><?php  echo $asig["FECHA_SOLICITUD"]; ?></td>
-                        <td><?php  echo $asig["NOMBRE"];  ?></td>
-                        <td><?php  echo $asig["NOMBRE"]; ?></td>
+                        <td><?php  echo $asig["APELLIDO"]." ".$asig["NOMBRE"];  ?></td>
+                        <td><?php  echo $asig["NOMBRE_CURSO"]." ".$asig["FECHA_DESDE"]." ".$asig["MODALIDAD"]; ?></td>
                         <td><?php  echo $asig["ESTADO"]; ?></td>
                         <td class="center"><a href="" class="edit_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>">Editar</a></td>
                     </tr>

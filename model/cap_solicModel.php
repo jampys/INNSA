@@ -268,6 +268,7 @@ class Asignacion_plan{
     var $id_plan;
 
     var $estado;
+    var $estado_cambio;
     var $reemplazo;
 
 
@@ -292,6 +293,9 @@ class Asignacion_plan{
 
     function getEstado()
     { return $this->estado;}
+
+    function getEstadoCambio()
+    { return $this->estado_cambio;}
 
     function getReemplazo()
     { return $this->reemplazo;}
@@ -320,6 +324,9 @@ class Asignacion_plan{
     function setEstado($val)
     {  $this->estado=$val;}
 
+    function setEstadoCambio($val)
+    {  $this->estado_cambio=$val;}
+
     function setReemplazo($val)
     {  $this->reemplazo=$val;}
 
@@ -330,8 +337,10 @@ class Asignacion_plan{
     {
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "select * from asignacion_plan ap, solicitud_capacitacion sc, empleados em where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado";
-        //$query="select * from asignacion_plan";
+        $query = "select sc.fecha_solicitud FECHA_SOLICITUD, em.apellido APELLIDO, em.nombre NOMBRE, cu.nombre NOMBRE_CURSO, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, ap.estado ESTADO, ap.id_asignacion ID_ASIGNACION".
+                 " from asignacion_plan ap, solicitud_capacitacion sc, empleados em, plan_capacitacion pc, cursos cu where".
+                 " ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
+                 " and ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso";
         $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
         return $obj_cp->fetchAll(); // retorna todos los cursos
 
@@ -341,7 +350,7 @@ class Asignacion_plan{
     {
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, id_plan) values($id_solicitud, '$this->objetivo', '$this->comentarios', $this->viaticos, $this->id_plan)";
+        $query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, id_plan) values($id_solicitud, '$this->objetivo', '$this->comentarios', $this->viaticos, $this->reemplazo, $this->id_plan)";
         $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -353,11 +362,23 @@ class Asignacion_plan{
     {
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "update asignacion_plan set objetivo='$this->objetivo', comentarios='$this->comentarios', viaticos=$this->viaticos, id_plan=$this->id_plan where id_asignacion=$this->id_asignacion";
+        $query = "update asignacion_plan set objetivo='$this->objetivo', comentarios='$this->comentarios', viaticos=$this->viaticos, reemplazo=$this->reemplazo, id_plan=$this->id_plan where id_asignacion=$this->id_asignacion";
         $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
         //return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
+
+    public function updateEstadoAsignacionPlan()
+    {
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "update asignacion_plan set estado='$this->estado', estado_cambio='$this->estado_cambio' where id_asignacion=$this->id_asignacion";
+        $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
+        //return $obj_user->getAffect(); // retorna todos los registros afectados
+
+    }
+
+
 
 
     //delete
@@ -378,7 +399,15 @@ class Asignacion_plan{
     public static function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and id_solicitud=$id");
+        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde DESC");
+        return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
+    }
+
+
+    public static function getAsignacionPlanById($id){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $obj_sp->executeQuery("select * from asignacion_plan where id_asignacion=$id");
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 

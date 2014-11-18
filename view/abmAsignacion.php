@@ -8,12 +8,12 @@
     var globalOperacion;
     var globalId;
 
-        function editar(id_empleado){
+        function editar(id_asignacion){
             //alert(id_usuario);
 
             $.ajax({
                 url:"index.php",
-                data:{"accion":"empleado","operacion":"update","id":id_empleado},
+                data:{"accion":"asignacion","operacion":"update","id":id_asignacion},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(){
@@ -26,18 +26,8 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#apellido").val(datas[0]['APELLIDO']);
-                    $("#nombre").val(datas[0]['NOMBRE']);
-                    $("#n_legajo").val(datas[0]['N_LEGAJO']);
-                    $("#cuil").val(datas[0]['CUIL']);
-                    $("#lugar_trabajo").val(datas[0]['LUGAR_TRABAJO']);
-                    $("#empresa").val(datas[0]['EMPRESA']);
-                    $("#funcion").val(datas[0]['FUNCION']);
-                    $("#categoria").val(datas[0]['CATEGORIA']);
-                    $("#division").val(datas[0]['DIVISION']);
-                    $("#fecha").val(datas[0]['FECHA_INGRESO']);
-                    $("#activo").val(datas[0]['ACTIVO']);
-                    $("#email").val(datas[0]['EMAIL']);
+                    $("#estado").val(datas[0]['ESTADO']);
+                    $("#estado_cambio").val(datas[0]['ESTADO_CAMBIO']);
 
                 },
                 type:"POST",
@@ -51,42 +41,15 @@
 
         function guardar(){
 
-            if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
+            if(globalOperacion=="edit"){ //Se elimina el insert del if, ya que no sera usado
+
                 var url="index.php";
-                var data={  "accion":"empleado",
-                            "operacion":"insert",
-                            "apellido":$("#apellido").val(),
-                            "nombre":$("#nombre").val(),
-                            "lugar_trabajo":$("#lugar_trabajo").val(),
-                            "n_legajo":$("#n_legajo").val(),
-                            "empresa":$("#empresa").val(),
-                            "funcion":$("#funcion").val(),
-                            "categoria":$("#categoria").val(),
-                            "division":$("#division").val(),
-                            "fecha_ingreso":$("#fecha").val(),
-                            "activo":$("#activo").val(),
-                            "email":$("#email").val(),
-                            "cuil":$("#cuil").val()
+                var data={  "accion":"asignacion",
+                            "operacion":"save",
+                            "id":globalId,
+                            "estado":$("#estado").val(),
+                            "estado_cambio":$("#estado_cambio").val()
                         };
-            }
-            else{ //se va a guardar un usuario editado
-                var url="index.php";
-                var data={  "accion":"empleado",
-                    "operacion":"save",
-                    "id":globalId,
-                    "apellido":$("#apellido").val(),
-                    "nombre":$("#nombre").val(),
-                    "lugar_trabajo":$("#lugar_trabajo").val(),
-                    "n_legajo":$("#n_legajo").val(),
-                    "empresa":$("#empresa").val(),
-                    "funcion":$("#funcion").val(),
-                    "categoria":$("#categoria").val(),
-                    "division":$("#division").val(),
-                    "fecha_ingreso":$("#fecha").val(),
-                    "activo":$("#activo").val(),
-                    "email":$("#email").val(),
-                    "cuil":$("#cuil").val()
-                };
             }
 
             $.ajax({
@@ -162,7 +125,7 @@
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"empleado", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
                         }
 
                     },
@@ -201,19 +164,12 @@
             });
 
 
-            // Datepicker
-            $('#fecha').datepicker({
-                //inline: true,
-                dateFormat:"dd/mm/yy"
-            });
-            //$('#fecha').datepicker('setDate', 'today');
-
-
             //hover states on the static widgets
             $('#dialog_link, ul#icons li').hover(
                 function() { $(this).addClass('ui-state-hover'); },
                 function() { $(this).removeClass('ui-state-hover'); }
             );
+
 
             //llamada a funcion validar
             $.validar();
@@ -225,42 +181,12 @@
     $.validar=function(){
         $('#form').validate({
             rules: {
-                apellido: {
-                    required: true
-                },
-                nombre: {
-                    required: true
-                },
-                cuil: {
-                    required: true,
-                    digits: true
-                },
-                lugar_trabajo: {
-                    //required: function(){return $('#lugar_trabajo').val()==''}
-                    required: true
-                },
-                empresa: {
-                    required: true
-                },
-                division: {
-                    required: true
-                },
-                fecha:{
-                    required: true
-                },
-                activo: {
+                estado: {
                     required: true
                 }
             },
             messages:{
-                apellido: "Ingrese el apellido",
-                nombre: "Ingrese el nombre",
-                cuil: "Ingrese el CUIL (sin guiones)",
-                lugar_trabajo: "Seleccione el lugar de trabajo",
-                empresa: "Seleccione la empresa",
-                division: "Seleccione la division",
-                fecha: "Seleccione la fecha de ingreso",
-                activo: "Seleccione el estado de habilitación"
+                estado: "Seleccione un estado"
             }
 
         });
@@ -303,128 +229,26 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Apellido: </label>
-                                    <input type="text" name="apellido" id="apellido"/>
-                                </div>
-                            </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Nombre: </label>
-                                    <input type="text" name="nombre" id="nombre"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>N legajo: </label>
-                                    <input type="text" name="n_legajo" id="n_legajo"/>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>CUIL: </label>
-                                    <input type="text" name="cuil" id="cuil"/>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Lugar de trabajo: </label>
-                                    <select name="lugar_trabajo" id="lugar_trabajo">
-                                        <option value="">Ingrese un lugar</option>
-                                        <option value="BO">Bolivia</option>
-                                        <option value="BUE">Buenos Aires</option>
-                                        <option value="CH">Chubut</option>
-                                        <option value="MZ">Mendoza</option>
-                                        <option value="NQ">Neuquén</option>
-                                        <option value="SC">Santa Cruz</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Empresa: </label>
-                                    <select name="empresa" id="empresa">
-                                        <option value="">Ingrese una empresa</option>
-                                        <option value="INNOVISION">Innovision</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Función: </label>
-                                    <input type="text" name="funcion" id="funcion"/>
-                                </div>
-                            </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Categoría: </label>
-                                    <input type="text" name="categoria" id="categoria"/>
-                                </div>
-                            </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>División: </label>
-                                    <select name="division" id="division">
-                                        <option value="">Ingrese una división</option>
-                                        <option value="SISTEMAS">Sistemas</option>
-                                        <option value="ADMINISTRACION">Administración</option>
-                                        <option value="RRHH">RRHH</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Fecha Ingreso: </label>
-                                    <input type="text" name="fecha" id="fecha">
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
                                     <label>Estado: </label>
-                                    <select name="activo" id="activo">
-                                        <option value="">Ingrese el estado</option>
-                                        <option value="0">Inactivo</option>
-                                        <option value="1">Activo</option>
+                                    <select name="estado" id="estado">
+                                        <option value="">Seleccione un estado</option>
+                                        <option value="ASIGNADO">Asignado</option>
+                                        <option value="CANCELADO">Cancelado</option>
+                                        <option value="SUSPENDIDO">Suspendido</option>
+                                        <option value="EN CURSO">En curso</option>
+                                        <option value="FINALIZADO">Finalizado</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="sixteen_column section">
-                            <div class="sixteen_column">
+                            <div class="eight column">
                                 <div class="column_content">
-                                    <label>E-mail: </label><br/>
-                                    <textarea type="text" name="email" id="email" rows="2"/></textarea>
+                                    <label>Motivo cambio: </label>
+                                    <textarea type="text" name="estado_cambio" id="estado_cambio" rows="5"/></textarea>
                                 </div>
                             </div>
-
                         </div>
+
 
                     </fieldset>
 

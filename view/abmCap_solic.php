@@ -60,6 +60,8 @@
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
+                        '<td class="ocultar">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
+                        '<td class="ocultar">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
                         '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
@@ -89,7 +91,6 @@
 
         function guardar(){
 
-
             //Codigo para recoger todas las filas de la tabla dinamica de planes
             jsonObj = [];
             $('#table_plan tbody tr').each(function () {
@@ -98,6 +99,7 @@
                 item['objetivo']= $(this).find('td').eq(1).html();
                 item['comentarios']= $(this).find('td').eq(2).html();
                 item['viaticos']= $(this).find('td').eq(5).html();
+                item['reemplazo']= $(this).find('td').eq(6).html();
                 item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
                 item['operacion_asignacion']=$(this).attr('operacion_asignacion');
                 jsonObj.push(item);
@@ -306,6 +308,8 @@
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
 
@@ -321,8 +325,10 @@
                                 '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
                                 '<td>'+$('#np_viaticos').val()+'</td>' +
-                                '<td><a class="editar_plan" href="#" id="1"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                                '<td><a class="eliminar_plan" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td class="ocultame">'+$('#np_reemplazo_id').val()+'</td>' +
+                                '<td class="ocultame">'+$('#np_reemplazo').val()+'</td>' +
+                                '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
                                 $("#form_plan")[0].reset();
                                 $('.ocultame').toggle();
@@ -377,6 +383,8 @@
                 $('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
                 $('#np_comentarios').val($(this).closest('tr').find('td').eq(2).html());
                 $('#np_viaticos').val($(this).closest('tr').find('td').eq(5).html());
+                $('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
+                $('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
                 //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
                 //con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
@@ -421,6 +429,33 @@
                     $('#np_plan_capacitacion').val(ui.item.label);
                     $('#np_plan_capacitacion_duracion').val(ui.item.duracion);
                     $('#np_plan_capacitacion_costo').val(ui.item.costo);
+                }
+            });
+
+
+            //Agregado dario para autocompletar empleado reemplazo
+            $("#np_reemplazo").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.APELLIDO+" "+item.NOMBRE,
+                                    id: item.ID_EMPLEADO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function(event, ui) {
+                    $('#np_reemplazo_id').val(ui.item.id);
+                    $('#np_reemplazo').val(ui.item.label);
                 }
             });
 
@@ -954,6 +989,9 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
+                                    <label>Reemplazo: </label><br/>
+                                    <input type="text" name="np_reemplazo" id="np_reemplazo"/>
+                                    <input type="hidden" name="np_reemplazo_id" id="np_reemplazo_id"/>
 
                                 </div>
                             </div>

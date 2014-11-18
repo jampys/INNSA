@@ -42,6 +42,7 @@ switch($operacion){
             $u->setObjetivo($v->objetivo);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
+            $u->setReemplazo($v->reemplazo);
             $u->insertAsignacionPlan($id_solicitud);
         }
 
@@ -114,6 +115,7 @@ switch($operacion){
             $u->setObjetivo($v->objetivo);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
+            $u->setReemplazo($v->reemplazo);
 
             if($v->id_asignacion==""){ //si no tiene id_asignacion=> es un insert
                 $u->insertAsignacionPlan($_POST['id']); //le paso parametro id_solicitud
