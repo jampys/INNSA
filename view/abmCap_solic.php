@@ -102,6 +102,7 @@
                 item['reemplazo']= $(this).find('td').eq(6).html();
                 item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
                 item['operacion_asignacion']=$(this).attr('operacion_asignacion');
+                item['estado'] = 'ASIGNADO';
                 jsonObj.push(item);
                 //alert(item['id_asignacion']);
             });
@@ -116,7 +117,7 @@
             });
 
 
-            if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
+            if(globalOperacion=="insert"){ //se va a guardar una solicitud capacitacion nueva
                 var data={  "accion":"cap_solic",
                             "operacion":"insert",
                             "datos":JSON.stringify(jsonObj),
@@ -141,7 +142,7 @@
                             "rp_no_conformidad": $('#rp_no_conformidad').prop('checked')? 1:0,
                             "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
 
-                            "apr_solicito": $("#apr_solicito").val()
+                            "apr_solicito": $("#apr_solicito_id").val()
 
                         };
             }
@@ -171,7 +172,7 @@
                         "rp_no_conformidad": $('#rp_no_conformidad').prop('checked')? 1:0,
                         "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
 
-                        "apr_solicito": $("#apr_solicito").val()
+                        "apr_solicito": $("#apr_solicito_id").val()
                     };
 
                 }
@@ -902,13 +903,14 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Solicitó - Gerencia de área: </label><br/>
-                                    <input type="text" name="apr_solicito" id="apr_solicito"/>
+                                    <input type="text" name="apr_solicito" id="apr_solicito" readonly/>
+                                    <input type="hidden" name="apr_solicito_id" id="apr_solicito_id" readonly/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Autorizó - Gerencia de RRHH: </label><br/>
-                                    <input type="text" name="apr_autorizo" id="apr_autorizo"/>
+                                    <input type="text" name="apr_autorizo" id="apr_autorizo" readonly/>
                                 </div>
                             </div>
                         </div>
@@ -917,7 +919,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Aprobó - Dirección: </label><br/>
-                                    <input type="text" name="apr_aprobacion" id="apr_aprobacion"/>
+                                    <input type="text" name="apr_aprobo" id="apr_aprobo" readonly/>
                                 </div>
                             </div>
                             <div class="eight column">

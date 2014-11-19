@@ -3,6 +3,7 @@ if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
 require_once("model/cap_solicModel.php");
+require_once("model/comunicacionModel.php");
 $view->u=new Asignacion_plan();
 
 
@@ -26,6 +27,47 @@ switch($operacion){
         exit;
         break; */
 
+    case 'insertComunicacion':
+        $view->c=new Comunicacion();
+
+        $view->c->setIdAsignacion($_POST['id']);
+        $view->c->setSituacion($_POST['situacion']);
+        $view->c->setObjetivos($_POST['objetivos']);
+        $view->c->setIndicadoresExito($_POST['indicadores_exito']);
+        $view->c->setCompromiso($_POST['compromiso']);
+        $view->c->setComunico($_POST['comunico']);
+
+        $rta=$view->c->insertComunicacion();
+        print_r(json_encode($rta));
+        exit;
+        break;
+
+    case 'updateComunicacion':
+        $view->c=new Comunicacion();
+
+        $rta=$view->c->getComunicacionByAsignacion($_POST['id']);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
+
+    case 'saveComunicacion':
+        $view->c=new Comunicacion();
+
+        //$view->c->setIdAsignacion($_POST['id']);
+        $view->c->setIdComunicacion($_POST['id_comunicacion']);
+        $view->c->setSituacion($_POST['situacion']);
+        $view->c->setObjetivos($_POST['objetivos']);
+        $view->c->setIndicadoresExito($_POST['indicadores_exito']);
+        $view->c->setCompromiso($_POST['compromiso']);
+        $view->c->setComunico($_POST['comunico']);
+
+        $rta=$view->c->updateComunicacion();
+        print_r(json_encode($rta));
+        exit;
+        break;
+
+
     case 'update':
 
         $rta=$view->u->getAsignacionPlanById($_POST['id']);
@@ -48,6 +90,7 @@ switch($operacion){
         include_once('view/abmAsignacionGrid.php');
         exit;
         break;
+
 
     default:
         $view->asignacion=$view->u->getAsignacionPlan();

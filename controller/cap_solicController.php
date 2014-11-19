@@ -43,6 +43,7 @@ switch($operacion){
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
             $u->setReemplazo($v->reemplazo);
+            $u->setEstado($v->estado);
             $u->insertAsignacionPlan($id_solicitud);
         }
 
@@ -116,6 +117,7 @@ switch($operacion){
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
             $u->setReemplazo($v->reemplazo);
+            $u->setEstado($v->estado);
 
             if($v->id_asignacion==""){ //si no tiene id_asignacion=> es un insert
                 $u->insertAsignacionPlan($_POST['id']); //le paso parametro id_solicitud
@@ -154,11 +156,12 @@ switch($operacion){
         exit;
         break;
 
+    /*
     case 'getTemas':
         $rta=$view->u->getTemas($_POST['id']);
         print_r(json_encode($rta));
         exit;
-        break;
+        break; */
 
 
     case 'autocompletar_planes':

@@ -8,20 +8,17 @@
             "scrollX": true,
             "autoWidth": true,
             "bJQueryUI": true,
-            "sPaginationType": "full_numbers"
+            "sPaginationType": "full_numbers",
+            "columnDefs": [
+                { "width": "60px", "targets": 0 },
+                { "width": "200px", "targets": 1 },
+                { "width": "500px", "targets": 2 }
+            ]
         } );
         $(window).bind('resize', function () {
             uTable.fnAdjustColumnSizing();
         } );
 
-
-        // Dialog Link
-        $('#dialog_link').click(function(){
-            //globalOperacion=$(this).attr("media");
-            globalOperacion='insert';
-            $('#dialog').dialog('open');
-            return false;
-        });
 
     });
 
@@ -55,6 +52,7 @@
                     <th>Curso</th>
                     <th>Estado</th>
                     <th>Editar</th>
+                    <th>Comunic.</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -64,6 +62,7 @@
                     <th>Curso</th>
                     <th>Estado</th>
                     <th>Editar</th>
+                    <th>Comunic.</th>
                 </tr>
                 </tfoot>
                 <tbody>
@@ -73,7 +72,8 @@
                         <td><?php  echo $asig["APELLIDO"]." ".$asig["NOMBRE"];  ?></td>
                         <td><?php  echo $asig["NOMBRE_CURSO"]." ".$asig["FECHA_DESDE"]." ".$asig["MODALIDAD"]; ?></td>
                         <td><?php  echo $asig["ESTADO"]; ?></td>
-                        <td class="center"><a href="" class="edit_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>">Editar</a></td>
+                        <td class="center"><a href="#" title="Edición" class="edit_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>">Editar</a></td>
+                        <td class="center"><a href="#" title="Comunicación" class="comunicacion_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/Communication-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>
 

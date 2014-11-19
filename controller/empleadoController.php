@@ -3,6 +3,7 @@ if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
 require_once("model/empleadoModel.php");
+require_once("model/userModel.php");
 $view->u=new Empleado();
 
 
@@ -60,6 +61,14 @@ switch($operacion){
     case 'refreshGrid':
         $view->empleados=$view->u->getEmpleados();
         include_once('view/abmEmpleadoGrid.php');
+        exit;
+        break;
+
+    case 'getEmpleadoBySession':
+
+        $view->e=new User();
+        $rta=$view->e->getUsuarioById($_SESSION["ses_id"]);
+        print_r(json_encode($rta));
         exit;
         break;
 

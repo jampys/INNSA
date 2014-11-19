@@ -44,6 +44,11 @@
     <nav class="nav">
         <a href="index.php?accion=cap_solic" title="Cursos">Solicitud capacitación</a>
     </nav>
+
+    <nav class="nav">
+        <a href="index.php?accion=autorizacion_aprobacion" title="Cursos">Autorización/Aprobación</a>
+    </nav>
+
     <nav class="nav">
         <a href="index.php?accion=asignacion" title="Asignacion plan">Asignacion plan</a>
     </nav>

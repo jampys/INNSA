@@ -39,11 +39,59 @@
         }
 
 
+
+    function editarComunicacion(id_asignacion){
+
+        $.ajax({
+            url:"index.php",
+            data:{  "accion":"asignacion",
+                    "operacion":"updateComunicacion",
+                    "id":id_asignacion
+                },
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",//xml,html,script,json
+            error:function(){
+
+                $("#dialog-msn").dialog("open");
+                $("#message").html("ha ocurrido un error");
+
+            },
+            ifModified:false,
+            processData:true,
+            success:function(datas){
+
+                if(datas[0]){ //si la consulta trae algun registro
+                    globalOperacion='updateComunicacion';
+                    $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
+                    //console.log( $('#comunicacion').data('id_comunicacion'));
+                    $("#situacion").val(datas[0]['SITUACION']);
+                    $("#objetivos").val(datas[0]['OBJETIVOS']);
+                    $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
+                    $("#compromiso").val(datas[0]['COMPROMISO']);
+                    $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
+                    $("#comunico_id").val(datas[0]['COMUNICO']);
+                }
+                else{
+                    setComunicador();
+                }
+
+
+
+
+            },
+            type:"POST",
+            timeout:3000000,
+            crossdomain:true
+
+        });
+
+    }
+
+
         function guardar(){
 
-            if(globalOperacion=="edit"){ //Se elimina el insert del if, ya que no sera usado
+            if(globalOperacion=="edit"){ //Se cambia el estado de la asignacion
 
-                var url="index.php";
                 var data={  "accion":"asignacion",
                             "operacion":"save",
                             "id":globalId,
@@ -51,12 +99,40 @@
                             "estado_cambio":$("#estado_cambio").val()
                         };
             }
+            else if (globalOperacion=="insertComunicacion"){ //Se guarda la comunicacion
+
+                var data={  "accion":"asignacion",
+                            "operacion":"insertComunicacion",
+                            "id":globalId, //id_asignacion
+                            "situacion":$("#situacion").val(),
+                            "objetivos":$("#objetivos").val(),
+                            "indicadores_exito":$("#indicadores_exito").val(),
+                            "compromiso":$("#compromiso").val(),
+                            "comunico":$("#comunico_id").val()
+
+                        };
+
+            }
+            else if(globalOperacion=="updateComunicacion"){
+
+                var data={  "accion":"asignacion",
+                            "operacion":"saveComunicacion",
+                            //"id":globalId, //id_asignacion
+                            "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
+                            "situacion":$("#situacion").val(),
+                            "objetivos":$("#objetivos").val(),
+                            "indicadores_exito":$("#indicadores_exito").val(),
+                            "compromiso":$("#compromiso").val(),
+                            "comunico":$("#comunico_id").val()
+                        };
+
+            }
 
             $.ajax({
-                url:url,
+                url: "index.php",
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
-                //dataType:"json",//xml,html,script,json
+                dataType:"json",//xml,html,script,json
                 error:function(){
 
                     $("#dialog-msn").dialog("open");
@@ -81,8 +157,39 @@
 
 
 
+    function setComunicador(){
+        //alert('llamada a funcion que carga el comunicador');
+        $.ajax({
+            url: "index.php",
+            data: {"accion":"empleado", "operacion":"getEmpleadoBySession"},
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",//xml,html,script,json
+            error:function(){
+
+                $("#dialog-msn").dialog("open");
+                $("#message").html("ha ocurrido un error");
+
+            },
+            ifModified:false,
+            processData:true,
+            success:function(datas){
+
+                $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
+                $("#comunico_id").val(datas[0]['ID_EMPLEADO']);
+
+            },
+            type:"POST",
+            timeout:3000000,
+            crossdomain:true
+
+        });
+
+    }
+
+
 
         $(document).ready(function(){
+
 
             // menu superfish
             $('#navigationTop').superfish();
@@ -150,7 +257,55 @@
 
             });
 
-            //Aca estaba el llamado al dialog link
+
+            // comunicacion
+            $('#comunicacion').dialog({
+                autoOpen: false,
+                width: 600,
+                modal:true,
+                title:"Agregar Registro",
+                buttons: {
+                    "Guardar": function() {
+                        //if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            guardar();
+                            $("#comunicacion").dialog("close");
+                            //Llamada ajax para refrescar la grilla
+                            //$('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
+                        //}
+
+                    },
+                    "Cancelar": function() {
+                        $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario
+                        $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                },
+                close:function(){
+                    $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                    $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                }
+
+            });
+
+
+            // comunicacion_link
+            $(document).on("click", ".comunicacion_link", function(){
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='insertComunicacion';
+                globalId=$(this).attr('id');
+                //setComunicador();
+                editarComunicacion(globalId);
+                $('#comunicacion').dialog('open');
+                return false;
+            });
 
             //Agregado para editar
             $(document).on("click", ".edit_link", function(){
@@ -159,7 +314,6 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
-
                 return false;
             });
 
@@ -248,6 +402,99 @@
                                 </div>
                             </div>
                         </div>
+
+
+                    </fieldset>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+<!-- ui-comunicacion -->
+<div id="comunicacion" >
+
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
+
+        <div class="clear"></div>
+        <div class="box">
+
+            <div class="block" id="forms">
+                <form id="form_comunicacion" action="">
+                    <fieldset>
+                        <legend>Datos Registro</legend>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Situación: Porque te vamos a capacitar</label><br/>
+                                    <textarea type="text" name="situacion" id="situacion" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Objetivos: Que esperamos lograr con esto</label><br/>
+                                    <textarea type="text" name="objetivos" id="objetivos" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Indicadores de éxito</label><br/>
+                                    <textarea type="text" name="indicadores_exito" id="indicadores_exito" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Compromiso</label><br/>
+                                    <textarea type="text" name="compromiso" id="compromiso" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Comunicó: </label>
+                                    <input type="text" name="comunico" id="comunico" readonly/>
+                                    <input type="hidden" name="comunico_id" id="comunico_id"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Notificado: </label>
+                                    <input type="text" name="notificado" id="notificado"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+
 
 
                     </fieldset>

@@ -32,6 +32,7 @@ class User
 
 
 
+
     // metodos que devuelven valores
     function getIdUsuario()
     { return $this->id_usuario;}
