@@ -30,6 +30,7 @@ switch($operacion){
         $view->u->setObjetivoMedible2($_POST['objetivo_medible_2']);
         $view->u->setObjetivoMedible3($_POST['objetivo_medible_3']);
 
+        $view->u->setEstado($_POST['estado']);
         $view->u->setAprSolicito($_POST['apr_solicito']);
         //Cuando insert solicitud devuelve el id, necesario para insert de planes asociados a la solicitud
         $id_solicitud=$view->u->insertCapSolic();
@@ -73,8 +74,12 @@ switch($operacion){
         $view->pro=new Propuesta();
         $propuestas=$view->pro->getPropuestaBySolicitud($_POST['id']);
 
-        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'propuestas'=>$propuestas)));
-        //print_r(json_encode($rta));
+        $solicito=$view->u->getCapSolicSolicito($_POST['id']);
+        $autorizo=$view->u->getCapSolicAutorizo($_POST['id']);
+        $aprobo=$view->u->getCapSolicAprobo($_POST['id']);
+
+        //print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'propuestas'=>$propuestas)));
+        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'propuestas'=>$propuestas, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo)));
         exit;
         break;
 
@@ -145,7 +150,7 @@ switch($operacion){
             if($v->id_propuesta==""){ //si no tiene id_propuesta=> es un insert
                 $c->insertPropuesta();
             }
-            else if($v->operacion_asignacion=="delete"){
+            else if($v->operacion_propuesta=="delete"){
                 $c->deletePropuesta();
             }
         }

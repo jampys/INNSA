@@ -188,7 +188,8 @@ class Cap_Solic
     public static function getCapSolic(){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.id_empleado=em.id_empleado");
+        //$obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.id_empleado=em.id_empleado");
+        $obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
         return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
     }
 
@@ -196,6 +197,13 @@ class Cap_Solic
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
         $obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.id_empleado = em.id_empleado and sc.id_solicitud=$id");
+        return $obj_cp->fetchAll();
+    }
+
+    public function getCapSolicSolicito($id){
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+        $obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.apr_solicito = em.id_empleado and sc.id_solicitud=$id");
         return $obj_cp->fetchAll();
     }
 
@@ -238,7 +246,7 @@ class Cap_Solic
                ", periodo='$this->periodo', dp_ingreso=$this->dp_ingreso, dp_crecimiento=$this->dp_crecimiento, dp_promocion=$this->dp_promocion, dp_futura_transfer=$this->dp_futura_transfer, dp_sustitucion_temp=$this->dp_sustitucion_temp,".
                "di_nuevas_tecnicas=$this->di_nuevas_tecnicas, di_crecimiento=$this->di_crecimiento, di_competencias_emp=$this->di_competencias_emp,".
                "rp_falta_comp=$this->rp_falta_comp, rp_no_conformidad=$this->rp_no_conformidad, rp_req_externo=$this->rp_req_externo,".
-               "apr_solicito=$this->apr_solicito".
+               "apr_solicito=$this->apr_solicito ".
                "where id_solicitud = $this->id_solicitud";
         $obj_cp->executeQuery($query);
         //return $obj_cliente->getAffect(); // retorna todos los registros afectados
@@ -260,8 +268,8 @@ class Cap_Solic
     public function insertCapSolic()
     {
         $conn=oci_connect('dario', 'dario', 'localhost');
-        $sql="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, apr_solicito)".
-            "values('$this->situacion_actual', '$this->situacion_deseada', '$this->objetivo_medible_1', '$this->objetivo_medible_2', '$this->objetivo_medible_3', SYSDATE, '$this->periodo' , $this->id_empleado, $this->dp_ingreso, $this->dp_crecimiento, $this->dp_promocion, $this->dp_futura_transfer, $this->dp_sustitucion_temp, $this->di_nuevas_tecnicas, $this->di_crecimiento, $this->di_competencias_emp, $this->rp_falta_comp, $this->rp_no_conformidad, $this->rp_req_externo, $this->apr_solicito) returning id_solicitud into :id";
+        $sql="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
+            "values('$this->situacion_actual', '$this->situacion_deseada', '$this->objetivo_medible_1', '$this->objetivo_medible_2', '$this->objetivo_medible_3', SYSDATE, '$this->periodo' , $this->id_empleado, $this->dp_ingreso, $this->dp_crecimiento, $this->dp_promocion, $this->dp_futura_transfer, $this->dp_sustitucion_temp, $this->di_nuevas_tecnicas, $this->di_crecimiento, $this->di_competencias_emp, $this->rp_falta_comp, $this->rp_no_conformidad, $this->rp_req_externo, '$this->estado', $this->apr_solicito) returning id_solicitud into :id";
 
         $consulta=oci_parse($conn, $sql);
         oci_bind_by_name($consulta,':id',$id);

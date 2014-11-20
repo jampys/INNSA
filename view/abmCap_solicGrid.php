@@ -84,7 +84,8 @@
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
                     <th>Empleado</th>
-                    <th>Solicitante</th>
+                    <th>Solicitó</th>
+                    <th>Estado</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
 
@@ -95,7 +96,8 @@
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
                     <th>Empleado</th>
-                    <th>Solicitante</th>
+                    <th>Solicitó</th>
+                    <th>Estado</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -106,7 +108,8 @@
                         <td><?php  echo $sol["FECHA_SOLICITUD"]; ?></td>
                         <td><?php  echo $sol["PERIODO"]; ?></td>
                         <td><?php  echo $sol["APELLIDO"]." ".$sol["NOMBRE"]; ?></td>
-                        <td><?php  echo $sol["APR_SOLICITO"]; ?></td>
+                        <td><?php  echo $sol["39"].' '.$sol["38"]; ?></td>
+                        <td><?php  echo $sol["ESTADO"]; ?></td>
                         <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>">Editar</a></td>
                         <td class="cen  ter"><a href="">Eliminar</a></td>
                     </tr>

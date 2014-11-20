@@ -78,7 +78,7 @@
                         <td><?php  echo $sol["FECHA_SOLICITUD"]; ?></td>
                         <td><?php  echo $sol["PERIODO"]; ?></td>
                         <td><?php  echo $sol["APELLIDO"]." ".$sol["NOMBRE"]; ?></td>
-                        <td><?php  echo $sol["APR_SOLICITO"]; ?></td>
+                        <td><?php  echo $sol["39"].' '.$sol["38"]; ?></td>
                         <td><?php  echo $sol["ESTADO"]; ?></td>
                         <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>">Autor/Aprob</a></td>
                     </tr>

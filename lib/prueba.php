@@ -4,7 +4,8 @@ require_once('config.php');
 
 $f=new Factory();
 $s=$f->returnsQuery();
-$query="select te.nombre nom from temas te, categorias ca where te.id_categoria=ca.id_categoria";
+//$query="select te.nombre nom from temas te, categorias ca where te.id_categoria=ca.id_categoria";
+$query="select * from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado";
 $s->executeQuery($query);
 $r=$s->fetchAll();
 
@@ -12,7 +13,8 @@ echo"<hr/>";
 echo 'Cantidad de filas afectadas:'.$s->getAffect();
 echo '<br/>';
 echo 'Liberacion de la consulta:'.$s->clean();
-//print_r($r);
+print_r($r);
+exit;
 
 ?>
 

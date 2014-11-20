@@ -48,25 +48,36 @@
                     $("#rp_falta_comp").attr('checked', (datas['solicitud'][0]['RP_FALTA_COMP']==1)? true:false);
                     $("#rp_no_conformidad").attr('checked', (datas['solicitud'][0]['RP_NO_CONFORMIDAD']==1)? true:false);
                     $("#rp_req_externo").attr('checked', (datas['solicitud'][0]['RP_REQ_EXTERNO']==1)? true:false);
-                    $("#apr_solicito").val(datas['solicitud'][0]['APR_SOLICITO']);
+
+                    //Completa los campos Solicito, autorizo, aprobo
+                    $("#apr_solicito").val(datas['solicito'][0]['APELLIDO']+' '+datas['solicito'][0]['NOMBRE']);
+                    $("#apr_solicito_id").val(datas['solicito'][0]['APR_SOLICITO']);
+
+                    if(datas['autorizo'].length!=0){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
+                        $("#apr_autorizo").val(datas['autorizo'][0]['APELLIDO']+' '+datas['autorizo'][0]['NOMBRE']);
+                    }
+
+                    if(datas['aprobo'].length!=0){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
+                        $("#apr_aprobo").val(datas['aprobo'][0]['APELLIDO']+' '+datas['aprobo'][0]['NOMBRE']);
+                    }
+                    //Fin completa los campos Solicito, autorizo, aprobo
 
                     //Se construye la tabla de asignaciones de planes
                     $.each(datas['planes'], function(indice, val){
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
-                        '<td class="ocultar">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
-                        '<td class="ocultar">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
+                        '<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
+                        '<td style="display: none">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
-                        '<td class="ocultar">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
-                        '<td class="ocultar">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
+                        '<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
+                        '<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
                         '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                     });
-                    $(".ocultar").toggle();
 
 
                     //Se construye la tabla de cursos propuestos
@@ -113,6 +124,7 @@
                 item = {};
                 item['id_curso']=$(this).attr('id_curso');
                 item['id_propuesta']=($(this).attr('id_propuesta'))? $(this).attr('id_propuesta') : "";
+                item['operacion_propuesta']=$(this).attr('operacion_propuesta');
                 jsonObjCursos.push(item);
             });
 
@@ -142,6 +154,7 @@
                             "rp_no_conformidad": $('#rp_no_conformidad').prop('checked')? 1:0,
                             "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
 
+                            "estado": 'SOLICITADA',
                             "apr_solicito": $("#apr_solicito_id").val()
 
                         };
@@ -262,6 +275,7 @@
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
+                        //$("input:checked").removeAttr("checked"); //para limpiar los checkbox
                         //limpiar la tabla de asignaciones de planes
                         $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                         $(this).dialog("close");
@@ -278,6 +292,7 @@
                close:function(){
                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                    $('#form').validate().resetForm(); //para limpiar los errores validate
+                   //$("input:checked").removeAttr("checked"); //para limpiar los checkbox
                    //limpiar la tabla de asignaciones de planes y tabla de cursos propuestos
                    $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                    $('#table_curso tbody tr').each(function(){ $(this).remove(); });
@@ -321,18 +336,18 @@
                                 //$('#table_plan tr:last').after('<tr>' +
                                 $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                                 '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                                '<td class="ocultame">'+$('#np_objetivo').val()+'</td>' +
-                                '<td class="ocultame">'+$('#np_comentarios').val()+'</td>' +
+                                '<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
+                                '<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
                                 '<td>'+$('#np_viaticos').val()+'</td>' +
-                                '<td class="ocultame">'+$('#np_reemplazo_id').val()+'</td>' +
-                                '<td class="ocultame">'+$('#np_reemplazo').val()+'</td>' +
+                                '<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
+                                '<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
                                 '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                                 '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
                                 $("#form_plan")[0].reset();
-                                $('.ocultame').toggle();
+
                             }
 
                         }
@@ -504,7 +519,7 @@
                 //pregunta si la fila tiene el atributo id_propuesta.
                 //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
                 if($(this).closest('tr').attr('id_propuesta')){
-                    $(this).closest('tr').attr('operacion_asignacion', 'delete');
+                    $(this).closest('tr').attr('operacion_propuesta', 'delete');
                     $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
                 }else{
                     $(this).closest('tr').remove(); //elimina la fila

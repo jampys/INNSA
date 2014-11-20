@@ -27,7 +27,7 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#apr_solicito").val(datas['solicitud'][0]['APR_SOLICITO']);
+                    $("#apr_solicito").val(datas['solicito'][0]['APELLIDO']+' '+datas['solicito'][0]['NOMBRE']);
 
                     if(datas['autorizo'].length!=0){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
                         $("#apr_autorizo").val(datas['autorizo'][0]['APELLIDO']+' '+datas['autorizo'][0]['NOMBRE']);
@@ -155,7 +155,8 @@
 
                     },
                     "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar los campos del formulario
+                        //$("#form")[0].reset(); //para limpiar los campos del formulario
+                        $(":input:not([type=button])").val(''); //limpia los campos, incluso los ocultos (la sentencia de arriba no limpia ocultos)
                         $('#form').validate().resetForm(); //para limpiar los errores validate
                         //limpiar la tabla de asignaciones de planes
                         $('#table_plan tbody tr').each(function(){ $(this).remove(); });
@@ -171,7 +172,8 @@
                     duration: 1000
                 },
                close:function(){
-                   $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                   //$("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                   $(":input:not([type=button])").val(''); //limpia los campos, incluso los ocultos (la sentencia de arriba no limpia ocultos)
                    $('#form').validate().resetForm(); //para limpiar los errores validate
                    //limpiar la tabla de asignaciones de planes y tabla de cursos propuestos
                    $('#table_plan tbody tr').each(function(){ $(this).remove(); });
@@ -419,7 +421,7 @@
                                 <div class="column_content">
                                     <label>Autorizó - Gerencia de RRHH: </label><br/>
                                     <input type="text" name="apr_autorizo" id="apr_autorizo" readonly/>
-                                    <input type="hidden" name="apr_autorizo_id" id="apr_autorizo_id" readonly/>
+                                    <input type="hidden" name="apr_autorizo_id" id="apr_autorizo_id"/>
                                 </div>
                             </div>
                             <div class="one column">
@@ -441,7 +443,7 @@
                                 <div class="column_content">
                                     <label>Aprobó - Dirección: </label><br/>
                                     <input type="text" name="apr_aprobo" id="apr_aprobo" readonly/>
-                                    <input type="hidden" name="apr_aprobo_id" id="apr_aprobo_id" readonly/>
+                                    <input type="hidden" name="apr_aprobo_id" id="apr_aprobo_id"/>
                                 </div>
                             </div>
                             <div class="one column">
