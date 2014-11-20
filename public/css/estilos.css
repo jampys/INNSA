@@ -79,6 +79,10 @@ html,body{
     color: red;
 }
 
+#table_plan tfoot tr td{
+    font-weight: bold;
+}
+
 
 
 

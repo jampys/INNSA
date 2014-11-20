@@ -53,10 +53,10 @@
         <a href="index.php?accion=asignacion" title="Asignacion plan">Asignacion plan</a>
     </nav>
     <nav class="nav">
-        <a href="#" title="Evaluacion plan" id="menu_4">Evaluacion plan</a>
+        <a href="#" title="Evaluacion plan">Evaluacion plan</a>
     </nav>
     <nav class="nav">
-        <a href="#" title="Post evaluacion plan" id="menu_5">Post evaluacion plan</a>
+        <a href="#" title="Post evaluacion plan">Post evaluacion plan</a>
     </nav>
     <!-- Opciones de menu solo para usuario administrador -->
     <?php
@@ -73,6 +73,9 @@
     }
     ?>
 
+    <nav class="nav">
+        <a href="index.php?accion=vista_empleado" title="Vista empleado">Vista empleado</a>
+    </nav>
 
 
 

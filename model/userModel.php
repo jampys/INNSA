@@ -137,8 +137,9 @@ class User
 
         $f=new Factory();
         $s=$f->returnsQuery();
-        //$query="select * from usuarios where login ='$login' and password='$pass'";
-        $query="select * from usuarios, perfiles where login ='$login' and password='$pass' and usuarios.id_perfil=perfiles.id_perfil ";
+        //$query="select * from usuarios, perfiles where login ='$login' and password='$pass' and usuarios.id_perfil=perfiles.id_perfil ";
+        $query="select * from usuarios, perfiles, empleados where login ='$login' and password='$pass' and".
+               " usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado = empleados.id_empleado";
         $s->executeQuery($query);
         $r=$s->fetchAll();
         //print_r($r);
@@ -154,6 +155,8 @@ class User
                 $datos[0]=$r[0]['ID_USUARIO'];
                 $datos[1]=$r[0]['LOGIN'];
                 $datos[2]=$r[0]['ACCESSLEVEL'];
+                $datos[3]=$r[0]['APELLIDO'];
+                $datos[4]=$r[0]['NOMBRE'];
                 return $datos;
             }
 

@@ -22,6 +22,8 @@ switch($operacion){
                 $_SESSION["ses_id"]=$id[0];
                 $_SESSION["user"]=$id[1];
                 $_SESSION['ACCESSLEVEL']=$id[2];
+                $_SESSION['USER_APELLIDO']=$id[3];
+                $_SESSION['USER_NOMBRE']=$id[4];
                 //echo $_SESSION['ACCESSLEVEL'];
 
                 //tambien guardar en la sesion el perfil de usuario

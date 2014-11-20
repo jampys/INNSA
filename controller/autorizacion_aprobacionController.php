@@ -30,9 +30,10 @@ switch($operacion){
         $solicito=$view->u->getCapSolicSolicito($_POST['id']);
         $autorizo=$view->u->getCapSolicAutorizo($_POST['id']);
         $aprobo=$view->u->getCapSolicAprobo($_POST['id']);
+        $totales=$view->u->getCapSolicTotalesById($_POST['id']);
 
-        //print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo)));
-        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo)));
+        //print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo)));
+        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo, 'totales'=>$totales)));
         exit;
         break;
 

@@ -54,6 +54,28 @@
                         '</tr>');
                     });
 
+                    //validaciones previas
+                    var viaticos= (datas['totales'][0]['VIATICOS'])? parseFloat(datas['totales'][0]['VIATICOS']) : 0;
+                    var pesos= (datas['totales'][0]['PESOS'])? parseFloat(datas['totales'][0]['PESOS']) : 0;
+                    var dolares= (datas['totales'][0]['DOLARES'])? parseFloat(datas['totales'][0]['DOLARES']) : 0;
+                    //alert(typeof(dolares))
+
+                    //Genera el tfoot con los totales
+                    $('#table_plan tfoot').append('<tr>' +
+                    '<td></td>' +
+                    '<td>Subtotal</td>' +
+                    '<td>'+'$ '+(pesos+dolares)+'</td>' +
+                    '<td>'+'$ '+viaticos+'</td>' +
+                    '</tr>');
+
+                    $('#table_plan tfoot').append('<tr>' +
+                    '<td></td>' +
+                    '<td>Total general</td>' +
+                    '<td colspan="2" style="text-align:center">'+'$ '+(pesos+dolares+viaticos)+'</td>' +
+                    //'<td></td>' +
+                    '</tr>');
+
+
                 },
                 type:"POST",
                 timeout:3000000,
@@ -160,6 +182,7 @@
                         $('#form').validate().resetForm(); //para limpiar los errores validate
                         //limpiar la tabla de asignaciones de planes
                         $('#table_plan tbody tr').each(function(){ $(this).remove(); });
+                        $('#table_plan tfoot tr').each(function(){ $(this).remove(); });
                         $(this).dialog("close");
                     }
                 },
@@ -177,7 +200,7 @@
                    $('#form').validate().resetForm(); //para limpiar los errores validate
                    //limpiar la tabla de asignaciones de planes y tabla de cursos propuestos
                    $('#table_plan tbody tr').each(function(){ $(this).remove(); });
-                   $('#table_curso tbody tr').each(function(){ $(this).remove(); });
+                   $('#table_plan tfoot tr').each(function(){ $(this).remove(); });
                 }
 
 
@@ -391,6 +414,9 @@
                                         <tbody>
                                         <!-- el cuerpo se genera dinamicamente con javascript -->
                                         </tbody>
+                                        <tfoot>
+                                        <!-- el foot se genera dinamicamente con javascript con los totales-->
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>

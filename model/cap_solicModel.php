@@ -222,6 +222,23 @@ class Cap_Solic
     }
 
 
+    //Funcion que devuelve los totales
+    public function getCapSolicTotalesById($id){
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+
+        $query= "select * from".
+                " (select sum(viaticos) as viaticos from asignacion_plan where id_solicitud=$id),".
+                " (select sum (pc.importe) as pesos from plan_capacitacion pc, asignacion_plan ap".
+                " where ap.id_plan = pc.id_plan and moneda='$' and ap.id_solicitud = $id),".
+                " (select sum (pc.importe * pc.tipo_cambio) as dolares from plan_capacitacion pc, asignacion_plan ap".
+                " where ap.id_plan = pc.id_plan and moneda='USD' and ap.id_solicitud = $id)";
+
+        $obj_cp->executeQuery($query);
+        return $obj_cp->fetchAll();
+    }
+
+
 
 
     public static function getPlanes($term){  //funcion usada para autocompletar planes
@@ -385,6 +402,21 @@ class Asignacion_plan{
                  " from asignacion_plan ap, solicitud_capacitacion sc, empleados em, plan_capacitacion pc, cursos cu where".
                  " ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
                  " and ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso";
+        $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
+        return $obj_cp->fetchAll(); // retorna todos los cursos
+
+    }
+
+
+    public function getAsignacionPlanByUser($id)
+    {
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "select sc. periodo PERIODO, cu.nombre NOMBRE_CURSO, pc.fecha_desde FECHA_DESDE, pc.fecha_hasta FECHA_HASTA, pc.duracion DURACION, pc.unidad UNIDAD, pc.modalidad MODALIDAD, ap.estado ESTADO, ap.id_asignacion ID_ASIGNACION".
+            " from asignacion_plan ap, solicitud_capacitacion sc, empleados em, plan_capacitacion pc, cursos cu, usuarios us where".
+            " ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
+            " and ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso".
+            " and us.id_empleado = em.id_empleado and us.id_usuario = $id";
         $obj_cp->executeQuery($query); // ejecuta la consulta para traer al cliente
         return $obj_cp->fetchAll(); // retorna todos los cursos
 
