@@ -8,6 +8,7 @@
     var globalOperacion;
     var globalId;
 
+        /*
         function editar(id_asignacion){
             //alert(id_usuario);
 
@@ -36,7 +37,7 @@
 
             });
 
-        }
+        } */
 
 
 
@@ -61,15 +62,16 @@
             success:function(datas){
 
                 if(datas[0]){ //si la consulta trae algun registro
-                    globalOperacion='updateComunicacion';
+                    globalOperacion='comunicacion';
                     $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
-                    //console.log( $('#comunicacion').data('id_comunicacion'));
+                    console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']);
                     $("#objetivos").val(datas[0]['OBJETIVOS']);
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
                     $("#compromiso").val(datas[0]['COMPROMISO']);
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
                     $("#comunico_id").val(datas[0]['COMUNICO']);
+                    $("#notificado").attr('checked', (datas[0]['NOTIFICADO']==1)? true:false);
                 }
                 else{
                     //setComunicador();
@@ -87,16 +89,15 @@
 
         function guardar(){
 
-            if(globalOperacion=="edit"){ //Se cambia el estado de la asignacion
+            if(globalOperacion=="comunicacion"){ //para guardar la notificacion de la comunicacion
 
                 var data={  "accion":"asignacion",
-                            "operacion":"save",
-                            "id":globalId,
-                            "estado":$("#estado").val(),
-                            "estado_cambio":$("#estado_cambio").val()
+                            "operacion":"updateComunicacionNotificacion",
+                            "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
+                            "notificado": $('#notificado').prop('checked')? 1:0
                         };
             }
-            else if (globalOperacion=="insertComunicacion"){ //Se guarda la comunicacion
+            else if (globalOperacion=="evaluacion"){ //Para guardar la evaluacion
 
                 var data={  "accion":"asignacion",
                             "operacion":"insertComunicacion",
@@ -107,20 +108,6 @@
                             "compromiso":$("#compromiso").val(),
                             "comunico":$("#comunico_id").val()
 
-                        };
-
-            }
-            else if(globalOperacion=="updateComunicacion"){
-
-                var data={  "accion":"asignacion",
-                            "operacion":"saveComunicacion",
-                            //"id":globalId, //id_asignacion
-                            "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
-                            "situacion":$("#situacion").val(),
-                            "objetivos":$("#objetivos").val(),
-                            "indicadores_exito":$("#indicadores_exito").val(),
-                            "compromiso":$("#compromiso").val(),
-                            "comunico":$("#comunico_id").val()
                         };
 
             }
@@ -266,9 +253,8 @@
 
             // comunicacion_link
             $(document).on("click", ".comunicacion_link", function(){
-                //globalOperacion=$(this).attr("media");
-                globalOperacion='insertComunicacion';
-                globalId=$(this).attr('id');
+                globalOperacion='comunicacion';
+                globalId=$(this).attr('id'); //id_asignacion
                 editarComunicacion(globalId);
                 $('#comunicacion').dialog('open');
                 return false;
@@ -277,9 +263,8 @@
 
             // evaluacion_link
             $(document).on("click", ".evaluacion_link", function(){
-                //globalOperacion=$(this).attr("media");
-                globalOperacion='insertComunicacion';
-                globalId=$(this).attr('id');
+                globalOperacion='evaluacion';
+                globalId=$(this).attr('id'); //id_asignacion
                 editarComunicacion(globalId);
                 $('#evaluacion').dialog('open');
                 return false;
@@ -402,13 +387,29 @@
                                 <div class="column_content">
                                     <label>Comunicó: </label>
                                     <input type="text" name="comunico" id="comunico" readonly/>
-                                    <input type="hidden" name="comunico_id" id="comunico_id"/>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Notificado: </label>
-                                    <input type="text" name="notificado" id="notificado"/>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+
+                                    <div class="checkbox_individual">
+                                        <div class="cbtitulo">Conformidad comunicación:</div>
+
+                                        <div class="cbcheck">
+                                            <div class="check"><input type="checkbox" id="notificado" name="notificado" /></div>
+                                            <div class="lab">He leído y acepto la comunicación propuesta</div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -496,11 +497,12 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Notificado: </label>
-                                    <input type="text" name="notificado" id="notificado"/>
+
                                 </div>
                             </div>
                         </div>
+
+
 
 
                     </fieldset>

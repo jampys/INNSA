@@ -51,6 +51,18 @@ switch($operacion){
         break;
 
 
+    case 'updateComunicacionNotificacion':
+        $view->c=new Comunicacion();
+
+        $view->c->setIdComunicacion($_POST['id_comunicacion']);
+        $view->c->setNotificado($_POST['notificado']);
+
+        $rta=$view->c->updateComunicacionNotificacion();
+        print_r(json_encode($rta));
+        exit;
+        break;
+
+
     case 'saveComunicacion':
         $view->c=new Comunicacion();
 

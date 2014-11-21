@@ -47,7 +47,9 @@
                     $.each(datas['planes'], function(indice, val){
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
-                        '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
+                        '<td>'+datas['planes'][indice]['NOMBRE']+'</td>' +
+                        '<td>'+datas['planes'][indice]['FECHA_DESDE']+'</td>' +
+                        '<td>'+datas['planes'][indice]['MODALIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
@@ -63,12 +65,16 @@
                     //Genera el tfoot con los totales
                     $('#table_plan tfoot').append('<tr>' +
                     '<td></td>' +
+                    '<td></td>' +
+                    '<td></td>' +
                     '<td>Subtotal</td>' +
                     '<td>'+'$ '+(pesos+dolares)+'</td>' +
                     '<td>'+'$ '+viaticos+'</td>' +
                     '</tr>');
 
                     $('#table_plan tfoot').append('<tr>' +
+                    '<td></td>' +
+                    '<td></td>' +
                     '<td></td>' +
                     '<td>Total general</td>' +
                     '<td colspan="2" style="text-align:center">'+'$ '+(pesos+dolares+viaticos)+'</td>' +
@@ -406,6 +412,8 @@
                                         <thead>
                                             <tr>
                                                 <td>Plan</td>
+                                                <td>Fecha inicio</td>
+                                                <td>Modalidad</td>
                                                 <td>Duración</td>
                                                 <td>Costo</td>
                                                 <td>Viaticos</td>

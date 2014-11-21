@@ -66,11 +66,40 @@ html,body{
     clear: right;
 }
 
+/* estilo usado para el checkbox unico del abmVistaEmpleado */
+.checkbox_individual{
+    float: left;
+    display: inline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 1px ;
+}
+.checkbox_individual .cbcheck{
+    clear: both;
+}
+
+.checkbox_individual .cbtitulo{
+    clear: both;
+    text-align: left;
+    padding-bottom: 5px;
+}
+.checkbox_individual .check{
+    float: left;
+    width: 15px;
+    height: 15px;
+}
+
+.checkbox_individual .lab{
+    float: left;
+    padding: 2px;
+    clear: right;
+}
+
 
 /* estilo para tabla donde se cargan los planes de capacitacion. Archivo abmCap_solic.php */
 .tablaSolicitud tbody tr td{
     background-color: #ffffff;
-    text-align: center;
+    /*text-align: center; */
 }
 
 

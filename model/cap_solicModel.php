@@ -398,7 +398,7 @@ class Asignacion_plan{
     {
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "select sc.fecha_solicitud FECHA_SOLICITUD, em.apellido APELLIDO, em.nombre NOMBRE, cu.nombre NOMBRE_CURSO, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, ap.estado ESTADO, ap.id_asignacion ID_ASIGNACION".
+        $query = "select sc.fecha_solicitud FECHA_SOLICITUD, sc.periodo, em.apellido APELLIDO, em.nombre NOMBRE, cu.nombre NOMBRE_CURSO, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, ap.estado ESTADO, ap.id_asignacion ID_ASIGNACION".
                  " from asignacion_plan ap, solicitud_capacitacion sc, empleados em, plan_capacitacion pc, cursos cu where".
                  " ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
                  " and ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso";

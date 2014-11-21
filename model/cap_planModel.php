@@ -26,7 +26,11 @@ class Cap_Plan
     public static function getCapPlan(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso");
+        //$obj_user->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso");
+        $query="select pc.id_plan, cu.nombre, pc.periodo, pc.fecha_desde, pc.fecha_hasta, pc.duracion, pc.unidad, pc.estado, pc.importe, pc.moneda, (select count(*)from asignacion_plan ap where ap.id_plan = pc.id_plan) as cantidad".
+                " from plan_capacitacion pc, cursos cu".
+                " where pc.id_curso=cu.id_curso";
+        $obj_user->executeQuery($query);
         return $obj_user->fetchAll(); // retorna todos los cursos
     }
 

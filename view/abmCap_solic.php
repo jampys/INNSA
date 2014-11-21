@@ -74,8 +74,8 @@
                         '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
                         '<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
                         '<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
-                        '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                        '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                     });
 
@@ -85,7 +85,7 @@
 
                         $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
                         '<td>'+datas['propuestas'][indice]['NOMBRE']+'</td>' +
-                        '<td><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                     });
 
@@ -259,7 +259,7 @@
             // Dialog
             $('#dialog').dialog({
                 autoOpen: false,
-                width: 600,
+                width: 700,
                 modal:true,
                 title:"Agregar Registro",
                 buttons: {
@@ -343,8 +343,8 @@
                                 '<td>'+$('#np_viaticos').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
-                                '<td><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                                '<td><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
                                 $("#form_plan")[0].reset();
 
@@ -506,7 +506,7 @@
                 select: function(event, ui) {
                     //$('#cursos_propuestos').append(ui.item.curso);
                     $('#table_curso tbody').append('<tr id_curso='+ui.item.id+'><td>'+ui.item.label+'</td>'+
-                    '<td><a class="eliminar_curso" href="#" id="1"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                    '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                     '</tr>');
 
                     $('#curso').clear(); //no funciona del todo bien
@@ -863,7 +863,7 @@
                                         <thead>
                                         <tr>
                                             <td>Curso</td>
-                                            <td>Eliminar</td>
+                                            <td style="text-align: center">Eliminar</td>
                                         </tr>
                                         </thead>
                                         <tbody>

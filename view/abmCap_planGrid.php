@@ -10,7 +10,7 @@
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "columnDefs": [
-                { "width": "30%", "targets": 0 }
+                { "width": "350px", "targets": 0 }
             ]
         } );
 
@@ -89,7 +89,7 @@
                 <tbody>
                 <?php foreach ($view->cp as $plan) {?>
                     <tr class="odd gradeA">
-                        <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 30)."...";  ?></td>
+                        <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 40);  ?></td>
                         <td><?php  echo $plan["PERIODO"] ?></td>
                         <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $plan["FECHA_HASTA"]; ?></td>

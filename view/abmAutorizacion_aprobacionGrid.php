@@ -77,10 +77,10 @@
                     <tr class="odd gradeA">
                         <td><?php  echo $sol["FECHA_SOLICITUD"]; ?></td>
                         <td><?php  echo $sol["PERIODO"]; ?></td>
-                        <td><?php  echo $sol["APELLIDO"]." ".$sol["NOMBRE"]; ?></td>
-                        <td><?php  echo $sol["39"].' '.$sol["38"]; ?></td>
+                        <td><?php  echo $sol["26"]." ".$sol["25"]; ?></td> <!-- apellido y nombre del empleado -->
+                        <td><?php  echo $sol["39"].' '.$sol["38"]; ?></td> <!-- apellido y nombre de quien solicito-->
                         <td><?php  echo $sol["ESTADO"]; ?></td>
-                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>">Autor/Aprob</a></td>
+                        <td class="center"><a href="#" title="Autorizar / Aprobar" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>
 

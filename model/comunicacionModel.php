@@ -87,6 +87,16 @@ class Comunicacion
 
     }
 
+    public function updateComunicacionNotificacion()
+    {
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $query="update cap_comunicacion set notificado=$this->notificado where id_comunicacion = $this->id_comunicacion";
+        $obj_user->executeQuery($query);
+        return $obj_user->getAffect(); // retorna todos los registros afectados
+
+    }
+
     public function insertComunicacion()
     {
         $f=new Factory();

@@ -70,6 +70,7 @@
                     $("#compromiso").val(datas[0]['COMPROMISO']);
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
                     $("#comunico_id").val(datas[0]['COMUNICO']);
+                    $("#notificado").val((datas[0]['NOTIFICADO']==1)? 'NOTIFICADO':'NO NOTIFICADO');
                 }
                 else{
                     setComunicador();
@@ -488,7 +489,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Notificado: </label>
-                                    <input type="text" name="notificado" id="notificado"/>
+                                    <input type="text" name="notificado" id="notificado" readonly/>
                                 </div>
                             </div>
                         </div>
