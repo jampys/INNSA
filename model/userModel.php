@@ -110,14 +110,15 @@ class User
 
     }
 
-    public function autocompletarEmpleadosSinUser($term){  //funcion usada para autocompletar de empleados
+    public function autocompletarEmpleadosSinUser($term, $user){  //funcion usada para autocompletar de empleados
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        //$query="select * from empleados where nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')";
-        //La consulta trae solos los empleados que no tienen usuario asociado
-        $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and id_empleado not in (select id_empleado from usuarios)";
+        //La consulta trae solos los empleados que no tienen usuario asociado y al propio empleado (de tratarse de una edicion)
+        $query="select em.id_empleado, em.apellido, em.nombre from empleados em where (em.nombre like UPPER ('%".$term."%') or em.apellido like UPPER ('%".$term."%')) and em.id_empleado not in (select id_empleado from usuarios)".
+            " UNION".
+            " select emx.id_empleado, emx.apellido, emx.nombre from empleados emx, usuarios us where us.id_empleado = emx.id_empleado and us.id_usuario = $user";
         $obj_cp->executeQuery($query);
-        return $obj_cp->fetchAll(); // retorna todos los cursos
+        return $obj_cp->fetchAll();
     }
 
     //*****************************************************************************************
@@ -130,10 +131,8 @@ class User
     function isAValidUser($login,$pass){
         /*
         Esta funcion deberia devolver en un array de la forma $user['habilitado']=1    $user['accesslevel']=xxx    return $user
-         */
-
-        //No olvider despues de hacer la codificacionn a md5
-        //$pass=md5($pass);
+        *No olvidar despues de hacer la codificacionn a md5
+        *$pass=md5($pass); */
 
         $f=new Factory();
         $s=$f->returnsQuery();
@@ -145,7 +144,6 @@ class User
         //print_r($r);
         //echo $r[0]['HABILITADO'];
 
-        //echo "ESTO ES LO QUE ME DEVUELVE EL GETAFFECT ".$s->getAffect();
         if ($s->getAffect()>=1) //en teoria devuelve la cantidad de filas afectadas. OJO controlar esta funcion
         {
             //lo trabajo de la manera porque a pesar de ser un solo registro el de la consulta

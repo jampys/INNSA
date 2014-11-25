@@ -206,7 +206,11 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"user", "operacion":"autocompletar_empleados_sin_user"},
+                        data: { "term": request.term,
+                                "accion":"user",
+                                "operacion":"autocompletar_empleados_sin_user",
+                                "user": globalId //id_usuario
+                        },
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {

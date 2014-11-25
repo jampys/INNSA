@@ -41,7 +41,8 @@ switch($operacion){
         break;
 
     case 'autocompletar_empleados_sin_user':
-        $rta=$view->u->autocompletarEmpleadosSinUser($_POST['term']);
+        $user=(isset($_POST['user']))? $_POST['user'] : 0;
+        $rta=$view->u->autocompletarEmpleadosSinUser($_POST['term'],$user);
         print_r(json_encode($rta));
         exit;
         break;
