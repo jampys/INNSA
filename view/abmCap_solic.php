@@ -50,15 +50,15 @@
                     $("#rp_req_externo").attr('checked', (datas['solicitud'][0]['RP_REQ_EXTERNO']==1)? true:false);
 
                     //Completa los campos Solicito, autorizo, aprobo
-                    $("#apr_solicito").val(datas['solicito'][0]['APELLIDO']+' '+datas['solicito'][0]['NOMBRE']);
-                    $("#apr_solicito_id").val(datas['solicito'][0]['APR_SOLICITO']);
+                    $("#apr_solicito").val(datas['solicitud'][0]['APELLIDO_SOLICITO']+' '+datas['solicitud'][0]['NOMBRE_SOLICITO']);
+                    $("#apr_solicito_id").val(datas['solicitud'][0]['ID_SOLICITO']);
 
-                    if(datas['autorizo'].length!=0){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
-                        $("#apr_autorizo").val(datas['autorizo'][0]['APELLIDO']+' '+datas['autorizo'][0]['NOMBRE']);
+                    if(datas['solicitud'][0]['APELLIDO_AUTORIZO'] && datas['solicitud'][0]['NOMBRE_AUTORIZO']){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
+                        $("#apr_autorizo").val(datas['solicitud'][0]['APELLIDO_AUTORIZO']+' '+datas['solicitud'][0]['NOMBRE_AUTORIZO']);
                     }
 
-                    if(datas['aprobo'].length!=0){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
-                        $("#apr_aprobo").val(datas['aprobo'][0]['APELLIDO']+' '+datas['aprobo'][0]['NOMBRE']);
+                    if(datas['solicitud'][0]['APELLIDO_APROBO'] && datas['solicitud'][0]['NOMBRE_APROBO']){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
+                        $("#apr_aprobo").val(datas['solicitud'][0]['APELLIDO_APROBO']+' '+datas['solicitud'][0]['NOMBRE_APROBO']);
                     }
                     //Fin completa los campos Solicito, autorizo, aprobo
 

@@ -27,13 +27,13 @@ switch($operacion){
         $view->p=new Asignacion_plan();
         $planes=$view->p->getAsignacionPlanBySolicitud($_POST['id']);
 
-        $solicito=$view->u->getCapSolicSolicito($_POST['id']);
-        $autorizo=$view->u->getCapSolicAutorizo($_POST['id']);
-        $aprobo=$view->u->getCapSolicAprobo($_POST['id']);
+        //$solicito=$view->u->getCapSolicSolicito($_POST['id']);
+        //$autorizo=$view->u->getCapSolicAutorizo($_POST['id']);
+        //$aprobo=$view->u->getCapSolicAprobo($_POST['id']);
         $totales=$view->u->getCapSolicTotalesById($_POST['id']);
 
         //print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo)));
-        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo, 'totales'=>$totales)));
+        print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'totales'=>$totales)));
         exit;
         break;
 

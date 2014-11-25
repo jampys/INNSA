@@ -27,17 +27,17 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#apr_solicito").val(datas['solicito'][0]['APELLIDO']+' '+datas['solicito'][0]['NOMBRE']);
+                    $("#apr_solicito").val(datas['solicitud'][0]['APELLIDO_SOLICITO']+' '+datas['solicitud'][0]['NOMBRE_SOLICITO']);
 
-                    if(datas['autorizo'].length!=0){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
-                        $("#apr_autorizo").val(datas['autorizo'][0]['APELLIDO']+' '+datas['autorizo'][0]['NOMBRE']);
-                        $("#apr_autorizo_id").val(datas['autorizo'][0]['APR_AUTORIZO']);
+                    if(datas['solicitud'][0]['APELLIDO_AUTORIZO'] && datas['solicitud'][0]['NOMBRE_AUTORIZO']){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
+                        $("#apr_autorizo").val(datas['solicitud'][0]['APELLIDO_AUTORIZO']+' '+datas['solicitud'][0]['NOMBRE_AUTORIZO']);
+                        $("#apr_autorizo_id").val(datas['solicitud'][0]['ID_AUTORIZO']);
                         $('#btn_autorizar').attr("disabled", true);
                     }
 
-                    if(datas['aprobo'].length!=0){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
-                        $("#apr_aprobo").val(datas['aprobo'][0]['APELLIDO']+' '+datas['aprobo'][0]['NOMBRE']);
-                        $("#apr_autorizo_id").val(datas['aprobo'][0]['APR_APROBO']);
+                    if(datas['solicitud'][0]['APELLIDO_APROBO'] && datas['solicitud'][0]['NOMBRE_APROBO']){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
+                        $("#apr_aprobo").val(datas['solicitud'][0]['APELLIDO_APROBO']+' '+datas['solicitud'][0]['NOMBRE_APROBO']);
+                        $("#apr_aprobo_id").val(datas['solicitud'][0]['ID_APROBO']);
                         $('#btn_aprobar').attr("disabled", true);
                     }
 
