@@ -174,7 +174,7 @@ class Evaluacion
     public function getEvaluacionByAsignacion($id){
         $f=new Factory();
         $obj_ev=$f->returnsQuery();
-        $obj_ev->executeQuery("select * from usuarios");
+        $obj_ev->executeQuery("select * from cap_evaluacion ev where ev.id_asignacion = $id");
         return $obj_ev->fetchAll();
     }
 
@@ -182,17 +182,19 @@ class Evaluacion
         $f=new Factory();
         $obj_ev=$f->returnsQuery();
         $query="select co.objetivo_1, co.objetivo_2, co.objetivo_3 from cap_comunicacion co, asignacion_plan ap where co.id_asignacion = ap.id_asignacion and co.id_asignacion = $id";
-        //$query="select co.objetivo_1, co.objetivo_2, co.objetivo_3 from ";
         $obj_ev->executeQuery($query);
         return $obj_ev->fetchAll();
     }
 
-    public function updateComunicacion()
+    public function updateEvaluacion()
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$query="update cap_comunicacion set situacion='$this->situacion', objetivos='$this->objetivos', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
-        $query="update cap_comunicacion set situacion='$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
+        $query="update cap_evaluacion set conceptos_importantes='$this->conceptos_importantes', aspectos_faltaron='$this->aspectos_faltaron', mejorar_desempenio='$this->mejorar_desempenio',".
+            " ev_i_dominio=$this->ev_i_dominio, ev_i_lenguaje=$this->ev_i_lenguaje, ev_i_claridad=$this->ev_i_claridad, ev_i_material=$this->ev_i_material, ev_i_consultas=$this->ev_i_consultas, ev_i_didactico=$this->ev_i_didactico, ev_i_participacion=$this->ev_i_participacion,".
+            " ev_l_duracion=$this->ev_l_duracion, ev_l_comunicacion=$this->ev_l_comunicacion, ev_l_material=$this->ev_l_material, ev_l_break=$this->ev_l_break, ev_l_hotel=$this->ev_l_hotel,".
+            " obj_1=$this->obj_1, obj_2=$this->obj_2, obj_3=$this->obj_3, comentarios='$this->comentarios'".
+            " where id_evaluacion = $this->id_evaluacion";
         $obj_user->executeQuery($query);
         return $obj_user->getAffect(); // retorna todos los registros afectados
 

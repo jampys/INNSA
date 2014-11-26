@@ -82,7 +82,7 @@
                         <td><?php  echo $asig["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $asig["MODALIDAD"]; ?></td>
                         <td><?php  echo $asig["ESTADO"]; ?></td>
-                        <td class="center"><a href="#" title="Edición" class="edit_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>">Editar</a></td>
+                        <td class="center"><a href="#" title="Edición" class="edit_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/state-icon.png" width="14px" height="14px"></a></td>
                         <td class="center"><a href="#" title="Comunicación" class="comunicacion_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/Communication-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>

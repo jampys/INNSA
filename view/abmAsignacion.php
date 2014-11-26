@@ -399,8 +399,10 @@
                                         <option value="ASIGNADO">Asignado</option>
                                         <option value="CANCELADO">Cancelado</option>
                                         <option value="SUSPENDIDO">Suspendido</option>
-                                        <option value="EN CURSO">En curso</option>
-                                        <option value="FINALIZADO">Finalizado</option>
+                                        <option value="COMUNICADO">Comunicado</option>
+                                        <option value="NOTIFICADO">Notificado</option>
+                                        <option value="EVALUADO">Evaluado</option>
+                                        <option value="POST-EVALUADO">Post-Evaluado</option>
                                     </select>
                                 </div>
                             </div>

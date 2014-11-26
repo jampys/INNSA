@@ -110,30 +110,28 @@
             processData:true,
             success:function(datas){
 
-                if(datas[0]){ //si la consulta trae algun registro
+                if(datas['objetivos'][0]){ //si la consulta trae algun registro
 
                     globalOperacion='insertEvaluacion';
-                    //$("#comunicacion").data('id_evaluacion',datas[0]['ID_EVALUACION']);
-                    //console.log( $('#comunicacion').data('id_comunicacion'));
 
-                    if(datas[0]['OBJETIVO_1']){
+                    if(datas['objetivos'][0]['OBJETIVO_1']){
                         $("#objetivos_comunicacion").append('<div class="cbcheck">'+
                             '<div class="check"><input class="spinner" id="obj_1" name="obj_1" readonly></div>'+
-                            '<div class="lab">'+datas[0]['OBJETIVO_1']+'</div>'+
+                            '<div class="lab">'+datas['objetivos'][0]['OBJETIVO_1']+'</div>'+
                             '</div>'
                         );
                     }
-                    if(datas[0]['OBJETIVO_2']){
+                    if(datas['objetivos'][0]['OBJETIVO_2']){
                         $("#objetivos_comunicacion").append('<div class="cbcheck">'+
                             '<div class="check"><input class="spinner" id="obj_2" name="obj_2" readonly></div>'+
-                            '<div class="lab">'+datas[0]['OBJETIVO_2']+'</div>'+
+                            '<div class="lab">'+datas['objetivos'][0]['OBJETIVO_2']+'</div>'+
                             '</div>'
                         );
                     }
-                    if(datas[0]['OBJETIVO_3']){
+                    if(datas['objetivos'][0]['OBJETIVO_3']){
                         $("#objetivos_comunicacion").append('<div class="cbcheck">'+
                             '<div class="check"><input class="spinner" id="obj_3" name="obj_3" readonly></div>'+
-                            '<div class="lab">'+datas[0]['OBJETIVO_3']+'</div>'+
+                            '<div class="lab">'+datas['objetivos'][0]['OBJETIVO_3']+'</div>'+
                             '</div>'
                         );
                     }
@@ -145,9 +143,39 @@
                     });
 
                 }
-                else {
-                    alert("consulta no trajo resultados");
+
+                //si ya existe la evaluacion, la trae para editar
+                if(datas['evaluacion'][0]){
+                    globalOperacion='saveEvaluacion';
+                    $("#evaluacion").data('id_evaluacion',datas['evaluacion'][0]['ID_EVALUACION']);
+                    console.log( $('#evaluacion').data('id_evaluacion'));
+
+                    $("#conceptos_importantes").val(datas['evaluacion'][0]['CONCEPTOS_IMPORTANTES']);
+                    $("#aspectos_faltaron").val(datas['evaluacion'][0]['ASPECTOS_FALTARON']);
+                    $("#mejorar_desempenio").val(datas['evaluacion'][0]['MEJORAR_DESEMPENIO']);
+
+                    $("#obj_1").val(datas['evaluacion'][0]['OBJ_1']);
+                    $("#obj_2").val(datas['evaluacion'][0]['OBJ_2']);
+                    $("#obj_3").val(datas['evaluacion'][0]['OBJ_3']);
+
+                    $("#ev_i_dominio").val(datas['evaluacion'][0]['EV_I_DOMINIO']);
+                    $("#ev_i_lenguaje").val(datas['evaluacion'][0]['EV_I_LENGUAJE']);
+                    $("#ev_i_claridad").val(datas['evaluacion'][0]['EV_I_CLARIDAD']);
+                    $("#ev_i_material").val(datas['evaluacion'][0]['EV_I_MATERIAL']);
+                    $("#ev_i_consultas").val(datas['evaluacion'][0]['EV_I_CONSULTAS']);
+                    $("#ev_i_didactico").val(datas['evaluacion'][0]['EV_I_DIDACTICO']);
+                    $("#ev_i_participacion").val(datas['evaluacion'][0]['EV_I_PARTICIPACION']);
+
+                    $("#ev_l_duracion").val(datas['evaluacion'][0]['EV_L_DURACION']);
+                    $("#ev_l_comunicacion").val(datas['evaluacion'][0]['EV_L_COMUNICACION']);
+                    $("#ev_l_material").val(datas['evaluacion'][0]['EV_L_MATERIAL']);
+                    $("#ev_l_break").val(datas['evaluacion'][0]['EV_L_BREAK']);
+                    $("#ev_l_hotel").val(datas['evaluacion'][0]['EV_L_HOTEL']);
+
+                    $("#comentarios").val(datas['evaluacion'][0]['COMENTARIOS']);
+
                 }
+
 
 
             },
@@ -170,11 +198,12 @@
                             "notificado": $('#notificado').prop('checked')? 1:0
                         };
             }
-            else if (globalOperacion=="insertEvaluacion" || globalOperacion=="updateEvaluacion"){ //Para guardar (por insert o update)
+            else if (globalOperacion=="insertEvaluacion" || globalOperacion=="saveEvaluacion"){ //Para guardar (por insert o save(al editar))
 
                 var data={  "accion":"evaluacion",
                             "operacion": globalOperacion, //globalOperacion=insertEvaluacion o updateEvaluacion
                             "id_asignacion":globalId, //id_asignacion
+                            "id_evaluacion": $('#evaluacion').data('id_evaluacion'), //si no existe (porque es un insert) no pasa nada
                             "conceptos_importantes":$("#conceptos_importantes").val(),
                             "aspectos_faltaron":$("#aspectos_faltaron").val(),
                             "mejorar_desempenio":$("#mejorar_desempenio").val(),
@@ -328,6 +357,8 @@
                     "Cancelar": function() {
                         $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario
                         $('#form_evaluacion').validate().resetForm(); //para limpiar los errores validate
+                        //limpiar los spinners con objetivos agregados dinamicamente
+                        $('#objetivos_comunicacion .cbcheck').each(function(){ $(this).remove(); });
                         $(this).dialog("close");
                     }
                 },
@@ -342,6 +373,8 @@
                 close:function(){
                     $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                     $('#form_evaluacion').validate().resetForm(); //para limpiar los errores validate
+                    //limpiar los spinners con objetivos agregados dinamicamente
+                    $('#objetivos_comunicacion .cbcheck').each(function(){ $(this).remove(); });
                 }
 
             });
@@ -359,7 +392,7 @@
 
             // evaluacion_link
             $(document).on("click", ".evaluacion_link", function(){
-                globalOperacion='evaluacion';
+                //globalOperacion='evaluacion';
                 globalId=$(this).attr('id'); //id_asignacion
                 editarEvaluacion(globalId);
                 $('#evaluacion').dialog('open');

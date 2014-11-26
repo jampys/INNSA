@@ -41,63 +41,47 @@ switch($operacion){
         break;
 
     case 'updateEvaluacion':
-        //$view->e=new Evaluacion();
-
-        $rta=$view->u->getObjetivosEvaluacionByAsignacion($_POST['id_asignacion']);
-        print_r(json_encode($rta));
+        $evaluacion=$view->u->getEvaluacionByAsignacion($_POST['id_asignacion']);
+        $objetivos=$view->u->getObjetivosEvaluacionByAsignacion($_POST['id_asignacion']);
+        print_r(json_encode(array('evaluacion'=>$evaluacion, 'objetivos'=>$objetivos)));
         exit;
         break;
 
 
-    case 'updateComunicacionNotificacion':
-        $view->c=new Comunicacion();
+    case 'saveEvaluacion':
 
-        $view->c->setIdComunicacion($_POST['id_comunicacion']);
-        $view->c->setNotificado($_POST['notificado']);
+        $view->u->setIdEvaluacion($_POST['id_evaluacion']);
 
-        $rta=$view->c->updateComunicacionNotificacion();
+        $view->u->setConceptosImportantes($_POST['conceptos_importantes']);
+        $view->u->setAspectosFaltaron($_POST['aspectos_faltaron']);
+        $view->u->setMejorarDesempenio($_POST['mejorar_desempenio']);
+        $view->u->setEvIDominio($_POST['ev_i_dominio']);
+        $view->u->setEvILenguaje($_POST['ev_i_lenguaje']);
+        $view->u->setEvIClaridad($_POST['ev_i_claridad']);
+        $view->u->setEvIMaterial($_POST['ev_i_material']);
+        $view->u->setEvIConsultas($_POST['ev_i_consultas']);
+        $view->u->setEvIDidactico($_POST['ev_i_didactico']);
+        $view->u->setEvIParticipacion($_POST['ev_i_participacion']);
+
+        $view->u->setEvLDuracion($_POST['ev_l_duracion']);
+        $view->u->setEvLComunicacion($_POST['ev_l_comunicacion']);
+        $view->u->setEvLMaterial($_POST['ev_l_material']);
+        $view->u->setEvLBreak($_POST['ev_l_break']);
+        $view->u->setEvLHotel($_POST['ev_l_hotel']);
+
+        //si existe objetivo ....., sino null
+        $view->u->setObj1(isset($_POST['obj_1'])? $_POST['obj_1'] : 'null');
+        $view->u->setObj2(isset($_POST['obj_2'])? $_POST['obj_2'] : 'null');
+        $view->u->setObj3(isset($_POST['obj_3'])? $_POST['obj_3'] : 'null');
+
+        $view->u->setComentarios($_POST['comentarios']);
+
+        $rta=$view->u->updateEvaluacion();
         print_r(json_encode($rta));
         exit;
         break;
 
-
-    case 'saveComunicacion':
-        $view->c=new Comunicacion();
-
-        //$view->c->setIdAsignacion($_POST['id']);
-        $view->c->setIdComunicacion($_POST['id_comunicacion']);
-        $view->c->setSituacion($_POST['situacion']);
-        //$view->c->setObjetivos($_POST['objetivos']);
-        $view->c->setObjetivo1($_POST['objetivo_1']);
-        $view->c->setObjetivo2($_POST['objetivo_2']);
-        $view->c->setObjetivo3($_POST['objetivo_3']);
-        $view->c->setIndicadoresExito($_POST['indicadores_exito']);
-        $view->c->setCompromiso($_POST['compromiso']);
-        $view->c->setComunico($_POST['comunico']);
-
-        $rta=$view->c->updateComunicacion();
-        print_r(json_encode($rta));
-        exit;
-        break;
-
-
-    case 'update':
-
-        $rta=$view->u->getAsignacionPlanById($_POST['id']);
-        print_r(json_encode($rta));
-        exit;
-        break;
-
-    case 'save':
-        $view->u->setIdAsignacion($_POST['id']);
-        $view->u->setEstado($_POST['estado']);
-        $view->u->setEstadoCambio($_POST['estado_cambio']);
-
-        $rta=$view->u->updateEstadoAsignacionPlan();
-        print_r(json_encode($rta));
-        exit;
-        break;
-
+/*
     case 'refreshGrid':
         $view->asignacion=$view->u->getAsignacionPlan();
         include_once('view/abmAsignacionGrid.php');
@@ -109,10 +93,12 @@ switch($operacion){
         $view->asignacion=$view->u->getAsignacionPlan();
         break;
 
+*/
+
 }
 
 
-$view->content="view/abmAsignacion.php";
+//$view->content="view/abmAsignacion.php";
 
 
 ?>
