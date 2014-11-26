@@ -115,5 +115,71 @@ html,body{
 
 
 
+/* estilo usado para los spinners de la evaluacion de la capacitacion */
+.spinners{
+    float: left;
+    width: 49%;
+    display: inline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 1px ;
+}
+
+.spinners .cbcheck{
+    clear: both;
+}
+
+.spinners .cbtitulo{
+    clear: both;
+    text-align: left;
+    padding-bottom: 5px;
+}
+.spinners .check{
+    float: left;
+    width: 38px;
+    height: 15px;
+}
+
+.spinners .lab{
+    float: left;
+    padding: 2px;
+    clear: right;
+}
+
+
+/* estilos para los spinner de los objetivos */
+.spinners_objetivos{
+    float: left;
+    width: 100%;
+    display: inline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 1px ;
+}
+
+.spinners_objetivos .cbcheck{
+    clear: both;
+}
+
+.spinners_objetivos .cbtitulo{
+    clear: both;
+    text-align: left;
+    padding-bottom: 5px;
+}
+.spinners_objetivos .check{
+    float: left;
+    width: 38px;
+    height: 15px;
+}
+
+.spinners_objetivos .lab{
+    float: left;
+    padding: 2px;
+    clear: right;
+}
+
+
+
+
 
 

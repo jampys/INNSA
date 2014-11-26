@@ -1,6 +1,6 @@
 <!doctype html>
 
-<head>
+<head xmlns="http://www.w3.org/1999/html">
     <meta charset="UTF-8">
 
 
@@ -66,7 +66,8 @@
                     $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
                     console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']);
-                    $("#objetivos").val(datas[0]['OBJETIVOS']);
+                    //$("#objetivos").val(datas[0]['OBJETIVOS']);
+                    $("#objetivos").val(datas[0]['OBJETIVO_1']+'\n'+datas[0]['OBJETIVO_2']+'\n'+datas[0]['OBJETIVO_3']);
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
                     $("#compromiso").val(datas[0]['COMPROMISO']);
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
@@ -76,6 +77,78 @@
                 else{
                     //setComunicador();
                 }
+
+            },
+            type:"POST",
+            timeout:3000000,
+            crossdomain:true
+
+        });
+
+    }
+
+
+
+    function editarEvaluacion(id_asignacion){
+        //alert(id_asignacion);
+
+        $.ajax({
+            url:"index.php",
+            data:{  "accion":"evaluacion",
+                    "operacion":"updateEvaluacion",
+                    "id_asignacion":id_asignacion
+            },
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",//xml,html,script,json
+            error:function(){
+
+                $("#dialog-msn").dialog("open");
+                $("#message").html("ha ocurrido un error");
+
+            },
+            ifModified:false,
+            processData:true,
+            success:function(datas){
+
+                if(datas[0]){ //si la consulta trae algun registro
+
+                    globalOperacion='insertEvaluacion';
+                    //$("#comunicacion").data('id_evaluacion',datas[0]['ID_EVALUACION']);
+                    //console.log( $('#comunicacion').data('id_comunicacion'));
+
+                    if(datas[0]['OBJETIVO_1']){
+                        $("#objetivos_comunicacion").append('<div class="cbcheck">'+
+                            '<div class="check"><input class="spinner" id="obj_1" name="obj_1" readonly></div>'+
+                            '<div class="lab">'+datas[0]['OBJETIVO_1']+'</div>'+
+                            '</div>'
+                        );
+                    }
+                    if(datas[0]['OBJETIVO_2']){
+                        $("#objetivos_comunicacion").append('<div class="cbcheck">'+
+                            '<div class="check"><input class="spinner" id="obj_2" name="obj_2" readonly></div>'+
+                            '<div class="lab">'+datas[0]['OBJETIVO_2']+'</div>'+
+                            '</div>'
+                        );
+                    }
+                    if(datas[0]['OBJETIVO_3']){
+                        $("#objetivos_comunicacion").append('<div class="cbcheck">'+
+                            '<div class="check"><input class="spinner" id="obj_3" name="obj_3" readonly></div>'+
+                            '<div class="lab">'+datas[0]['OBJETIVO_3']+'</div>'+
+                            '</div>'
+                        );
+                    }
+
+
+                    $(".spinner").spinner({
+                        max: 5,
+                        min: 1
+                    });
+
+                }
+                else {
+                    alert("consulta no trajo resultados");
+                }
+
 
             },
             type:"POST",
@@ -97,20 +170,38 @@
                             "notificado": $('#notificado').prop('checked')? 1:0
                         };
             }
-            else if (globalOperacion=="evaluacion"){ //Para guardar la evaluacion
+            else if (globalOperacion=="insertEvaluacion" || globalOperacion=="updateEvaluacion"){ //Para guardar (por insert o update)
 
-                var data={  "accion":"asignacion",
-                            "operacion":"insertComunicacion",
-                            "id":globalId, //id_asignacion
-                            "situacion":$("#situacion").val(),
-                            "objetivos":$("#objetivos").val(),
-                            "indicadores_exito":$("#indicadores_exito").val(),
-                            "compromiso":$("#compromiso").val(),
-                            "comunico":$("#comunico_id").val()
+                var data={  "accion":"evaluacion",
+                            "operacion": globalOperacion, //globalOperacion=insertEvaluacion o updateEvaluacion
+                            "id_asignacion":globalId, //id_asignacion
+                            "conceptos_importantes":$("#conceptos_importantes").val(),
+                            "aspectos_faltaron":$("#aspectos_faltaron").val(),
+                            "mejorar_desempenio":$("#mejorar_desempenio").val(),
+                            "ev_i_dominio":$("#ev_i_dominio").val(),
+                            "ev_i_lenguaje":$("#ev_i_lenguaje").val(),
+                            "ev_i_claridad":$("#ev_i_claridad").val(),
+                            "ev_i_material":$("#ev_i_material").val(),
+                            "ev_i_consultas":$("#ev_i_consultas").val(),
+                            "ev_i_didactico":$("#ev_i_didactico").val(),
+                            "ev_i_participacion":$("#ev_i_participacion").val(),
+
+                            "ev_l_duracion":$("#ev_l_duracion").val(),
+                            "ev_l_comunicacion":$("#ev_l_comunicacion").val(),
+                            "ev_l_material":$("#ev_l_material").val(),
+                            "ev_l_break":$("#ev_l_break").val(),
+                            "ev_l_hotel":$("#ev_l_hotel").val(),
+
+                            "obj_1":$("#obj_1").val(),
+                            "obj_2":$("#obj_2").val(),
+                            "obj_3":$("#obj_3").val(),
+
+                            "comentarios":$("#comentarios").val()
 
                         };
 
             }
+
 
             $.ajax({
                 url: "index.php",
@@ -142,6 +233,11 @@
 
 
         $(document).ready(function(){
+
+            $( ".spinner" ).spinner({
+                    max: 5,
+                    min: 1
+                });
 
 
             // menu superfish
@@ -216,22 +312,22 @@
             // evaluacion
             $('#evaluacion').dialog({
                 autoOpen: false,
-                width: 600,
+                width: 680,
                 modal:true,
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
                         //if($("#form").valid()){ //OJO valid() devuelve un booleano
                         guardar();
-                        $("#comunicacion").dialog("close");
+                        $("#evaluacion").dialog("close");
                         //Llamada ajax para refrescar la grilla
                         //$('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
                         //}
 
                     },
                     "Cancelar": function() {
-                        $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario
-                        $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                        $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario
+                        $('#form_evaluacion').validate().resetForm(); //para limpiar los errores validate
                         $(this).dialog("close");
                     }
                 },
@@ -244,8 +340,8 @@
                     duration: 1000
                 },
                 close:function(){
-                    $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
-                    $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                    $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                    $('#form_evaluacion').validate().resetForm(); //para limpiar los errores validate
                 }
 
             });
@@ -265,7 +361,7 @@
             $(document).on("click", ".evaluacion_link", function(){
                 globalOperacion='evaluacion';
                 globalId=$(this).attr('id'); //id_asignacion
-                editarComunicacion(globalId);
+                editarEvaluacion(globalId);
                 $('#evaluacion').dialog('open');
                 return false;
             });
@@ -353,7 +449,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivos: Que esperamos lograr con esto</label><br/>
-                                    <textarea type="text" name="objetivos" id="objetivos" rows="5" readonly/></textarea>
+                                    <textarea type="text" name="objetivos" id="objetivos" rows="4" readonly/></textarea>
                                 </div>
                             </div>
 
@@ -429,7 +525,7 @@
 
 
 
-<!-- ui-comunicacion -->
+<!-- evaluacion -->
 <div id="evaluacion" >
 
     <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
@@ -439,7 +535,7 @@
         <div class="box">
 
             <div class="block" id="forms">
-                <form id="form_comunicacion" action="">
+                <form id="form_evaluacion" action="">
                     <fieldset>
                         <legend>Datos Registro</legend>
 
@@ -447,7 +543,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Mencione los tres conceptos mas importantes que haya aprendido en la actividad</label><br/>
-                                    <textarea type="text" name="situacion" id="situacion" rows="5" readonly/></textarea>
+                                    <textarea type="text" name="conceptos_importantes" id="conceptos_importantes" rows="5" /></textarea>
                                 </div>
                             </div>
 
@@ -458,7 +554,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Mencione aspectos que no le gustaron / faltaron / no cumplió expectativas</label><br/>
-                                    <textarea type="text" name="objetivos" id="objetivos" rows="5" readonly/></textarea>
+                                    <textarea type="text" name="aspectos_faltaron" id="aspectos_faltaron" rows="5" /></textarea>
                                 </div>
                             </div>
 
@@ -469,7 +565,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Mencione tres maneras concretas en que cree puede mejorar su desempeño como resultado</label><br/>
-                                    <textarea type="text" name="indicadores_exito" id="indicadores_exito" rows="5" readonly/></textarea>
+                                    <textarea type="text" name="mejorar_desempenio" id="mejorar_desempenio" rows="5" /></textarea>
                                 </div>
                             </div>
 
@@ -478,28 +574,101 @@
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
-                                <div class="column_content">
                                     <label>Los siguientes fueron sus objetivos fijados, clasifique los mismos con una escala del 1 al 5 según considere usted que ha alcanzado los mismos</label><br/>
-                                    <textarea type="text" name="compromiso" id="compromiso" rows="5" readonly/></textarea>
-                                </div>
+                                    <div id="objetivos_comunicacion" class="spinners_objetivos">
+                                        <!-- se generan dinamicamente -->
+                                    </div>
                             </div>
 
                         </div>
 
 
                         <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Comunicó: </label>
-                                    <input type="text" name="comunico" id="comunico" readonly/>
-                                    <input type="hidden" name="comunico_id" id="comunico_id"/>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
+                            <div class="spinners">
+                                <div class="cbtitulo">Evaluación del instructor / Capacitación:</div>
 
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_dominio" name="ev_i_dominio" readonly></div>
+                                    <div class="lab">Demuestra dominio sobre el tema</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_lenguaje" name="ev_i_lenguaje" readonly></div>
+                                    <div class="lab">Utiliza lenguaje / términos adecuados</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_claridad" name="ev_i_claridad" readonly></div>
+                                    <div class="lab">Claridad en la exposición de temas</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_material" name="ev_i_material" readonly></div>
+                                    <div class="lab">El material de apoyo es bueno</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_consultas" name="ev_i_consultas" readonly></div>
+                                    <div class="lab">Responde con claridad consultas</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_didactico" name="ev_i_didactico" readonly></div>
+                                    <div class="lab">La capacitación es didáctica y entretenida</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_i_participacion" name="ev_i_participacion" readonly></div>
+                                    <div class="lab">Invita a la participación e integración</div>
                                 </div>
                             </div>
+
+
+                            <div class="spinners">
+                                <div class="cbtitulo">Evaluación logística de capacitación:</div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_l_duracion" name="ev_l_duracion" readonly></div>
+                                    <div class="lab">La duración de la actividad fue satisfactoria</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_l_comunicacion" name="ev_l_comunicacion" readonly></div>
+                                    <div class="lab">Fue informado con tiempo de su participación</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_l_material" name="ev_l_material" readonly></div>
+                                    <div class="lab">El material recibido fue adecuado</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_l_break" name="ev_l_break" readonly></div>
+                                    <div class="lab">Los tiempos de descanso fueron suficientes</div>
+                                </div>
+
+                                <div class="cbcheck">
+                                    <div class="check"><input class="spinner" id="ev_l_hotel" name="ev_l_hotel" readonly></div>
+                                    <div class="lab">Hotel / hospedaje</div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <label>Escala obj: [1] Pobre, [2] Regular-No alcanzó obj., [3] Bueno-Alcanzó obj., [4] Muy bueno, [5] Supera ampliamente</label>
+                        <p></p>
+
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Comentarios</label><br/>
+                                    <textarea type="text" name="comentarios" id="comentarios" rows="3" /></textarea>
+                                </div>
+                            </div>
+
                         </div>
 
 

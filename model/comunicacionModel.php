@@ -6,7 +6,10 @@ class Comunicacion
     var $id_comunicacion;
     var $id_asignacion;
     var $situacion;
-    var $objetivos;
+    //var $objetivos;
+    var $objetivo_1;
+    var $objetivo_2;
+    var $objetivo_3;
     var $indicadores_exito;
     var $compromiso;
     var $comunico;
@@ -23,8 +26,17 @@ class Comunicacion
     function getSituacion()
     { return $this->situacion;}
 
-    function getObjetivos()
-    { return $this->objetivos;}
+    /*function getObjetivos()
+    { return $this->objetivos;}*/
+
+    function getObjetivo1()
+    { return $this->objetivo_1;}
+
+    function getObjetivo2()
+    { return $this->objetivo_2;}
+
+    function getObjetivo3()
+    { return $this->objetivo_3;}
 
     function getIndicadoresExito()
     { return $this->indicadores_exito;}
@@ -49,8 +61,17 @@ class Comunicacion
     function setSituacion($val)
     {  $this->situacion=$val;}
 
-    function setObjetivos($val)
-    {  $this->objetivos=$val;}
+    /*function setObjetivos($val)
+    {  $this->objetivos=$val;}*/
+
+    function setObjetivo1($val)
+    {  $this->objetivo_1=$val;}
+
+    function setObjetivo2($val)
+    {  $this->objetivo_2=$val;}
+
+    function setObjetivo3($val)
+    {  $this->objetivo_3=$val;}
 
     function setIndicadoresExito($val)
     {  $this->indicadores_exito=$val;}
@@ -81,7 +102,8 @@ class Comunicacion
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="update cap_comunicacion set situacion='$this->situacion', objetivos='$this->objetivos', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
+        //$query="update cap_comunicacion set situacion='$this->situacion', objetivos='$this->objetivos', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
+        $query="update cap_comunicacion set situacion='$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
         $obj_user->executeQuery($query);
         return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -101,8 +123,10 @@ class Comunicacion
     {
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $query="insert into cap_comunicacion(id_asignacion, situacion, objetivos, indicadores_exito, compromiso, comunico)".
-            "values($this->id_asignacion, '$this->situacion', '$this->objetivos' , '$this->indicadores_exito', '$this->compromiso', '$this->comunico')";
+        /*$query="insert into cap_comunicacion(id_asignacion, situacion, objetivos, indicadores_exito, compromiso, comunico)".
+            "values($this->id_asignacion, '$this->situacion', '$this->objetivos' , '$this->indicadores_exito', '$this->compromiso', '$this->comunico')"; */
+        $query="insert into cap_comunicacion(id_asignacion, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, comunico)".
+            "values($this->id_asignacion, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso', '$this->comunico')";
         $obj_emp->executeQuery($query);
         return $obj_emp->getAffect(); // retorna todos los registros afectados
 

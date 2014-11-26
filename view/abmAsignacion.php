@@ -65,7 +65,10 @@
                     $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
                     //console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']);
-                    $("#objetivos").val(datas[0]['OBJETIVOS']);
+                    //$("#objetivos").val(datas[0]['OBJETIVOS']);
+                    $("#objetivo_1").val(datas[0]['OBJETIVO_1']);
+                    $("#objetivo_2").val(datas[0]['OBJETIVO_2']);
+                    $("#objetivo_3").val(datas[0]['OBJETIVO_3']);
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
                     $("#compromiso").val(datas[0]['COMPROMISO']);
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
@@ -106,7 +109,10 @@
                             "operacion":"insertComunicacion",
                             "id":globalId, //id_asignacion
                             "situacion":$("#situacion").val(),
-                            "objetivos":$("#objetivos").val(),
+                            //"objetivos":$("#objetivos").val(),
+                            "objetivo_1":$("#objetivo_1").val(),
+                            "objetivo_2":$("#objetivo_2").val(),
+                            "objetivo_3":$("#objetivo_3").val(),
                             "indicadores_exito":$("#indicadores_exito").val(),
                             "compromiso":$("#compromiso").val(),
                             "comunico":$("#comunico_id").val()
@@ -121,7 +127,10 @@
                             //"id":globalId, //id_asignacion
                             "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
                             "situacion":$("#situacion").val(),
-                            "objetivos":$("#objetivos").val(),
+                            //"objetivos":$("#objetivos").val(),
+                            "objetivo_1":$("#objetivo_1").val(),
+                            "objetivo_2":$("#objetivo_2").val(),
+                            "objetivo_3":$("#objetivo_3").val(),
                             "indicadores_exito":$("#indicadores_exito").val(),
                             "compromiso":$("#compromiso").val(),
                             "comunico":$("#comunico_id").val()
@@ -449,7 +458,9 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivos: Que esperamos lograr con esto</label><br/>
-                                    <textarea type="text" name="objetivos" id="objetivos" rows="5"/></textarea>
+                                    <textarea type="text" name="objetivo_1" id="objetivo_1" rows="1"/></textarea>
+                                    <textarea type="text" name="objetivo_2" id="objetivo_2" rows="1"/></textarea>
+                                    <textarea type="text" name="objetivo_3" id="objetivo_3" rows="1"/></textarea>
                                 </div>
                             </div>
 
