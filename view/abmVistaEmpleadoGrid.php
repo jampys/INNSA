@@ -83,8 +83,8 @@
                         <td><?php  echo $asig["DURACION"].' '.$asig["UNIDAD"]; ?></td>
                         <td><?php  echo $asig["MODALIDAD"]; ?></td>
                         <td><?php  echo $asig["ESTADO"]; ?></td>
-                        <td class="center"><a href="#" title="Comunicación" class="comunicacion_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/Communication-icon.png" width="15px" height="15px"></a></td>
-                        <td class="center"><a href="#" title="Evaluación" class="evaluacion_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/tests-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="#" title="Comunicación" class="<?php echo ($asig["ESTADO"]=='ASIGNADO' ||$asig["ESTADO"]=='SUSPENDIDO' || $asig["ESTADO"]=='CANCELADO')? 'link-desactivado' : 'comunicacion_link' ?>" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/Communication-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="#" title="Evaluación" class="<?php echo ($asig["ESTADO"]=='ASIGNADO' ||$asig["ESTADO"]=='SUSPENDIDO' || $asig["ESTADO"]=='CANCELADO' || $asig["ESTADO"]=='COMUNICADO' )? 'link-desactivado' : 'evaluacion_link' ?>" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/tests-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>
 

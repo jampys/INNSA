@@ -40,6 +40,12 @@ switch($operacion){
         $view->c->setCompromiso($_POST['compromiso']);
         $view->c->setComunico($_POST['comunico']);
 
+        //cambio esta asignacion a COMUNICADA
+        $view->u->setIdAsignacion($_POST['id']);
+        $view->u->setEstado($_POST['estado']);
+        $view->u->setEstadoCambio($_POST['estado_cambio']);
+        $view->u->updateEstadoAsignacionPlan();
+
         $rta=$view->c->insertComunicacion();
         print_r(json_encode($rta));
         exit;

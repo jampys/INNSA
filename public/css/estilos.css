@@ -99,6 +99,7 @@ html,body{
 /* estilo para tabla donde se cargan los planes de capacitacion. Archivo abmCap_solic.php */
 .tablaSolicitud tbody tr td{
     background-color: #ffffff;
+    vertical-align: middle;
     /*text-align: center; */
 }
 
@@ -177,6 +178,17 @@ html,body{
     padding: 2px;
     clear: right;
 }
+
+
+
+/* para cambiar el estado a los img de los links */
+.link-desactivado img {
+    filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+}
+
+
 
 
 

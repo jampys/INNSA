@@ -196,7 +196,7 @@ class Cap_Solic
     public function getCapSolicById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select sc.id_solicitud, sc.situacion_actual, sc.situacion_deseada, sc.objetivo_medible_1, sc.objetivo_medible_2, sc.objetivo_medible_3,".
+        $query="select sc.id_solicitud, sc.estado, sc.situacion_actual, sc.situacion_deseada, sc.objetivo_medible_1, sc.objetivo_medible_2, sc.objetivo_medible_3,".
             " sc.periodo, em.apellido, em.nombre,".
             " sc.dp_ingreso, sc.dp_crecimiento, sc.dp_promocion, sc.dp_futura_transfer, sc.dp_sustitucion_temp,".
             " sc.di_nuevas_tecnicas, sc.di_crecimiento, sc.di_competencias_emp,".
