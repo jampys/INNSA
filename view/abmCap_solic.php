@@ -79,7 +79,7 @@
                         '</tr>');
                         if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
                             //$('#table_plan tbody').find('a').eq(1).removeClass('eliminar_plan').addClass('link-desactivado');
-                            $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado');
+                            $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         }
                     });
 
@@ -91,7 +91,17 @@
                         '<td>'+datas['propuestas'][indice]['NOMBRE']+'</td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
+                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
+                            $('#table_curso tbody').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                        }
                     });
+
+                    //Si esta aprobada
+                    if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
+                        $('#new-plan').removeClass('new-plan-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
+
+                    }
+
 
 
                 },
@@ -300,6 +310,9 @@
                    //limpiar la tabla de asignaciones de planes y tabla de cursos propuestos
                    $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                    $('#table_curso tbody tr').each(function(){ $(this).remove(); });
+
+                    //Vuelve a habilitar el link new plan, por si fue desactivado
+                   $('#new-plan').removeClass('link-desactivado').addClass('new-plan-link');
                 }
 
 
@@ -380,7 +393,7 @@
             });
 
             //Al presionar la x para eliminar planes de la solicitud
-            $(document).on("click",".eliminar_plan",function(){
+            $(document).on("click",".eliminar_plan",function(e){
                 //pregunta si la fila tiene el atributo id_asignacion.
                 //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
                 if($(this).closest('tr').attr('id_asignacion')){
@@ -391,6 +404,7 @@
 
                     $(this).closest('tr').remove(); //elimina la fila
                 }
+                e.preventDefault(); //para evitar que suba el foco al eliminar un plan
 
             });
 
@@ -416,7 +430,8 @@
 
 
             // new plan link
-            $('#new-plan-link').click(function(){
+            //$('#new-plan-link').click(function(){
+            $(document).on('click', '.new-plan-link', function(){
                 //$('#asignar_plan').dialog('open');
                 $('#asignar_plan').data('operacion', 'insert').dialog('open');
                 return false;
@@ -519,7 +534,7 @@
 
 
             //Al presionar la x para eliminar cursos propuestos de la solicitud
-            $(document).on("click",".eliminar_curso",function(){
+            $(document).on("click",".eliminar_curso",function(e){
                 //pregunta si la fila tiene el atributo id_propuesta.
                 //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
                 if($(this).closest('tr').attr('id_propuesta')){
@@ -528,7 +543,7 @@
                 }else{
                     $(this).closest('tr').remove(); //elimina la fila
                 }
-
+                e.preventDefault(); //para evitar que suba el foco al eliminar un curso propuesto
             });
 
 
@@ -556,8 +571,8 @@
                     });
                 },
                 minLength: 2,
-                select: function(event, ui) {
-                    $('#empleado_id').val(ui.item.id);
+                change: function(event, ui) {
+                    $('#empleado_id').val(ui.item? ui.item.id : '');
                     $('#empleado').val(ui.item.label);
                 }
             });
@@ -595,12 +610,17 @@
     //Declaracion de funcion para validar
     $.validar=function(){
         $('#form').validate({
+            /*lo pone en vacio, ya que por defecto es igual a hiddenn  (default: ":hidden"). Y asi evito que ignore el campo oculto http://jqueryvalidation.org/validate/ */
+            ignore:"",
             rules: {
                 periodo: {
                     required: true
                 },
                 empleado: {
                     required: true
+                },
+                empleado_id:{
+                    required: function(item){return $('#empleado').val().length>0;}
                 },
                 situacion_actual: {
                     required: true
@@ -616,22 +636,18 @@
                 },
                 objetivo_medible_3:{
                     required: true
-                },
-                apr_solicito:{
-                    required: true
                 }
 
             },
             messages:{
                 periodo: "Seleccione el periodo",
-                empleado: "Ingrese el empleado",
+                empleado: "Seleccione un empleado",
+                empleado_id: "Seleccione un empleado sugerido",
                 situacion_actual: "Ingrese la situación actual",
                 situacion_deseada: "Ingrese la situacion deseada",
                 objetivo_medible_1: "Ingrese el objetivo medible 1",
                 objetivo_medible_2: "Ingrese el objetivo medible 2",
-                objetivo_medible_3: "Ingrese el objetivo medible 3",
-                apr_solicito: "Ingrese el solicitante"
-
+                objetivo_medible_3: "Ingrese el objetivo medible 3"
             }
 
         });
@@ -649,16 +665,19 @@
                 np_viaticos: {
                     required: true,
                     number: true
+                },
+                np_reemplazo: {
+                    required: true
                 }
 
             },
             messages:{
                 np_plan_capacitacion: "Seleccione un plan de capacitación",
-                np_viaticos: "Ingrese los viaticos"
+                np_viaticos: "Ingrese los viaticos",
+                np_reemplazo: "Seleccione el reemplazo"
             }
 
         });
-
 
     };
 
@@ -700,7 +719,7 @@
                                 <div class="column_content">
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
-                                        <option value="">Ingrese el periodo</option>
+                                        <option value="">Seleccione el periodo</option>
                                         <option value="2010">2010</option>
                                         <option value="2011">2011</option>
                                         <option value="2012">2012</option>
@@ -866,7 +885,7 @@
                                     <table id="table_curso" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td>Curso</td>
+                                            <td style="width: 89%">Curso</td>
                                             <td style="text-align: center">Eliminar</td>
                                         </tr>
                                         </thead>
@@ -884,7 +903,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Asignación de planes: </label><br/>
-                                    <a id="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
+                                    <a id="new-plan" class="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
                                 </div>
                             </div>
                             <div class="eight column">

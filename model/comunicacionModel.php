@@ -93,8 +93,8 @@ class Comunicacion
     public function getComunicacionByAsignacion($id){
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        //$obj_emp->executeQuery("select * from cap_comunicacion where id_asignacion=$id");
-        $obj_emp->executeQuery("select * from cap_comunicacion, empleados where cap_comunicacion.comunico = empleados.id_empleado and id_asignacion=$id");
+        //$obj_emp->executeQuery("select * from cap_comunicacion, empleados where cap_comunicacion.comunico = empleados.id_empleado and id_asignacion=$id");
+        $obj_emp->executeQuery("select * from cap_comunicacion co, empleados em, asignacion_plan ap where co.comunico = em.id_empleado and co.id_asignacion = ap.id_asignacion and ap.id_asignacion=$id");
         return $obj_emp->fetchAll();
     }
 

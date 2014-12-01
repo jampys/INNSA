@@ -37,7 +37,6 @@ class Cap_Plan
     public function getCapPlanById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-
         $obj_cp->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso and plan_capacitacion.id_plan=$id");
         return $obj_cp->fetchAll();
     }

@@ -206,7 +206,15 @@
                 //inline: true,
                 dateFormat:"dd/mm/yy"
             });
-            //$('#fecha').datepicker('setDate', 'today');
+
+            /*este es un truco para hacer que el plugin validate valide las fechas readonly. Si se pone el atributo readonly en el input
+             no funciona, por eso se hace de esta manera con eventos */
+            $(document).on("focusin", "#fecha", function(event) {
+                $(this).prop('readonly', true);
+            });
+            $(document).on("focusout", "#fecha", function(event) {
+                $(this).prop('readonly', false);
+            });
 
 
             //hover states on the static widgets
@@ -231,6 +239,9 @@
                 nombre: {
                     required: true
                 },
+                n_legajo: {
+                    digits: true
+                },
                 cuil: {
                     required: true,
                     digits: true
@@ -250,17 +261,22 @@
                 },
                 activo: {
                     required: true
+                },
+                email: {
+                    maxlength: 100
                 }
             },
             messages:{
                 apellido: "Ingrese el apellido",
                 nombre: "Ingrese el nombre",
+                n_legajo: "Ingrese solo números",
                 cuil: "Ingrese el CUIL (sin guiones)",
                 lugar_trabajo: "Seleccione el lugar de trabajo",
                 empresa: "Seleccione la empresa",
                 division: "Seleccione la division",
                 fecha: "Seleccione la fecha de ingreso",
-                activo: "Seleccione el estado de habilitación"
+                activo: "Seleccione el estado de habilitación",
+                email: "Ingrese como máximo 100 caracteres"
             }
 
         });
@@ -353,7 +369,7 @@
                                     <label>Empresa: </label>
                                     <select name="empresa" id="empresa">
                                         <option value="">Ingrese una empresa</option>
-                                        <option value="INNOVISION">Innovision</option>
+                                        <option value="INNOVISION" selected>Innovision</option>
                                     </select>
                                 </div>
                             </div>
@@ -410,7 +426,7 @@
                                     <select name="activo" id="activo">
                                         <option value="">Ingrese el estado</option>
                                         <option value="0">Inactivo</option>
-                                        <option value="1">Activo</option>
+                                        <option value="1" selected>Activo</option>
                                     </select>
                                 </div>
                             </div>

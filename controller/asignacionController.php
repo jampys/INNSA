@@ -29,7 +29,6 @@ switch($operacion){
 
     case 'insertComunicacion':
         $view->c=new Comunicacion();
-
         $view->c->setIdAsignacion($_POST['id']);
         $view->c->setSituacion($_POST['situacion']);
         //$view->c->setObjetivos($_POST['objetivos']);
@@ -40,7 +39,7 @@ switch($operacion){
         $view->c->setCompromiso($_POST['compromiso']);
         $view->c->setComunico($_POST['comunico']);
 
-        //cambio esta asignacion a COMUNICADA
+        //cambio la asignacion a COMUNICADA
         $view->u->setIdAsignacion($_POST['id']);
         $view->u->setEstado($_POST['estado']);
         $view->u->setEstadoCambio($_POST['estado_cambio']);
@@ -62,9 +61,14 @@ switch($operacion){
 
     case 'updateComunicacionNotificacion':
         $view->c=new Comunicacion();
-
         $view->c->setIdComunicacion($_POST['id_comunicacion']);
         $view->c->setNotificado($_POST['notificado']);
+
+        //cambio esta asignacion a NOTIFICADO
+        $view->u->setIdAsignacion($_POST['id']);
+        $view->u->setEstado($_POST['estado']);
+        $view->u->setEstadoCambio($_POST['estado_cambio']);
+        $view->u->updateEstadoAsignacionPlan();
 
         $rta=$view->c->updateComunicacionNotificacion();
         print_r(json_encode($rta));

@@ -57,9 +57,10 @@
                     });
 
                     //validaciones previas
-                    var viaticos= (datas['totales'][0]['VIATICOS'])? parseFloat(datas['totales'][0]['VIATICOS']) : 0;
-                    var pesos= (datas['totales'][0]['PESOS'])? parseFloat(datas['totales'][0]['PESOS']) : 0;
-                    var dolares= (datas['totales'][0]['DOLARES'])? parseFloat(datas['totales'][0]['DOLARES']) : 0;
+                    //$("#importe").val(parseFloat(datas[0]['IMPORTE'].replace(/,/, '.')));
+                    var viaticos= (datas['totales'][0]['VIATICOS'])? parseFloat(datas['totales'][0]['VIATICOS'].replace(/,/, '.')) : 0;
+                    var pesos= (datas['totales'][0]['PESOS'])? parseFloat(datas['totales'][0]['PESOS'].replace(/,/, '.')) : 0;
+                    var dolares= (datas['totales'][0]['DOLARES'])? parseFloat(datas['totales'][0]['DOLARES'].replace(/,/, '.')) : 0;
                     //alert(typeof(dolares))
 
                     //Genera el tfoot con los totales

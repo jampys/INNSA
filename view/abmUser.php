@@ -229,7 +229,6 @@
                     $('#empleado').val(ui.item.label);
                 }
             });
-            //fin agregado
 
             //llamada a funcion validar
             $.validar();
@@ -241,6 +240,7 @@
     //Declaracion de funcion para validar
     $.validar=function(){
         $('#form').validate({
+            /*lo pone en vacio, ya que por defecto es igual a hiddenn  (default: ":hidden"). Y asi evito que ignore el campo oculto http://jqueryvalidation.org/validate/ */
             ignore:"",
             rules: {
                 login: {

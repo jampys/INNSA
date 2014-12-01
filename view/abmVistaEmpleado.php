@@ -73,10 +73,19 @@
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
                     $("#comunico_id").val(datas[0]['COMUNICO']);
                     $("#notificado").attr('checked', (datas[0]['NOTIFICADO']==1)? true:false);
+                    /*si el empleado ya esta notificado (dio su conformidad con el check) el checkbox se inhabilita
+                    para que no lo pueda volver a deltildar */
+                    if(datas[0]['NOTIFICADO']==1){
+                        $("#notificado").attr("disabled", true);
+                        $('#com_btn_guardar').button('disable');
+                    }
+                    else{
+                        $("#notificado").attr("disabled", false);
+                        $('#com_btn_guardar').button('enable');
+
+                    }
                 }
-                else{
-                    //setComunicador();
-                }
+
 
             },
             type:"POST",
@@ -140,7 +149,7 @@
                     $(".spinner").spinner({
                         max: 5,
                         min: 1
-                    });
+                    }).val(1);
 
                 }
 
@@ -195,7 +204,14 @@
                 var data={  "accion":"asignacion",
                             "operacion":"updateComunicacionNotificacion",
                             "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
-                            "notificado": $('#notificado').prop('checked')? 1:0
+                            "notificado": $('#notificado').prop('checked')? 1:0,
+
+                            //cambio estado asignacion a NOTIFICADO
+                            "id": globalId, //id_asignacion
+                            "estado": $('#notificado').prop('checked')? 'NOTIFICADO':'COMUNICADO',
+                            "estado_cambio": ''
+
+
                         };
             }
             else if (globalOperacion=="insertEvaluacion" || globalOperacion=="saveEvaluacion"){ //Para guardar (por insert o save(al editar))
@@ -214,20 +230,22 @@
                             "ev_i_consultas":$("#ev_i_consultas").val(),
                             "ev_i_didactico":$("#ev_i_didactico").val(),
                             "ev_i_participacion":$("#ev_i_participacion").val(),
-
                             "ev_l_duracion":$("#ev_l_duracion").val(),
                             "ev_l_comunicacion":$("#ev_l_comunicacion").val(),
                             "ev_l_material":$("#ev_l_material").val(),
                             "ev_l_break":$("#ev_l_break").val(),
                             "ev_l_hotel":$("#ev_l_hotel").val(),
-
                             "obj_1":$("#obj_1").val(),
                             "obj_2":$("#obj_2").val(),
                             "obj_3":$("#obj_3").val(),
+                            "comentarios":$("#comentarios").val(),
 
-                            "comentarios":$("#comentarios").val()
+                            //cambio estado asignacion a EVALUADA
+                            "estado": 'EVALUADO',
+                            "estado_cambio":''
 
                         };
+
 
             }
 
@@ -266,7 +284,7 @@
             $( ".spinner" ).spinner({
                     max: 5,
                     min: 1
-                });
+                }).val(1);
 
 
             // menu superfish
@@ -306,22 +324,27 @@
                 width: 600,
                 modal:true,
                 title:"Agregar Registro",
-                buttons: {
-                    "Guardar": function() {
-                        //if($("#form").valid()){ //OJO valid() devuelve un booleano
+                buttons: [{
+                        click: function() {
+                            //if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#comunicacion").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            //$('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
-                        //}
-
+                            $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid"});
+                            //}
+                        },
+                        id: 'com_btn_guardar',
+                        text: "Guardar"
                     },
-                    "Cancelar": function() {
-                        $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario
-                        $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
-                        $(this).dialog("close");
-                    }
-                },
+                        {
+                        click: function() {
+                            $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario
+                            //$('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                            $(this).dialog("close");
+                        },
+                        id: 'com_btn_cancelar',
+                        text: 'Cancelar'
+                        }],
                 show: {
                     effect: "blind",
                     duration: 1000
@@ -332,7 +355,7 @@
                 },
                 close:function(){
                     $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
-                    $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                    //$('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
                 }
 
             });
@@ -346,12 +369,12 @@
                 title:"Agregar Registro",
                 buttons: {
                     "Guardar": function() {
-                        //if($("#form").valid()){ //OJO valid() devuelve un booleano
+                        if($("#form_evaluacion").valid()){
                         guardar();
                         $("#evaluacion").dialog("close");
                         //Llamada ajax para refrescar la grilla
-                        //$('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
-                        //}
+                        $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid"});
+                        }
 
                     },
                     "Cancelar": function() {
@@ -364,11 +387,11 @@
                 },
                 show: {
                     effect: "blind",
-                    duration: 1000
+                    duration: 500
                 },
                 hide: {
                     effect: "explode",
-                    duration: 1000
+                    duration: 500
                 },
                 close:function(){
                     $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
@@ -391,12 +414,14 @@
 
 
             // evaluacion_link
-            $(document).on("click", ".evaluacion_link", function(){
+            //$(document).on("click", ".evaluacion_link", function(){
+            $('.evaluacion_link').on('click', function(e){
                 //globalOperacion='evaluacion';
                 globalId=$(this).attr('id'); //id_asignacion
                 editarEvaluacion(globalId);
                 $('#evaluacion').dialog('open');
-                return false;
+                //return false;
+                e.preventDefault();
             });
 
 
@@ -408,25 +433,36 @@
 
 
             //llamada a funcion validar
-            $.validar();
+            $.validarEvaluacion();
 
         });
 
 
-    //Declaracion de funcion para validar
-    $.validar=function(){
-        $('#form').validate({
+    //Declaracion de funcion para validar la evaluacion
+    $.validarEvaluacion=function(){
+        $('#form_evaluacion').validate({
             rules: {
-                estado: {
-                    required: true
+                conceptos_importantes: {
+                    required: true,
+                    maxlength: 250
+                },
+                aspectos_faltaron: {
+                    required: true,
+                    maxlength: 250
+                },
+                mejorar_desempenio: {
+                    required: true,
+                    maxlength: 250
                 }
+
             },
             messages:{
-                estado: "Seleccione un estado"
+                conceptos_importantes: "Ingrese los conceptos importantes",
+                aspectos_faltaron: "Ingrese los aspectos que faltaron",
+                mejorar_desempenio: "Ingrese la mejora de desempeño",
             }
 
         });
-
 
     };
 

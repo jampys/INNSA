@@ -3,6 +3,7 @@
 if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
+require_once("model/cap_solicModel.php");
 require_once("model/evaluacionModel.php");
 $view->u=new Evaluacion();
 
@@ -22,18 +23,22 @@ switch($operacion){
         $view->u->setEvIConsultas($_POST['ev_i_consultas']);
         $view->u->setEvIDidactico($_POST['ev_i_didactico']);
         $view->u->setEvIParticipacion($_POST['ev_i_participacion']);
-
         $view->u->setEvLDuracion($_POST['ev_l_duracion']);
         $view->u->setEvLComunicacion($_POST['ev_l_comunicacion']);
         $view->u->setEvLMaterial($_POST['ev_l_material']);
         $view->u->setEvLBreak($_POST['ev_l_break']);
         $view->u->setEvLHotel($_POST['ev_l_hotel']);
-
         $view->u->setObj1($_POST['obj_1']);
         $view->u->setObj2($_POST['obj_2']);
         $view->u->setObj3($_POST['obj_3']);
-
         $view->u->setComentarios($_POST['comentarios']);
+
+        //cambio la asignacion a EVALUADO
+        $view->a=new Asignacion_plan();
+        $view->a->setIdAsignacion($_POST['id_asignacion']);
+        $view->a->setEstado($_POST['estado']);
+        $view->a->setEstadoCambio($_POST['estado_cambio']);
+        $view->a->updateEstadoAsignacionPlan();
 
         $rta=$view->u->insertEvaluacion();
         print_r(json_encode($rta));

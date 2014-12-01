@@ -235,6 +235,12 @@
                     maxlength: 100,
                     minlength: 5
                 },
+                descripcion: {
+                    maxlength: 100
+                },
+                comentarios: {
+                    maxlength: 4
+                },
                 entidad: {
                     required: true
                 },
@@ -247,6 +253,8 @@
             },
             messages:{
                 nombre: "Ingrese su nombre",
+                descripcion: "Máximo 100 caracteres",
+                comentarios: "Máximo 100 caracteres",
                 entidad: "Ingrese su entidad",
                 categoria: "Seleccione una categoria",
                 tema: "Seleccione un tema"
@@ -334,7 +342,7 @@
                                 <div class="column_content">
                                     <label>Categoria: </label>
                                     <select name="categoria" id="categoria" onchange="cargarTemas();">
-                                        <option value="">Ingrese una categoria</option>
+                                        <option value="">Seleccione una categoria</option>
                                         <option value="1">Habilidades soft</option>
                                         <option value="2">Gestión</option>
                                         <option value="3">Industria Oil</option>

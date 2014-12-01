@@ -20,7 +20,8 @@ switch($operacion){
         $view->u->setEstado($_POST['estado']);
         $view->u->setImporte($_POST['importe']);
         $view->u->setMoneda($_POST['moneda']);
-        $view->u->setTipoCambio($_POST['tipo_cambio']);
+        //Si tipo_cambio trae valor=> envia el valor, sino 1 o ('null')
+        $view->u->setTipoCambio(($_POST['tipo_cambio']!='')? $_POST['tipo_cambio'] : 1);
         $view->u->setFormaPago($_POST['forma_pago']);
         $view->u->setFormaFinanciacion($_POST['forma_financiacion']);
         $view->u->setProfesor1($_POST['profesor_1']);
@@ -53,7 +54,8 @@ switch($operacion){
         $view->u->setEstado($_POST['estado']);
         $view->u->setImporte($_POST['importe']);
         $view->u->setMoneda($_POST['moneda']);
-        $view->u->setTipoCambio($_POST['tipo_cambio']);
+        //Si tipo_cambio trae valor=> envia el valor, sino 1 o ('null')
+        $view->u->setTipoCambio(($_POST['tipo_cambio']!='')? $_POST['tipo_cambio'] : 1);
         $view->u->setFormaPago($_POST['forma_pago']);
         $view->u->setFormaFinanciacion($_POST['forma_financiacion']);
         $view->u->setProfesor1($_POST['profesor_1']);

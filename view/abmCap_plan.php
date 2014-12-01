@@ -35,16 +35,17 @@
                     $("#unidad").val(datas[0]['UNIDAD']);
                     $("#prioridad").val(datas[0]['PRIORIDAD']);
                     $("#estado").val(datas[0]['ESTADO']);
-                    $("#importe").val(datas[0]['IMPORTE']);
+                    $("#importe").val(parseFloat(datas[0]['IMPORTE'].replace(/,/, '.')));
                     $("#moneda").val(datas[0]['MONEDA']);
-                    $("#tipo_cambio").val(datas[0]['TIPO_CAMBIO']);
+                    $("#tipo_cambio").val(parseFloat(datas[0]['TIPO_CAMBIO'].replace(/,/, '.')));
                     $("#forma_pago").val(datas[0]['FORMA_PAGO']);
                     $("#forma_financiacion").val(datas[0]['FORMA_FINANCIACION']);
                     $("#profesor_1").val(datas[0]['PROFESOR_1']);
                     $("#profesor_2").val(datas[0]['PROFESOR_2']);
                     $("#comentarios").val(datas[0]['COMENTARIOS_PLAN']);
-                    //cargarTemas(datas[5]);
 
+                    //para el campo tipo de cambio al editar
+                    (datas[0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
 
                 },
                 type:"POST",
@@ -216,7 +217,6 @@
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
                 $("#curso").attr("readonly", true); //para no permitir editar el curso
-                //alert("funciona el link edit");
                 return false;
             });
             //Fin agregado
@@ -253,6 +253,15 @@
                 }
             });
 
+            /*este es un truco para hacer que el plugin validate valide las fechas readonly. Si se pone el atributo readonly en el input
+            no funciona, por eso se hace de esta manera con eventos */
+            $(document).on("focusin", "#fecha_desde, #fecha_hasta", function(event) {
+                $(this).prop('readonly', true);
+            });
+            $(document).on("focusout", "#fecha_desde, #fecha_hasta", function(event) {
+                $(this).prop('readonly', false);
+            });
+
 
             //hover states on the static widgets
             $('#dialog_link, ul#icons li').hover(
@@ -280,10 +289,18 @@
                     });
                 },
                 minLength: 2,
-                select: function(event, ui) {
-                    $('#curso_id').val(ui.item.id);
+                change: function(event, ui) {
+                    $('#curso_id').val(ui.item? ui.item.id : '');
                     $('#curso').val(ui.item.label);
                 }
+
+            });
+
+
+            //Al cambiar el select de moneda. Si la moneda es USD se habilita el campo tipo_cambio, sino => se deshabilita
+            $('#moneda').change(function() {
+                $('#tipo_cambio').val('');
+                ($('#moneda').val()=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true) ;
             });
 
             //llamada a funcion validar
@@ -295,12 +312,20 @@
     //Declaracion de funcion para validar
     $.validar=function(){
         $('#form').validate({
+            /*lo pone en vacio, ya que por defecto es igual a hiddenn  (default: ":hidden"). Y asi evito que ignore el campo oculto http://jqueryvalidation.org/validate/ */
+            ignore:"",
             rules: {
                 curso: {
                     required: true
                 },
+                curso_id:{
+                    required: function(){return ($('#curso').val().length>0 && globalOperacion!='edit');}
+                },
                 periodo: {
                     required: true
+                },
+                objetivo: {
+                    maxlength: 150
                 },
                 modalidad: {
                     required: true
@@ -313,7 +338,7 @@
                 },
                 duracion: {
                     required: true,
-                    number: true
+                    digits: true
                 },
                 unidad:{
                     required: true
@@ -332,14 +357,16 @@
                     required: true
                 },
                 tipo_cambio: {
-                    required: true,
+                    required: function(){ return $('#moneda').val()=='USD';},
                     number: true
                 }
 
             },
             messages:{
-                curso: "Ingrese el curso",
+                curso: "Seleccione el curso",
+                curso_id: "Seleccione un curso sugerido",
                 periodo: "Seleccione el periodo",
+                objetivo: "El objetivo no debe superar los 150 caracteres",
                 modalidad: "Seleccione la modalidad",
                 fecha_desde: "Seleccione la fecha de inicio",
                 fecha_hasta: "Seleccione la fecha de finalización",
@@ -349,7 +376,7 @@
                 estado: "Seleccione el estado",
                 importe: "Ingrese el importe",
                 moneda: "Seleccione la moneda",
-                tipo_cambio: "Ingrese el tipo de cambio"
+                tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)"
             }
 
         });
@@ -405,7 +432,7 @@
                                 <div class="column_content">
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
-                                        <option value="">Ingrese el periodo</option>
+                                        <option value="">Seleccione el periodo</option>
                                         <option value="2010">2010</option>
                                         <option value="2011">2011</option>
                                         <option value="2012">2012</option>
@@ -419,10 +446,10 @@
                                 <div class="column_content">
                                     <label>Modalidad: </label>
                                     <select name="modalidad" id="modalidad">
-                                        <option value="">Ingrese la modalidad</option>
-                                        <option value="presencial">Presencial</option>
-                                        <option value="a_distancia">A distancia</option>
-                                        <option value="e_learning">E Learning</option>
+                                        <option value="">Seleccione la modalidad</option>
+                                        <option value="PRESENCIAL">Presencial</option>
+                                        <option value="A DISTANCIA">A distancia</option>
+                                        <option value="E-LEARNING">E-Learning</option>
                                     </select>
                                 </div>
                             </div>
@@ -466,7 +493,7 @@
                                 <div class="column_content">
                                     <label>Unidad: </label>
                                     <select name="unidad" id="unidad">
-                                        <option value="">Ingrese la unidad</option>
+                                        <option value="">Seleccione la unidad</option>
                                         <option value="Horas">Horas</option>
                                         <option value="Dias">Dias</option>
                                     </select>
@@ -481,7 +508,7 @@
                                 <div class="column_content">
                                     <label>Prioridad: </label><br/>
                                     <select name="prioridad" id="prioridad">
-                                        <option value="">Ingrese la prioridad</option>
+                                        <option value="">Seleccione la prioridad</option>
                                         <option value="3">Baja</option>
                                         <option value="2">Media</option>
                                         <option value="1">Alta</option>
@@ -492,7 +519,7 @@
                                 <div class="column_content">
                                     <label>Estado: </label>
                                     <select name="estado" id="estado">
-                                        <option value="">Ingrese el estado</option>
+                                        <option value="">Seleccione el estado</option>
                                         <option value="Propuesto">Propuesto</option>
                                         <option value="Cancelado">Cancelado</option>
                                     </select>
@@ -512,7 +539,7 @@
                                 <div class="column_content">
                                     <label>Moneda: </label>
                                     <select name="moneda" id="moneda">
-                                        <option value="">Ingrese la moneda</option>
+                                        <option value="">Seleccione la moneda</option>
                                         <option value="$">$</option>
                                         <option value="USD">USD</option>
                                     </select>
@@ -525,7 +552,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Tipo cambio: </label><br/>
-                                    <input type="text" name="tipo_cambio" id="tipo_cambio"/>
+                                    <input type="text" name="tipo_cambio" id="tipo_cambio" readonly="readonly"/>
                                 </div>
                             </div>
                             <div class="eight column">
@@ -541,7 +568,7 @@
                                 <div class="column_content">
                                     <label>Forma pago: </label><br/>
                                     <select name="forma_pago" id="forma_pago">
-                                        <option value="">Ingrese la forma pago</option>
+                                        <option value="">Seleccione la forma pago</option>
                                         <option value="Tarjeta">Tarjeta</option>
                                         <option value="Cheque">Cheque</option>
                                         <option value="Transferencia">Transferencia</option>
@@ -553,7 +580,7 @@
                                 <div class="column_content">
                                     <label>Forma financiación: </label>
                                     <select name="forma_financiacion" id="forma_financiacion">
-                                        <option value="">Ingrese la financiación</option>
+                                        <option value="">Seleccione la financiación</option>
                                         <option value="1" selected>1 pago</option>
                                         <option value="3">3 pagos</option>
                                         <option value="6">6 pagos</option>
