@@ -209,7 +209,6 @@
             //Aca estaba la llamada al dialog link
 
             //Agregado por dario para editar
-
             $(document).on("click", ".edit_link", function(){
                 //globalOperacion=$(this).attr("media");
                 globalOperacion='edit';
@@ -219,7 +218,6 @@
                 $("#curso").attr("readonly", true); //para no permitir editar el curso
                 return false;
             });
-            //Fin agregado
 
 
             /*

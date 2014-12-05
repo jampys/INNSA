@@ -52,12 +52,13 @@
     <nav class="nav">
         <a href="index.php?accion=asignacion" title="Asignacion plan">Asignacion plan</a>
     </nav>
-    <nav class="nav">
+    <!--<nav class="nav">
         <a href="#" title="Evaluacion plan">Evaluacion plan</a>
     </nav>
     <nav class="nav">
         <a href="#" title="Post evaluacion plan">Post evaluacion plan</a>
-    </nav>
+    </nav>-->
+
     <!-- Opciones de menu solo para usuario administrador -->
     <?php
     if($_SESSION['ACCESSLEVEL']==1){
@@ -65,8 +66,14 @@
         <nav class="nav">
             <a href="index.php?accion=user" title="Usuarios">Usuarios</a>
         </nav>
-        <nav class="nav">
+        <!--<nav class="nav">
             <a href="#" title="Alarmas">Alarmas</a>
+        </nav>-->
+        <nav class="nav">
+            <a href="index.php?accion=reportes" title="Reportes">Reportes</a>
+        </nav>
+        <nav class="nav">
+            <a href="index.php?accion=reportes&operacion=reportes1" title="Reportes">Reportes1</a>
         </nav>
 
     <?php

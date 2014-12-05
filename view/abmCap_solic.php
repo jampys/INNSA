@@ -71,7 +71,7 @@
                         '<td style="display: none">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
-                        '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
+                        '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
                         '<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
                         '<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
@@ -375,6 +375,7 @@
                     },
                     "Cancelar": function() {
                         $("#form_plan")[0].reset(); //para limpiar el formulario
+                        $('#form_plan').validate().resetForm(); //para limpiar los errores validate
                         $(this).dialog("close");
                     }
                 },
@@ -388,6 +389,7 @@
                 },
                 close:function(){
                     $("#form_plan")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $('#form_plan').validate().resetForm(); //para limpiar los errores validate
                 }
 
             });
@@ -423,7 +425,7 @@
                 //con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
                 $('#asignar_plan').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
-
+                $('#np_plan_capacitacion').attr('readonly', true); //Deshabilita el campo plan_capacitacion
                 return false;
 
             });
@@ -434,6 +436,7 @@
             $(document).on('click', '.new-plan-link', function(){
                 //$('#asignar_plan').dialog('open');
                 $('#asignar_plan').data('operacion', 'insert').dialog('open');
+                $('#np_plan_capacitacion').attr('readonly', false); //Vuelve a habilitar el campo plan_capacitacion
                 return false;
             });
 
@@ -459,8 +462,8 @@
                     });
                 },
                 minLength: 2,
-                select: function(event, ui) {
-                    $('#np_plan_capacitacion_id').val(ui.item.id);
+                change: function(event, ui) {
+                    $('#np_plan_capacitacion_id').val(ui.item? ui.item.id : '');
                     $('#np_plan_capacitacion').val(ui.item.label);
                     $('#np_plan_capacitacion_duracion').val(ui.item.duracion);
                     $('#np_plan_capacitacion_costo').val(ui.item.costo);
@@ -488,8 +491,8 @@
                     });
                 },
                 minLength: 2,
-                select: function(event, ui) {
-                    $('#np_reemplazo_id').val(ui.item.id);
+                change: function(event, ui) {
+                    $('#np_reemplazo_id').val(ui.item? ui.item.id : '');
                     $('#np_reemplazo').val(ui.item.label);
                 }
             });
@@ -658,9 +661,19 @@
 
     $.validarPlan=function(){
         $('#form_plan').validate({
+            ignore:"",
             rules: {
                 np_plan_capacitacion: {
                     required: true
+                },
+                np_plan_capacitacion_id:{
+                    required: function(item){return $('#np_plan_capacitacion').val().length>0;}
+                },
+                np_objetivo: {
+                    maxlength: 100
+                },
+                np_comentarios: {
+                    maxlength: 100
                 },
                 np_viaticos: {
                     required: true,
@@ -668,13 +681,20 @@
                 },
                 np_reemplazo: {
                     required: true
+                },
+                np_reemplazo_id:{
+                    required: function(item){return $('#np_reemplazo').val().length>0;}
                 }
 
             },
             messages:{
                 np_plan_capacitacion: "Seleccione un plan de capacitación",
+                np_plan_capacitacion_id: "Seleccione un plan de capacitación sugerido",
+                np_objetivo: "Máximo 100 caracteres",
+                np_comentarios: "Máximo 100 caracteres",
                 np_viaticos: "Ingrese los viaticos",
-                np_reemplazo: "Seleccione el reemplazo"
+                np_reemplazo: "Seleccione el reemplazo",
+                np_reemplazo_id: "Seleccione un empleado sugerido"
             }
 
         });

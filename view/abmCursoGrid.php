@@ -60,7 +60,7 @@
                     <th>Descripcion</th>
                     <th>Entidad</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <!--<th>Eliminar</th>-->
 
                 </tr>
                 </thead>
@@ -70,7 +70,7 @@
                     <th>Descripcion</th>
                     <th>Entidad</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <!--<th>Eliminar</th>-->
                 </tr>
                 </tfoot>
                 <tbody>
@@ -79,8 +79,8 @@
                         <td><?php  echo Conexion::corta_palabra($curso["NOMBRE"], 35);  ?></td>
                         <td><?php  echo Conexion::corta_palabra($curso["DESCRIPCION"], 35); ?></td>
                         <td><?php  echo $curso["ENTIDAD"]; ?></td>
-                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>">Editar</a></td>
-                        <td class="center"><a href="">Eliminar</a></td>
+                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>"><img src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <!--<td class="center"><a href="">Eliminar</a></td>-->
                     </tr>
                 <?php }  ?>
 

@@ -104,6 +104,8 @@
 
         $(document).ready(function(){
 
+            $(document).tooltip();
+
             // menu superfish
             $('#navigationTop').superfish();
 
@@ -349,11 +351,20 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Perfil: </label>
+                                    <label>Perfil:<img src="public/img/information-icon.png" width="12px" height="12px" title="
+                                    Dirección: Aprobar solicitud<br/>
+                                    RRHH: Personal de recursos humanos<br/>
+                                    Referente: Crear solicitud de capacitación<br/>
+                                    Empleado: Visualizar sus planes de capacitación
+                                    "></label>
                                     <select name="perfil" id="perfil">
                                         <option value="">Ingrese un perfil</option>
-                                        <option value="1">Administrador</option>
-                                        <option value="2">Operador</option>
+                                        <!--<option value="1">Administrador</option>
+                                        <option value="2">Operador</option>-->
+                                        <option value="1">Dirección</option>
+                                        <option value="2">RRHH</option>
+                                        <option value="3">Referente</option>
+                                        <option value="4">Empleado</option>
                                     </select>
                                 </div>
                             </div>
@@ -379,6 +390,8 @@
     </div>
 
 </div>
+
+
 
 
 

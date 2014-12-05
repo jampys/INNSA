@@ -80,13 +80,34 @@
 
     <script type="text/javascript" language="JavaScript" src="public/js/js_dario.js"></script>
 
+
+    <script type="text/javascript" language="javascript">
+
+        $(window).scroll(function(){
+            $('#header').css({
+                'left': $(this).scrollLeft()  //Why this 15, because in the CSS, we have set left 15, so as we scroll, we would want this to remain at 15px left
+            });
+
+        });
+
+
+        $(window).scroll(function(){
+            $('#footer').css({
+                'left': $(this).scrollLeft()  //Why this 15, because in the CSS, we have set left 15, so as we scroll, we would want this to remain at 15px left
+            });
+
+        });
+
+
+    </script>
+
 </head>
 
 
 <body>
 
 
-    <div id="principalLayout">
+    <!--<div id="principalLayout">-->
         <div id="header">
             <a href="index.php">INNSA Sistema de Capacitación</a>
         </div>
@@ -135,7 +156,7 @@
             </div>
 
 
-    </div>
+    <!--</div>-->
 
 
 

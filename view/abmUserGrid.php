@@ -52,7 +52,7 @@
                     <th>Empleado</th>
                     <th>Estado</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <!--<th>Eliminar</th>-->
                 </tr>
                 </thead>
                 <tfoot>
@@ -64,7 +64,7 @@
                     <th>Empleado</th>
                     <th>Estado</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
+                    <!--<th>Eliminar</th>-->
                 </tr>
                 </tfoot>
                 <tbody>
@@ -76,8 +76,8 @@
                         <td><?php  echo $user["PERFIL"]; ?></td>
                         <td><?php  echo $user["APELLIDO"]." ".$user["NOMBRE"]; ?></td>
                         <td><?php  echo ($user["HABILITADO"]==1) ? 'HABILITADO' : 'DESHABILITADO'; ?></td>
-                        <td class="center"><a href="" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>">Editar</a></td>
-                        <td class="center"><a href="">Eliminar</a></td>
+                        <td class="center"><a href="" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>"><img src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <!--<td class="center"><a href="">Eliminar</a></td>-->
                     </tr>
                 <?php }  ?>
 

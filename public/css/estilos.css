@@ -9,25 +9,60 @@ html,body{
     border: none;
 }
 
+/*
 #principalLayout{
     width: 100%;
     height: 100%;
     font-size:12px;
 }
+*/
 
-	#header{ width:100%; height:100px; background-color: rgba(13, 12, 65, 0.79); float:left; font-size: 20px; text-align: left;}
+	#header{
+        width:100%;
+        height:75px;
+        background-color: rgba(13, 12, 65, 0.79);
+        float:left;
+        font-size: 20px;
+        text-align: left;
+        position: absolute;
+    }
 
 
-		#content{ width:100%; float:right; background-color: #e9f0ed; min-height:78.8% !important;}
+		#content{
+            width:100%;
+            float:right;
+            background-color: #e9f0ed;
+            min-height:78.8% !important;
+            margin-top: 75px
+        }
 
-            #menuIzq{ width:165px; float:left; background-color: #f9f9f9; text-align: center }
+            #menuIzq{
+                width:165px;
+                float:left;
+                background-color: #f9f9f9;
+                text-align: center
+            }
 
 
-			#contenedor{ width:920px; float:left; background-color: #e9f0ed; padding: 15px; }
+			#contenedor{
+                width:65%;
+                float:left;
+                background-color: #e9f0ed;
+                padding: 15px;
+            }
 				
 
 
-    #footer{ width: 100%; height:30px; float:left; text-align:center; background-color: rgba(13, 12, 65, 0.79); padding-top: 7px; color:#FFFFFF}
+    #footer{
+        width: 100%;
+        height:30px;
+        float:left;
+        text-align:center;
+        background-color: rgba(13, 12, 65, 0.79);
+        padding-top: 7px;
+        color:#FFFFFF;
+        position: relative
+    }
 
 
 #FormularioAcceso{
@@ -100,6 +135,7 @@ html,body{
 .tablaSolicitud tbody tr td{
     background-color: #ffffff;
     vertical-align: middle;
+    padding: 5px;
     /*text-align: center; */
 }
 
@@ -109,8 +145,14 @@ html,body{
     color: red;
 }
 
+/*Estilo para tabla de autorizacion / aprobacion */
+#table_plan thead tr td{
+    padding-left: 5px;
+}
+
 #table_plan tfoot tr td{
     font-weight: bold;
+    padding-left: 5px;
 }
 
 

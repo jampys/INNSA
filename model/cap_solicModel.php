@@ -188,8 +188,8 @@ class Cap_Solic
     public static function getCapSolic(){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        //$obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.id_empleado=em.id_empleado");
-        $obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
+        //$obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
+        $obj_sp->executeQuery("select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
         return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
     }
 
@@ -197,7 +197,7 @@ class Cap_Solic
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
         $query="select sc.id_solicitud, sc.estado, sc.situacion_actual, sc.situacion_deseada, sc.objetivo_medible_1, sc.objetivo_medible_2, sc.objetivo_medible_3,".
-            " sc.periodo, em.apellido, em.nombre,".
+            " sc.periodo, em.id_empleado, em.apellido, em.nombre,".
             " sc.dp_ingreso, sc.dp_crecimiento, sc.dp_promocion, sc.dp_futura_transfer, sc.dp_sustitucion_temp,".
             " sc.di_nuevas_tecnicas, sc.di_crecimiento, sc.di_competencias_emp,".
             " sc.rp_falta_comp, sc.rp_no_conformidad, sc.rp_req_externo,".
@@ -494,7 +494,7 @@ class Asignacion_plan{
     public static function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
+        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.estado ESTADO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 

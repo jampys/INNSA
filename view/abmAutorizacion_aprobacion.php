@@ -52,7 +52,7 @@
                         '<td>'+datas['planes'][indice]['MODALIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
-                        '<td>'+datas['planes'][indice]['VIATICOS']+'</td>' +
+                        '<td>'+'$ '+datas['planes'][indice]['VIATICOS']+'</td>' +
                         '</tr>');
                     });
 

@@ -387,11 +387,11 @@
                 },
                 show: {
                     effect: "blind",
-                    duration: 500
+                    duration: 1000
                 },
                 hide: {
                     effect: "explode",
-                    duration: 500
+                    duration: 1000
                 },
                 close:function(){
                     $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
