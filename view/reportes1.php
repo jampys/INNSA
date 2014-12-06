@@ -3,6 +3,7 @@
 <head>
 
     <style type="text/css">
+
         #tabla_cuerpo tr td{
             background-color: ivory;
             height: 20px;
@@ -35,6 +36,7 @@
         }
 
 
+
     </style>
 
     <script type="text/javascript" language="javascript">
@@ -56,11 +58,77 @@
 
             }); */
 
+            //para filtrar por categorias de cursos
             $(document).on('change', '#categoria',  function() {
-                //alert('cambio la categoria');
-                $('#tabla_cursos').find('.clase2').toggle();
-                $('#tabla_cuerpo').find('.clase2').toggle();
+                if($(this).val()==0){
+                    $('#tabla_cursos tr').show();
+                    $('#tabla_cuerpo tr').show();
+                }
+                else {
+
+                    $('#tabla_cursos tr').hide();
+                    $('#tabla_cuerpo tr').hide();
+
+                    $('#tabla_cursos').find('.rowToggle' + $(this).val()).show();
+                    $('#tabla_cuerpo').find('.rowToggle' + $(this).val()).show();
+                }
+
             });
+
+
+            //para filtrar empleados por lugar de trabajo
+            $(document).on('change', '#lugar_trabajo',  function() {
+                if($(this).val()==0){
+                    $('#tabla_empleados tr td').show();
+                    $('#tabla_cuerpo tr td').show();
+                }
+                else {
+
+                    $('#tabla_empleados tr td').hide();
+                    $('#tabla_cuerpo tr td').hide();
+
+                    $('#tabla_empleados').find('.colToggle' + $(this).val()).show();
+                    $('#tabla_cuerpo').find('.colToggle' + $(this).val()).show();
+                    //$('.colToggleBO').show();
+                    //var tam=$('#tabla_empleados').find('tr')[0].cells.length*120+600;
+                    var cant=$('#tabla_empleados tr:first').find('.colToggle'+$(this).val()).length;
+                    //alert(cant);
+                    var tam=cant*120+500;
+                    $('.reporte').width(tam);
+                    $('.cuerpo').width(tam-500);
+                }
+
+            });
+
+
+            //Funcionalidad para resaltar la fila sobre la que se encuentra posicionado
+            /*
+            $('#tabla_cuerpo tr').hover(
+                function(){
+                    //$(this).find('td').addClass('tr_hover');
+                    $(this).find('td').css('background-color', '#ffccee');
+                },
+                function(){
+                    $(this).find('td').css('background-color', 'ivory');
+                }
+            );
+            */
+
+            var index;
+            $('#tabla_cuerpo tr').hover(
+                function(){
+                    index =$('#tabla_cuerpo tr').index($(this));
+                    //alert(index);
+                    $('#tabla_cuerpo').find('tr').eq(index).find('td').css('background-color', '#ffddee'); //ffeeee
+                    $('#tabla_cursos').find('tr').eq(index).find('td').css('background-color', '#ffddee');
+
+                },
+                function(){
+                    $('#tabla_cuerpo').find('tr').eq(index).find('td').css('background-color', 'ivory');
+                    $('#tabla_cursos').find('tr').eq(index).find('td').css('background-color', '#f1f1f1');
+                }
+
+            );
 
 
         });
@@ -110,7 +178,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                     <div class="column_content">
                         <label>Categoría: </label>
                         <select name="categoria" id="categoria">
-                            <option value="">Seleccione la categoría</option>
+                            <option value="0">Todas las categorías</option>
                             <option value="1">Habilidades Soft</option>
                             <option value="2">Gestión</option>
                             <option value="3">Industria Oild</option>
@@ -122,7 +190,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                     <div class="column_content">
                         <label>Lugar de trabajo: </label>
                         <select name="lugar_trabajo" id="lugar_trabajo">
-                            <option value="">Seleccione un lugar de trabajo</option>
+                            <option value="0">Todos los lugares de trabajo</option>
                             <option value="BO">Bolivia</option>
                             <option value="BUE">Buenos Aires</option>
                             <option value="CH">Chubut</option>
@@ -145,7 +213,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                 <?php
                 foreach($ejeEmpleados as $e){
                     ?>
-                    <td style="width: 100px"><?php echo $e['LUGAR_TRABAJO']; ?></td>
+                    <td class="colToggle<?php echo $e['LUGAR_TRABAJO']; ?>" style="width: 100px"><?php echo $e['LUGAR_TRABAJO']; ?></td>
                 <?php
 
                 }
@@ -157,7 +225,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                 <?php
                 foreach($ejeEmpleados as $e){
                     ?>
-                    <td style="width: 100px"><?php echo $e['APELLIDO'].' '.$e['NOMBRE']; ?></td>
+                    <td class="colToggle<?php echo $e['LUGAR_TRABAJO']; ?>" style="width: 100px; height: 50px"><?php echo $e['APELLIDO'].' '.$e['NOMBRE']; ?></td>
                 <?php
 
                 }
@@ -176,11 +244,11 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
 
     <!-- COLUMNA DE CURSOS -->
     <div id="div_tabla_cursos" style="float: left; width: 500px">
-        <table id="tabla_cursos" style="table-layout: fixed; width: 500px">
+        <table id="tabla_cursos" style="table-layout: fixed; width: 500px; border-right: 0px">
             <?php
             foreach($ejeCursos as $c){
                 ?>
-                <tr class="clase<?php echo $c['ID_CATEGORIA']; ?>">
+                <tr class="rowToggle<?php echo $c['ID_CATEGORIA']; ?>">
                     <td style="width: 100px"><?php echo $c['CATEGORIA']; ?></td>
                     <td><?php echo Conexion::corta_palabra($c['NOMBRE'], 50); ?></td>
                 </tr>
@@ -200,19 +268,19 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
 
     <!-- CUERPO DE LA TABLA -->
     <div class="cuerpo" style="float: left; margin-left: 500px">
-        <table id="tabla_cuerpo" style="table-layout: fixed;">
+        <table id="tabla_cuerpo" style="table-layout: fixed">
 
             <?php
             foreach($ejeCursos as $c){
 
                 ?>
-                <tr class="clase<?php echo $c['ID_CATEGORIA']; ?>">
+                <tr class="rowToggle<?php echo $c['ID_CATEGORIA']; ?>">
                     <?php
 
                     foreach($ejeEmpleados as $e){
 
                         ?>
-                        <td style="width: 100px">
+                        <td class="colToggle<?php echo $e['LUGAR_TRABAJO']; ?>" style="width: 100px">
                             <?php
 
 
