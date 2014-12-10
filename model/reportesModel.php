@@ -2,17 +2,11 @@
 
 class Reportes
 {
-    var $id_curso;
-    var $nombre;
-    var $descripcion;
-    var $comentarios;
-    var $entidad;
-    var $id_tema;
+
 
     public static function getCursos(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$query="select * from cursos";
         $query="select ca.nombre CATEGORIA, ca.id_categoria, cu.id_curso, cu.nombre,".
                 " (select count(cursos.id_curso) from cursos, temas, categorias where cursos.id_tema = temas.id_tema and temas.id_categoria = categorias.id_categoria and temas.id_categoria = ca.id_categoria) TOTAL".
                 " from categorias ca, cursos cu, temas te".
@@ -21,6 +15,7 @@ class Reportes
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll(); // retorna todos los cursos
     }
+
 
     public static function getEmpleadosActivos(){
         $f=new Factory();
@@ -31,9 +26,12 @@ class Reportes
 
 
 
-
-
-
+    public static function getCapSolic(){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $obj_sp->executeQuery("select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, em.lugar_trabajo, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
+        return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
+    }
 
 
 
@@ -71,83 +69,16 @@ class Reportes
 
     }
 
-    public static function getTemas($id){  //funcion usada para cargar dinamicamente select con los temas de la categoria seleccionada
+
+
+    public static function getCapSolicByFiltro($periodo, $lugar_trabajo){
         $f=new Factory();
-        $obj_curso=$f->returnsQuery();
-        $obj_curso->executeQuery("select * from temas where id_categoria=$id");
-        return $obj_curso->fetchAll(); // retorna todos los cursos
+        $obj_sp=$f->returnsQuery();
+        $obj_sp->executeQuery("select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, em.lugar_trabajo, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado and sc.periodo = $periodo and em.lugar_trabajo = $lugar_trabajo");
+        return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
     }
 
 
-
-    // metodos que devuelven valores
-    function getIdCurso()
-    { return $this->id_curso;}
-
-    function getNombre()
-    { return $this->nombre;}
-
-    function getDescripcion()
-    { return $this->descripcion;}
-
-    function getComentarios()
-    { return $this->comentarios;}
-
-    function getEntidad()
-    { return $this->entidad;}
-
-    function getIdTema()
-    { return $this->id_tema;}
-
-    // metodos que setean los valores
-    function setIdCurso($val)
-    { $this->id_curso=$val;}
-
-    function setNombre($val)
-    {  $this->nombre=$val;}
-
-    function setDescripcion($val)
-    {  $this->descripcion=$val;}
-
-    function setComentarios($val)
-    {  $this->comentarios=$val;}
-
-    function setEntidad($val)
-    {  $this->entidad=$val;}
-
-    function setIdTema($val)
-    {  $this->id_tema=$val;}
-
-
-
-    public function updateCurso()
-    {
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        $query="update cursos set nombre='$this->nombre', descripcion='$this->descripcion', comentarios='$this->comentarios', entidad='$this->entidad', id_tema=$this->id_tema where id_curso = $this->id_curso   ";
-        $obj_user->executeQuery($query);
-        return $obj_user->getAffect(); // retorna todos los registros afectados
-
-    }
-
-    public function insertCurso()	// inserta el cliente cargado en los atributos
-    {
-        $f=new Factory();
-        $obj_curso=$f->returnsQuery();
-        $query="insert into cursos(nombre, descripcion, comentarios, entidad, id_tema) values('$this->nombre', '$this->descripcion', '$this->comentarios', '$this->entidad' , $this->id_tema)";
-        $obj_curso->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_curso->getAffect(); // retorna todos los registros afectados
-
-    }
-    function deleteCurso()	// elimina el cliente
-    {
-        $f=new Factory();
-        $obj_cliente=$f->returnsQuery();
-        $query="delete from clientes where id=$this->id";
-        $obj_cliente->executeQuery($query); // ejecuta la consulta para  borrar el cliente
-        return $obj_cliente->getAffect(); // retorna todos los registros afectados
-
-    }
 
 
 }

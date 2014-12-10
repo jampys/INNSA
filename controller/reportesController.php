@@ -2,11 +2,15 @@
 if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
-require_once("model/cap_solicModel.php");
-$view->u=new Cap_Solic();
+//require_once("model/cap_solicModel.php");
+require_once("model/reportesModel.php");
+//$view->u=new Cap_Solic();
+$view->u=new Reportes();
 
 
 switch($operacion){
+
+    /*
     case 'insert':
         $view->u->setApellido($_POST['apellido']);
         $view->u->setNombre($_POST['nombre']);
@@ -60,6 +64,17 @@ switch($operacion){
     case 'refreshGrid':
         $view->empleados=$view->u->getEmpleados();
         include_once('view/abmEmpleadoGrid.php');
+        exit;
+        break;
+
+    */
+
+    case 'filtrosReportes':
+        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'periodo';
+        $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+
+        $view->solicitud=$view->u->getCapSolicByFiltro($periodo, $lugar_trabajo);
+        include_once('view/reportesGrid.php');
         exit;
         break;
 

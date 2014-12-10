@@ -137,6 +137,8 @@ html,body{
     background-color: #ffffff;
     vertical-align: middle;
     padding: 5px;
+    font-family: Arial;
+    font-size: 11px;
     /*text-align: center; */
 }
 

@@ -6,7 +6,7 @@
             /* En vez de un div uso una etiqueta propia llamada nav*/
             #menuIzq nav {
                 position: relative;
-                top: 5px;
+                /*top: 5px; */
             }
 
             #menuIzq nav a {
@@ -33,30 +33,30 @@
 
 
     <nav class="nav">
-        <a href="index.php?accion=empleado" title="Recursos">Recursos</a>
+        <a href="index.php?accion=empleado">Recursos</a>
     </nav>
     <nav class="nav">
-        <a href="index.php?accion=curso" title="Cursos">Cursos</a>
+        <a href="index.php?accion=curso">Cursos</a>
     </nav>
     <nav class="nav">
-        <a href="index.php?accion=cap_plan" title="Cursos">Plan capacitación</a>
+        <a href="index.php?accion=cap_plan">Plan capacitación</a>
     </nav>
     <nav class="nav">
-        <a href="index.php?accion=cap_solic" title="Cursos">Solicitud capacitación</a>
-    </nav>
-
-    <nav class="nav">
-        <a href="index.php?accion=autorizacion_aprobacion" title="Cursos">Autorización/Aprobación</a>
+        <a href="index.php?accion=cap_solic">Solicitud capacitación</a>
     </nav>
 
     <nav class="nav">
-        <a href="index.php?accion=asignacion" title="Asignacion plan">Asignacion plan</a>
+        <a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a>
+    </nav>
+
+    <nav class="nav">
+        <a href="index.php?accion=asignacion">Asignacion plan</a>
     </nav>
     <!--<nav class="nav">
-        <a href="#" title="Evaluacion plan">Evaluacion plan</a>
+        <a href="#">Evaluacion plan</a>
     </nav>
     <nav class="nav">
-        <a href="#" title="Post evaluacion plan">Post evaluacion plan</a>
+        <a href="#">Post evaluacion plan</a>
     </nav>-->
 
     <!-- Opciones de menu solo para usuario administrador -->
@@ -64,16 +64,16 @@
     if($_SESSION['ACCESSLEVEL']==1){
         ?>
         <nav class="nav">
-            <a href="index.php?accion=user" title="Usuarios">Usuarios</a>
+            <a href="index.php?accion=user">Usuarios</a>
         </nav>
         <!--<nav class="nav">
-            <a href="#" title="Alarmas">Alarmas</a>
+            <a href="#">Alarmas</a>
         </nav>-->
         <nav class="nav">
-            <a href="index.php?accion=reportes" title="Reportes">Reportes</a>
+            <a href="index.php?accion=reportes">Reportes</a>
         </nav>
         <nav class="nav">
-            <a href="index.php?accion=reportes&operacion=reportes1" title="Reportes">Reportes1</a>
+            <a href="index.php?accion=reportes&operacion=reportes1">Reportes1</a>
         </nav>
 
     <?php
@@ -81,7 +81,7 @@
     ?>
 
     <nav class="nav">
-        <a href="index.php?accion=vista_empleado" title="Vista empleado">Vista empleado</a>
+        <a href="index.php?accion=vista_empleado">Vista empleado</a>
     </nav>
 
 

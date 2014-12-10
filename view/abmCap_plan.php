@@ -492,8 +492,8 @@
                                     <label>Unidad: </label>
                                     <select name="unidad" id="unidad">
                                         <option value="">Seleccione la unidad</option>
-                                        <option value="Horas">Horas</option>
-                                        <option value="Dias">Dias</option>
+                                        <option value="HORAS">Horas</option>
+                                        <option value="DIAS">Dias</option>
                                     </select>
                                 </div>
                             </div>
@@ -518,8 +518,8 @@
                                     <label>Estado: </label>
                                     <select name="estado" id="estado">
                                         <option value="">Seleccione el estado</option>
-                                        <option value="Propuesto">Propuesto</option>
-                                        <option value="Cancelado">Cancelado</option>
+                                        <option value="PROPUESTO">Propuesto</option>
+                                        <option value="CANCELADO">Cancelado</option>
                                     </select>
                                 </div>
                             </div>
