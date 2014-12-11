@@ -19,10 +19,10 @@
     <tbody>
     <?php foreach ($view->solicitud as $sol) {?>
         <tr class="odd gradeA">
-            <td style="background-color: #E6FF99"><?php  echo $sol["PERIODO"]; ?></td>
-            <td style="background-color: #E6FF99"><?php  echo $sol["FECHA_SOLICITUD"];  ?></td>
-            <td style="background-color: #E6FF99"><?php  echo $sol["EMPLEADO_APELLIDO"].' '.$sol['EMPLEADO_NOMBRE']; ?></td>
-            <td style="background-color: #E6FF99"><?php  echo $sol["LUGAR_TRABAJO"]; ?></td>
+            <td style="background-color: #FFD699"><?php  echo $sol["PERIODO"]; ?></td>
+            <td style="background-color: #FFD699"><?php  echo $sol["FECHA_SOLICITUD"];  ?></td>
+            <td style="background-color: #FFD699"><?php  echo $sol["EMPLEADO_APELLIDO"].' '.$sol['EMPLEADO_NOMBRE']; ?></td>
+            <td style="background-color: #FFD699"><?php  echo $sol["LUGAR_TRABAJO"]; ?></td>
 
         </tr>
         <tr>

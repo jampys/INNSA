@@ -64,7 +64,7 @@
                             "operacion":"save",
                             "id":globalId,
                             "login":$("#login").val(),
-                            "password":$("#password").val(),
+                            //"password":$("#password").val(),
                             "fecha":$("#fecha").val(),
                             "perfil":$("#perfil").val(),
                             "estado":$("#estado").val(),
@@ -173,6 +173,70 @@
 
             });
 
+
+
+
+            $('#password_clear').dialog({
+                autoOpen: false,
+                width: 400,
+                modal:true,
+                title:"Blanqueo de password",
+                buttons: {
+                    "Guardar": function() {
+                        //$("#form").submit();
+                        if($('#form_password_clear').valid()){
+                            //alert('todo ok');
+
+                            $.ajax({
+                                url:"index.php",
+                                data:{  "accion":"login",
+                                        "operacion":"clear_pass_first",
+                                        "id_usuario":globalId, //id_usuario
+                                        "password": $('#pc_password').val()
+                                },
+                                contentType:"application/x-www-form-urlencoded",
+                                dataType:"json",//xml,html,script,json
+                                error:function(){
+
+                                    $("#dialog-msn").dialog("open");
+                                    $("#message").html("ha ocurrido un error");
+
+                                },
+                                ifModified:false,
+                                processData:true,
+                                success:function(datas){
+
+                                    $("#dialog-msn").dialog("open");
+                                    $("#message").html("Registro actualizado en la BD");
+
+
+                                },
+                                type:"POST",
+                                timeout:3000000,
+                                crossdomain:true
+
+                            });
+
+                            $("#password_clear").dialog("close");
+                        }
+
+                    },
+                    "Cancelar": function() {
+                        $("#form_password_clear")[0].reset(); //para limpiar el formulario
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+
+            });
+
             //ACA ESTABA EL DIALOG LINK. SE COLOCO EN abmUserGrid.php
 
             //Al hacer click en editar
@@ -182,6 +246,16 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
+                return false;
+            });
+
+
+            $(document).on("click", ".password_link", function(){
+                //globalOperacion=$(this).attr("media");
+                //globalOperacion='edit';
+                globalId=$(this).attr('id');
+                //editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
+                $('#password_clear').dialog('open');
                 return false;
             });
 
@@ -234,6 +308,7 @@
 
             //llamada a funcion validar
             $.validar();
+            $.validar_clear_pass();
 
 
         });
@@ -250,11 +325,11 @@
                     maxlength: 20,
                     minlength: 3
                 },
-                password: {
+                /*password: {
                     required: true,
                     maxlength: 20,
                     minlength: 3
-                },
+                }, */
                 perfil: {
                     required: true
                 },
@@ -270,7 +345,7 @@
             },
             messages:{
                 login: "Ingrese un login",
-                password: "Ingrese un password",
+                //password: "Ingrese un password",
                 perfil: "Seleccione un perfil",
                 estado: "Seleccione un estado",
                 empleado: "Seleccione un empleado",
@@ -279,6 +354,32 @@
 
         });
 
+
+    };
+
+
+
+
+    $.validar_clear_pass=function(){
+
+        //validacion de formulario
+        $('#form_password_clear').validate({
+            rules: {
+                pc_password: {
+                    required: true,
+                    maxlength: 20,
+                    minlength: 3
+                },
+                pc_password_again: {
+                    equalTo: "#pc_password"
+                }
+            },
+            messages:{
+                pc_password: "Ingrese un password (Máx 10 caracteres)",
+                pc_password_again: "Reingrese el password"
+            }
+
+        });
 
     };
 
@@ -325,8 +426,8 @@
 
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Password: </label>
-                                    <input type="text" name="password" id="password"/>
+                                    <!--<label>Password: </label>
+                                    <input type="text" name="password" id="password"/>-->
                                 </div>
                             </div>
 
@@ -374,8 +475,51 @@
                                     <select name="estado" id="estado">
                                         <option value="">Ingrese un estado</option>
                                         <option value="1">Habilitado</option>
-                                        <option value="2">Deshabilitado</option>
+                                        <option value="2">Inhabilitado</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- dialog para cambio de password -->
+<div id="password_clear">
+
+    <div class="grid_7">
+        <div class="clear"></div>
+        <div class="box">
+
+            <div class="block" id="forms">
+                <form id="form_password_clear" action="index.php" method="post">
+                    <fieldset>
+                        <legend>Blanqueo de password</legend>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Ingrese password: </label>
+                                    <input type="password" name="pc_password" id="pc_password"/>
+                                </div>
+                            </div>
+
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Reingrese password: </label>
+                                    <input type="password" name="pc_password_again" id="pc_password_again"/>
+                                    <input type="hidden" name="operacion" value='clear_pass' />
+                                    <input type="hidden" name="id_usuario" value='<?php echo $view->id_usuario; ?>' />
                                 </div>
                             </div>
                         </div>

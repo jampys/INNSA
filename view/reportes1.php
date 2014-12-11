@@ -119,8 +119,8 @@
                 function(){
                     index =$('#tabla_cuerpo tr').index($(this));
                     //alert(index);
-                    $('#tabla_cuerpo').find('tr').eq(index).find('td').css('background-color', '#ffddee'); //ffeeee
-                    $('#tabla_cursos').find('tr').eq(index).find('td').css('background-color', '#ffddee');
+                    $('#tabla_cuerpo').find('tr').eq(index).find('td').css('background-color', '#FFD699'); //ffeeee
+                    $('#tabla_cursos').find('tr').eq(index).find('td').css('background-color', '#FFD699');
 
                 },
                 function(){
@@ -307,7 +307,8 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
 
                                 ?>
                                 <!-- la demora en renderizar la grilla se debe a la carga de las imagenes -->
-                                <a href="#"><img src="public/img/document-icon.png" width="15px" height="15px"></a>
+                                <!--<a href="#"><img src="public/img/document-icon.png" width="15px" height="15px"></a>-->
+                                <img src="public/img/document-icon.png" width="15px" height="15px">
                                 <?php
                             }
 

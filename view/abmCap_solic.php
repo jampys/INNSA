@@ -240,6 +240,9 @@
         $(document).ready(function(){
 
 
+            $(document).tooltip();
+
+
             // menu superfish
             $('#navigationTop').superfish();
 

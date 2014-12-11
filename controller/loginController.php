@@ -19,15 +19,18 @@ switch($operacion){
             if($id>=1){
                 //$_SESSION["ses_id"]=$id;
                 //$_SESSION["user"]=$_POST['usuario'];
-                $_SESSION["ses_id"]=$id[0];
-                $_SESSION["user"]=$id[1];
-                $_SESSION['ACCESSLEVEL']=$id[2];
-                $_SESSION['USER_APELLIDO']=$id[3];
-                $_SESSION['USER_NOMBRE']=$id[4];
-                //echo $_SESSION['ACCESSLEVEL'];
+                if($id[5]!=1) { //si se ha limpiado el password  hay que cambiarlo...
+                    $_SESSION["ses_id"] = $id[0];
+                    $_SESSION["user"] = $id[1];
+                    $_SESSION['ACCESSLEVEL'] = $id[2];
+                    $_SESSION['USER_APELLIDO'] = $id[3];
+                    $_SESSION['USER_NOMBRE'] = $id[4];
+                }
+                else{
+                    $view->id_usuario = (int)$id[0];
+                    $view->content="view/login_clear_pass.php";
+                }
 
-                //tambien guardar en la sesion el perfil de usuario
-                //$_SESSION['accesslevel']= xxxxxxx;
 
                 //header("Location: ".Conexion::ruta()."?accion=index");
                 //echo "EL USUARIO SE SE LOGUEO OK";
@@ -38,12 +41,12 @@ switch($operacion){
             {
                 //echo "EL USUARIO NO SE PUDO LOGUEAR";
                 if($id==0){
-                    $_SESSION["error"]="USUARIO DESHABILITADO";
+                    $_SESSION["error"]="Usuario inhabilitado";
                     //header("Location: ".Conexion::ruta()."?accion=error");
                     $view->content="view/error.php";
                 }
                 if($id==-1){
-                    $_SESSION["error"]="DISCULPE, USUARIO O CONSTRASEÑA INVALIDOS";
+                    $_SESSION["error"]="Usuario o contraseña inválidos";
                     //header("Location: ".Conexion::ruta()."?accion=error");
                     $view->content="view/error.php";
                 }
@@ -52,6 +55,31 @@ switch($operacion){
         }
 
         break;
+
+
+
+    case 'clear_pass':
+        $view->u->setIdUsuario($_POST['id_usuario']);
+        $view->u->setPassword($_POST['password']);
+        $view->u->setClearPass(0);
+
+        $rta=$view->u->updatePassword();
+
+        header("Location: index.php");
+        break;
+
+
+    case 'clear_pass_first':
+        $view->u->setIdUsuario($_POST['id_usuario']);
+        $view->u->setPassword($_POST['password']);
+        $view->u->setClearPass(1);
+        $rta=$view->u->updatePassword();
+
+        print_r(json_encode($rta));
+        exit;
+        break;
+
+
 
     case 'salir':
         $view->u->salir();

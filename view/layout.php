@@ -137,6 +137,7 @@
                 ?>
 
                 </div>
+
                 <div id="sidebar">
                     <?php
                     if(isset($_SESSION["ses_id"])){

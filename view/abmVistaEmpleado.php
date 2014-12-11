@@ -281,6 +281,8 @@
 
         $(document).ready(function(){
 
+            $(document).tooltip();
+
             $( ".spinner" ).spinner({
                     max: 5,
                     min: 1

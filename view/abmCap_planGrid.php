@@ -99,7 +99,7 @@
                         <td><?php  echo $plan["IMPORTE"]; ?></td>
                         <td><?php  echo $plan["MONEDA"]; ?></td>
                         <td><?php  echo $plan["CANTIDAD"]; ?></td>
-                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
                         <!--<td class="center"><a href="">Eliminar</a></td>-->
                     </tr>
                 <?php }  ?>

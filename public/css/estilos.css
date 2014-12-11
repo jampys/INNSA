@@ -235,6 +235,22 @@ html,body{
 
 
 
+/* Estilo del tooltip. La clase .ui-tooltip es la clase CSS que tiene por defecto el tooltip*/
+.ui-tooltip {
+    font-size:11px;
+    font-family: Arial;
+    padding: 3px;
+    background-image: none;
+    background-color: #FFCC80;
+    border: 1px;
+    box-shadow: 2px 2px 5px #999;
+}
+
+
+
+
+
+
 
 
 

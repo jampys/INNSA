@@ -11,7 +11,8 @@ class Reportes
                 " (select count(cursos.id_curso) from cursos, temas, categorias where cursos.id_tema = temas.id_tema and temas.id_categoria = categorias.id_categoria and temas.id_categoria = ca.id_categoria) TOTAL".
                 " from categorias ca, cursos cu, temas te".
                 " where te.id_categoria = ca.id_categoria".
-                " and cu.id_tema = te.id_tema";
+                //" and cu.id_tema = te.id_tema";
+                " and cu.id_tema = te.id_tema order by CATEGORIA, cu.nombre";
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll(); // retorna todos los cursos
     }
@@ -20,7 +21,8 @@ class Reportes
     public static function getEmpleadosActivos(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from empleados where activo=1 order by lugar_trabajo asc");
+        //$obj_user->executeQuery("select * from empleados where activo=1 order by lugar_trabajo asc");
+        $obj_user->executeQuery("select * from empleados where activo=1 order by lugar_trabajo asc, apellido asc");
         return $obj_user->fetchAll(); // retorna todos los empleados
     }
 

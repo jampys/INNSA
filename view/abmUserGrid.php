@@ -46,24 +46,26 @@
                 <thead>
                 <tr>
                     <th>Login</th>
-                    <th>Password</th>
+                    <!--<th>Password</th>-->
                     <th>Fecha alta</th>
                     <th>Perfil</th>
                     <th>Empleado</th>
                     <th>Estado</th>
                     <th>Editar</th>
+                    <th>Password</th>
                     <!--<th>Eliminar</th>-->
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
                     <th>Login</th>
-                    <th>Password</th>
+                    <!--<th>Password</th>-->
                     <th>Fecha alta</th>
                     <th>Perfil</th>
                     <th>Empleado</th>
                     <th>Estado</th>
                     <th>Editar</th>
+                    <th>Password</th>
                     <!--<th>Eliminar</th>-->
                 </tr>
                 </tfoot>
@@ -71,12 +73,13 @@
                 <?php foreach ($view->usuarios as $user) {?>
                     <tr class="odd gradeA">
                         <td><?php  echo $user["LOGIN"];  ?></td>
-                        <td><?php  echo $user["PASSWORD"]; ?></td>
+                        <!--<td><?php  echo $user["PASSWORD"]; ?></td>-->
                         <td><?php  echo $user["FECHA_ALTA"]; ?></td>
                         <td><?php  echo $user["PERFIL"]; ?></td>
                         <td><?php  echo $user["APELLIDO"]." ".$user["NOMBRE"]; ?></td>
-                        <td><?php  echo ($user["HABILITADO"]==1) ? 'HABILITADO' : 'DESHABILITADO'; ?></td>
-                        <td class="center"><a href="" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>"><img src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td><?php  echo ($user["HABILITADO"]==1) ? 'HABILITADO' : 'INHABILITADO'; ?></td>
+                        <td class="center"><a href="" class="edit_link" id="<?php  echo $user["ID_USUARIO"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="" class="password_link" id="<?php  echo $user["ID_USUARIO"];  ?>"><img title="Blanquear password" src="public/img/Unlock-icon.png" width="15px" height="15px"></a></td>
                         <!--<td class="center"><a href="">Eliminar</a></td>-->
                     </tr>
                 <?php }  ?>

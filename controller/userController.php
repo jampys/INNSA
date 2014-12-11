@@ -9,7 +9,8 @@ $view->u=new User();
 switch($operacion){
     case 'insert':
         $view->u->setLogin($_POST['login']);
-        $view->u->setPassword($_POST['password']);
+        //$view->u->setPassword($_POST['password']);
+        $view->u->setPassword('1234'); //al insertar un nuevo usuario se asigna por defecto el password 1234, el usuario debe cambiarlo
         $view->u->setFechaAlta($_POST['fecha']);
         $view->u->setIdPerfil($_POST['perfil']);
         $view->u->setIdEmpleado($_POST['empleado']);
@@ -30,7 +31,7 @@ switch($operacion){
     case 'save':
         $view->u->setIdUsuario($_POST['id']);
         $view->u->setLogin($_POST['login']);
-        $view->u->setPassword($_POST['password']);
+        //$view->u->setPassword($_POST['password']);
         $view->u->setFechaAlta($_POST['fecha']);
         $view->u->setIdPerfil($_POST['perfil']);
         $view->u->setIdEmpleado($_POST['empleado']);

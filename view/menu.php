@@ -31,27 +31,42 @@
 
 
 
-
+    <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
     <nav class="nav">
         <a href="index.php?accion=empleado">Recursos</a>
     </nav>
+    <?   } ?>
+
+    <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
     <nav class="nav">
         <a href="index.php?accion=curso">Cursos</a>
     </nav>
+    <?   } ?>
+
+    <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
     <nav class="nav">
         <a href="index.php?accion=cap_plan">Plan capacitación</a>
     </nav>
+    <?   } ?>
+
+    <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
     <nav class="nav">
         <a href="index.php?accion=cap_solic">Solicitud capacitación</a>
     </nav>
+    <?   } ?>
 
+    <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
     <nav class="nav">
         <a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a>
     </nav>
 
-    <nav class="nav">
-        <a href="index.php?accion=asignacion">Asignacion plan</a>
-    </nav>
+        <nav class="nav">
+            <a href="index.php?accion=asignacion">Asignacion plan</a>
+        </nav>
+    <?   } ?>
+
+
+
     <!--<nav class="nav">
         <a href="#">Evaluacion plan</a>
     </nav>
@@ -60,25 +75,25 @@
     </nav>-->
 
     <!-- Opciones de menu solo para usuario administrador -->
-    <?php
-    if($_SESSION['ACCESSLEVEL']==1){
-        ?>
+    <?php if($_SESSION['ACCESSLEVEL']==2){ ?>
         <nav class="nav">
             <a href="index.php?accion=user">Usuarios</a>
         </nav>
+    <?   } ?>
+
         <!--<nav class="nav">
             <a href="#">Alarmas</a>
         </nav>-->
-        <nav class="nav">
-            <a href="index.php?accion=reportes">Reportes</a>
-        </nav>
-        <nav class="nav">
-            <a href="index.php?accion=reportes&operacion=reportes1">Reportes1</a>
-        </nav>
 
-    <?php
-    }
-    ?>
+    <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
+        <nav class="nav">
+            <a href="index.php?accion=reportes">Reporte Solicitudes</a>
+        </nav>
+        <nav class="nav">
+            <a href="index.php?accion=reportes&operacion=reportes1">Reporte Asignaciones</a>
+        </nav>
+    <?   } ?>
+
 
     <nav class="nav">
         <a href="index.php?accion=vista_empleado">Vista empleado</a>

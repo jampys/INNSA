@@ -110,7 +110,7 @@
                         <td><?php  echo $sol["EMPLEADO_APELLIDO"]." ".$sol["EMPLEADO_NOMBRE"]; ?></td> <!-- apellido y nombre del empleado -->
                         <td><?php  echo $sol["SOLICITO_APELLIDO"].' '.$sol["SOLICITO_NOMBRE"]; ?></td> <!-- apellido y nombre de quien solicito-->
                         <td><?php  echo $sol["ESTADO"]; ?></td>
-                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>"><img src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
                         <!--<td class="center"><a href="">Eliminar</a></td>-->
                     </tr>
                 <?php }  ?>

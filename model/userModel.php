@@ -12,6 +12,7 @@ class User
     var $id_empleado;
     var $habilitado;
     var $fecha_baja;
+    var $clear_pass;
 
 
     public static function getUsuarios(){
@@ -77,6 +78,9 @@ class User
     function setHabilitado($val)
     {  $this->habilitado=$val;}
 
+    function setClearPass($val)
+    {  $this->clear_pass=$val;}
+
 
 
 
@@ -84,7 +88,8 @@ class User
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario   ";
+        //$query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario";
+        $query="update usuarios set login='$this->login', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -94,8 +99,8 @@ class User
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="insert into usuarios(login, password, id_perfil, id_empleado, habilitado)".
-            "values('$this->login', '$this->password', $this->id_perfil , $this->id_empleado, $this->habilitado)";
+        $query="insert into usuarios(login, password, id_perfil, id_empleado, habilitado, clear_pass)".
+            "values('$this->login', '$this->password', $this->id_perfil , $this->id_empleado, $this->habilitado, $this->clear_pass)";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -136,9 +141,10 @@ class User
 
         $f=new Factory();
         $s=$f->returnsQuery();
-        //$query="select * from usuarios, perfiles where login ='$login' and password='$pass' and usuarios.id_perfil=perfiles.id_perfil ";
-        $query="select * from usuarios, perfiles, empleados where login ='$login' and password='$pass' and".
-               " usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado = empleados.id_empleado";
+        /*$query="select * from usuarios, perfiles, empleados where login ='$login' and password='$pass' and".
+               " usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado = empleados.id_empleado"; */
+        $query="select * from usuarios, perfiles, empleados where login ='$login' and password = encrypt('$pass') and".
+            " usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado = empleados.id_empleado";
         $s->executeQuery($query);
         $r=$s->fetchAll();
         //print_r($r);
@@ -155,6 +161,7 @@ class User
                 $datos[2]=$r[0]['ACCESSLEVEL'];
                 $datos[3]=$r[0]['APELLIDO'];
                 $datos[4]=$r[0]['NOMBRE'];
+                $datos[5]=$r[0]['CLEAR_PASS'];
                 return $datos;
             }
 
@@ -168,6 +175,17 @@ class User
 
     public function salir(){
         session_destroy();
+
+    }
+
+    //funcion para limpiar el password
+    public function updatePassword()
+    {
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $query="update usuarios set password='$this->password', clear_pass = $this->clear_pass where id_usuario = $this->id_usuario";
+        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
+        return $obj_user->getAffect(); // retorna todos los registros afectados
 
     }
 

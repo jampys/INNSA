@@ -91,7 +91,7 @@
                         <td><?php  echo $emp["FUNCION"]; ?></td>
                         <td><?php  echo $emp["CATEGORIA"]; ?></td>
                         <td><?php  echo $emp["DIVISION"]; ?></td>
-                        <td class="center"><a href="" class="edit_link" id="<?php  echo $emp["ID_EMPLEADO"];  ?>"><img src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="" class="edit_link" id="<?php  echo $emp["ID_EMPLEADO"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>
 
