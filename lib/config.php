@@ -225,7 +225,9 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
         return oci_num_rows($this->consulta);}
 
     function getAffect() // devuelve las cantidad de filas afectadas     //DARIO: este metodo es igual al de arriba
-    {return oci_num_rows($this->consulta);}
+    {
+        return oci_num_rows($this->consulta);
+    }
 
 
     //esta devuelve todos los registros en un array..... se debe sobreescribir

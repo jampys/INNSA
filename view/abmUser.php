@@ -322,8 +322,20 @@
             rules: {
                 login: {
                     required: true,
-                    maxlength: 20,
-                    minlength: 3
+                    maxlength: 40,
+                    //minlength: 3,
+                    email: true,
+                    remote: {
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            login: function(){ return $("#login").val(); },
+                            accion: "user",
+                            operacion: "AvailableUser"
+                        }
+                    }
+
                 },
                 /*password: {
                     required: true,
@@ -344,7 +356,11 @@
                 }
             },
             messages:{
-                login: "Ingrese un login",
+                login:{
+                    required: "Ingrese un usuario",
+                    remote: "El usuario ya existe, intente con otro",
+                    email: "El usuario debe ser un e-mail"
+                },
                 //password: "Ingrese un password",
                 perfil: "Seleccione un perfil",
                 estado: "Seleccione un estado",

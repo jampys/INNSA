@@ -28,14 +28,15 @@ class Empleado
     public function getEmpleadoById($id){
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $obj_emp->executeQuery("select * from empleados where id_empleado=$id");
+        //$obj_emp->executeQuery("select * from empleados where id_empleado=$id");
+        $obj_emp->executeQuery("select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, division, to_char(fecha_ingreso,'DD/MM/YYYY') as fecha_ingreso, activo, email, cuil from empleados where id_empleado=$id");
         return $obj_emp->fetchAll(); // retorna todos los clientes
     }
 
-    public function autocompletarEmpleados($term){  //funcion usada para autocompletar de empleados
+    public function autocompletarEmpleados($term){  //funcion usada para autocompletar de empleados (solo activos)
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select * from empleados where nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')";
+        $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll(); // retorna todos los cursos
     }
@@ -128,7 +129,8 @@ class Empleado
     {
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo=$this->n_legajo, empresa='$this->empresa', funcion='$this->funcion', categoria='$this->categoria', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
+        //$query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo=$this->n_legajo, empresa='$this->empresa', funcion='$this->funcion', categoria='$this->categoria', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
+        $query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo='$this->n_legajo', empresa='$this->empresa', funcion='$this->funcion', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
         $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
         return $obj_user->getAffect(); // retorna todos los registros afectados
 
@@ -138,8 +140,10 @@ class Empleado
     {
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, categoria, division, fecha_ingreso, activo, email, cuil)".
-            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , $this->n_legajo, '$this->empresa', '$this->funcion', '$this->categoria', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')";
+        /*$query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, categoria, division, fecha_ingreso, activo, email, cuil)".
+            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , $this->n_legajo, '$this->empresa', '$this->funcion', '$this->categoria', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')"; */
+        $query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, division, fecha_ingreso, activo, email, cuil)".
+            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , '$this->n_legajo', '$this->empresa', '$this->funcion', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')";
         $obj_emp->executeQuery($query); // ejecuta la consulta para traer al cliente
         return $obj_emp->getAffect(); // retorna todos los registros afectados
 

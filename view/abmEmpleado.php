@@ -33,7 +33,7 @@
                     $("#lugar_trabajo").val(datas[0]['LUGAR_TRABAJO']);
                     $("#empresa").val(datas[0]['EMPRESA']);
                     $("#funcion").val(datas[0]['FUNCION']);
-                    $("#categoria").val(datas[0]['CATEGORIA']);
+                    //$("#categoria").val(datas[0]['CATEGORIA']);
                     $("#division").val(datas[0]['DIVISION']);
                     $("#fecha").val(datas[0]['FECHA_INGRESO']);
                     $("#activo").val(datas[0]['ACTIVO']);
@@ -61,7 +61,7 @@
                             "n_legajo":$("#n_legajo").val(),
                             "empresa":$("#empresa").val(),
                             "funcion":$("#funcion").val(),
-                            "categoria":$("#categoria").val(),
+                            //"categoria":$("#categoria").val(),
                             "division":$("#division").val(),
                             "fecha_ingreso":$("#fecha").val(),
                             "activo":$("#activo").val(),
@@ -80,7 +80,7 @@
                     "n_legajo":$("#n_legajo").val(),
                     "empresa":$("#empresa").val(),
                     "funcion":$("#funcion").val(),
-                    "categoria":$("#categoria").val(),
+                    //"categoria":$("#categoria").val(),
                     "division":$("#division").val(),
                     "fecha_ingreso":$("#fecha").val(),
                     "activo":$("#activo").val(),
@@ -93,9 +93,9 @@
                 url:url,
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
-                //dataType:"json",//xml,html,script,json
-                error:function(){
-
+                dataType:"json",//xml,html,script,json
+                error:function(error){
+                    //alert(error.responseText);
                     $("#dialog-msn").dialog("open");
                     $("#message").html("ha ocurrido un error");
 
@@ -377,27 +377,29 @@
                             </div>
                         </div>
 
+
+
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Función: </label>
-                                    <input type="text" name="funcion" id="funcion"/>
-                                </div>
-                            </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Categoría: </label>
-                                    <input type="text" name="categoria" id="categoria"/>
+                                    <select name="funcion" id="funcion">
+                                        <option value="">Ingrese una función</option>
+                                        <option value="ANALISTA FUNCIONAL JR.">Analista funcional JR.</option>
+                                        <option value="ANALISTA FUNCIONAL SR.">Analista funcional SR.</option>
+                                        <option value="COORDINADOR DESARROLLO">Coordinador desarrollo</option>
+                                        <option value="COORDINADOR FORMACIÓN Y GESTIÓN DEL CONOCIMIENTO">Coordinador formación y gestión del conocimiento</option>
+                                        <option value="COORDINADOR VENTAS">Coordinador ventas</option>
+                                        <option value="COORDINADOR CONSULTORÍA">Coordinador consultoría</option>
+                                        <option value="DATA ENTRY">Data entry</option>
+                                        <option value="DESARROLLADOR JR.">Desarrollador JR.</option>
+                                        <option value="DESARROLLADOR SR.">Desarrollador SR.</option>
+                                        <option value="ESPECIALISTA">Especialista</option>
+                                        <option value="GERENTE SISTEMAS">Gerente sistemas</option>
+                                        <option value="SOPORTE FUNCIONAL">Soporte funcional</option>
+                                        <option value="SOPORTE TÉCNICO">Soporte técnico</option>
+                                        <option value="OTROS">Otros</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -406,9 +408,10 @@
                                     <label>División: </label>
                                     <select name="division" id="division">
                                         <option value="">Ingrese una división</option>
-                                        <option value="SISTEMAS">Sistemas</option>
-                                        <option value="ADMINISTRACION">Administración</option>
+                                        <option value="ADMINISTRACIÓN">Administración</option>
+                                        <option value="DIRECCIÓN">Dirección</option>
                                         <option value="RRHH">RRHH</option>
+                                        <option value="SISTEMAS">Sistemas</option>
                                     </select>
                                 </div>
                             </div>

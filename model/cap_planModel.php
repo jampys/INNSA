@@ -44,8 +44,6 @@ class Cap_Plan
     public static function getCursos($term){  //funcion usada para cargar dinamicamente select con los temas de la categoria seleccionada
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        //$obj_cp->executeQuery("select * from cursos");
-        //$query="select * from cursos where nombre like '%".$term."%'";
         $query="select * from cursos where nombre like UPPER ('%".$term."%')";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll(); // retorna todos los cursos

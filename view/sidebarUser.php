@@ -160,7 +160,11 @@
     <div class="arrow"><</div>
     <nav class="nav">
         <img src="public/img/user.png" width="75" height="75">
-        <p><?php echo $_SESSION["user"]?></p>
+        <p><?php
+                $firstName=explode(" ", $_SESSION["USER_NOMBRE"]);
+                echo $firstName[0];
+
+            ?></p>
 
         <a href="index.php?accion=login&operacion=salir">Cerrar Sesion</a>
 

@@ -54,6 +54,12 @@ switch($operacion){
         exit;
         break;
 
+    case 'AvailableUser':
+        $rta=$view->u->availableUser($_POST['login']);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
     default:
         $view->usuarios=$view->u->getUsuarios();
         break;

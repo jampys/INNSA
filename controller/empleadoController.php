@@ -15,7 +15,7 @@ switch($operacion){
         $view->u->setNLegajo($_POST['n_legajo']);
         $view->u->setEmpresa($_POST['empresa']);
         $view->u->setFuncion($_POST['funcion']);
-        $view->u->setCategoria($_POST['categoria']);
+        //$view->u->setCategoria($_POST['categoria']);
         $view->u->setDivision($_POST['division']);
         $view->u->setFechaIngreso($_POST['fecha_ingreso']);
         $view->u->setActivo($_POST['activo']);
@@ -41,7 +41,7 @@ switch($operacion){
         $view->u->setNLegajo($_POST['n_legajo']);
         $view->u->setEmpresa($_POST['empresa']);
         $view->u->setFuncion($_POST['funcion']);
-        $view->u->setCategoria($_POST['categoria']);
+        //$view->u->setCategoria($_POST['categoria']);
         $view->u->setDivision($_POST['division']);
         $view->u->setFechaIngreso($_POST['fecha_ingreso']);
         $view->u->setActivo($_POST['activo']);

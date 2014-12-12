@@ -42,8 +42,8 @@
                 rules: {
                     usuario: {
                         required: true,
-                        maxlength: 20,
-                        minlength: 3
+                        maxlength: 40,
+                        //minlength: 3
                     },
                     password: {
                         required: true,

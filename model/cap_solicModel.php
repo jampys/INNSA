@@ -260,11 +260,11 @@ class Cap_Solic
 
 
 
-    public static function getPlanes($term){  //funcion usada para autocompletar planes
+    public static function getPlanes($term){  //funcion usada para autocompletar planes (solo los propuestos, no los cancelados)
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
         //$query="select * from cursos where nombre like UPPER ('%".$term."%')";
-        $query="select * from plan_capacitacion, cursos where plan_capacitacion.id_curso = cursos.id_curso and nombre like UPPER ('%".$term."%')";
+        $query="select * from plan_capacitacion, cursos where plan_capacitacion.id_curso = cursos.id_curso and nombre like UPPER ('%".$term."%') and estado = 'PROPUESTO'";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll(); // retorna todos los cursos
     }
