@@ -277,8 +277,10 @@
                 empresa: "Seleccione la empresa",
                 division: "Seleccione la division",
                 fecha: "Seleccione la fecha de ingreso",
-                activo: "Seleccione el estado de habilitación",
-                email: "Ingrese como máximo 100 caracteres"
+                activo: "Seleccione el estado",
+                email: {
+                    maxlength: "Máximo 100 caracteres"
+                }
             }
 
         });

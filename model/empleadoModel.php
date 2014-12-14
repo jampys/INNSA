@@ -26,11 +26,21 @@ class Empleado
     }
 
     public function getEmpleadoById($id){
+        /*
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
         //$obj_emp->executeQuery("select * from empleados where id_empleado=$id");
         $obj_emp->executeQuery("select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, division, to_char(fecha_ingreso,'DD/MM/YYYY') as fecha_ingreso, activo, email, cuil from empleados where id_empleado=$id");
-        return $obj_emp->fetchAll(); // retorna todos los clientes
+        return $obj_emp->fetchAll(); */
+
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        //$query="select * from empleados where id_empleado= :id";
+        $query="select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, division, to_char(fecha_ingreso,'DD/MM/YYYY') as fecha_ingreso, activo, email, cuil from empleados where id_empleado=:id";
+        $obj_emp->dpParse($query);
+        $obj_emp->dpBind(':id', $id);
+        $obj_emp->dpExecute();
+        return $obj_emp->fetchAll();
     }
 
     public function autocompletarEmpleados($term){  //funcion usada para autocompletar de empleados (solo activos)
@@ -125,42 +135,78 @@ class Empleado
 
 
 
-    public function updateEmpleado()
-    {
+    public function updateEmpleado(){
+        /*
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         //$query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo=$this->n_legajo, empresa='$this->empresa', funcion='$this->funcion', categoria='$this->categoria', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
         $query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo='$this->n_legajo', empresa='$this->empresa', funcion='$this->funcion', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
-        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_user->getAffect(); // retorna todos los registros afectados
+        $obj_user->executeQuery($query);
+        return $obj_user->getAffect(); */
 
-    }
-
-    public function insertEmpleado()
-    {
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        /*$query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, categoria, division, fecha_ingreso, activo, email, cuil)".
-            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , $this->n_legajo, '$this->empresa', '$this->funcion', '$this->categoria', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')"; */
-        $query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, division, fecha_ingreso, activo, email, cuil)".
-            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , '$this->n_legajo', '$this->empresa', '$this->funcion', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')";
-        $obj_emp->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_emp->getAffect(); // retorna todos los registros afectados
+        $query="update empleados set apellido= :apellido, nombre= :nombre, lugar_trabajo= :lugar_trabajo, n_legajo= :n_legajo, empresa= :empresa, funcion= :funcion, ".
+            " division= :division, fecha_ingreso=to_date(:fecha_ingreso,'DD/MM/YYYY'), activo= :activo, email= :email, cuil= :cuil where id_empleado = :id_empleado";
+        $obj_emp->dpParse($query);
+
+        $obj_emp->dpBind(':id_empleado', $this->id_empleado);
+        $obj_emp->dpBind(':apellido', $this->apellido);
+        $obj_emp->dpBind(':nombre', $this->nombre);
+        $obj_emp->dpBind(':lugar_trabajo', $this->lugar_trabajo);
+        $obj_emp->dpBind(':n_legajo', $this->n_legajo);
+        $obj_emp->dpBind(':empresa', $this->empresa);
+        $obj_emp->dpBind(':funcion', $this->funcion);
+        $obj_emp->dpBind(':division', $this->division);
+        $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
+        $obj_emp->dpBind(':activo', $this->activo);
+        $obj_emp->dpBind(':email', $this->email);
+        $obj_emp->dpBind(':cuil', $this->cuil);
+
+        $obj_emp->dpExecute();
+        return $obj_emp->getAffect();
 
     }
-    function delete()	// elimina el cliente
-    {
+
+    public function insertEmpleado(){
+        /*
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, division, fecha_ingreso, activo, email, cuil)".
+            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , '$this->n_legajo', '$this->empresa', '$this->funcion', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')";
+        $obj_emp->executeQuery($query);
+        return $obj_emp->getAffect(); */
+
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="insert into empleados (apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, division, fecha_ingreso, activo, email, cuil)".
+            " values(:apellido, :nombre, :lugar_trabajo, :n_legajo, :empresa, :funcion, :division, to_date(:fecha_ingreso,'DD/MM/YYYY'), :activo, :email, :cuil)";
+        $obj_emp->dpParse($query);
+
+        $obj_emp->dpBind(':apellido', $this->apellido);
+        $obj_emp->dpBind(':nombre', $this->nombre);
+        $obj_emp->dpBind(':lugar_trabajo', $this->lugar_trabajo);
+        $obj_emp->dpBind(':n_legajo', $this->n_legajo);
+        $obj_emp->dpBind(':empresa', $this->empresa);
+        $obj_emp->dpBind(':funcion', $this->funcion);
+        $obj_emp->dpBind(':division', $this->division);
+        $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
+        $obj_emp->dpBind(':activo', $this->activo);
+        $obj_emp->dpBind(':email', $this->email);
+        $obj_emp->dpBind(':cuil', $this->cuil);
+
+        $obj_emp->dpExecute();
+        return $obj_emp->getAffect();
+    }
+
+    /*
+    function delete(){
         $f=new Factory();
         $obj_cliente=$f->returnsQuery();
         $query="delete from clientes where id=$this->id";
-        $obj_cliente->executeQuery($query); // ejecuta la consulta para  borrar el cliente
-        return $obj_cliente->getAffect(); // retorna todos los registros afectados
-
-    }
-
-
-
-
+        $obj_cliente->executeQuery($query);
+        return $obj_cliente->getAffect();
+    }*/
 
 
 

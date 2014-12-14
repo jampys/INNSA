@@ -475,29 +475,33 @@
                         </div>
 
 
-                        <div class="sixteen_column section">
-                            <div class="four column">
-                                <div class="column_content">
-                                    <label>Aprobó - Dirección: </label><br/>
-                                    <input type="text" name="apr_aprobo" id="apr_aprobo" readonly/>
-                                    <input type="hidden" name="apr_aprobo_id" id="apr_aprobo_id"/>
+                        <!--Seccion para APROBAR la solicitud -->
+                        <?php if($_SESSION['ACCESSLEVEL']==1){ ?>
+
+                            <div class="sixteen_column section">
+                                <div class="four column">
+                                    <div class="column_content">
+                                        <label>Aprobó - Dirección: </label><br/>
+                                        <input type="text" name="apr_aprobo" id="apr_aprobo" readonly/>
+                                        <input type="hidden" name="apr_aprobo_id" id="apr_aprobo_id"/>
+                                    </div>
+                                </div>
+                                <div class="one column">
+                                    <div class="column_content">
+                                        <label> </label><br/>
+                                        <input type="button" name="btn_aprobar" id="btn_aprobar" value="Aprobar">
+                                    </div>
+                                </div>
+                                <div class="eight column">
+                                    <div class="column_content">
+
+                                    </div>
                                 </div>
                             </div>
-                            <div class="one column">
-                                <div class="column_content">
-                                    <label> </label><br/>
-                                    <input type="button" name="btn_aprobar" id="btn_aprobar" value="Aprobar">
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
 
-                                </div>
-                            </div>
-                        </div>
+                        <?   } ?>
 
-
-
+                        
                     </fieldset>
 
                 </form>

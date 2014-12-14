@@ -490,7 +490,7 @@
                                     <label>Habilitacion: </label>
                                     <select name="estado" id="estado">
                                         <option value="">Ingrese un estado</option>
-                                        <option value="1">Habilitado</option>
+                                        <option value="1" selected>Habilitado</option>
                                         <option value="2">Inhabilitado</option>
                                     </select>
                                 </div>

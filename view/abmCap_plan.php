@@ -111,10 +111,10 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
-
-                    $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                error:function(error){
+                    alert(error.responseText);
+                    //$("#dialog-msn").dialog("open");
+                    //$("#message").html("ha ocurrido un error");
 
                 },
                 ifModified:false,
@@ -190,6 +190,8 @@
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
+                        //Limpia los minDate y maxDate de los datepicker
+                        $('#fecha_desde, #fecha_hasta').datepicker( "option" , {minDate: null, maxDate: null} );
                         $(this).dialog("close");
                     }
                 },
@@ -204,6 +206,8 @@
                close:function(){
                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                    $('#form').validate().resetForm(); //para limpiar los errores validate
+                   //Limpia los minDate y maxDate de los datepicker
+                   $('#fecha_desde, #fecha_hasta').datepicker( "option" , {minDate: null, maxDate: null} );
                 }
 
             });

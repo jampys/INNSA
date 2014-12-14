@@ -10,6 +10,25 @@ html,body{
     background-color: #e9f0ed;
 }
 
+input{
+    font-family:Arial !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+
+}
+textarea{
+    font-family:Arial !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+}
+
+select{
+    font-family:Arial !important;
+    font-size: 10px !important;
+    text-transform: uppercase !important;
+}
+
+
 /*
 #principalLayout{
     width: 100%;
@@ -138,7 +157,7 @@ html,body{
     vertical-align: middle;
     padding: 5px;
     font-family: Arial;
-    font-size: 11px;
+    font-size: 10px;
     /*text-align: center; */
 }
 

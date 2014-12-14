@@ -99,7 +99,7 @@
                 url:url,
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
-                //dataType:"json",//xml,html,script,json
+                dataType:"json",//xml,html,script,json
                 error:function(){
 
                     $("#dialog-msn").dialog("open");
@@ -240,7 +240,7 @@
                     maxlength: 100
                 },
                 comentarios: {
-                    maxlength: 4
+                    maxlength: 100
                 },
                 entidad: {
                     required: true

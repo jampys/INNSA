@@ -40,7 +40,7 @@ abstract class sQuery{
         $this->coneccion->Close();
     }
     abstract function Clean();
-    abstract function getResultados();
+    //abstract function getResultados();
     abstract function getAffect();
     abstract function fetchAll();
 }
@@ -129,10 +129,8 @@ class sQueryMYSQL extends sQuery   // se declara una clase para poder ejecutar l
     function Clean() // libera la consulta
     {mysql_free_result($this->consulta);}
 
-    function getResultados() // debuelve la cantidad de registros encontrados
-    {return mysql_affected_rows($this->coneccion->getConexion()) ;}
 
-    function getAffect() // devuelve las cantidad de filas afectadas     //DARIO: este metodo es igual al de arriba
+    function getAffect() // devuelve las cantidad de filas afectadas
     {return mysql_affected_rows($this->coneccion->getConexion()) ;}
 
 
@@ -219,13 +217,10 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
     {oci_free_statement($this->consulta);}
 
 
-    function getResultados() // debuelve la cantidad de registros encontrados
+    function getAffect() // devuelve las cantidad de filas afectadas
     {
-        //return oci_num_rows($this->coneccion->getConexion()) ;}
-        return oci_num_rows($this->consulta);}
-
-    function getAffect() // devuelve las cantidad de filas afectadas     //DARIO: este metodo es igual al de arriba
-    {
+        /*OJO!!! Al usarlo con un SELECT primero debe hacerse un fetch_array. Esta informacion la aclara el manual del metodo
+        Si no se hace el fetch array antes, devuelve 0. Con INSERT, UPDATE y DELETE si devuelve las filas afectadas. */
         return oci_num_rows($this->consulta);
     }
 
@@ -244,6 +239,23 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
             }
         }
         return $rows;
+    }
+
+
+
+    /* METODOS CREADOS PARA PODER TRABAJAR LAS CONSULTAS CON bind */
+
+    function dpParse($cons){
+        $this->consulta=oci_parse($this->coneccion->getConexion(), $cons);
+        //return $this->consulta; //no es necesario que la devuelva
+    }
+
+    function dpExecute(){
+        oci_execute($this->consulta);
+    }
+
+    function dpBind($a, $b){
+        oci_bind_by_name($this->consulta, $a, $b);
     }
 
 
