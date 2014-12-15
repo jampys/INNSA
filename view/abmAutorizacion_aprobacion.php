@@ -8,6 +8,7 @@
     <script type="text/javascript">
     var globalOperacion="";
     var globalId;
+    var estadoSolicitud;
 
 
         function editar(id_plan){
@@ -99,7 +100,7 @@
                         "operacion":"save",
                         "id": globalId,
                         "apr_autorizo": $("#apr_autorizo_id").val(),
-                        "apr_aprobo": $("#apr_aprobo_id").val(),
+                        "apr_aprobo":($("#apr_aprobo_id").length >0)? $("#apr_aprobo_id").val() : '',   //$("#apr_aprobo_id").val(),
                         "estado": ($("#apr_aprobo_id").val()=='')? 'AUTORIZADA':'APROBADA'
                     };
 
@@ -219,66 +220,21 @@
             //Al hacer click en el boton btn_autorizar
             $(document).on("click", "#btn_autorizar", function(){
 
-                    $.ajax({
-                        url: "index.php",
-                        data: {"accion":"empleado", "operacion":"getEmpleadoBySession"},
-                        contentType:"application/x-www-form-urlencoded",
-                        dataType:"json",//xml,html,script,json
-                        error:function(){
+                $("#apr_autorizo").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+                $("#apr_autorizo_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
+                estadoSolicitud='AUTORIZADA';
+                //alert($("#apr_autorizo_id").val());
 
-                            $("#dialog-msn").dialog("open");
-                            $("#message").html("ha ocurrido un error");
-
-                        },
-                        ifModified:false,
-                        processData:true,
-                        success:function(datas){
-
-                            $("#apr_autorizo").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
-                            $("#apr_autorizo_id").val(datas[0]['ID_EMPLEADO']);
-
-                        },
-                        type:"POST",
-                        timeout:3000000,
-                        crossdomain:true
-
-                    });
-
-
-                return false;
             });
 
 
             //Al hacer click en el boton btn_aprobar
             $(document).on("click", "#btn_aprobar", function(){
 
-                $.ajax({
-                    url: "index.php",
-                    data: {"accion":"empleado", "operacion":"getEmpleadoBySession"},
-                    contentType:"application/x-www-form-urlencoded",
-                    dataType:"json",//xml,html,script,json
-                    error:function(){
+                $("#apr_aprobo").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+                $("#apr_aprobo_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
+                estadoSolicitud='APROBADA';
 
-                        $("#dialog-msn").dialog("open");
-                        $("#message").html("ha ocurrido un error");
-
-                    },
-                    ifModified:false,
-                    processData:true,
-                    success:function(datas){
-
-                        $("#apr_aprobo").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
-                        $("#apr_aprobo_id").val(datas[0]['ID_EMPLEADO']);
-
-                    },
-                    type:"POST",
-                    timeout:3000000,
-                    crossdomain:true
-
-                });
-
-
-                return false;
             });
 
 
@@ -501,7 +457,7 @@
 
                         <?   } ?>
 
-                        
+
                     </fieldset>
 
                 </form>

@@ -96,7 +96,10 @@
 
 
     <nav class="nav">
-        <a href="index.php?accion=vista_empleado">Vista empleado</a>
+        <a href="index.php?accion=vista_empleado">Cursos <?php
+            $firstName=explode(" ", $_SESSION["USER_NOMBRE"]);
+            echo $firstName[0]; ?>
+        </a>
     </nav>
 
 

@@ -36,7 +36,7 @@ class Reportes
     }
 
 
-
+    //NO SE USA
     public function getEstadoAsignacion($id_empleado, $id_curso){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
@@ -60,12 +60,24 @@ class Reportes
 
 
     public function getEstadoAsignacion1(){
+        /*
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="select sc.id_empleado, pc.id_curso, ap.estado".
                 " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
                 " where ap.id_solicitud = sc.id_solicitud".
                 " and ap.id_plan = pc.id_plan";
+        $obj_user->executeQuery($query);
+        return $obj_user->fetchAll(); */
+
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $query="select sc.id_empleado, pc.id_curso, ap.estado".
+            " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
+            " where ap.id_solicitud = sc.id_solicitud".
+            " and ap.id_plan = pc.id_plan".
+            " UNION".
+            " select ah.id_empleado, ah.id_curso, ah.estado from asignacion_plan_historico ah";
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll();
 

@@ -15,6 +15,7 @@ switch($operacion){
         $view->u->setIdPerfil($_POST['perfil']);
         $view->u->setIdEmpleado($_POST['empleado']);
         $view->u->setHabilitado($_POST['estado']);
+        $view->u->setClearPass(1);
         $rta=$view->u->insertUsuario();
         print_r(json_encode($rta));
         exit;

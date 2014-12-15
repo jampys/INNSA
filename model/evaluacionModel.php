@@ -186,8 +186,8 @@ class Evaluacion
         return $obj_ev->fetchAll();
     }
 
-    public function updateEvaluacion()
-    {
+    public function updateEvaluacion(){
+        /*
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="update cap_evaluacion set conceptos_importantes='$this->conceptos_importantes', aspectos_faltaron='$this->aspectos_faltaron', mejorar_desempenio='$this->mejorar_desempenio',".
@@ -196,13 +196,30 @@ class Evaluacion
             " obj_1=$this->obj_1, obj_2=$this->obj_2, obj_3=$this->obj_3, comentarios='$this->comentarios'".
             " where id_evaluacion = $this->id_evaluacion";
         $obj_user->executeQuery($query);
-        return $obj_user->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect(); */
+
+        $f=new Factory();
+        $obj_eva=$f->returnsQuery();
+        $query="update cap_evaluacion set conceptos_importantes = :conceptos_importantes, aspectos_faltaron = :aspectos_faltaron, mejorar_desempenio = :mejorar_desempenio,".
+            " ev_i_dominio=$this->ev_i_dominio, ev_i_lenguaje=$this->ev_i_lenguaje, ev_i_claridad=$this->ev_i_claridad, ev_i_material=$this->ev_i_material, ev_i_consultas=$this->ev_i_consultas, ev_i_didactico=$this->ev_i_didactico, ev_i_participacion=$this->ev_i_participacion,".
+            " ev_l_duracion=$this->ev_l_duracion, ev_l_comunicacion=$this->ev_l_comunicacion, ev_l_material=$this->ev_l_material, ev_l_break=$this->ev_l_break, ev_l_hotel=$this->ev_l_hotel,".
+            " obj_1=$this->obj_1, obj_2=$this->obj_2, obj_3=$this->obj_3, comentarios = :comentarios".
+            " where id_evaluacion = $this->id_evaluacion";
+        $obj_eva->dpParse($query);
+
+        $obj_eva->dpBind(':conceptos_importantes', $this->conceptos_importantes);
+        $obj_eva->dpBind(':aspectos_faltaron', $this->aspectos_faltaron);
+        $obj_eva->dpBind(':mejorar_desempenio', $this->mejorar_desempenio);
+        $obj_eva->dpBind(':comentarios', $this->comentarios);
+
+        $obj_eva->dpExecute();
+        return $obj_eva->getAffect();
 
     }
 
 
-    public function insertEvaluacion()
-    {
+    public function insertEvaluacion(){
+        /*
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
         $query="insert into cap_evaluacion(id_asignacion, conceptos_importantes, aspectos_faltaron, mejorar_desempenio, fecha_evaluacion,".
@@ -210,7 +227,23 @@ class Evaluacion
             " values($this->id_asignacion, '$this->conceptos_importantes', '$this->aspectos_faltaron', '$this->mejorar_desempenio', SYSDATE,".
             " $this->ev_i_dominio, $this->ev_i_lenguaje, $this->ev_i_claridad, $this->ev_i_material, $this->ev_i_consultas, $this->ev_i_didactico, $this->ev_i_participacion, $this->ev_l_duracion, $this->ev_l_comunicacion, $this->ev_l_material, $this->ev_l_break, $this->ev_l_hotel, $this->obj_1, $this->obj_2, $this->obj_3, '$this->comentarios')";
         $obj_emp->executeQuery($query);
-        return $obj_emp->getAffect(); // retorna todos los registros afectados
+        return $obj_emp->getAffect(); */
+
+        $f=new Factory();
+        $obj_eva=$f->returnsQuery();
+        $query="insert into cap_evaluacion(id_asignacion, conceptos_importantes, aspectos_faltaron, mejorar_desempenio, fecha_evaluacion,".
+            " ev_i_dominio, ev_i_lenguaje, ev_i_claridad, ev_i_material, ev_i_consultas, ev_i_didactico, ev_i_participacion, ev_l_duracion, ev_l_comunicacion, ev_l_material, ev_l_break, ev_l_hotel, obj_1, obj_2, obj_3, comentarios)".
+            " values($this->id_asignacion, :conceptos_importantes, :aspectos_faltaron, :mejorar_desempenio, SYSDATE,".
+            " $this->ev_i_dominio, $this->ev_i_lenguaje, $this->ev_i_claridad, $this->ev_i_material, $this->ev_i_consultas, $this->ev_i_didactico, $this->ev_i_participacion, $this->ev_l_duracion, $this->ev_l_comunicacion, $this->ev_l_material, $this->ev_l_break, $this->ev_l_hotel, $this->obj_1, $this->obj_2, $this->obj_3, :comentarios)";
+        $obj_eva->dpParse($query);
+
+        $obj_eva->dpBind(':conceptos_importantes', $this->conceptos_importantes);
+        $obj_eva->dpBind(':aspectos_faltaron', $this->aspectos_faltaron);
+        $obj_eva->dpBind(':mejorar_desempenio', $this->mejorar_desempenio);
+        $obj_eva->dpBind(':comentarios', $this->comentarios);
+
+        $obj_eva->dpExecute();
+        return $obj_eva->getAffect();
 
     }
 

@@ -25,6 +25,7 @@ switch($operacion){
                     $_SESSION['ACCESSLEVEL'] = $id[2];
                     $_SESSION['USER_APELLIDO'] = $id[3];
                     $_SESSION['USER_NOMBRE'] = $id[4];
+                    $_SESSION['USER_ID_EMPLEADO'] = $id[6];
                 }
                 else{
                     $view->id_usuario = (int)$id[0];

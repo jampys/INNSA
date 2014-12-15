@@ -237,10 +237,10 @@
                     minlength: 5
                 },
                 descripcion: {
-                    maxlength: 100
+                    maxlength: 150
                 },
                 comentarios: {
-                    maxlength: 100
+                    maxlength: 150
                 },
                 entidad: {
                     required: true
@@ -254,8 +254,8 @@
             },
             messages:{
                 nombre: "Ingrese su nombre",
-                descripcion: "Máximo 100 caracteres",
-                comentarios: "Máximo 100 caracteres",
+                descripcion: "Máximo 150 caracteres",
+                comentarios: "Máximo 150 caracteres",
                 entidad: "Ingrese su entidad",
                 categoria: "Seleccione una categoria",
                 tema: "Seleccione un tema"

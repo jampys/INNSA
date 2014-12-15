@@ -6,7 +6,6 @@ class Comunicacion
     var $id_comunicacion;
     var $id_asignacion;
     var $situacion;
-    //var $objetivos;
     var $objetivo_1;
     var $objetivo_2;
     var $objetivo_3;
@@ -26,8 +25,6 @@ class Comunicacion
     function getSituacion()
     { return $this->situacion;}
 
-    /*function getObjetivos()
-    { return $this->objetivos;}*/
 
     function getObjetivo1()
     { return $this->objetivo_1;}
@@ -61,8 +58,6 @@ class Comunicacion
     function setSituacion($val)
     {  $this->situacion=$val;}
 
-    /*function setObjetivos($val)
-    {  $this->objetivos=$val;}*/
 
     function setObjetivo1($val)
     {  $this->objetivo_1=$val;}
@@ -98,37 +93,69 @@ class Comunicacion
         return $obj_emp->fetchAll();
     }
 
-    public function updateComunicacion()
-    {
+    public function updateComunicacion(){
+        /*
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$query="update cap_comunicacion set situacion='$this->situacion', objetivos='$this->objetivos', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
         $query="update cap_comunicacion set situacion='$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
         $obj_user->executeQuery($query);
-        return $obj_user->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect(); */
+
+        $f=new Factory();
+        $obj_com=$f->returnsQuery();
+        $query="update cap_comunicacion set situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, comunico=:comunico where id_comunicacion = :id_comunicacion";
+        $obj_com->dpParse($query);
+
+        $obj_com->dpBind(':situacion', $this->situacion);
+        $obj_com->dpBind(':objetivo_1', $this->objetivo_1);
+        $obj_com->dpBind(':objetivo_2', $this->objetivo_2);
+        $obj_com->dpBind(':objetivo_3', $this->objetivo_3);
+        $obj_com->dpBind(':indicadores_exito', $this->indicadores_exito);
+        $obj_com->dpBind(':compromiso', $this->compromiso);
+        $obj_com->dpBind(':comunico', $this->comunico);
+        $obj_com->dpBind(':id_comunicacion', $this->id_comunicacion);
+
+        $obj_com->dpExecute();
+        return $obj_com->getAffect();
 
     }
 
-    public function updateComunicacionNotificacion()
-    {
+    public function updateComunicacionNotificacion(){
+
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="update cap_comunicacion set notificado=$this->notificado where id_comunicacion = $this->id_comunicacion";
         $obj_user->executeQuery($query);
-        return $obj_user->getAffect(); // retorna todos los registros afectados
+        return $obj_user->getAffect();
 
     }
 
-    public function insertComunicacion()
-    {
+    public function insertComunicacion(){
+        /*
         $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        /*$query="insert into cap_comunicacion(id_asignacion, situacion, objetivos, indicadores_exito, compromiso, comunico)".
-            "values($this->id_asignacion, '$this->situacion', '$this->objetivos' , '$this->indicadores_exito', '$this->compromiso', '$this->comunico')"; */
+        $obj_com=$f->returnsQuery();
         $query="insert into cap_comunicacion(id_asignacion, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, comunico)".
             "values($this->id_asignacion, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso', '$this->comunico')";
-        $obj_emp->executeQuery($query);
-        return $obj_emp->getAffect(); // retorna todos los registros afectados
+        $obj_com->executeQuery($query);
+        return $obj_com->getAffect();  */
+
+        $f=new Factory();
+        $obj_com=$f->returnsQuery();
+        $query="insert into cap_comunicacion(id_asignacion, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, comunico)".
+            "values(:id_asignacion, :situacion, :objetivo_1, :objetivo_2, :objetivo_3, :indicadores_exito, :compromiso, :comunico)";
+        $obj_com->dpParse($query);
+
+        $obj_com->dpBind(':id_asignacion', $this->id_asignacion);
+        $obj_com->dpBind(':situacion', $this->situacion);
+        $obj_com->dpBind(':objetivo_1', $this->objetivo_1);
+        $obj_com->dpBind(':objetivo_2', $this->objetivo_2);
+        $obj_com->dpBind(':objetivo_3', $this->objetivo_3);
+        $obj_com->dpBind(':indicadores_exito', $this->indicadores_exito);
+        $obj_com->dpBind(':compromiso', $this->compromiso);
+        $obj_com->dpBind(':comunico', $this->comunico);
+
+        $obj_com->dpExecute();
+        return $obj_com->getAffect();
 
     }
 

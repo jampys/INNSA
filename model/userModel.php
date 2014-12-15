@@ -166,6 +166,7 @@ class User
                 $datos[3]=$r[0]['APELLIDO'];
                 $datos[4]=$r[0]['NOMBRE'];
                 $datos[5]=$r[0]['CLEAR_PASS'];
+                $datos[6]=$r[0]['ID_EMPLEADO'];
                 return $datos;
             }
 

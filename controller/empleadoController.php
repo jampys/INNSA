@@ -64,13 +64,13 @@ switch($operacion){
         exit;
         break;
 
+    /*
     case 'getEmpleadoBySession':
-
         $view->e=new User();
         $rta=$view->e->getUsuarioById($_SESSION["ses_id"]);
         print_r(json_encode($rta));
         exit;
-        break;
+        break; */
 
     default:
         $view->empleados=$view->u->getEmpleados();

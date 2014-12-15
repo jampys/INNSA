@@ -101,15 +101,30 @@
 
     </script>
 
+    <style type="text/css">
+
+        #header p{
+            text-align: left;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 17.5px;
+            color: ivory;
+            padding: 0px 0px 0px 5px;
+            text-shadow: none;
+            font-weight: bold;
+
+        }
+    </style>
+
 </head>
 
 
 <body>
 
 
-    <!--<div id="principalLayout">-->
+        <!--<div id="principalLayout">-->
         <div id="header">
-            <a href="index.php">INNSA Sistema de Capacitación</a>
+            <a style="padding-left: 5px" href="index.php"><img src="public/img/logo.gif"></a>
+            <p>Sistema de capacitación</p>
         </div>
 
 

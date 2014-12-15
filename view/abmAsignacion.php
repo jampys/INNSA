@@ -88,7 +88,9 @@
                     }
                 }
                 else{ // se trata de una comunicacion nueva
-                    setComunicador();
+                    //seteo el comunicardor
+                    $("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+                    $("#comunico_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
                     //selecciona los input del form_comunicacion... less than 6 (osea del 0 al 5)
                     $("#form_comunicacion :input:lt(6)").attr("readonly", false);
                     $('#com_btn_guardar').button('enable');
@@ -286,37 +288,6 @@
             });
 
         }
-
-
-
-    function setComunicador(){
-        //alert('llamada a funcion que carga el comunicador');
-        $.ajax({
-            url: "index.php",
-            data: {"accion":"empleado", "operacion":"getEmpleadoBySession"},
-            contentType:"application/x-www-form-urlencoded",
-            dataType:"json",//xml,html,script,json
-            error:function(){
-
-                $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
-
-            },
-            ifModified:false,
-            processData:true,
-            success:function(datas){
-
-                $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
-                $("#comunico_id").val(datas[0]['ID_EMPLEADO']);
-
-            },
-            type:"POST",
-            timeout:3000000,
-            crossdomain:true
-
-        });
-
-    }
 
 
 

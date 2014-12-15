@@ -330,7 +330,8 @@
                         type: "POST",
                         dataType: "json",
                         data: {
-                            login: function(){ return $("#login").val(); },
+                            //login: function(){ return $("#login").val(); },
+                            login: function(){ return (globalOperacion=='insert')? $("#login").val() : '' },
                             accion: "user",
                             operacion: "AvailableUser"
                         }

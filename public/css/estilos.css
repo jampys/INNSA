@@ -13,7 +13,7 @@ html,body{
 input{
     font-family:Arial !important;
     font-size: 10px !important;
-    text-transform: uppercase !important;
+    /*text-transform: uppercase !important; */
 
 }
 textarea{
@@ -52,7 +52,7 @@ select{
             width:100%;
             float:right;
             background-color: #e9f0ed;
-            min-height:78.8% !important;
+            min-height:82.7% !important;
             margin-top: 75px
         }
 
@@ -84,11 +84,11 @@ select{
         position: relative
     }
 
-
+/*
 #FormularioAcceso{
     width: 33%;
     margin: 0 auto;
-}
+} */
 
 /* estilo usado para los checkboxes del abm cap_solic */
 .checkboxes{
@@ -170,11 +170,15 @@ select{
 /*Estilo para tabla de autorizacion / aprobacion */
 #table_plan thead tr td{
     padding-left: 5px;
+    font-family: Arial;
+    font-size: 10px;
 }
 
 #table_plan tfoot tr td{
     font-weight: bold;
     padding-left: 5px;
+    font-family: Arial;
+    font-size: 10px;
 }
 
 
@@ -241,6 +245,8 @@ select{
     float: left;
     padding: 2px;
     clear: right;
+    font-family: Arial;
+    font-size: 10px;
 }
 
 
@@ -263,6 +269,12 @@ select{
     background-color: #FFCC80;
     border: 1px;
     box-shadow: 2px 2px 5px #999;
+}
+
+/* estilo de tabla del archivo reportes.php */
+#reportes tr td{
+    font-family: Arial;
+    font-size: 10px;
 }
 
 

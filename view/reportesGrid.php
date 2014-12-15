@@ -1,19 +1,18 @@
-<table cellpadding="0" cellspacing="0" width="100%" class="display" id="nada">
+<table cellpadding="0" cellspacing="0" width="100%" class="display" id="reportes">
     <thead>
     <tr>
-        <th>Periodo</th>
-        <th>Fecha_solicitud</th>
+        <th>Período</th>
+        <th>Fecha de solicitud</th>
         <th>Empleado</th>
-        <th>Lugar trabajo</th>
-
+        <th>Lugar de trabajo</th>
     </tr>
     </thead>
     <tfoot>
     <tr>
-        <th>Periodo</th>
-        <th>Fecha_solicitud</th>
+        <th>Período</th>
+        <th>Fecha de solicitud</th>
         <th>Empleado</th>
-        <th>Lugar trabajo</th>
+        <th>Lugar de trabajo</th>
     </tr>
     </tfoot>
     <tbody>
@@ -57,7 +56,7 @@
                             <td style="width: 70px"><?php  echo $sol["MODALIDAD"]; ?></td>
                             <td style="width: 50px"><?php  echo $sol["FECHA_DESDE"];  ?></td>
                             <td style="width: 100px"><?php  echo $sol["ESTADO"]; ?></td>
-                            <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='COMUNICADO' || $sol["ESTADO"]=='NOTIFICADO' || $sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="15px" height="15px">': ''; ?></td>
+                            <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='COMUNICADO' || $sol["ESTADO"]=='NOTIFICADO' || $sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="14px" height="14px">': ''; ?></td>
                             <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='NOTIFICADO' || $sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
                             <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
 
