@@ -299,6 +299,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                                     <a href="" title="<?php echo $cu['ESTADO']; ?>"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
                                     <?php
                                     $coincidencia=1;
+                                    break; //detiene el loop
                                 }
                             }
                             if($coincidencia==1){

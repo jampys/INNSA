@@ -18,12 +18,13 @@
 
         // Dialog Link
         $('#dialog_link').click(function(){
-            //globalOperacion=$(this).attr("media");
+
             globalOperacion='insert';
             $('#dialog').dialog('open');
             $("#empleado").attr("readonly", false);
 
             //codigo para setear automaticamente el apr_solicito
+            /*
             $.ajax({
                 url: "index.php",
                 data: {"accion":"empleado", "operacion":"getEmpleadoBySession"},
@@ -48,13 +49,16 @@
                 crossdomain:true
 
             });
-            //fin codigo
+            */
 
+            $("#apr_solicito").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+            $("#apr_solicito_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
             return false;
         });
 
 
     });
+
 </script>
 
 

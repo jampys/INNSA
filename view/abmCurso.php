@@ -234,7 +234,7 @@
                 nombre: {
                     required: true,
                     maxlength: 100,
-                    minlength: 5
+                    //minlength: 5
                 },
                 descripcion: {
                     maxlength: 150
