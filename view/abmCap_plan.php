@@ -43,6 +43,7 @@
                     $("#profesor_1").val(datas[0]['PROFESOR_1']);
                     $("#profesor_2").val(datas[0]['PROFESOR_2']);
                     $("#comentarios").val(datas[0]['COMENTARIOS_PLAN']);
+                    $("#entidad").val(datas[0]['ENTIDAD_PLAN']);
 
                     //para el campo tipo de cambio al editar
                     (datas[0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
@@ -80,7 +81,9 @@
                             "forma_financiacion":$("#forma_financiacion").val(),
                             "profesor_1":$("#profesor_1").val(),
                             "profesor_2":$("#profesor_2").val(),
-                            "comentarios":$("#comentarios").val()};
+                            "comentarios":$("#comentarios").val(),
+                            "entidad":$("#entidad").val()
+                    };
             }
             else{ //se va a guardar un curso editado
                 var data={  "accion":"cap_plan",
@@ -103,7 +106,9 @@
                             "forma_financiacion":$("#forma_financiacion").val(),
                             "profesor_1":$("#profesor_1").val(),
                             "profesor_2":$("#profesor_2").val(),
-                            "comentarios":$("#comentarios").val()};
+                            "comentarios":$("#comentarios").val(),
+                            "entidad":$("#entidad").val()
+                        };
             }
 
             $.ajax({
@@ -329,6 +334,7 @@
                     required: true
                 },
                 objetivo: {
+                    required:true,
                     maxlength: 150
                 },
                 modalidad: {
@@ -363,6 +369,9 @@
                 tipo_cambio: {
                     required: function(){ return $('#moneda').val()=='USD';},
                     number: true
+                },
+                comentarios: {
+                    maxlength: 150
                 }
 
             },
@@ -370,7 +379,10 @@
                 curso: "Seleccione el curso",
                 curso_id: "Seleccione un curso sugerido",
                 periodo: "Seleccione el periodo",
-                objetivo: "El objetivo no debe superar los 150 caracteres",
+                objetivo: {
+                    required: "Ingrese el título del curso en la entidad capacitadora",
+                    maxlength: "Max. 150 caracteres "
+                },
                 modalidad: "Seleccione la modalidad",
                 fecha_desde: "Seleccione la fecha de inicio",
                 fecha_hasta: "Seleccione la fecha de finalización",
@@ -380,7 +392,8 @@
                 estado: "Seleccione el estado",
                 importe: "Ingrese el importe",
                 moneda: "Seleccione la moneda",
-                tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)"
+                tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)",
+                comentarios: "Max. 150 caracteres"
             }
 
         });
@@ -437,10 +450,6 @@
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
                                         <option value="">Seleccione el periodo</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
                                         <option value="2014">2014</option>
                                         <option value="2015">2015</option>
                                     </select>
@@ -461,10 +470,31 @@
 
 
                         <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Entidad: </label>
+                                    <select name="entidad" id="entidad">
+                                        <option value="">Seleccione la entidad</option>
+                                        <option value="IAPG">IAPG</option>
+                                        <option value="PERSEUS">Perseus</option>
+                                        <option value="UTN">UTN</option>
+                                        <option value="OTRA">Otra</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Objetivo: </label><br/>
-                                    <textarea name="objetivo" id="objetivo" rows="3"></textarea>
+                                    <label>Título del curso en la entidad: </label><br/>
+                                    <textarea name="objetivo" id="objetivo" rows="2"></textarea>
                                 </div>
                             </div>
 
@@ -524,7 +554,7 @@
                                     <label>Estado: </label>
                                     <select name="estado" id="estado">
                                         <option value="">Seleccione el estado</option>
-                                        <option value="PROPUESTO">Propuesto</option>
+                                        <option value="PROPUESTO" selected>Propuesto</option>
                                         <option value="CANCELADO">Cancelado</option>
                                     </select>
                                 </div>

@@ -328,7 +328,7 @@ class Cap_Solic
     }
 
     public function insertCapSolic(){
-        /*
+
         $conn=oci_connect('dario', 'dario', 'localhost');
         $sql="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
             "values('$this->situacion_actual', '$this->situacion_deseada', '$this->objetivo_medible_1', '$this->objetivo_medible_2', '$this->objetivo_medible_3', SYSDATE, '$this->periodo' , $this->id_empleado, $this->dp_ingreso, $this->dp_crecimiento, $this->dp_promocion, $this->dp_futura_transfer, $this->dp_sustitucion_temp, $this->di_nuevas_tecnicas, $this->di_crecimiento, $this->di_competencias_emp, $this->rp_falta_comp, $this->rp_no_conformidad, $this->rp_req_externo, '$this->estado', $this->apr_solicito) returning id_solicitud into :id";
@@ -336,12 +336,13 @@ class Cap_Solic
         $consulta=oci_parse($conn, $sql);
         oci_bind_by_name($consulta,':id',$id);
         oci_execute($consulta);
-        return $id; */
+        return $id;
+
 
         $f=new Factory();
         $obj_sc=$f->returnsQuery();
         $query="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
-            "values(:situacion_actual, :situacion_deseada, :objetivo_medible_1, :objetivo_medible_2, :objetivo_medible_3, SYSDATE, :periodo, :id_empleado, :dp_ingreso, :dp_crecimiento, :dp_promocion, :dp_futura_transfer, :dp_sustitucion_temp, :di_nuevas_tecnicas, :di_crecimiento, :di_competencias_emp, :rp_falta_comp, :rp_no_conformidad, :rp_req_externo, :estado, :apr_solicito)".
+            " values(:situacion_actual, :situacion_deseada, :objetivo_medible_1, :objetivo_medible_2, :objetivo_medible_3, SYSDATE, :periodo, :id_empleado, :dp_ingreso, :dp_crecimiento, :dp_promocion, :dp_futura_transfer, :dp_sustitucion_temp, :di_nuevas_tecnicas, :di_crecimiento, :di_competencias_emp, :rp_falta_comp, :rp_no_conformidad, :rp_req_externo, :estado, :apr_solicito)".
             " returning id_solicitud into :id";
         $obj_sc->dpParse($query);
 
@@ -366,8 +367,8 @@ class Cap_Solic
         $obj_sc->dpBind(':estado', $this->estado);
         $obj_sc->dpBind(':apr_solicito', $this->apr_solicito);
 
-        $id=0; //declaro la variable donde se asignara el id de la nueva solicitud
-        $obj_sc->dpBind(':id', $id); //Se asigna a la variable $id el valor :id devuelto por la consulta
+        //Se asigna a la variable $id el valor :id devuelto por la consulta, si le saco el parametro $obj_sc da error
+        $obj_sc->dpBind($obj_sc, ':id', $id);
         $obj_sc->dpExecute();
         return $id;
 

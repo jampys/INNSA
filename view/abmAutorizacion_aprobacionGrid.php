@@ -10,8 +10,8 @@
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "columnDefs": [
-                { "width": "70px", "targets": 0 },
-                { "width": "70px", "targets": 1 },
+                //{ "width": "70px", "targets": 0 },
+                //{ "width": "70px", "targets": 1 },
                 { "width": "240px", "targets": 2 },
                 { "width": "240px", "targets": 3 }
             ]

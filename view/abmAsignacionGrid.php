@@ -14,7 +14,7 @@
             "columnDefs": [
                 { "width": "60px", "targets": 0 },
                 { "width": "60px", "targets": 1 },
-                { "width": "200px", "targets": 2 },
+                { "width": "240px", "targets": 2 },
                 { "width": "350px", "targets": 3 }
             ]
         } );

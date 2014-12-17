@@ -308,7 +308,6 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
 
                                 ?>
                                 <!-- la demora en renderizar la grilla se debe a la carga de las imagenes -->
-                                <!--<a href="#"><img src="public/img/document-icon.png" width="15px" height="15px"></a>-->
                                 <img src="public/img/document-icon.png" width="15px" height="15px">
                                 <?php
                             }

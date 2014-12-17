@@ -242,9 +242,9 @@
                 comentarios: {
                     maxlength: 150
                 },
-                entidad: {
+                /*entidad: {
                     required: true
-                },
+                }, */
                 categoria: {
                     required: true
                 },
@@ -256,7 +256,7 @@
                 nombre: "Ingrese su nombre",
                 descripcion: "Máximo 150 caracteres",
                 comentarios: "Máximo 150 caracteres",
-                entidad: "Ingrese su entidad",
+                //entidad: "Ingrese su entidad",
                 categoria: "Seleccione una categoria",
                 tema: "Seleccione un tema"
             }
@@ -312,7 +312,7 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Descripcion: </label><br/>
+                                    <label>Objetivo: </label><br/>
                                     <textarea name="descripcion" id="descripcion" rows="5"></textarea>
                                 </div>
                             </div>
@@ -324,19 +324,7 @@
                             </div>
                         </div>
 
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Entidad: </label>
-                                    <input type="text" name="entidad" id="entidad"/>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Se quita la entidad y se coloca en el plan de capacitacion -->
 
                         <div class="sixteen_column section">
                             <div class="eight column">

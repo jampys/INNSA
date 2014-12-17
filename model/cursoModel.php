@@ -12,8 +12,9 @@ class Curso
     public static function getCursos(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from cursos");
-        return $obj_user->fetchAll(); // retorna todos los cursos
+        //$obj_user->executeQuery("select * from cursos");
+        $obj_user->executeQuery("select cu.id_curso, cu.nombre nombre_curso, ca.nombre nombre_categoria, te.nombre nombre_tema from cursos cu, temas te, categorias ca where cu.id_tema = te.id_tema and te.id_categoria = ca.id_categoria ");
+        return $obj_user->fetchAll();
     }
 
     public function getCursoById($id){

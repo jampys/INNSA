@@ -56,7 +56,8 @@
                 <thead>
                 <tr>
                     <th>Curso</th>
-                    <th>Periodo</th>
+                    <th>Período</th>
+                    <th>Entidad</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
                     <th>Duracion</th>
@@ -73,7 +74,8 @@
                 <tfoot>
                 <tr>
                     <th>Curso</th>
-                    <th>Periodo</th>
+                    <th>Período</th>
+                    <th>Entidad</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
                     <th>Duracion</th>
@@ -91,6 +93,7 @@
                     <tr class="odd gradeA">
                         <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 40);  ?></td>
                         <td><?php  echo $plan["PERIODO"] ?></td>
+                        <td><?php  echo $plan["ENTIDAD"] ?></td>
                         <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
                         <td><?php  echo $plan["DURACION"]; ?></td>

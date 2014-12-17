@@ -27,6 +27,7 @@ switch($operacion){
         $view->u->setProfesor1($_POST['profesor_1']);
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
+        $view->u->setEntidad($_POST['entidad']);
 
         $rta=$view->u->insertCapPlan();
         print_r(json_encode($rta));
@@ -61,6 +62,7 @@ switch($operacion){
         $view->u->setProfesor1($_POST['profesor_1']);
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
+        $view->u->setEntidad($_POST['entidad']);
 
         $rta=$view->u->updateCapPlan();
         print_r(json_encode($rta));

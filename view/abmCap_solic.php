@@ -35,19 +35,19 @@
                     $("#objetivo_medible_2").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_2']);
                     $("#objetivo_medible_3").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_3']);
 
-                    $("#dp_ingreso").attr('checked', (datas['solicitud'][0]['DP_INGRESO']==1)? true:false);
-                    $("#dp_crecimiento").attr('checked', (datas['solicitud'][0]['DP_CRECIMIENTO']==1)? true:false);
-                    $("#dp_promocion").attr('checked', (datas['solicitud'][0]['DP_PROMOCION']==1)? true:false);
-                    $("#dp_futura_transfer").attr('checked', (datas['solicitud'][0]['DP_FUTURA_TRANSFER']==1)? true:false);
-                    $("#dp_sustitucion_temp").attr('checked', (datas['solicitud'][0]['DP_SUSTITUCION_TEMP']==1)? true:false);
+                    $("#dp_ingreso").prop('checked', (datas['solicitud'][0]['DP_INGRESO']==1)? true:false);
+                    $("#dp_crecimiento").prop('checked', (datas['solicitud'][0]['DP_CRECIMIENTO']==1)? true:false);
+                    $("#dp_promocion").prop('checked', (datas['solicitud'][0]['DP_PROMOCION']==1)? true:false);
+                    $("#dp_futura_transfer").prop('checked', (datas['solicitud'][0]['DP_FUTURA_TRANSFER']==1)? true:false);
+                    $("#dp_sustitucion_temp").prop('checked', (datas['solicitud'][0]['DP_SUSTITUCION_TEMP']==1)? true:false);
 
-                    $("#di_nuevas_tecnicas").attr('checked', (datas['solicitud'][0]['DI_NUEVAS_TECNICAS']==1)? true:false);
-                    $("#di_crecimiento").attr('checked', (datas['solicitud'][0]['DI_CRECIMIENTO']==1)? true:false);
-                    $("#di_competencias_emp").attr('checked', (datas['solicitud'][0]['DI_COMPETENCIAS_EMP']==1)? true:false);
+                    $("#di_nuevas_tecnicas").prop('checked', (datas['solicitud'][0]['DI_NUEVAS_TECNICAS']==1)? true:false);
+                    $("#di_crecimiento").prop('checked', (datas['solicitud'][0]['DI_CRECIMIENTO']==1)? true:false);
+                    $("#di_competencias_emp").prop('checked', (datas['solicitud'][0]['DI_COMPETENCIAS_EMP']==1)? true:false);
 
-                    $("#rp_falta_comp").attr('checked', (datas['solicitud'][0]['RP_FALTA_COMP']==1)? true:false);
-                    $("#rp_no_conformidad").attr('checked', (datas['solicitud'][0]['RP_NO_CONFORMIDAD']==1)? true:false);
-                    $("#rp_req_externo").attr('checked', (datas['solicitud'][0]['RP_REQ_EXTERNO']==1)? true:false);
+                    $("#rp_falta_comp").prop('checked', (datas['solicitud'][0]['RP_FALTA_COMP']==1)? true:false);
+                    $("#rp_no_conformidad").prop('checked', (datas['solicitud'][0]['RP_NO_CONFORMIDAD']==1)? true:false);
+                    $("#rp_req_externo").prop('checked', (datas['solicitud'][0]['RP_REQ_EXTERNO']==1)? true:false);
 
                     //Completa los campos Solicito, autorizo, aprobo
                     $("#apr_solicito").val(datas['solicitud'][0]['APELLIDO_SOLICITO']+' '+datas['solicitud'][0]['NOMBRE_SOLICITO']);
@@ -292,7 +292,7 @@
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
-                        //$("input:checked").removeAttr("checked"); //para limpiar los checkbox
+                        $(":checked").removeAttr("checked"); //para limpiar los checkbox
                         //limpiar la tabla de asignaciones de planes
                         $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                         $(this).dialog("close");
@@ -309,7 +309,7 @@
                close:function(){
                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                    $('#form').validate().resetForm(); //para limpiar los errores validate
-                   //$("input:checked").removeAttr("checked"); //para limpiar los checkbox
+                   $(":checked").removeAttr("checked"); //para limpiar los checkbox
                    //limpiar la tabla de asignaciones de planes y tabla de cursos propuestos
                    $('#table_plan tbody tr').each(function(){ $(this).remove(); });
                    $('#table_curso tbody tr').each(function(){ $(this).remove(); });
@@ -360,7 +360,7 @@
                                 '<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
-                                '<td>'+$('#np_viaticos').val()+'</td>' +
+                                '<td style="text-align: center">'+$('#np_viaticos').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
                                 '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
@@ -743,10 +743,6 @@
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
                                         <option value="">Seleccione el periodo</option>
-                                        <option value="2010">2010</option>
-                                        <option value="2011">2011</option>
-                                        <option value="2012">2012</option>
-                                        <option value="2013">2013</option>
                                         <option value="2014">2014</option>
                                         <option value="2015">2015</option>
                                     </select>
