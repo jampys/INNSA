@@ -93,6 +93,47 @@ class Reportes
     }
 
 
+    public function getCursosPropuestosByFiltro($periodo){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        /*$query= "select cu.id_curso, cu.nombre, count(*) as cantidad".
+                " from propuestas pro, cursos cu, solicitud_capacitacion sc".
+                " where pro.id_curso = cu.id_curso and pro.id_solicitud = sc.id_solicitud and sc.periodo = $periodo".
+                " group by cu.id_curso, cu.nombre order by cantidad DESC"; */
+        $query="select cu.id_curso, cu.nombre, count(*) as cantidad".
+            " from propuestas pro, cursos cu, solicitud_capacitacion sc".
+            " where pro.id_curso = cu.id_curso".
+            " and pro.id_solicitud = sc.id_solicitud and sc.periodo = $periodo".
+            " and cu.id_curso not in".
+            " (select pc.id_curso from plan_capacitacion pc, asignacion_plan ap".
+            " where pc.id_plan = ap.id_plan and ap.id_solicitud = sc.id_solicitud)".
+            " group by cu.id_curso, cu.nombre order by cantidad DESC";
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+    public function getEmpleadosByCurso($id_curso){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        /*$query= "select em.apellido, em.nombre".
+            " from empleados em, solicitud_capacitacion sc, propuestas pro".
+            " where pro.id_solicitud = sc.id_solicitud".
+            " and em.id_empleado = sc.id_empleado".
+            " and pro.id_curso = $id_curso"; */
+        $query="select em.apellido, em.nombre".
+                " from empleados em, solicitud_capacitacion sc, propuestas pro".
+                " where pro.id_solicitud = sc.id_solicitud".
+                " and em.id_empleado = sc.id_empleado".
+                " and pro.id_curso = $id_curso".
+                " and pro.id_curso not in".
+                " (select pc.id_curso".
+                " from plan_capacitacion pc, asignacion_plan ap".
+                " where pc.id_plan = ap.id_plan and ap.id_solicitud = sc.id_solicitud)";
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+
 
 
 }

@@ -88,6 +88,21 @@ switch($operacion){
         $view->content="view/reportes1.php";
         break;
 
+
+    case 'reportes2':
+        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'periodo';
+        //$lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+
+        $view->cursos=$view->u->getCursosPropuestosByFiltro($periodo);
+        $view->content="view/reportes2.php";
+
+        if($_POST['filtro']=='filtro'){
+            include_once('view/reportesGrid2.php');
+            exit;
+        }
+
+        break;
+
     default:
         $view->solicitud=$view->u->getCapSolic();
         $view->content="view/reportes.php";

@@ -35,25 +35,25 @@
     <nav class="nav">
         <a href="index.php?accion=empleado">Recursos</a>
     </nav>
-    <?   } ?>
+    <?php   } ?>
 
     <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
     <nav class="nav">
         <a href="index.php?accion=curso">Cursos</a>
     </nav>
-    <?   } ?>
+    <?php   } ?>
 
     <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
     <nav class="nav">
         <a href="index.php?accion=cap_plan">Plan capacitación</a>
     </nav>
-    <?   } ?>
+    <?php   } ?>
 
     <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
     <nav class="nav">
         <a href="index.php?accion=cap_solic">Solicitud capacitación</a>
     </nav>
-    <?   } ?>
+    <?php   } ?>
 
     <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
     <nav class="nav">
@@ -63,7 +63,7 @@
         <nav class="nav">
             <a href="index.php?accion=asignacion">Asignacion plan</a>
         </nav>
-    <?   } ?>
+    <?php   } ?>
 
 
 
@@ -91,6 +91,9 @@
         </nav>
         <nav class="nav">
             <a href="index.php?accion=reportes&operacion=reportes1">Reporte Asignaciones</a>
+        </nav>
+        <nav class="nav">
+            <a href="index.php?accion=reportes&operacion=reportes2">Reporte cursos propuestos</a>
         </nav>
     <?   } ?>
 

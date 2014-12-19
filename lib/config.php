@@ -178,7 +178,7 @@ class ConexionOracle extends Conexion{
     }
 
     function Close(){  // cierra la conexion
-        mysql_close($this->con);
+        //mysql_close($this->con);
     }
 
     //Al metodo ruta() lo hereda
@@ -215,6 +215,14 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
 
     function Clean() // libera la consulta
     {oci_free_statement($this->consulta);}
+
+
+    //AGREGADA DARIO ULTIMO MOMENTO
+    function cerrarConexion(){
+        $this->coneccion->Close();
+    }
+
+    //-------------------------------
 
 
     function getAffect() // devuelve las cantidad de filas afectadas

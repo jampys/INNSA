@@ -84,36 +84,35 @@ class User
 
 
 
-    public function updateUsuario()	// actualiza el cliente cargado en los atributos
-    {
+    public function updateUsuario(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         //$query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario";
         $query="update usuarios set login='$this->login', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario";
-        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_user->getAffect(); // retorna todos los registros afectados
+        $obj_user->executeQuery($query);
+        $obj_user->cerrarConexion(); //cierra la conexion
+        return $obj_user->getAffect();
 
     }
 
-    public function insertUsuario()	// inserta el cliente cargado en los atributos
-    {
+    public function insertUsuario(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="insert into usuarios(login, password, id_perfil, id_empleado, habilitado, clear_pass)".
             "values('$this->login', '$this->password', $this->id_perfil , $this->id_empleado, $this->habilitado, $this->clear_pass)";
-        $obj_user->executeQuery($query); // ejecuta la consulta para traer al cliente
-        return $obj_user->getAffect(); // retorna todos los registros afectados
-
+        $obj_user->executeQuery($query);
+        $obj_user->cerrarConexion(); //cierra la conexion
+        return $obj_user->getAffect();
     }
-    function delete()	// elimina el cliente
-    {
+
+    /*
+    function delete(){
         $f=new Factory();
         $obj_cliente=$f->returnsQuery();
         $query="delete from clientes where id=$this->id";
-        $obj_cliente->executeQuery($query); // ejecuta la consulta para  borrar el cliente
-        return $obj_cliente->getAffect(); // retorna todos los registros afectados
-
-    }
+        $obj_cliente->executeQuery($query);
+        return $obj_cliente->getAffect();
+    } */
 
     public function autocompletarEmpleadosSinUser($term, $user){  //funcion usada para autocompletar de empleados
         $f=new Factory();
@@ -127,6 +126,7 @@ class User
             " UNION".
             " select emx.id_empleado, emx.apellido, emx.nombre from empleados emx, usuarios us where us.id_empleado = emx.id_empleado and us.id_usuario = $user";
         $obj_cp->executeQuery($query);
+        $obj_cp->cerrarConexion(); //cierra la conexion
         return $obj_cp->fetchAll();
     }
 
@@ -150,6 +150,7 @@ class User
         $query="select * from usuarios, perfiles, empleados where login ='$login' and password = encrypt('$pass') and".
             " usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado = empleados.id_empleado";
         $s->executeQuery($query);
+        $s->cerrarConexion(); //cierra la conexion
         $r=$s->fetchAll();
         //print_r($r);
         //echo $r[0]['HABILITADO'];
