@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start(); //Se mueve esta linea al index.php para evitar errores al migrar el sitio a otro servidor
 
 //Se configura el motor de BD que se usara. ORACLE o MYSQL
 define('TIPO_CONEXION', 'ORACLE');

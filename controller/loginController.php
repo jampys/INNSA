@@ -85,7 +85,9 @@ switch($operacion){
     case 'salir':
         $view->u->salir();
         //$view->content="view/login.php";
-        header("Location: index.php");
+        //header("Location: index.php");
+        //para evitar los tipicos errores del header location =>lo hago con javascript
+        echo "<script>window.location='index.php';</script>";
         break;
 
     default:
@@ -96,9 +98,5 @@ switch($operacion){
 }
 
 
-
-
-
-
-
 ?>
+
