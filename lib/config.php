@@ -24,6 +24,20 @@ abstract class Conexion{
         $cadena=substr($palabra,0,$num);
         return $cadena;
     }
+
+    public static function periodos(){
+        //establece los periodos para los select del ABM plan de capacitacion y solicitud de capacitacion
+        $anioActual=date("Y");
+        $mesActual=date("m");
+        //hasta el mes 10 inclusive (octubre) muestra solo año actual, despues año actual y siguiente
+        $anioHasta= ($mesActual<=10)? $anioActual: $anioActual+1;
+        $periodos=array();
+            for($i=$anioActual; $i<=$anioHasta; $i++){
+                $periodos[]=$i;
+            }
+        return $periodos;
+
+    }
 }
 
 abstract class sQuery{

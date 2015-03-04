@@ -21,7 +21,7 @@ echo 'Cantidad de filas afectadas:'.$s->getAffect();
 echo '<br/>';
 echo 'Liberacion de la consulta:'.$s->clean();
 print_r($r);
-exit;
+//exit;
 
 ?>
 
@@ -54,6 +54,30 @@ exit;
 
 <hr/>
 <INPUT TYPE="NUMBER" MIN="1" MAX="5" STEP="1" VALUE="5" SIZE="1">
+
+<hr/>
+
+<?php
+echo "El mes actual es".date("m");
+$periodos=Conexion::periodos();
+echo sizeof(Conexion::periodos());
+echo $periodos[0];
+
+?>
+
+
+<select name="periodo" id="periodo">
+    <option value="">Seleccione el periodo</option>
+    <!--<option value="2014">2014</option>
+    <option value="2015">2015</option>-->
+    <?php
+    foreach ($periodos as $per){
+    ?>
+    <option><?php echo $per; ?></option>
+    <?php
+    }
+    ?>
+</select>
 
 
 
