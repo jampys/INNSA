@@ -7,6 +7,8 @@ require_once("model/reportesModel.php");
 //$view->u=new Cap_Solic();
 $view->u=new Reportes();
 
+//traigo los periordos de la BD
+$periodos=$view->u->getPeriodos();
 
 switch($operacion){
 

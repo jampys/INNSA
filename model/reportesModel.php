@@ -134,6 +134,19 @@ class Reportes
     }
 
 
+    public function getPeriodos(){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $query="select DISTINCT periodo from solicitud_capacitacion".
+        " UNION".
+        " select DISTINCT periodo from plan_capacitacion";
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+
+
+
 
 
 }

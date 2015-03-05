@@ -743,8 +743,14 @@
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
                                         <option value="">Seleccione el periodo</option>
-                                        <option value="2014">2014</option>
-                                        <option value="2015">2015</option>
+                                        <?php
+                                        $periodos=Conexion::periodos();
+                                        foreach ($periodos as $per){
+                                            ?>
+                                            <option value="<?php echo $per; ?>"><?php echo $per; ?></option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>

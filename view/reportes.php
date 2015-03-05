@@ -50,11 +50,13 @@
             <label>Período: </label><br/>
             <select name="periodo" id="periodo">
                 <option value="">Todos los períodos</option>
-                <option value="2010">2010</option>
-                <option value="2011">2011</option>
-                <option value="2012">2012</option>
-                <option value="2013">2013</option>
-                <option value="2014">2014</option>
+                <<?php
+                foreach ($periodos as $per){
+                    ?>
+                    <option value="<?php echo $per["PERIODO"]; ?>"><?php echo $per["PERIODO"]; ?></option>
+                <?php
+                }
+                ?>
             </select>
         </div>
     </div>

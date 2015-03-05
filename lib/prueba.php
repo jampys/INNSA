@@ -8,10 +8,12 @@ $s=$f->returnsQuery();
 //$query="select * from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado";
 
 
-$query="select co.objetivo_1, co.objetivo_2, co.objetivo_3".
+/*$query="select co.objetivo_1, co.objetivo_2, co.objetivo_3".
     " from cap_comunicacion co, asignacion_plan ap".
     " where co.id_asignacion = ap.id_asignacion".
-    " and ap.id_asignacion = 301";
+    " and ap.id_asignacion = 301";*/
+
+$query="select DISTINCT periodo from plan_capacitacion";
 
 $s->executeQuery($query);
 $r=$s->fetchAll();
@@ -38,7 +40,7 @@ print_r($r);
         foreach ($r as $fila){
             ?>
             <tr>
-                <td><?php echo $fila['ID_TEMA']; ?></td>
+                <td><?php echo $fila['PERIODO']; ?></td>
                 <td><?php echo $fila['NOM']; ?></td>
                 <td><?php echo $fila['OBJETIVO']; ?></td>
 
@@ -78,6 +80,7 @@ echo $periodos[0];
     }
     ?>
 </select>
+
 
 
 

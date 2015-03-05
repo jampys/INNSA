@@ -1,4 +1,8 @@
 <?php
+/*colocada provisoriamente para desactivar toda notificacion de error
+http://www.lawebdelprogramador.com/foros/PHP/1395996-solucionado-Como-desactivar-los-warning-notice-y-error-de-PHP.html
+*/
+error_reporting(0);
 //session_start(); //Se mueve esta linea al index.php para evitar errores al migrar el sitio a otro servidor
 
 //Se configura el motor de BD que se usara. ORACLE o MYSQL
