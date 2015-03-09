@@ -134,12 +134,36 @@ class Reportes
     }
 
 
-    public function getPeriodos(){
+    public function getPeriodos(){ //metodo utilizado para rellenar los combos de los periodos
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
         $query="select DISTINCT periodo from solicitud_capacitacion".
         " UNION".
         " select DISTINCT periodo from plan_capacitacion";
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+
+    public function getPlanesCapacitacion($periodo){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, (select count(*) from asignacion_plan where id_plan = pc.id_plan) as cantidad".
+                " from plan_capacitacion pc, cursos cu, asignacion_plan ap".
+                " where pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
+                " and pc.periodo = $periodo";
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+    public function getEmpleadosByPlan($lugar_trabajo, $id_plan){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $query="select em.apellido, em.nombre, ap.viaticos".
+                " from empleados em, plan_capacitacion pc, asignacion_plan ap, solicitud_capacitacion sc".
+                " where pc.id_plan = ap.id_plan and ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
+                " and em.lugar_trabajo = $lugar_trabajo".
+                " and ap.id_plan = $id_plan";
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
     }

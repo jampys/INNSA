@@ -105,6 +105,21 @@ switch($operacion){
 
         break;
 
+
+    case 'reportes3':
+        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'periodo';
+        $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+
+        $view->planes=$view->u->getPlanesCapacitacion($periodo);
+        $view->content="view/reportes3.php";
+
+        if($_POST['filtro']=='filtro'){
+            include_once('view/reportesGrid3.php');
+            exit;
+        }
+
+        break;
+
     default:
         $view->solicitud=$view->u->getCapSolic();
         $view->content="view/reportes.php";

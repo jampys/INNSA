@@ -95,6 +95,9 @@
         <nav class="nav">
             <a href="index.php?accion=reportes&operacion=reportes2">Reporte cursos propuestos</a>
         </nav>
+        <nav class="nav">
+            <a href="index.php?accion=reportes&operacion=reportes3">Reporte gerencia</a>
+        </nav>
     <?   } ?>
 
 
