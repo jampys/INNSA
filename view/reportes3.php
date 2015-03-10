@@ -27,9 +27,10 @@
             $('#reporte').load(
                 'index.php',
                 {   accion:"reportes",
-                    operacion: "filtrosReportes",
+                    operacion: "reportes3",
                     periodo:$('#periodo').val(),
-                    lugar_trabajo: $('#lugar_trabajo').val()
+                    lugar_trabajo: $('#lugar_trabajo').val(),
+                    filtro: 'filtro'
                 }
             );
 

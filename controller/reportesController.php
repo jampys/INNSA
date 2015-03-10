@@ -106,7 +106,7 @@ switch($operacion){
         break;
 
 
-    case 'reportes3':
+    case 'reportes3': //reporte para gerencia
         $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'periodo';
         $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
 

@@ -6,7 +6,8 @@
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
-        <th>Total s/viáticos</th>
+        <th>Subtotal s/viáticos (pesos)</th>
+        <th>Total c/viáticos (pesos)</th>
     </tr>
     </thead>
     <tfoot>
@@ -16,7 +17,8 @@
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
-        <th>Total s/viáticos</th>
+        <th>Subtotal s/viáticos (pesos)</th>
+        <th>Total c/viáticos (pesos)</th>
     </tr>
     </tfoot>
     <tbody>
@@ -27,11 +29,11 @@
             <td style="background-color: #FFD699"><?php  echo $plan["CANTIDAD"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["DURACION"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["UNIDAD"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo "calcular"; ?></td>
-
+            <td style="background-color: #FFD699"><?php  echo $plan["SUBTOTAL"]; ?></td>
+            <td style="background-color: #FFD699"><?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
         </tr>
         <tr>
-            <td colspan="6">
+            <td colspan="7">
 
 
 
@@ -80,3 +82,8 @@
 
     </tbody>
 </table>
+
+<!--Muestra el total general -->
+<br/>
+<h4>Costo total de capacitación (en pesos) para el periodo seleccionado es: $ <?php echo $total_general; ?> </h4>
+

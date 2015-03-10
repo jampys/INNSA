@@ -148,7 +148,14 @@ class Reportes
     public function getPlanesCapacitacion($periodo){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, (select count(*) from asignacion_plan where id_plan = pc.id_plan) as cantidad".
+        /*$query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, (select count(*) from asignacion_plan where id_plan = pc.id_plan) as cantidad".
+                " from plan_capacitacion pc, cursos cu, asignacion_plan ap".
+                " where pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
+                " and pc.periodo = $periodo";*/
+        $query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio,".
+                " (select count(*) from asignacion_plan where id_plan = pc.id_plan) as cantidad,".
+                " (select count(*) from asignacion_plan where id_plan = pc.id_plan) * pc.importe * pc.tipo_cambio as subtotal,".
+                " (select count(*) from asignacion_plan where id_plan = pc.id_plan) * pc.importe * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan where id_plan = pc.id_plan) as total".
                 " from plan_capacitacion pc, cursos cu, asignacion_plan ap".
                 " where pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
                 " and pc.periodo = $periodo";
