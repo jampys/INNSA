@@ -1,3 +1,18 @@
+
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function(){
+        //oculta el detalle de cada fila del reporte
+        $('.oculta').hide();
+
+        //oculta y desoculta el detalle de cada fila del reporte
+        $('#reportes tbody tr').on('click', function(){
+            $(this).next('tr').toggle();
+        });
+    });
+
+
+</script>
+
 <table cellpadding="0" cellspacing="0" width="100%" class="display" id="reportes">
     <thead>
     <tr>
@@ -6,6 +21,7 @@
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
+        <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
     </tr>
@@ -17,6 +33,7 @@
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
+        <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
     </tr>
@@ -29,11 +46,12 @@
             <td style="background-color: #FFD699"><?php  echo $plan["CANTIDAD"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["DURACION"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["UNIDAD"]; ?></td>
+            <td style="background-color: #FFD699"><?php  echo $plan["UNITARIO"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["SUBTOTAL"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
         </tr>
-        <tr>
-            <td colspan="7">
+        <tr class="oculta">
+            <td colspan="8">
 
 
 
@@ -85,5 +103,5 @@
 
 <!--Muestra el total general -->
 <br/>
-<h4>Costo total de capacitación (en pesos) para el periodo seleccionado es: $ <?php echo $total_general; ?> </h4>
+<h5>Costo total de capacitación (en pesos) para el periodo seleccionado es: $ <?php echo $total_general; ?> </h5>
 
