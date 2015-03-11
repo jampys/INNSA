@@ -277,6 +277,10 @@ select{
     font-size: 10px;
 }
 
+#reportes > tbody > tr:not(.oculta) {
+    cursor: pointer;
+}
+
 
 
 

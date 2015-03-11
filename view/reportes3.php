@@ -41,7 +41,9 @@
 
 </script>
 
-
+<h5>
+    <a href="#" id="toggle-list">REPORTE: Costos de capacitación</a>
+</h5>
 
 
 <div class="sixteen_column section">

@@ -4,20 +4,10 @@
         //oculta el detalle de cada fila del reporte
         $('.oculta').hide();
 
-        //oculta y desoculta el detalle de cada fila del reporte. El selector :not(.oculta) es para evitar que ocurra al clickear sobre tr que tienen la clase "oculta"
-        $('#reportes > tbody > tr:not(.oculta)').on('click', function(){
-            $(this).next('tr').toggle();
-        });
     });
-
 
 </script>
 
-<style type="text/css">
-    #reportes > tbody > tr:not(.oculta) {
-        cursor: pointer;
-    }
-</style>
 
 <table cellpadding="0" cellspacing="0" width="100%" class="display" id="reportes">
     <thead>

@@ -43,7 +43,7 @@
 
 
 <h5>
-    <a href="#" id="toggle-list">CURSOS PROPUESTOS CON ASIGNACIÓN PENDIENTE</a>
+    <a href="#" id="toggle-list">REPORTE: Cursos propuestos con asignación pendiente</a>
 </h5>
 
 

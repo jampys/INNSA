@@ -1,3 +1,13 @@
+
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function(){
+        //oculta el detalle de cada fila del reporte
+        $('.oculta').hide();
+
+    });
+
+</script>
+
 <table cellpadding="0" cellspacing="0" width="100%" class="display" id="reportes">
     <thead>
     <tr>
@@ -24,7 +34,7 @@
             <td style="background-color: #FFD699"><?php  echo $sol["LUGAR_TRABAJO"]; ?></td>
 
         </tr>
-        <tr>
+        <tr class="oculta">
             <td colspan="4">
 
 
