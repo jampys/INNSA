@@ -4,14 +4,20 @@
         //oculta el detalle de cada fila del reporte
         $('.oculta').hide();
 
-        //oculta y desoculta el detalle de cada fila del reporte
-        $('#reportes tbody tr').on('click', function(){
+        //oculta y desoculta el detalle de cada fila del reporte. El selector :not(.oculta) es para evitar que ocurra al clickear sobre tr que tienen la clase "oculta"
+        $('#reportes > tbody > tr:not(.oculta)').on('click', function(){
             $(this).next('tr').toggle();
         });
     });
 
 
 </script>
+
+<style type="text/css">
+    #reportes > tbody > tr:not(.oculta) {
+        cursor: pointer;
+    }
+</style>
 
 <table cellpadding="0" cellspacing="0" width="100%" class="display" id="reportes">
     <thead>
@@ -67,6 +73,7 @@
                     <tr>
                         <th>Apellido</th>
                         <th>Nombre</th>
+                        <th>Lugar trabajo</th>
                         <th>Viaticos</th>
                     </tr>
 
@@ -76,6 +83,7 @@
                         <tr class="odd gradeA">
                             <td style="width: 300px"><?php  echo $repo["APELLIDO"]; ?></td>
                             <td style="width: 70px"><?php  echo $repo["NOMBRE"]; ?></td>
+                            <td style="width: 70px"><?php  echo $repo["LUGAR_TRABAJO"]; ?></td>
                             <td style="width: 50px"><?php  echo $repo["VIATICOS"];  ?></td>
                         </tr>
 
