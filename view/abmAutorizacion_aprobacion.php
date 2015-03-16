@@ -101,7 +101,7 @@
                         "id": globalId,
                         "apr_autorizo": $("#apr_autorizo_id").val(),
                         "apr_aprobo":($("#apr_aprobo_id").length >0)? $("#apr_aprobo_id").val() : '',   //$("#apr_aprobo_id").val(),
-                        "estado": ($("#apr_aprobo_id").val()=='')? 'AUTORIZADA':'APROBADA'
+                        "estado": ($("#apr_aprobo_id").length && $("#apr_aprobo_id").val()!='' )? 'APROBADA':'AUTORIZADA'
                     };
 
             $.ajax({
