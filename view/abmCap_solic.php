@@ -481,7 +481,7 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados"},
+                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados", "target":"BYUSER"},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
@@ -564,7 +564,7 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados"},
+                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados", "target":"BYUSER"},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {

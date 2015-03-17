@@ -23,7 +23,7 @@ class Empleado
         $obj_emp=$f->returnsQuery();
         //$obj_emp->executeQuery("select * from empleados");
         $query="select empleados.*, division.nombre DIVISION from empleados, division".
-                " where empleados.id_division = division.id_division";
+                " where empleados.id_division = division.id_division (+)";
         $obj_emp->executeQuery($query);
         return $obj_emp->fetchAll(); // retorna todos los empleados
     }
@@ -46,10 +46,26 @@ class Empleado
         return $obj_emp->fetchAll();
     }
 
-    public function autocompletarEmpleados($term){  //funcion usada para autocompletar de empleados (solo activos)
+    public function autocompletarEmpleados($term, $id_empleado, $target){  //funcion usada para autocompletar de empleados (solo activos)
+        /* Si se le pasa el parametro 'BYUSER': Devuelve solos los empleados habilitados para que el usuario opere
+           Si se le para el parametro 'ALL': Devuelve todos los empleados
+        */
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
+        //$query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
+        if($target=='BYUSER'){
+            $query="select em.*".
+                " from empleados em, division di, supervisor_division sd, empleados su".
+                " where em.id_division = di.id_division".
+                " and di.id_division = sd.id_division".
+                " and sd.id_empleado = su.id_empleado".
+                " and su.id_empleado = $id_empleado".
+                " and (em.nombre like UPPER ('%".$term."%') or em.apellido like UPPER ('%".$term."%'))".
+                " and em.activo = 1";
+        }else if ($target=='ALL'){
+            $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
+        }
+
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
     }
