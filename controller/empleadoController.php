@@ -75,6 +75,7 @@ switch($operacion){
 
     default:
         $view->empleados=$view->u->getEmpleados();
+        $view->divisiones=$view->u->getDivisiones(); //para cargar dinamicamente el combo 'divsion' al agregar o editar empleado
         break;
 
 }

@@ -228,6 +228,15 @@ class Empleado
     }*/
 
 
+    public function getDivisiones(){
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="select * from division";
+        $obj_emp->executeQuery($query);
+        return $obj_emp->fetchAll(); // retorna todas las divisiones
+    }
+
+
 
 
 }

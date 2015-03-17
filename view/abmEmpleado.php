@@ -410,10 +410,13 @@
                                     <label>División: </label>
                                     <select name="division" id="division">
                                         <option value="">Ingrese una división</option>
-                                        <option value="1">Administración</option>
+                                        <?php foreach ($view->divisiones as $div){?>
+                                            <option value="<?php echo $div['ID_DIVISION'];?>"><?php echo $div['NOMBRE'];?></option>
+                                        <?php  } ?>
+                                        <!--<option value="1">Administración</option>
                                         <option value="2">Dirección</option>
                                         <option value="3">RRHH</option>
-                                        <option value="4">Sistemas</option>
+                                        <option value="4">Sistemas</option>-->
                                     </select>
                                 </div>
                             </div>
