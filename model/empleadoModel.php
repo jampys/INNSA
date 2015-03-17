@@ -11,7 +11,7 @@ class Empleado
     var $empresa;
     var $funcion;
     var $categoria;
-    var $division;
+    var $id_division;
     var $fecha_ingreso;
     var $activo;
     var $email;
@@ -21,7 +21,10 @@ class Empleado
     public static function getEmpleados(){
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $obj_emp->executeQuery("select * from empleados");
+        //$obj_emp->executeQuery("select * from empleados");
+        $query="select empleados.*, division.nombre DIVISION from empleados, division".
+                " where empleados.id_division = division.id_division";
+        $obj_emp->executeQuery($query);
         return $obj_emp->fetchAll(); // retorna todos los empleados
     }
 
@@ -35,8 +38,8 @@ class Empleado
 
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        //$query="select * from empleados where id_empleado= :id";
-        $query="select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, division, to_char(fecha_ingreso,'DD/MM/YYYY') as fecha_ingreso, activo, email, cuil from empleados where id_empleado=:id";
+        $query="select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, to_char(fecha_ingreso,'DD/MM/YYYY')".
+            " as fecha_ingreso, activo, email, cuil, id_division as division from empleados where id_empleado = :id";
         $obj_emp->dpParse($query);
         $obj_emp->dpBind(':id', $id);
         $obj_emp->dpExecute();
@@ -48,7 +51,7 @@ class Empleado
         $obj_cp=$f->returnsQuery();
         $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
         $obj_cp->executeQuery($query);
-        return $obj_cp->fetchAll(); // retorna todos los cursos
+        return $obj_cp->fetchAll();
     }
 
 
@@ -78,7 +81,7 @@ class Empleado
     { return $this->categoria;}
 
     function getDivision()
-    { return $this->division;}
+    { return $this->id_division;}
 
     function getFechaIngreso()
     { return $this->fecha_ingreso;}
@@ -118,7 +121,7 @@ class Empleado
     {  $this->categoria=$val;}
 
     function setDivision($val)
-    {  $this->division=$val;}
+    {  $this->id_division=$val;}
 
     function setFechaIngreso($val)
     {  $this->fecha_ingreso=$val;}
@@ -147,7 +150,7 @@ class Empleado
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
         $query="update empleados set apellido= :apellido, nombre= :nombre, lugar_trabajo= :lugar_trabajo, n_legajo= :n_legajo, empresa= :empresa, funcion= :funcion, ".
-            " division= :division, fecha_ingreso=to_date(:fecha_ingreso,'DD/MM/YYYY'), activo= :activo, email= :email, cuil= :cuil where id_empleado = :id_empleado";
+            " id_division= :division, fecha_ingreso=to_date(:fecha_ingreso,'DD/MM/YYYY'), activo= :activo, email= :email, cuil= :cuil where id_empleado = :id_empleado";
         $obj_emp->dpParse($query);
 
         $obj_emp->dpBind(':id_empleado', $this->id_empleado);
@@ -157,7 +160,7 @@ class Empleado
         $obj_emp->dpBind(':n_legajo', $this->n_legajo);
         $obj_emp->dpBind(':empresa', $this->empresa);
         $obj_emp->dpBind(':funcion', $this->funcion);
-        $obj_emp->dpBind(':division', $this->division);
+        $obj_emp->dpBind(':division', $this->id_division);
         $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
         $obj_emp->dpBind(':activo', $this->activo);
         $obj_emp->dpBind(':email', $this->email);
@@ -179,7 +182,7 @@ class Empleado
 
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $query="insert into empleados (apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, division, fecha_ingreso, activo, email, cuil)".
+        $query="insert into empleados (apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, id_division, fecha_ingreso, activo, email, cuil)".
             " values(:apellido, :nombre, :lugar_trabajo, :n_legajo, :empresa, :funcion, :division, to_date(:fecha_ingreso,'DD/MM/YYYY'), :activo, :email, :cuil)";
         $obj_emp->dpParse($query);
 
@@ -189,7 +192,7 @@ class Empleado
         $obj_emp->dpBind(':n_legajo', $this->n_legajo);
         $obj_emp->dpBind(':empresa', $this->empresa);
         $obj_emp->dpBind(':funcion', $this->funcion);
-        $obj_emp->dpBind(':division', $this->division);
+        $obj_emp->dpBind(':division', $this->id_division);
         $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
         $obj_emp->dpBind(':activo', $this->activo);
         $obj_emp->dpBind(':email', $this->email);

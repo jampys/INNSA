@@ -410,10 +410,10 @@
                                     <label>División: </label>
                                     <select name="division" id="division">
                                         <option value="">Ingrese una división</option>
-                                        <option value="ADMINISTRACIÓN">Administración</option>
-                                        <option value="DIRECCIÓN">Dirección</option>
-                                        <option value="RRHH">RRHH</option>
-                                        <option value="SISTEMAS">Sistemas</option>
+                                        <option value="1">Administración</option>
+                                        <option value="2">Dirección</option>
+                                        <option value="3">RRHH</option>
+                                        <option value="4">Sistemas</option>
                                     </select>
                                 </div>
                             </div>
