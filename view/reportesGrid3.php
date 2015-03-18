@@ -22,18 +22,7 @@
         <th>Total c/viáticos (pesos)</th>
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-        <th>Período</th>
-        <th>Plan capacitación</th>
-        <th>Cant. recursos</th>
-        <th>Duración</th>
-        <th>Unidad</th>
-        <th>Precio unitario</th>
-        <th>Subtotal s/viáticos (pesos)</th>
-        <th>Total c/viáticos (pesos)</th>
-    </tr>
-    </tfoot>
+
     <tbody>
     <?php foreach ($view->planes as $plan) {?>
         <tr class="odd gradeA">
@@ -42,9 +31,9 @@
             <td style="background-color: #FFD699"><?php  echo $plan["CANTIDAD"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["DURACION"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["UNIDAD"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["UNITARIO"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["SUBTOTAL"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
+            <td style="background-color: #FFD699">$ <?php  echo $plan["UNITARIO"]; ?></td>
+            <td style="background-color: #FFD699">$ <?php  echo $plan["SUBTOTAL"]; $sub_total_general+=$plan["SUBTOTAL"]; ?></td>
+            <td style="background-color: #FFD699">$ <?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
         </tr>
         <tr class="oculta">
             <td colspan="8">
@@ -97,9 +86,28 @@
     <?php }  ?>
 
     </tbody>
+
+    <tfoot>
+    <tr>
+        <th>Período</th>
+        <th>Plan capacitación</th>
+        <th>Cant. recursos</th>
+        <th>Duración</th>
+        <th>Unidad</th>
+        <th>Precio unitario</th>
+        <th>Subtotal s/viáticos (pesos)</th>
+        <th>Total c/viáticos (pesos)</th>
+    </tr>
+    <!--Muestra el total general -->
+    <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><h6>$ <?php echo $sub_total_general; ?></h6></th>
+        <th><h6>$ <?php echo $total_general; ?></h6></th>
+    </tr>
+    </tfoot>
 </table>
-
-<!--Muestra el total general -->
-<br/>
-<h5>Costo total de capacitación (en pesos) para el periodo seleccionado es: $ <?php echo $total_general; ?> </h5>
-
