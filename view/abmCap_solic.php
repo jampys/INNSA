@@ -679,7 +679,7 @@
                     maxlength: 100
                 },
                 np_viaticos: {
-                    required: true,
+                    //required: true,
                     number: true
                 },
                 np_reemplazo: {
@@ -695,7 +695,7 @@
                 np_plan_capacitacion_id: "Seleccione un plan de capacitación sugerido",
                 np_objetivo: "Máximo 100 caracteres",
                 np_comentarios: "Máximo 100 caracteres",
-                np_viaticos: "Ingrese los viaticos",
+                //np_viaticos: "Ingrese los viaticos",
                 np_reemplazo: "Seleccione el reemplazo",
                 np_reemplazo_id: "Seleccione un empleado sugerido"
             }
