@@ -443,6 +443,14 @@
                 return false;
             });
 
+            // new propuesta link
+            $(document).on('click', '.new-propuesta-link', function(){
+                //$('#asignar_plan').dialog('open');
+                $('#proponer_curso').data('operacion', 'insert').dialog('open');
+                //$('#np_plan_capacitacion').attr('readonly', false); //Vuelve a habilitar el campo plan_capacitacion
+                return false;
+            });
+
 
             //Agregado para autocompletar planes
             $("#np_plan_capacitacion").autocomplete({
@@ -508,18 +516,20 @@
             //********************************************************************************************
             //Funcionalidad para la tabla cursos propuestos
 
+
             //Agregado dario para autocompletar cursos
-            $("#curso").autocomplete({
+            $("#nc_curso").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos"},
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos", "target":"BYPERIODO"},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
-                                    label: item.NOMBRE,
+                                    //label: item.NOMBRE+' - '+item.FECHA_DESDE+' - '+item.MODALIDAD,
+                                    label: item.NOMBRE+' '+((typeof(item.FECHA_DESDE)=='undefined')? '': item.FECHA_DESDE)+'  '+((typeof(item.MODALIDAD)=='undefined')? '': item.MODALIDAD)+'  '+((typeof(item.ENTIDAD)=='undefined')? '': item.ENTIDAD),
                                     id: item.ID_CURSO
 
                                 };
@@ -528,16 +538,13 @@
                     });
                 },
                 minLength: 2,
-                select: function(event, ui) {
-                    //$('#cursos_propuestos').append(ui.item.curso);
-                    $('#table_curso tbody').append('<tr id_curso='+ui.item.id+'><td>'+ui.item.label+'</td>'+
-                    '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
-                    '</tr>');
-
-                    $('#curso').clear(); //no funciona del todo bien
+                change: function(event, ui) {
+                    $('#np_curso_id').val(ui.item? ui.item.id : '');
+                    $('#np_curso').val(ui.item.label);
                 }
             });
 
+            /*
 
             //Al presionar la x para eliminar cursos propuestos de la solicitud
             $(document).on("click",".eliminar_curso",function(e){
@@ -552,6 +559,80 @@
                 e.preventDefault(); //para evitar que suba el foco al eliminar un curso propuesto
             });
 
+            */
+
+            $('#proponer_curso').dialog({
+                autoOpen: false,
+                width: 500,
+                modal:true,
+                title:"Agregar Registro",
+                buttons: {
+                    "Guardar": function() {
+                        if($("#form_curso").valid()){
+                            //alert('form plan');
+
+                            // si se trata de un update
+                            if($('#proponer_curso').data('operacion')=='editar'){
+                                var row_index=$('#proponer_curso').data('row_index');
+                                //console.log($('#asignar_plan').data('operacion'));
+                                //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
+                                $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
+                                $("#form_curso")[0].reset();
+                                $(this).dialog("close");
+
+                            }
+                            else{  //si se trata de un insert
+
+                                //Se agrega fila a la tabla de planes
+                                //$('#table_plan tr:last').after('<tr>' +
+                                $('#table_curso tbody').append('<tr id_curso='+$("#nc_curso_id").val()+'>' +
+                                '<td>'+$('#nc_curso').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
+                                //'<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
+                                //'<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
+                                //'<td style="text-align: center">'+$('#np_viaticos').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
+                                '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                                '</tr>');
+                                $("#form_curso")[0].reset();
+
+                            }
+
+                        }
+
+
+
+
+                    },
+                    "Cancelar": function() {
+                        $("#form_curso")[0].reset(); //para limpiar el formulario
+                        $('#form_curso').validate().resetForm(); //para limpiar los errores validate
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 300
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 300
+                },
+                close:function(){
+                    $("#form_curso")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $('#form_curso').validate().resetForm(); //para limpiar los errores validate
+                }
+
+            });
 
             //-------------------------------------------------------------------------------------------------------
 
@@ -609,6 +690,7 @@
             //llamada a funcion validar
             $.validar();
             $.validarPlan();
+            $.validarCurso();
 
         });
 
@@ -698,6 +780,24 @@
                 //np_viaticos: "Ingrese los viaticos",
                 np_reemplazo: "Seleccione el reemplazo",
                 np_reemplazo_id: "Seleccione un empleado sugerido"
+            }
+
+        });
+
+    };
+
+
+    $.validarCurso=function(){
+        $('#form_curso').validate({
+            ignore:"",
+            rules: {
+                nc_situacion: {
+                    required: true
+                }
+
+            },
+            messages:{
+                nc_situacion: "Ingresaaaaa la situacion"
             }
 
         });
@@ -894,7 +994,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Capacitaciones propuestas: </label><br/>
-                                    <input type="text" name="curso" id="curso"/>
+                                    <a id="new-propuesta" class="new-propuesta-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
                                 </div>
                             </div>
                             <div class="eight column">
@@ -903,6 +1003,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
@@ -1006,6 +1107,89 @@
 </div>
 
 
+<!-- funcionalidad para proponer curso y hacer comunicacion -->
+<div id="proponer_curso" >
+
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
+
+        <div class="clear"></div>
+        <div class="box">
+
+            <div class="block" id="forms">
+                <form id="form_curso" action="">
+                    <fieldset>
+                        <legend>Datos Registro</legend>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Curso propuesto: </label><br/>
+                                    <input type="text" name="nc_curso" id="nc_curso"/>
+                                    <input type="hidden" name="nc_curso_id" id="nc_curso_id"/>
+                                    <input type="hidden" name="np_curso_duracion" id="np_curso_duracion"/>
+                                    <input type="hidden" name="np_curso_costo" id="np_curso_costo"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Situación: Porque te vamos a capacitar</label><br/>
+                                    <textarea type="text" name="nc_situacion" id="nc_situacion" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Objetivos: Que esperamos lograr con esto</label><br/>
+                                    <textarea type="text" name="nc_objetivo_1" id="nc_objetivo_1" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_2" id="nc_objetivo_2" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_3" id="nc_objetivo_3" rows="1"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Indicadores de éxito:</label><br/>
+                                    <textarea type="text" name="nc_indicadores_exito" id="nc_indicadores_exito" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Compromiso:</label><br/>
+                                    <textarea type="text" name="nc_compromiso" id="nc_compromiso" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </fieldset>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
 
 
 <div id="asignar_plan" >

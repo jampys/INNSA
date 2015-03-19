@@ -43,10 +43,24 @@ class Cap_Plan
         return $obj_cp->fetchAll();
     }
 
-    public static function getCursos($term){  //funcion usada para cargar dinamicamente select con los temas de la categoria seleccionada
+    public static function getCursos($term, $target){
+        /*Si target es igual a ALL, traigo todos los cursos que contengan la cadena term
+         *Si target es igual a BYPERIODO traigo todos cursos que contengan la cadena term, y ademas si tienen
+         * un plan en el periodo vigente o superior => que lo muestre
+         */
+        if($target=='ALL'){
+            $query="select * from cursos where nombre like UPPER ('%".$term."%')";
+        }
+        else if($target=='BYPERIODO'){
+            $query="select cu.nombre, pc.periodo, pc.fecha_desde, pc.modalidad, pc.entidad".
+                " from cursos cu".
+                " left join plan_capacitacion pc".
+                " on cu.id_curso = pc.id_curso and pc.periodo >=".date('Y').
+                " where cu.nombre like UPPER ('%".$term."%')";
+        }
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select * from cursos where nombre like UPPER ('%".$term."%')";
+
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll(); // retorna todos los cursos
     }
