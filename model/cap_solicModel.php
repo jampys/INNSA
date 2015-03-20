@@ -501,13 +501,14 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        $query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, estado, id_plan) values($id_solicitud, :objetivo, :comentarios, :viaticos, :reemplazo, :estado, :id_plan)";
+        //$query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, estado, id_plan) values($id_solicitud, :objetivo, :comentarios, :viaticos, :reemplazo, :estado, :id_plan)";
+        $query = "insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan) values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan)";
         $obj_asig->dpParse($query);
 
-        $obj_asig->dpBind(':objetivo', $this->objetivo);
+        //$obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->viaticos);
-        $obj_asig->dpBind(':reemplazo', $this->reemplazo);
+        //$obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':estado', $this->estado);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
 
@@ -564,7 +565,13 @@ class Asignacion_plan{
     public function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.estado ESTADO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
+        //$obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.estado ESTADO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
+        $query="select cu.nombre, ap.estado ESTADO, ap.comentarios, ap.viaticos, ap.id_plan, ap.id_asignacion, pc.fecha_desde, pc.modalidad, pc.duracion, pc.unidad, pc.moneda, pc.importe".
+                " from asignacion_plan ap, plan_capacitacion pc, cursos cu".
+                " where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso".
+                " and id_solicitud=$id".
+                " order by pc.fecha_desde ASC";
+        $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 

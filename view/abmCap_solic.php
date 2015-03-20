@@ -130,10 +130,10 @@
             $('#table_plan tbody tr').each(function () {
                 item = {};
                 item['id_plan']=$(this).attr('id_plan');
-                item['objetivo']= $(this).find('td').eq(1).html();
-                item['comentarios']= $(this).find('td').eq(2).html();
-                item['viaticos']= $(this).find('td').eq(5).html();
-                item['reemplazo']= $(this).find('td').eq(6).html();
+                //item['objetivo']= $(this).find('td').eq(1).html();
+                item['comentarios']= $(this).find('td').eq(1).html();
+                item['viaticos']= $(this).find('td').eq(4).html();
+                //item['reemplazo']= $(this).find('td').eq(6).html();
                 item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
                 item['operacion_asignacion']=$(this).attr('operacion_asignacion');
                 item['estado'] = 'ASIGNADO';
@@ -358,8 +358,8 @@
                                 $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
                                 //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_comentarios').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(4).html($('#np_viaticos').val());
                                 //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
                                 //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
                                 $("#form_plan")[0].reset();
@@ -437,7 +437,7 @@
                 $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
                 //$('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
                 $('#np_comentarios').val($(this).closest('tr').find('td').eq(1).html());
-                $('#np_viaticos').val($(this).closest('tr').find('td').eq(5).html());
+                $('#np_viaticos').val($(this).closest('tr').find('td').eq(4).html());
                 //$('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
                 //$('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
                 //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
