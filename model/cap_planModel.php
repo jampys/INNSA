@@ -52,7 +52,7 @@ class Cap_Plan
             $query="select * from cursos where nombre like UPPER ('%".$term."%')";
         }
         else if($target=='BYPERIODO'){
-            $query="select cu.nombre, pc.periodo, pc.fecha_desde, pc.modalidad, pc.entidad".
+            $query="select cu.id_curso, cu.nombre, pc.periodo, pc.fecha_desde, pc.modalidad, pc.entidad".
                 " from cursos cu".
                 " left join plan_capacitacion pc".
                 " on cu.id_curso = pc.id_curso and pc.periodo >=".date('Y').

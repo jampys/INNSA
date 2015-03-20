@@ -54,6 +54,14 @@ switch($operacion){
             $c=new Propuesta();
             $c->setIdSolicitud($id_solicitud);
             $c->setIdCurso($v->id_curso);
+            $c->setIdReemplazo($v->reemplazo);
+            $c->setSituacion($v->situacion);
+            $c->setObjetivo1($v->objetivo_1);
+            $c->setObjetivo2($v->objetivo_2);
+            $c->setObjetivo3($v->objetivo_3);
+            $c->setIndicadoresExito($v->indicadores_exito);
+            $c->setCompromiso($v->compromiso);
+
             $c->insertPropuesta();
         }
 

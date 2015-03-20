@@ -137,8 +137,15 @@
             $('#table_curso tbody tr').each(function () {
                 item = {};
                 item['id_curso']=$(this).attr('id_curso');
+                item['reemplazo']= $(this).find('td').eq(1).html();
+                item['situacion']= $(this).find('td').eq(3).html();
+                item['objetivo_1']= $(this).find('td').eq(4).html();
+                item['objetivo_2']= $(this).find('td').eq(5).html();
+                item['objetivo_3']= $(this).find('td').eq(6).html();
+                item['indicadores_exito']= $(this).find('td').eq(7).html();
+                item['compromiso']= $(this).find('td').eq(8).html();
                 item['id_propuesta']=($(this).attr('id_propuesta'))? $(this).attr('id_propuesta') : "";
-                item['operacion_propuesta']=$(this).attr('operacion_propuesta');
+                item['operacion_curso']=$(this).attr('operacion_curso');
                 jsonObjCursos.push(item);
             });
 
@@ -341,11 +348,11 @@
                                 //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
                                 $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
 
@@ -356,13 +363,13 @@
                                 //$('#table_plan tr:last').after('<tr>' +
                                 $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                                 '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                                '<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
                                 '<td style="text-align: center">'+$('#np_viaticos').val()+'</td>' +
-                                '<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
-                                '<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
                                 '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                                 '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
@@ -419,11 +426,11 @@
                 $(this).closest('tr').attr('operacion_asignacion', 'update');
                 $('#np_plan_capacitacion_id').val($(this).closest('tr').attr('id_plan'));
                 $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
-                $('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
-                $('#np_comentarios').val($(this).closest('tr').find('td').eq(2).html());
+                //$('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
+                $('#np_comentarios').val($(this).closest('tr').find('td').eq(1).html());
                 $('#np_viaticos').val($(this).closest('tr').find('td').eq(5).html());
-                $('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
-                $('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
+                //$('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
+                //$('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
                 //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
                 //con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
@@ -483,7 +490,7 @@
 
 
             //Agregado dario para autocompletar empleado reemplazo
-            $("#np_reemplazo").autocomplete({
+            $("#nc_reemplazo").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
@@ -503,8 +510,8 @@
                 },
                 minLength: 2,
                 change: function(event, ui) {
-                    $('#np_reemplazo_id').val(ui.item? ui.item.id : '');
-                    $('#np_reemplazo').val(ui.item.label);
+                    $('#nc_reemplazo_id').val(ui.item? ui.item.id : '');
+                    $('#nc_reemplazo').val(ui.item.label);
                 }
             });
 
@@ -539,27 +546,12 @@
                 },
                 minLength: 2,
                 change: function(event, ui) {
-                    $('#np_curso_id').val(ui.item? ui.item.id : '');
-                    $('#np_curso').val(ui.item.label);
+                    $('#nc_curso_id').val(ui.item? ui.item.id : '');
+                    $('#nc_curso').val(ui.item.label);
                 }
             });
 
-            /*
 
-            //Al presionar la x para eliminar cursos propuestos de la solicitud
-            $(document).on("click",".eliminar_curso",function(e){
-                //pregunta si la fila tiene el atributo id_propuesta.
-                //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
-                if($(this).closest('tr').attr('id_propuesta')){
-                    $(this).closest('tr').attr('operacion_propuesta', 'delete');
-                    $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
-                }else{
-                    $(this).closest('tr').remove(); //elimina la fila
-                }
-                e.preventDefault(); //para evitar que suba el foco al eliminar un curso propuesto
-            });
-
-            */
 
             $('#proponer_curso').dialog({
                 autoOpen: false,
@@ -576,13 +568,16 @@
                                 var row_index=$('#proponer_curso').data('row_index');
                                 //console.log($('#asignar_plan').data('operacion'));
                                 //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
-                                $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).attr('id_curso',$("#nc_curso_id").val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(0).html($('#nc_curso').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(1).html($('#nc_reemplazo_id').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(2).html($('#nc_reemplazo').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(3).html($('#nc_situacion').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(4).html($('#nc_objetivo_1').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(5).html($('#nc_objetivo_2').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(6).html($('#nc_objetivo_3').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(7).html($('#nc_indicadores_exito').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(8).html($('#nc_compromiso').val());
                                 $("#form_curso")[0].reset();
                                 $(this).dialog("close");
 
@@ -593,15 +588,17 @@
                                 //$('#table_plan tr:last').after('<tr>' +
                                 $('#table_curso tbody').append('<tr id_curso='+$("#nc_curso_id").val()+'>' +
                                 '<td>'+$('#nc_curso').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
-                                //'<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
-                                //'<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
-                                //'<td style="text-align: center">'+$('#np_viaticos').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
-                                '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                                '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td style="display: none">'+$('#nc_reemplazo_id').val()+'</td>' +
+                                '<td>'+$('#nc_reemplazo').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_situacion').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_objetivo_1').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_objetivo_2').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_objetivo_3').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_indicadores_exito').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_compromiso').val()+'</td>' +
+
+                                '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
                                 $("#form_curso")[0].reset();
 
@@ -634,6 +631,45 @@
 
             });
 
+            //Al presionar la x para eliminar cursos propuestos de la solicitud
+            $(document).on("click",".eliminar_curso",function(e){
+                //pregunta si la fila tiene el atributo id_propuesta.
+                //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
+                if($(this).closest('tr').attr('id_propuesta')){
+                    $(this).closest('tr').attr('operacion_curso', 'delete');
+                    $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
+                }else{
+
+                    $(this).closest('tr').remove(); //elimina la fila
+                }
+                e.preventDefault(); //para evitar que suba el foco al eliminar un plan
+
+            });
+
+
+            //Al presionar el lapiz para editar los cursos propuestos de la solicitud
+            $(document).on("click",".editar_curso",function(){
+                //alert($(this).closest('tr').attr('id_asignacion'));
+                $(this).closest('tr').attr('operacion_curso', 'update');
+                $('#nc_curso_id').val($(this).closest('tr').attr('id_curso'));
+                $('#nc_curso').val($(this).closest('tr').find('td').eq(0).html());
+                $('#nc_reemplazo_id').val($(this).closest('tr').find('td').eq(1).html());
+                $('#nc_reemplazo').val($(this).closest('tr').find('td').eq(2).html());
+                $('#nc_situacion').val($(this).closest('tr').find('td').eq(3).html());
+                $('#nc_objetivo_1').val($(this).closest('tr').find('td').eq(4).html());
+                $('#nc_objetivo_2').val($(this).closest('tr').find('td').eq(5).html());
+                $('#nc_objetivo_3').val($(this).closest('tr').find('td').eq(6).html());
+                $('#nc_indicadores_exito').val($(this).closest('tr').find('td').eq(7).html());
+                $('#nc_compromiso').val($(this).closest('tr').find('td').eq(8).html());
+                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
+                //con el metodo .data() en formato json.
+                var row_index=$(this).closest('tr').index();
+                $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
+                return false;
+
+            });
+
+            //Fin funcionalidad cursos propuestos
             //-------------------------------------------------------------------------------------------------------
 
 
@@ -761,14 +797,7 @@
                     maxlength: 100
                 },
                 np_viaticos: {
-                    //required: true,
                     number: true
-                },
-                np_reemplazo: {
-                    required: true
-                },
-                np_reemplazo_id:{
-                    required: function(item){return $('#np_reemplazo').val().length>0;}
                 }
 
             },
@@ -776,10 +805,7 @@
                 np_plan_capacitacion: "Seleccione un plan de capacitación",
                 np_plan_capacitacion_id: "Seleccione un plan de capacitación sugerido",
                 np_objetivo: "Máximo 100 caracteres",
-                np_comentarios: "Máximo 100 caracteres",
-                //np_viaticos: "Ingrese los viaticos",
-                np_reemplazo: "Seleccione el reemplazo",
-                np_reemplazo_id: "Seleccione un empleado sugerido"
+                np_comentarios: "Máximo 100 caracteres"
             }
 
         });
@@ -793,11 +819,19 @@
             rules: {
                 nc_situacion: {
                     required: true
+                },
+                nc_reemplazo: {
+                    required: true
+                },
+                nc_reemplazo_id:{
+                    required: function(item){return $('#nc_reemplazo').val().length>0;}
                 }
 
             },
             messages:{
-                nc_situacion: "Ingresaaaaa la situacion"
+                nc_situacion: "Ingresaaaaa la situacion",
+                nc_reemplazo: "Seleccione el reemplazo",
+                nc_reemplazo_id: "Seleccione un empleado sugerido"
             }
 
         });
@@ -1011,7 +1045,9 @@
                                     <table id="table_curso" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td style="width: 89%">Curso</td>
+                                            <td style="width: 40%">Curso</td>
+                                            <td style="width: 30%">Reemplazo</td>
+                                            <td style="text-align: center">Editar</td>
                                             <td style="text-align: center">Eliminar</td>
                                         </tr>
                                         </thead>
@@ -1127,8 +1163,22 @@
                                     <label>Curso propuesto: </label><br/>
                                     <input type="text" name="nc_curso" id="nc_curso"/>
                                     <input type="hidden" name="nc_curso_id" id="nc_curso_id"/>
-                                    <input type="hidden" name="np_curso_duracion" id="np_curso_duracion"/>
-                                    <input type="hidden" name="np_curso_costo" id="np_curso_costo"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Reemplazo: </label><br/>
+                                    <input type="text" name="nc_reemplazo" id="nc_reemplazo"/>
+                                    <input type="hidden" name="nc_reemplazo_id" id="nc_reemplazo_id"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+
                                 </div>
                             </div>
                         </div>
@@ -1216,35 +1266,19 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Objetivo: </label><br/>
-                                    <textarea name="np_objetivo" id="np_objetivo" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
                                     <label>Comentarios: </label>
                                     <textarea name="np_comentarios" id="np_comentarios" rows="5"></textarea>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Viaticos: </label><br/>
                                     <input type="text" name="np_viaticos" id="np_viaticos"/>
                                 </div>
                             </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Reemplazo: </label><br/>
-                                    <input type="text" name="np_reemplazo" id="np_reemplazo"/>
-                                    <input type="hidden" name="np_reemplazo_id" id="np_reemplazo_id"/>
-
-                                </div>
-                            </div>
                         </div>
+
+
 
                 </fieldset>
 

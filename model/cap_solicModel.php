@@ -593,6 +593,14 @@ class Propuesta{
     var $id_solicitud;
     var $id_curso;
 
+    var $id_reemplazo;
+    var $situacion;
+    var $objetivo_1;
+    var $objetivo_2;
+    var $objetivo_3;
+    var $indicadores_exito;
+    var $compromiso;
+
 
     // metodos que devuelven valores
     function getIdPropuesta()
@@ -603,6 +611,27 @@ class Propuesta{
 
     function getIdCurso()
     { return $this->id_curso;}
+
+    function getIdReemplazo()
+    { return $this->id_reemplazo;}
+
+    function getSituacion()
+    { return $this->situacion;}
+
+    function getObjetivo1()
+    { return $this->objetivo_1;}
+
+    function getObjetivo2()
+    { return $this->objetivo_2;}
+
+    function getObjetivo3()
+    { return $this->objetivo_3;}
+
+    function getIndicadoresExito()
+    { return $this->indicadores_exito;}
+
+    function getCompromiso()
+    { return $this->compromiso;}
 
 
     // metodos que setean los valores
@@ -615,11 +644,32 @@ class Propuesta{
     function setIdCurso($val)
     {  $this->id_curso=$val;}
 
+    function setIdReemplazo($val)
+    {  $this->id_reemplazo=$val;}
+
+    function setSituacion($val)
+    {  $this->situacion=$val;}
+
+    function setObjetivo1($val)
+    {  $this->objetivo_1=$val;}
+
+    function setObjetivo2($val)
+    {  $this->objetivo_2=$val;}
+
+    function setObjetivo3($val)
+    {  $this->objetivo_3=$val;}
+
+    function setIndicadoresExito($val)
+    {  $this->indicadores_exito=$val;}
+
+    function setCompromiso($val)
+    {  $this->compromiso=$val;}
+
 
     public function insertPropuesta(){
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "insert into propuestas (id_solicitud, id_curso) values($this->id_solicitud, $this->id_curso)";
+        $query = "insert into propuestas (id_solicitud, id_curso, id_reemplazo, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso) values($this->id_solicitud, $this->id_curso, $this->id_reemplazo, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso')";
         $obj_cp->executeQuery($query);
         //return $obj_user->getAffect();
     }
