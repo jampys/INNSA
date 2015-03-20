@@ -675,6 +675,27 @@ class Propuesta{
     }
 
 
+    public function updatePropuesta(){
+
+        $f=new Factory();
+        $obj_pro=$f->returnsQuery();
+        $query = "update propuestas set id_reemplazo=:id_reemplazo, situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso where id_propuesta=:id_propuesta";
+        $obj_pro->dpParse($query);
+
+        $obj_pro->dpBind(':id_reemplazo', $this->id_reemplazo);
+        $obj_pro->dpBind(':situacion', $this->situacion);
+        $obj_pro->dpBind(':objetivo_1', $this->objetivo_1);
+        $obj_pro->dpBind(':objetivo_2', $this->objetivo_2);
+        $obj_pro->dpBind(':objetivo_3', $this->objetivo_3);
+        $obj_pro->dpBind(':indicadores_exito', $this->indicadores_exito);
+        $obj_pro->dpBind(':compromiso', $this->compromiso);
+        $obj_pro->dpBind(':id_propuesta', $this->id_propuesta);
+
+        $obj_pro->dpExecute();
+        //return $obj_asig->getAffect();
+    }
+
+
     function deletePropuesta(){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
@@ -688,7 +709,12 @@ class Propuesta{
     public function getPropuestaBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select * from propuestas, cursos where propuestas.id_curso = cursos.id_curso and id_solicitud=$id");
+        //$obj_sp->executeQuery("select * from propuestas, cursos where propuestas.id_curso = cursos.id_curso and id_solicitud=$id");
+        $query="select pro.*, cu.nombre curso_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre from propuestas pro, cursos cu, empleados em".
+                " where pro.id_curso = cu.id_curso".
+                " and pro.id_reemplazo = em.id_empleado".
+                " and pro.id_solicitud=$id";
+        $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll(); // retorna todas las propuestas que corresponden con el id de solicitud
     }
 

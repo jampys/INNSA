@@ -67,13 +67,13 @@
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
+                        //'<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
                         '<td style="display: none">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
+                        //'<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
+                        //'<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
@@ -88,7 +88,16 @@
                     $.each(datas['propuestas'], function(indice, val){
 
                         $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
-                        '<td>'+datas['propuestas'][indice]['NOMBRE']+'</td>' +
+                        '<td>'+datas['propuestas'][indice]['CURSO_NOMBRE']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['ID_REEMPLAZO']+'</td>' +
+                        '<td>'+datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_2']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_3']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['INDICADORES_EXITO']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['COMPROMISO']+'</td>' +
+                        '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                         if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
