@@ -826,7 +826,7 @@
         $('#form_curso').validate({
             ignore:"",
             rules: {
-                nc_situacion: {
+                nc_curso: {
                     required: true
                 },
                 nc_reemplazo: {
@@ -834,13 +834,42 @@
                 },
                 nc_reemplazo_id:{
                     required: function(item){return $('#nc_reemplazo').val().length>0;}
+                },
+                nc_curso_id:{
+                    required: function(item){return $('#nc_curso').val().length>0;}
+                },
+                nc_situacion: {
+                    required: true
+                },
+                nc_objetivo_1: {
+                    required: true
+                },
+                nc_objetivo_2: {
+                    required: true
+                },
+                nc_objetivo_3: {
+                    required: true
+                },
+                nc_indicadores_exito: {
+                    required: true
+                },
+                nc_compromiso: {
+                    required: true
                 }
+
 
             },
             messages:{
-                nc_situacion: "Ingresaaaaa la situacion",
+                nc_curso: "Seleccione un curso",
+                nc_curso_id: "Seleccione un curso sugerido",
                 nc_reemplazo: "Seleccione el reemplazo",
-                nc_reemplazo_id: "Seleccione un empleado sugerido"
+                nc_reemplazo_id: "Seleccione un empleado sugerido",
+                nc_situacion: "Ingrese la situacion",
+                nc_objetivo_1: "Ingrese el objetivo 1",
+                nc_objetivo_2: "Ingrese el objetivo 2",
+                nc_objetivo_3: "Ingrese el objetivo 3",
+                nc_indicadores_exito: "Ingrese los indicadores de éxito",
+                nc_compromiso: "Ingrese el compromiso"
             }
 
         });
@@ -1054,8 +1083,8 @@
                                     <table id="table_curso" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td style="width: 40%">Curso</td>
-                                            <td style="width: 30%">Reemplazo</td>
+                                            <td style="width: 45%">Curso</td>
+                                            <td style="width: 40%">Reemplazo</td>
                                             <td style="text-align: center">Editar</td>
                                             <td style="text-align: center">Eliminar</td>
                                         </tr>
@@ -1091,10 +1120,10 @@
                                     <table id="table_plan" class="tablaSolicitud">
                                         <thead>
                                             <tr>
-                                                <td>Plan</td>
-                                                <td>Duración</td>
-                                                <td>Costo</td>
-                                                <td>Viaticos</td>
+                                                <td style="width: 55%">Plan</td>
+                                                <td style="width: 10%">Duración</td>
+                                                <td style="width: 10%">Costo</td>
+                                                <td style="width: 10%">Viaticos</td>
                                                 <td>Editar</td>
                                                 <td>Eliminar</td>
                                             </tr>
