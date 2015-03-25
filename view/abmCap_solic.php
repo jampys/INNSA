@@ -184,7 +184,7 @@
                             "rp_no_conformidad": $('#rp_no_conformidad').prop('checked')? 1:0,
                             "rp_req_externo": $('#rp_req_externo').prop('checked')? 1:0,
 
-                            "estado": 'SOLICITADA',
+                            "estado": 'PENDIENTE',
                             "apr_solicito": $("#apr_solicito_id").val()
 
                         };
