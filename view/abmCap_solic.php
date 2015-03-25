@@ -77,9 +77,11 @@
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
+                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){ //Si la solicitud esta autorizada/aprobada deshabilito los campos
                             //$('#table_plan tbody').find('a').eq(1).removeClass('eliminar_plan').addClass('link-desactivado');
                             $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                            $('#table_plan tbody').find('a.editar_plan').removeClass('editar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                            $(":input").attr("disabled", true);
                         }
                     });
 
@@ -108,6 +110,7 @@
                     //Si esta aprobada
                     if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
                         $('#new-plan').removeClass('new-plan-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                        $('#new-propuesta').removeClass('new-propuesta-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
 
                     }
 
@@ -332,6 +335,7 @@
 
                     //Vuelve a habilitar el link new plan, por si fue desactivado
                    $('#new-plan').removeClass('link-desactivado').addClass('new-plan-link');
+                   $('#new-propuesta').removeClass('link-desactivado').addClass('new-propuesta-link');
                 }
 
 
@@ -720,6 +724,7 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
+                $(":input").attr("disabled", false); //para volver a habilitar todos los campor, por si fueron deshabilitados
                 $("#empleado").attr("readonly", true); //para no permitir editar el empleado
                 return false;
             });
