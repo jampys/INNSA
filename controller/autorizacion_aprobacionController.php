@@ -3,6 +3,7 @@ if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
 require_once("model/cap_solicModel.php");
+require_once("model/comunicacionModel.php");
 $view->u=new Cap_Solic();
 
 
@@ -41,18 +42,16 @@ switch($operacion){
         //Aprobar/autorizar solicitud de capacitacion
         $view->u->setIdSolicitud($_POST['id']);
         $view->u->setAprAutorizo($_POST['apr_autorizo']);
-
-        if($_POST['apr_aprobo']==''){
-            $view->u->setAprAprobo('null');
-        }
-        else{
-            $view->u->setAprAprobo($_POST['apr_aprobo']);
-        }
-
-
+        $view->u->setAprAprobo(($_POST['apr_aprobo']=='')? 'null': $_POST['apr_aprobo']);
         $view->u->setEstado($_POST['estado']);
 
         $rta=$view->u->autorizar_aprobarCapSolic();
+        //*********Agregado para copiar propuesta en comunicacion
+        if($_POST['estado']=='APROBADA'){
+            $view->c=new Comunicacion();
+            $view->c->copyPropuestaIntoComunicacion($_POST['id']);
+        }
+        //--------fin
         print_r(json_encode($rta));
         exit;
         break;

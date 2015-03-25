@@ -36,7 +36,7 @@
                         $('#btn_autorizar').attr("disabled", true);
                     }
 
-                    if(datas['solicitud'][0]['APELLIDO_APROBO'] && datas['solicitud'][0]['NOMBRE_APROBO']){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
+                    if(datas['solicitud'][0]['APELLIDO_APROBO'] && datas['solicitud'][0]['NOMBRE_APROBO']){ //Si el array aprobo tiene datos =>esta aprobada y se completan los campos.
                         $("#apr_aprobo").val(datas['solicitud'][0]['APELLIDO_APROBO']+' '+datas['solicitud'][0]['NOMBRE_APROBO']);
                         $("#apr_aprobo_id").val(datas['solicitud'][0]['ID_APROBO']);
                         $('#btn_aprobar').attr("disabled", true);

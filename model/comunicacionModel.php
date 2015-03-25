@@ -159,6 +159,24 @@ class Comunicacion
 
     }
 
+    public function copyPropuestaIntoComunicacion($id_solicitud){
+
+        $f=new Factory();
+        $obj_com=$f->returnsQuery();
+        $query="insert into cap_comunicacion (id_asignacion, situacion, indicadores_exito, compromiso, comunico, objetivo_1, objetivo_2, objetivo_3)".
+                " select ap.id_asignacion, pro.situacion, pro.indicadores_exito, pro.compromiso, sc.apr_solicito, pro.objetivo_1, pro.objetivo_2, pro.objetivo_3".
+                " from solicitud_capacitacion sc, asignacion_plan ap, propuestas pro, plan_capacitacion pc".
+                " where pro.id_solicitud = sc.id_solicitud".
+                " and sc.id_solicitud = ap.id_solicitud".
+                " and pro.id_curso = pc.id_curso".
+                " and pc.id_plan = ap.id_plan".
+                " and sc.id_solicitud = $id_solicitud";
+
+        $obj_com->executeQuery($query);
+        return $obj_com->getAffect();
+
+    }
+
 
 
 
