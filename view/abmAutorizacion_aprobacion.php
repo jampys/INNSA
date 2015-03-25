@@ -40,6 +40,7 @@
                         $("#apr_aprobo").val(datas['solicitud'][0]['APELLIDO_APROBO']+' '+datas['solicitud'][0]['NOMBRE_APROBO']);
                         $("#apr_aprobo_id").val(datas['solicitud'][0]['ID_APROBO']);
                         $('#btn_aprobar').attr("disabled", true);
+                        $("#button-guardar").button("disable");
                     }
 
 
@@ -176,26 +177,34 @@
                 width: 900,
                 modal:true,
                 title:"Autorizar/Aprobar Solicitud de capacitación",
-                buttons: {
-                    "Guardar": function() {
-                        if($("#form").valid()){ //OJO valid() devuelve un booleano
-                            guardar();
-                            $("#dialog").dialog("close");
-                            //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"autorizacion_aprobacion", operacion: "refreshGrid"});
-                        }
+                buttons: [
+                    {
+                        id: "button-guardar",
+                        text: "Guardar",
+                        click: function() {
+                            if($("#form").valid()){ //OJO valid() devuelve un booleano
+                                guardar();
+                                $("#dialog").dialog("close");
+                                //Llamada ajax para refrescar la grilla
+                                $('#principal').load('index.php',{accion:"autorizacion_aprobacion", operacion: "refreshGrid"});
+                            }
 
+                        }
                     },
-                    "Cancelar": function() {
-                        //$("#form")[0].reset(); //para limpiar los campos del formulario
-                        $(":input:not([type=button])").val(''); //limpia los campos, incluso los ocultos (la sentencia de arriba no limpia ocultos)
-                        $('#form').validate().resetForm(); //para limpiar los errores validate
-                        //limpiar la tabla de asignaciones de planes
-                        $('#table_plan tbody tr').each(function(){ $(this).remove(); });
-                        $('#table_plan tfoot tr').each(function(){ $(this).remove(); });
-                        $(this).dialog("close");
+                    {
+                        id: "button-cancelar",
+                        text: "Cancelar",
+                        click: function() {
+                            //$("#form")[0].reset(); //para limpiar los campos del formulario
+                            $(":input:not([type=button])").val(''); //limpia los campos, incluso los ocultos (la sentencia de arriba no limpia ocultos)
+                            $('#form').validate().resetForm(); //para limpiar los errores validate
+                            //limpiar la tabla de asignaciones de planes
+                            $('#table_plan tbody tr').each(function(){ $(this).remove(); });
+                            $('#table_plan tfoot tr').each(function(){ $(this).remove(); });
+                            $(this).dialog("close");
+                        }
                     }
-                },
+                ],
                 show: {
                     effect: "blind",
                     duration: 1000
@@ -250,6 +259,7 @@
                 $('#dialog').dialog('open');
                 $('#btn_autorizar').attr("disabled", false);
                 $('#btn_aprobar').attr("disabled", false);
+                $("#button-guardar").button("enable");
                 return false;
             });
 
