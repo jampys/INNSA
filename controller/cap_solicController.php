@@ -54,6 +54,14 @@ switch($operacion){
             $c=new Propuesta();
             $c->setIdSolicitud($id_solicitud);
             $c->setIdCurso($v->id_curso);
+            $c->setIdReemplazo($v->reemplazo);
+            $c->setSituacion($v->situacion);
+            $c->setObjetivo1($v->objetivo_1);
+            $c->setObjetivo2($v->objetivo_2);
+            $c->setObjetivo3($v->objetivo_3);
+            $c->setIndicadoresExito($v->indicadores_exito);
+            $c->setCompromiso($v->compromiso);
+
             $c->insertPropuesta();
         }
 
@@ -145,12 +153,26 @@ switch($operacion){
             //$c->setIdSolicitud($v->id_solicitud);
             $c->setIdSolicitud($_POST['id']);
             $c->setIdCurso($v->id_curso);
+            $c->setIdReemplazo($v->reemplazo);
+            $c->setSituacion($v->situacion);
+            $c->setObjetivo1($v->objetivo_1);
+            $c->setObjetivo2($v->objetivo_2);
+            $c->setObjetivo3($v->objetivo_3);
+            $c->setIndicadoresExito($v->indicadores_exito);
+            $c->setCompromiso($v->compromiso);
+
 
             if($v->id_propuesta==""){ //si no tiene id_propuesta=> es un insert
                 $c->insertPropuesta();
             }
-            else if($v->operacion_propuesta=="delete"){
+            else {
+                if($v->operacion_curso=="update"){
+                    $c->updatePropuesta();
+                }
+                if($v->operacion_curso=="delete"){
                 $c->deletePropuesta();
+                }
+
             }
         }
 

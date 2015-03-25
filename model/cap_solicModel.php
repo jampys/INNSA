@@ -501,13 +501,14 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        $query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, estado, id_plan) values($id_solicitud, :objetivo, :comentarios, :viaticos, :reemplazo, :estado, :id_plan)";
+        //$query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, estado, id_plan) values($id_solicitud, :objetivo, :comentarios, :viaticos, :reemplazo, :estado, :id_plan)";
+        $query = "insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan) values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan)";
         $obj_asig->dpParse($query);
 
-        $obj_asig->dpBind(':objetivo', $this->objetivo);
+        //$obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->viaticos);
-        $obj_asig->dpBind(':reemplazo', $this->reemplazo);
+        //$obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':estado', $this->estado);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
 
@@ -564,7 +565,13 @@ class Asignacion_plan{
     public function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.estado ESTADO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
+        //$obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.estado ESTADO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
+        $query="select cu.nombre, ap.estado ESTADO, ap.comentarios, ap.viaticos, ap.id_plan, ap.id_asignacion, pc.fecha_desde, pc.modalidad, pc.duracion, pc.unidad, pc.moneda, pc.importe".
+                " from asignacion_plan ap, plan_capacitacion pc, cursos cu".
+                " where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso".
+                " and id_solicitud=$id".
+                " order by pc.fecha_desde ASC";
+        $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll(); // retorna todas las asignaciones que corresponden con el id de solicitud
     }
 
@@ -593,6 +600,14 @@ class Propuesta{
     var $id_solicitud;
     var $id_curso;
 
+    var $id_reemplazo;
+    var $situacion;
+    var $objetivo_1;
+    var $objetivo_2;
+    var $objetivo_3;
+    var $indicadores_exito;
+    var $compromiso;
+
 
     // metodos que devuelven valores
     function getIdPropuesta()
@@ -603,6 +618,27 @@ class Propuesta{
 
     function getIdCurso()
     { return $this->id_curso;}
+
+    function getIdReemplazo()
+    { return $this->id_reemplazo;}
+
+    function getSituacion()
+    { return $this->situacion;}
+
+    function getObjetivo1()
+    { return $this->objetivo_1;}
+
+    function getObjetivo2()
+    { return $this->objetivo_2;}
+
+    function getObjetivo3()
+    { return $this->objetivo_3;}
+
+    function getIndicadoresExito()
+    { return $this->indicadores_exito;}
+
+    function getCompromiso()
+    { return $this->compromiso;}
 
 
     // metodos que setean los valores
@@ -615,13 +651,55 @@ class Propuesta{
     function setIdCurso($val)
     {  $this->id_curso=$val;}
 
+    function setIdReemplazo($val)
+    {  $this->id_reemplazo=$val;}
+
+    function setSituacion($val)
+    {  $this->situacion=$val;}
+
+    function setObjetivo1($val)
+    {  $this->objetivo_1=$val;}
+
+    function setObjetivo2($val)
+    {  $this->objetivo_2=$val;}
+
+    function setObjetivo3($val)
+    {  $this->objetivo_3=$val;}
+
+    function setIndicadoresExito($val)
+    {  $this->indicadores_exito=$val;}
+
+    function setCompromiso($val)
+    {  $this->compromiso=$val;}
+
 
     public function insertPropuesta(){
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "insert into propuestas (id_solicitud, id_curso) values($this->id_solicitud, $this->id_curso)";
+        $query = "insert into propuestas (id_solicitud, id_curso, id_reemplazo, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso) values($this->id_solicitud, $this->id_curso, $this->id_reemplazo, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso')";
         $obj_cp->executeQuery($query);
         //return $obj_user->getAffect();
+    }
+
+
+    public function updatePropuesta(){
+
+        $f=new Factory();
+        $obj_pro=$f->returnsQuery();
+        $query = "update propuestas set id_reemplazo=:id_reemplazo, situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso where id_propuesta=:id_propuesta";
+        $obj_pro->dpParse($query);
+
+        $obj_pro->dpBind(':id_reemplazo', $this->id_reemplazo);
+        $obj_pro->dpBind(':situacion', $this->situacion);
+        $obj_pro->dpBind(':objetivo_1', $this->objetivo_1);
+        $obj_pro->dpBind(':objetivo_2', $this->objetivo_2);
+        $obj_pro->dpBind(':objetivo_3', $this->objetivo_3);
+        $obj_pro->dpBind(':indicadores_exito', $this->indicadores_exito);
+        $obj_pro->dpBind(':compromiso', $this->compromiso);
+        $obj_pro->dpBind(':id_propuesta', $this->id_propuesta);
+
+        $obj_pro->dpExecute();
+        //return $obj_asig->getAffect();
     }
 
 
@@ -638,7 +716,12 @@ class Propuesta{
     public function getPropuestaBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select * from propuestas, cursos where propuestas.id_curso = cursos.id_curso and id_solicitud=$id");
+        //$obj_sp->executeQuery("select * from propuestas, cursos where propuestas.id_curso = cursos.id_curso and id_solicitud=$id");
+        $query="select pro.*, cu.nombre curso_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre from propuestas pro, cursos cu, empleados em".
+                " where pro.id_curso = cu.id_curso".
+                " and pro.id_reemplazo = em.id_empleado".
+                " and pro.id_solicitud=$id";
+        $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll(); // retorna todas las propuestas que corresponden con el id de solicitud
     }
 

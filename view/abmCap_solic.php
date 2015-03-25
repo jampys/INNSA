@@ -67,13 +67,13 @@
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
+                        //'<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
                         '<td style="display: none">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
+                        //'<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
+                        //'<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
@@ -88,7 +88,16 @@
                     $.each(datas['propuestas'], function(indice, val){
 
                         $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
-                        '<td>'+datas['propuestas'][indice]['NOMBRE']+'</td>' +
+                        '<td>'+datas['propuestas'][indice]['CURSO_NOMBRE']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['ID_REEMPLAZO']+'</td>' +
+                        '<td>'+datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_2']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_3']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['INDICADORES_EXITO']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['COMPROMISO']+'</td>' +
+                        '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                         if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
@@ -121,10 +130,10 @@
             $('#table_plan tbody tr').each(function () {
                 item = {};
                 item['id_plan']=$(this).attr('id_plan');
-                item['objetivo']= $(this).find('td').eq(1).html();
-                item['comentarios']= $(this).find('td').eq(2).html();
-                item['viaticos']= $(this).find('td').eq(5).html();
-                item['reemplazo']= $(this).find('td').eq(6).html();
+                //item['objetivo']= $(this).find('td').eq(1).html();
+                item['comentarios']= $(this).find('td').eq(1).html();
+                item['viaticos']= $(this).find('td').eq(4).html();
+                //item['reemplazo']= $(this).find('td').eq(6).html();
                 item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
                 item['operacion_asignacion']=$(this).attr('operacion_asignacion');
                 item['estado'] = 'ASIGNADO';
@@ -137,8 +146,15 @@
             $('#table_curso tbody tr').each(function () {
                 item = {};
                 item['id_curso']=$(this).attr('id_curso');
+                item['reemplazo']= $(this).find('td').eq(1).html();
+                item['situacion']= $(this).find('td').eq(3).html();
+                item['objetivo_1']= $(this).find('td').eq(4).html();
+                item['objetivo_2']= $(this).find('td').eq(5).html();
+                item['objetivo_3']= $(this).find('td').eq(6).html();
+                item['indicadores_exito']= $(this).find('td').eq(7).html();
+                item['compromiso']= $(this).find('td').eq(8).html();
                 item['id_propuesta']=($(this).attr('id_propuesta'))? $(this).attr('id_propuesta') : "";
-                item['operacion_propuesta']=$(this).attr('operacion_propuesta');
+                item['operacion_curso']=$(this).attr('operacion_curso');
                 jsonObjCursos.push(item);
             });
 
@@ -341,11 +357,11 @@
                                 //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
                                 $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(2).html($('#np_comentarios').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(5).html($('#np_viaticos').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_comentarios').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(4).html($('#np_viaticos').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
 
@@ -356,13 +372,13 @@
                                 //$('#table_plan tr:last').after('<tr>' +
                                 $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                                 '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                                '<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
                                 '<td style="text-align: center">'+$('#np_viaticos').val()+'</td>' +
-                                '<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
-                                '<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
+                                //'<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
                                 '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                                 '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
@@ -419,11 +435,11 @@
                 $(this).closest('tr').attr('operacion_asignacion', 'update');
                 $('#np_plan_capacitacion_id').val($(this).closest('tr').attr('id_plan'));
                 $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
-                $('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
-                $('#np_comentarios').val($(this).closest('tr').find('td').eq(2).html());
-                $('#np_viaticos').val($(this).closest('tr').find('td').eq(5).html());
-                $('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
-                $('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
+                //$('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
+                $('#np_comentarios').val($(this).closest('tr').find('td').eq(1).html());
+                $('#np_viaticos').val($(this).closest('tr').find('td').eq(4).html());
+                //$('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
+                //$('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
                 //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
                 //con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
@@ -440,6 +456,14 @@
                 //$('#asignar_plan').dialog('open');
                 $('#asignar_plan').data('operacion', 'insert').dialog('open');
                 $('#np_plan_capacitacion').attr('readonly', false); //Vuelve a habilitar el campo plan_capacitacion
+                return false;
+            });
+
+            // new propuesta link
+            $(document).on('click', '.new-propuesta-link', function(){
+                //$('#asignar_plan').dialog('open');
+                $('#proponer_curso').data('operacion', 'insert').dialog('open');
+                //$('#np_plan_capacitacion').attr('readonly', false); //Vuelve a habilitar el campo plan_capacitacion
                 return false;
             });
 
@@ -475,7 +499,7 @@
 
 
             //Agregado dario para autocompletar empleado reemplazo
-            $("#np_reemplazo").autocomplete({
+            $("#nc_reemplazo").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
@@ -495,8 +519,8 @@
                 },
                 minLength: 2,
                 change: function(event, ui) {
-                    $('#np_reemplazo_id').val(ui.item? ui.item.id : '');
-                    $('#np_reemplazo').val(ui.item.label);
+                    $('#nc_reemplazo_id').val(ui.item? ui.item.id : '');
+                    $('#nc_reemplazo').val(ui.item.label);
                 }
             });
 
@@ -508,18 +532,20 @@
             //********************************************************************************************
             //Funcionalidad para la tabla cursos propuestos
 
+
             //Agregado dario para autocompletar cursos
-            $("#curso").autocomplete({
+            $("#nc_curso").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos"},
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos", "target":"BYPERIODO"},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
-                                    label: item.NOMBRE,
+                                    //label: item.NOMBRE+' - '+item.FECHA_DESDE+' - '+item.MODALIDAD,
+                                    label: item.NOMBRE+' '+((typeof(item.FECHA_DESDE)=='undefined')? '': item.FECHA_DESDE)+'  '+((typeof(item.MODALIDAD)=='undefined')? '': item.MODALIDAD)+'  '+((typeof(item.ENTIDAD)=='undefined')? '': item.ENTIDAD),
                                     id: item.ID_CURSO
 
                                 };
@@ -528,31 +554,131 @@
                     });
                 },
                 minLength: 2,
-                select: function(event, ui) {
-                    //$('#cursos_propuestos').append(ui.item.curso);
-                    $('#table_curso tbody').append('<tr id_curso='+ui.item.id+'><td>'+ui.item.label+'</td>'+
-                    '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
-                    '</tr>');
-
-                    $('#curso').clear(); //no funciona del todo bien
+                change: function(event, ui) {
+                    $('#nc_curso_id').val(ui.item? ui.item.id : '');
+                    $('#nc_curso').val(ui.item.label);
                 }
             });
 
+
+
+            $('#proponer_curso').dialog({
+                autoOpen: false,
+                width: 500,
+                modal:true,
+                title:"Agregar Registro",
+                buttons: {
+                    "Guardar": function() {
+                        if($("#form_curso").valid()){
+                            //alert('form plan');
+
+                            // si se trata de un update
+                            if($('#proponer_curso').data('operacion')=='editar'){
+                                var row_index=$('#proponer_curso').data('row_index');
+                                //console.log($('#asignar_plan').data('operacion'));
+                                //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
+                                $('#table_curso tbody').find('tr').eq(row_index).attr('id_curso',$("#nc_curso_id").val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(0).html($('#nc_curso').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(1).html($('#nc_reemplazo_id').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(2).html($('#nc_reemplazo').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(3).html($('#nc_situacion').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(4).html($('#nc_objetivo_1').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(5).html($('#nc_objetivo_2').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(6).html($('#nc_objetivo_3').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(7).html($('#nc_indicadores_exito').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(8).html($('#nc_compromiso').val());
+                                $("#form_curso")[0].reset();
+                                $(this).dialog("close");
+
+                            }
+                            else{  //si se trata de un insert
+
+                                //Se agrega fila a la tabla de planes
+                                //$('#table_plan tr:last').after('<tr>' +
+                                $('#table_curso tbody').append('<tr id_curso='+$("#nc_curso_id").val()+'>' +
+                                '<td>'+$('#nc_curso').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_reemplazo_id').val()+'</td>' +
+                                '<td>'+$('#nc_reemplazo').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_situacion').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_objetivo_1').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_objetivo_2').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_objetivo_3').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_indicadores_exito').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_compromiso').val()+'</td>' +
+
+                                '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                                '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                                '</tr>');
+                                $("#form_curso")[0].reset();
+
+                            }
+
+                        }
+
+
+
+
+                    },
+                    "Cancelar": function() {
+                        $("#form_curso")[0].reset(); //para limpiar el formulario
+                        $('#form_curso').validate().resetForm(); //para limpiar los errores validate
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 300
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 300
+                },
+                close:function(){
+                    $("#form_curso")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $('#form_curso').validate().resetForm(); //para limpiar los errores validate
+                }
+
+            });
 
             //Al presionar la x para eliminar cursos propuestos de la solicitud
             $(document).on("click",".eliminar_curso",function(e){
                 //pregunta si la fila tiene el atributo id_propuesta.
                 //Si lo tiene=> viene de la BD. Sino=> se acaba de agregar dinamicamente y estan solo en memoria
                 if($(this).closest('tr').attr('id_propuesta')){
-                    $(this).closest('tr').attr('operacion_propuesta', 'delete');
+                    $(this).closest('tr').attr('operacion_curso', 'delete');
                     $(this).closest('tr').toggle(); //oculta la fila, pero no la elimina
                 }else{
+
                     $(this).closest('tr').remove(); //elimina la fila
                 }
-                e.preventDefault(); //para evitar que suba el foco al eliminar un curso propuesto
+                e.preventDefault(); //para evitar que suba el foco al eliminar un plan
+
             });
 
 
+            //Al presionar el lapiz para editar los cursos propuestos de la solicitud
+            $(document).on("click",".editar_curso",function(){
+                //alert($(this).closest('tr').attr('id_asignacion'));
+                $(this).closest('tr').attr('operacion_curso', 'update');
+                $('#nc_curso_id').val($(this).closest('tr').attr('id_curso'));
+                $('#nc_curso').val($(this).closest('tr').find('td').eq(0).html());
+                $('#nc_reemplazo_id').val($(this).closest('tr').find('td').eq(1).html());
+                $('#nc_reemplazo').val($(this).closest('tr').find('td').eq(2).html());
+                $('#nc_situacion').val($(this).closest('tr').find('td').eq(3).html());
+                $('#nc_objetivo_1').val($(this).closest('tr').find('td').eq(4).html());
+                $('#nc_objetivo_2').val($(this).closest('tr').find('td').eq(5).html());
+                $('#nc_objetivo_3').val($(this).closest('tr').find('td').eq(6).html());
+                $('#nc_indicadores_exito').val($(this).closest('tr').find('td').eq(7).html());
+                $('#nc_compromiso').val($(this).closest('tr').find('td').eq(8).html());
+                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
+                //con el metodo .data() en formato json.
+                var row_index=$(this).closest('tr').index();
+                $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
+                return false;
+
+            });
+
+            //Fin funcionalidad cursos propuestos
             //-------------------------------------------------------------------------------------------------------
 
 
@@ -609,6 +735,7 @@
             //llamada a funcion validar
             $.validar();
             $.validarPlan();
+            $.validarCurso();
 
         });
 
@@ -679,14 +806,7 @@
                     maxlength: 100
                 },
                 np_viaticos: {
-                    required: true,
                     number: true
-                },
-                np_reemplazo: {
-                    required: true
-                },
-                np_reemplazo_id:{
-                    required: function(item){return $('#np_reemplazo').val().length>0;}
                 }
 
             },
@@ -694,10 +814,62 @@
                 np_plan_capacitacion: "Seleccione un plan de capacitación",
                 np_plan_capacitacion_id: "Seleccione un plan de capacitación sugerido",
                 np_objetivo: "Máximo 100 caracteres",
-                np_comentarios: "Máximo 100 caracteres",
-                np_viaticos: "Ingrese los viaticos",
-                np_reemplazo: "Seleccione el reemplazo",
-                np_reemplazo_id: "Seleccione un empleado sugerido"
+                np_comentarios: "Máximo 100 caracteres"
+            }
+
+        });
+
+    };
+
+
+    $.validarCurso=function(){
+        $('#form_curso').validate({
+            ignore:"",
+            rules: {
+                nc_curso: {
+                    required: true
+                },
+                nc_reemplazo: {
+                    required: true
+                },
+                nc_reemplazo_id:{
+                    required: function(item){return $('#nc_reemplazo').val().length>0;}
+                },
+                nc_curso_id:{
+                    required: function(item){return $('#nc_curso').val().length>0;}
+                },
+                nc_situacion: {
+                    required: true
+                },
+                nc_objetivo_1: {
+                    required: true
+                },
+                nc_objetivo_2: {
+                    required: true
+                },
+                nc_objetivo_3: {
+                    required: true
+                },
+                nc_indicadores_exito: {
+                    required: true
+                },
+                nc_compromiso: {
+                    required: true
+                }
+
+
+            },
+            messages:{
+                nc_curso: "Seleccione un curso",
+                nc_curso_id: "Seleccione un curso sugerido",
+                nc_reemplazo: "Seleccione el reemplazo",
+                nc_reemplazo_id: "Seleccione un empleado sugerido",
+                nc_situacion: "Ingrese la situacion",
+                nc_objetivo_1: "Ingrese el objetivo 1",
+                nc_objetivo_2: "Ingrese el objetivo 2",
+                nc_objetivo_3: "Ingrese el objetivo 3",
+                nc_indicadores_exito: "Ingrese los indicadores de éxito",
+                nc_compromiso: "Ingrese el compromiso"
             }
 
         });
@@ -894,7 +1066,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Capacitaciones propuestas: </label><br/>
-                                    <input type="text" name="curso" id="curso"/>
+                                    <a id="new-propuesta" class="new-propuesta-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
                                 </div>
                             </div>
                             <div class="eight column">
@@ -904,13 +1076,16 @@
                             </div>
                         </div>
 
+
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <table id="table_curso" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td style="width: 89%">Curso</td>
+                                            <td style="width: 45%">Curso</td>
+                                            <td style="width: 40%">Reemplazo</td>
+                                            <td style="text-align: center">Editar</td>
                                             <td style="text-align: center">Eliminar</td>
                                         </tr>
                                         </thead>
@@ -945,10 +1120,10 @@
                                     <table id="table_plan" class="tablaSolicitud">
                                         <thead>
                                             <tr>
-                                                <td>Plan</td>
-                                                <td>Duración</td>
-                                                <td>Costo</td>
-                                                <td>Viaticos</td>
+                                                <td style="width: 55%">Plan</td>
+                                                <td style="width: 10%">Duración</td>
+                                                <td style="width: 10%">Costo</td>
+                                                <td style="width: 10%">Viaticos</td>
                                                 <td>Editar</td>
                                                 <td>Eliminar</td>
                                             </tr>
@@ -1006,6 +1181,103 @@
 </div>
 
 
+<!-- funcionalidad para proponer curso y hacer comunicacion -->
+<div id="proponer_curso" >
+
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
+
+        <div class="clear"></div>
+        <div class="box">
+
+            <div class="block" id="forms">
+                <form id="form_curso" action="">
+                    <fieldset>
+                        <legend>Datos Registro</legend>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Curso propuesto: </label><br/>
+                                    <input type="text" name="nc_curso" id="nc_curso"/>
+                                    <input type="hidden" name="nc_curso_id" id="nc_curso_id"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Reemplazo: </label><br/>
+                                    <input type="text" name="nc_reemplazo" id="nc_reemplazo"/>
+                                    <input type="hidden" name="nc_reemplazo_id" id="nc_reemplazo_id"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Situación: Porque te vamos a capacitar</label><br/>
+                                    <textarea type="text" name="nc_situacion" id="nc_situacion" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Objetivos: Que esperamos lograr con esto</label><br/>
+                                    <textarea type="text" name="nc_objetivo_1" id="nc_objetivo_1" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_2" id="nc_objetivo_2" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_3" id="nc_objetivo_3" rows="1"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Indicadores de éxito:</label><br/>
+                                    <textarea type="text" name="nc_indicadores_exito" id="nc_indicadores_exito" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Compromiso:</label><br/>
+                                    <textarea type="text" name="nc_compromiso" id="nc_compromiso" rows="5"/></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </fieldset>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
 
 
 <div id="asignar_plan" >
@@ -1032,35 +1304,19 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Objetivo: </label><br/>
-                                    <textarea name="np_objetivo" id="np_objetivo" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
                                     <label>Comentarios: </label>
                                     <textarea name="np_comentarios" id="np_comentarios" rows="5"></textarea>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Viaticos: </label><br/>
                                     <input type="text" name="np_viaticos" id="np_viaticos"/>
                                 </div>
                             </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Reemplazo: </label><br/>
-                                    <input type="text" name="np_reemplazo" id="np_reemplazo"/>
-                                    <input type="hidden" name="np_reemplazo_id" id="np_reemplazo_id"/>
-
-                                </div>
-                            </div>
                         </div>
+
+
 
                 </fieldset>
 
