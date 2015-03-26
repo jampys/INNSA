@@ -258,11 +258,20 @@ class Cap_Solic
     }
 
 
-    public static function getPlanes($term){  //funcion usada para autocompletar planes (solo los propuestos, no los cancelados)
+    public static function getPlanes($term, $id_solicitud){
+    /*funcion usada para autocompletar planes (solo los propuestos, no los cancelados), ademas solo trae planes con fecha >= a la vigente
+    y planes de cursos que estan cargados como propuestos.
+    */
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        //$query="select * from cursos where nombre like UPPER ('%".$term."%')";
-        $query="select * from plan_capacitacion, cursos where plan_capacitacion.id_curso = cursos.id_curso and nombre like UPPER ('%".$term."%') and estado = 'PROPUESTO'";
+        //$query="select * from plan_capacitacion, cursos where plan_capacitacion.id_curso = cursos.id_curso and nombre like UPPER ('%".$term."%') and estado = 'PROPUESTO'";
+        $query="select pc.*, cu.nombre".
+                " from plan_capacitacion pc, cursos cu, propuestas pro, solicitud_capacitacion sc".
+                " where pc.id_curso = cu.id_curso".
+                " and pro.id_solicitud = sc.id_solicitud".
+                " and pro.id_curso = pc.id_curso".
+                " and sc.id_solicitud = $id_solicitud".
+                " and cu.nombre like UPPER ('%".$term."%') and pc.estado = 'PROPUESTO' and pc.fecha_desde >=SYSDATE";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
     }

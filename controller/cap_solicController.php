@@ -191,7 +191,7 @@ switch($operacion){
 
 
     case 'autocompletar_planes':
-        $rta=$view->u->getPlanes($_POST['term']);
+        $rta=$view->u->getPlanes($_POST['term'], $_POST['id_solicitud']);
         print_r(json_encode($rta));
         exit;
         break;

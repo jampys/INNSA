@@ -489,7 +489,7 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"cap_solic", "operacion":"autocompletar_planes"},
+                        data: { "term": request.term, "accion":"cap_solic", "operacion":"autocompletar_planes", "id_solicitud": globalId},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
