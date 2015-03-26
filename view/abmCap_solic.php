@@ -345,6 +345,7 @@
                     //Vuelve a habilitar el link new plan, por si fue desactivado
                    $('#new-plan').removeClass('link-desactivado').addClass('new-plan-link');
                    $('#new-propuesta').removeClass('link-desactivado').addClass('new-propuesta-link');
+                   $(":input").attr("disabled", false); //para volver a habilitar todos los campor, por si fueron deshabilitados
                 }
 
 
@@ -736,7 +737,6 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
-                $(":input").attr("disabled", false); //para volver a habilitar todos los campor, por si fueron deshabilitados
                 $("#empleado").attr("readonly", true); //para no permitir editar el empleado
                 return false;
             });
