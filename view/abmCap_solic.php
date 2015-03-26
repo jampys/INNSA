@@ -64,11 +64,13 @@
 
                     //Se construye la tabla de asignaciones de planes
                     $.each(datas['planes'], function(indice, val){
+                        
+                        var comentarios= (datas['planes'][indice]['COMENTARIOS'])? datas['planes'][indice]['COMENTARIOS']: "";
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
                         //'<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
-                        '<td style="display: none">'+datas['planes'][indice]['COMENTARIOS']+'</td>' +
+                        '<td style="display: none">'+comentarios+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
