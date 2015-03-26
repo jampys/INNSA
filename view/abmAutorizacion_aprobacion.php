@@ -40,7 +40,7 @@
                         $("#apr_aprobo").val(datas['solicitud'][0]['APELLIDO_APROBO']+' '+datas['solicitud'][0]['NOMBRE_APROBO']);
                         $("#apr_aprobo_id").val(datas['solicitud'][0]['ID_APROBO']);
                         $('#btn_aprobar').attr("disabled", true);
-                        $("#button-guardar").button("disable");
+                        $("#button-guardar").attr("disabled", true);
                     }
 
 
@@ -259,7 +259,7 @@
                 $('#dialog').dialog('open');
                 $('#btn_autorizar').attr("disabled", false);
                 $('#btn_aprobar').attr("disabled", false);
-                $("#button-guardar").button("enable");
+                $("#button-guardar").attr("disabled", false);
                 return false;
             });
 
