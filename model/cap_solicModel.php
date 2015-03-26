@@ -271,6 +271,7 @@ class Cap_Solic
                 " and pro.id_solicitud = sc.id_solicitud".
                 " and pro.id_curso = pc.id_curso".
                 " and sc.id_solicitud = $id_solicitud".
+                " and pc.id_plan not in (select apx.id_plan from asignacion_plan apx, solicitud_capacitacion scx where scx.id_solicitud = sc.id_solicitud )".
                 " and cu.nombre like UPPER ('%".$term."%') and pc.estado = 'PROPUESTO' and pc.fecha_desde >=SYSDATE";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
