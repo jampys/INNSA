@@ -81,7 +81,7 @@
                             //$('#table_plan tbody').find('a').eq(1).removeClass('eliminar_plan').addClass('link-desactivado');
                             $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
                             $('#table_plan tbody').find('a.editar_plan').removeClass('editar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
-                            $(":input").attr("disabled", true);
+                            $(":input:not(.button-cancel)").attr("disabled", true);
                         }
                     });
 
@@ -298,25 +298,34 @@
                 width: 700,
                 modal:true,
                 title:"Agregar Registro",
-                buttons: {
-                    "Guardar": function() {
+                buttons: [
+                    {
+                        class: "button-guardar",
+                        text: "Guardar",
+                        click: function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
                             $('#principal').load('index.php',{accion:"cap_solic", operacion: "refreshGrid"});
+                            }
                         }
-
                     },
-                    "Cancelar": function() {
-                        $("#form")[0].reset(); //para limpiar los campos del formulario
-                        $('#form').validate().resetForm(); //para limpiar los errores validate
-                        $(":checked").removeAttr("checked"); //para limpiar los checkbox
-                        //limpiar la tabla de asignaciones de planes
-                        $('#table_plan tbody tr').each(function(){ $(this).remove(); });
-                        $(this).dialog("close");
+                    {
+                        class: "button-cancel",
+                        text: "Cancelar",
+                        click: function () {
+                            $("#form")[0].reset(); //para limpiar los campos del formulario
+                            $('#form').validate().resetForm(); //para limpiar los errores validate
+                            $(":checked").removeAttr("checked"); //para limpiar los checkbox
+                            //limpiar la tabla de asignaciones de planes
+                            $('#table_plan tbody tr').each(function () {
+                                $(this).remove();
+                            });
+                            $(this).dialog("close");
+                        }
                     }
-                },
+                ],
                 show: {
                     effect: "blind",
                     duration: 1000
@@ -571,8 +580,10 @@
                 width: 500,
                 modal:true,
                 title:"Agregar Registro",
-                buttons: {
-                    "Guardar": function() {
+                buttons: [{
+                    class: "button-save",
+                    text: "Guardar",
+                    click: function() {
                         if($("#form_curso").valid()){
                             //alert('form plan');
 
@@ -619,16 +630,17 @@
 
                         }
 
-
-
-
-                    },
-                    "Cancelar": function() {
-                        $("#form_curso")[0].reset(); //para limpiar el formulario
-                        $('#form_curso').validate().resetForm(); //para limpiar los errores validate
-                        $(this).dialog("close");
                     }
                 },
+                    {
+                        class: "button-cancel",
+                        text: "Cancelar",
+                        click: function() {
+                            $("#form_curso")[0].reset(); //para limpiar el formulario
+                            $('#form_curso').validate().resetForm(); //para limpiar los errores validate
+                            $(this).dialog("close");
+                        }
+                }],
                 show: {
                     effect: "blind",
                     duration: 300
