@@ -248,7 +248,7 @@
 
                 var data={  "accion":"asignacion",
                             "operacion":"saveComunicacion",
-                            //"id":globalId, //id_asignacion
+                            "id":globalId, //id_asignacion
                             "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
                             "situacion":$("#situacion").val(),
                             //"objetivos":$("#objetivos").val(),
@@ -257,7 +257,10 @@
                             "objetivo_3":$("#objetivo_3").val(),
                             "indicadores_exito":$("#indicadores_exito").val(),
                             "compromiso":$("#compromiso").val(),
-                            "comunico":$("#comunico_id").val()
+                            "comunico":$("#comunico_id").val(),
+                            //cambio estado a COMUNICADO
+                            "estado": "COMUNICADO",
+                            "estado_cambio": ""
                         };
 
             }
