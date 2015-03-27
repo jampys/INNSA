@@ -8,9 +8,8 @@
     var globalOperacion;
     var globalId;
 
-        /*
-        function editar(id_asignacion){
-            //alert(id_usuario);
+
+        function editar(id_asignacion){ //funcion que trae los datos del estado de una asignacion
 
             $.ajax({
                 url:"index.php",
@@ -37,7 +36,7 @@
 
             });
 
-        } */
+        }
 
 
 
@@ -199,7 +198,16 @@
 
         function guardar(){
 
-            if(globalOperacion=="comunicacion"){ //para guardar la notificacion de la comunicacion
+            if(globalOperacion=="edit"){ //Se cambia el estado de la asignacion
+
+                var data={  "accion":"asignacion",
+                    "operacion":"save",
+                    "id":globalId,
+                    "estado":$("#estado").val(),
+                    "estado_cambio":$("#estado_cambio").val()
+                };
+            }
+            else if(globalOperacion=="comunicacion"){ //para guardar la notificacion de la comunicacion
 
                 var data={  "accion":"asignacion",
                             "operacion":"updateComunicacionNotificacion",
@@ -405,6 +413,44 @@
             });
 
 
+            // Dialog.... Contiene el modal donde se cambia el estado de una asignacion
+            $('#dialog').dialog({
+                autoOpen: false,
+                width: 600,
+                modal:true,
+                title:"Agregar Registro",
+                buttons: {
+                    "Guardar": function() {
+                        if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            guardar();
+                            $("#dialog").dialog("close");
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
+                        }
+
+                    },
+                    "Cancelar": function() {
+                        $("#form")[0].reset(); //para limpiar los campos del formulario
+                        $('#form').validate().resetForm(); //para limpiar los errores validate
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                },
+                close:function(){
+                    $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
+                    $('#form').validate().resetForm(); //para limpiar los errores validate
+                }
+
+            });
+
+
             // comunicacion_link
             $(document).on("click", ".comunicacion_link", function(){
                 globalOperacion='comunicacion';
@@ -424,6 +470,16 @@
                 $('#evaluacion').dialog('open');
                 //return false;
                 e.preventDefault();
+            });
+
+            //Agregado para editar (cambiar de estado)
+            $(document).on("click", ".edit_link", function(){
+                //globalOperacion=$(this).attr("media");
+                globalOperacion='edit';
+                globalId=$(this).attr('id');
+                editar(globalId); //le mando el id de la asignacion a editar que esta en el atributo id
+                $('#dialog').dialog('open');
+                return false;
             });
 
 
@@ -743,6 +799,57 @@
                         </div>
 
 
+
+
+                    </fieldset>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- cambio de estado -->
+<div id="dialog" >
+
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
+
+        <div class="clear"></div>
+        <div class="box">
+
+            <div class="block" id="forms">
+                <form id="form" action="">
+                    <fieldset>
+                        <legend>Datos Registro</legend>
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Estado: </label>
+                                    <select name="estado" id="estado">
+                                        <option value="">Seleccione un estado</option>
+                                        <option value="ASIGNADO">Asignado</option>
+                                        <option value="CANCELADO">Cancelado</option>
+                                        <option value="SUSPENDIDO">Suspendido</option>
+                                        <option value="COMUNICADO">Comunicado</option>
+                                        <option value="NOTIFICADO">Notificado</option>
+                                        <option value="EVALUADO">Evaluado</option>
+                                        <option value="POST-EVALUADO">Post-Evaluado</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Motivo cambio: </label>
+                                    <textarea type="text" name="estado_cambio" id="estado_cambio" rows="5"/></textarea>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </fieldset>
