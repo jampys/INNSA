@@ -8,30 +8,11 @@ $view->u=new Asignacion_plan();
 
 
 switch($operacion){
-    case 'insert':
-        /*
-        $view->u->setApellido($_POST['apellido']);
-        $view->u->setNombre($_POST['nombre']);
-        $view->u->setLugarTrabajo($_POST['lugar_trabajo']);
-        $view->u->setNLegajo($_POST['n_legajo']);
-        $view->u->setEmpresa($_POST['empresa']);
-        $view->u->setFuncion($_POST['funcion']);
-        $view->u->setCategoria($_POST['categoria']);
-        $view->u->setDivision($_POST['division']);
-        $view->u->setFechaIngreso($_POST['fecha_ingreso']);
-        $view->u->setActivo($_POST['activo']);
-        $view->u->setEmail($_POST['email']);
-        $view->u->setCuil($_POST['cuil']);
-        $rta=$view->u->insertEmpleado();
-        print_r(json_encode($rta));
-        exit;
-        break; */
 
-    case 'insertComunicacion':
+    case 'insertComunicacion': //guarda una comunicacion nueva
         $view->c=new Comunicacion();
         $view->c->setIdAsignacion($_POST['id']);
         $view->c->setSituacion($_POST['situacion']);
-        //$view->c->setObjetivos($_POST['objetivos']);
         $view->c->setObjetivo1($_POST['objetivo_1']);
         $view->c->setObjetivo2($_POST['objetivo_2']);
         $view->c->setObjetivo3($_POST['objetivo_3']);
@@ -50,9 +31,8 @@ switch($operacion){
         exit;
         break;
 
-    case 'updateComunicacion':
+    case 'updateComunicacion': //carga en la ventana modal los datos de la comunicacion a editar
         $view->c=new Comunicacion();
-
         $rta=$view->c->getComunicacionByAsignacion($_POST['id']);
         print_r(json_encode($rta));
         exit;
@@ -82,7 +62,6 @@ switch($operacion){
         //$view->c->setIdAsignacion($_POST['id']);
         $view->c->setIdComunicacion($_POST['id_comunicacion']);
         $view->c->setSituacion($_POST['situacion']);
-        //$view->c->setObjetivos($_POST['objetivos']);
         $view->c->setObjetivo1($_POST['objetivo_1']);
         $view->c->setObjetivo2($_POST['objetivo_2']);
         $view->c->setObjetivo3($_POST['objetivo_3']);
@@ -102,14 +81,13 @@ switch($operacion){
         break;
 
 
-    case 'update':
-
+    case 'update': //carga en la ventana modal los datos del estado de una asignacion para editar
         $rta=$view->u->getAsignacionPlanById($_POST['id']);
         print_r(json_encode($rta));
         exit;
         break;
 
-    case 'save':
+    case 'save': //Guarda la edicion del estado de la asignacion
         $view->u->setIdAsignacion($_POST['id']);
         $view->u->setEstado($_POST['estado']);
         $view->u->setEstadoCambio($_POST['estado_cambio']);

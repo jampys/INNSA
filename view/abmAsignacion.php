@@ -230,7 +230,6 @@
                             "operacion":"insertComunicacion",
                             "id":globalId, //id_asignacion
                             "situacion":$("#situacion").val(),
-                            //"objetivos":$("#objetivos").val(),
                             "objetivo_1":$("#objetivo_1").val(),
                             "objetivo_2":$("#objetivo_2").val(),
                             "objetivo_3":$("#objetivo_3").val(),
@@ -251,7 +250,6 @@
                             "id":globalId, //id_asignacion
                             "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
                             "situacion":$("#situacion").val(),
-                            //"objetivos":$("#objetivos").val(),
                             "objetivo_1":$("#objetivo_1").val(),
                             "objetivo_2":$("#objetivo_2").val(),
                             "objetivo_3":$("#objetivo_3").val(),
@@ -571,7 +569,7 @@
                                     <select name="estado" id="estado">
                                         <option value="">Seleccione un estado</option>
                                         <option value="ASIGNADO">Asignado</option>
-                                        <option value="CANCELADO">Cancelado</option>
+                                        <!--<option value="CANCELADO">Cancelado</option>-->
                                         <option value="SUSPENDIDO">Suspendido</option>
                                         <option value="COMUNICADO">Comunicado</option>
                                         <option value="NOTIFICADO">Notificado</option>
