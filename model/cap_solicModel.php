@@ -594,6 +594,40 @@ class Asignacion_plan{
     }
 
 
+    public function estadosCambio($id){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        /*$query="select ap.*, com.id_comunicacion, eva.id_evaluacion".
+                " from asignacion_plan ap".
+                " left join cap_comunicacion com".
+                " on ap.id_asignacion = com.id_asignacion".
+                " left join cap_evaluacion eva".
+                " on ap.id_asignacion = eva.id_asignacion".
+                " where ap.id_asignacion = $id"; */
+        $query="select".
+                " case".
+                " when id_evaluacion is not null then 'EVALUADO'".
+                " when id_comunicacion is not null AND notificado is not null then 'NOTIFICADO'".
+                " when id_comunicacion is not null AND notificado is null then 'COMUNICADO'".
+                " else 'ASIGNADO'".
+                " end as estado".
+                " from".
+                " (select ap.*, com.id_comunicacion, com.notificado, eva.id_evaluacion".
+                        " from asignacion_plan ap".
+                        " left join cap_comunicacion com".
+                        " on ap.id_asignacion = com.id_asignacion".
+                        " left join cap_evaluacion eva".
+                        " on ap.id_asignacion = eva.id_asignacion".
+                        " where ap.id_asignacion = $id and ap.estado <> 'SUSPENDIDO')".
+                " UNION".
+                " select ap.estado from asignacion_plan ap where ap.id_asignacion = $id";
+
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+
+
 
 }
 

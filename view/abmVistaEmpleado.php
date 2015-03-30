@@ -26,8 +26,15 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#estado").val(datas[0]['ESTADO']);
-                    $("#estado_cambio").val(datas[0]['ESTADO_CAMBIO']);
+                    //lleno el select con los estados posibles de cambio
+                    $("#estado").html('<option value="">Ingrese un estado</option>');
+                    $.each(datas['estado_cambiar'], function(indice, val){
+                        $("#estado").append(new Option(datas['estado_cambiar'][indice]["ESTADO"],datas['estado_cambiar'][indice]["ESTADO"] ));
+
+                    });
+
+                    $("#estado").val(datas['estado_actual'][0]['ESTADO']);
+                    $("#estado_cambio").val(datas['estado_actual'][0]['ESTADO_CAMBIO']);
 
                 },
                 type:"POST",
@@ -831,14 +838,15 @@
                                 <div class="column_content">
                                     <label>Estado: </label>
                                     <select name="estado" id="estado">
-                                        <option value="">Seleccione un estado</option>
+                                        <!--<option value="">Seleccione un estado</option>
                                         <option value="ASIGNADO">Asignado</option>
                                         <option value="CANCELADO">Cancelado</option>
                                         <option value="SUSPENDIDO">Suspendido</option>
                                         <option value="COMUNICADO">Comunicado</option>
                                         <option value="NOTIFICADO">Notificado</option>
                                         <option value="EVALUADO">Evaluado</option>
-                                        <option value="POST-EVALUADO">Post-Evaluado</option>
+                                        <option value="POST-EVALUADO">Post-Evaluado</option>-->
+                                        <!-- se carga dinamicamente  -->
                                     </select>
                                 </div>
                             </div>
