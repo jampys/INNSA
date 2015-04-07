@@ -78,8 +78,10 @@
                     $("#objetivo_3").val(datas[0]['OBJETIVO_3']);
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
                     $("#compromiso").val(datas[0]['COMPROMISO']);
-                    $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
-                    $("#comunico_id").val(datas[0]['COMUNICO']);
+                    //$("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
+                    //$("#comunico_id").val(datas[0]['COMUNICO']);
+                    $("#comunico").val((typeof (datas[0]['COMUNICO'])=='undefined')? 'NO COMUNICADO': datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']); //si todavia no se comunico
+                    $("#comunico_id").val((typeof (datas[0]['COMUNICO'])=='undefined')? '': datas[0]['COMUNICO']); //si todavia no se comunico
                     $("#notificado").val((datas[0]['NOTIFICADO']==1)? 'NOTIFICADO':'NO NOTIFICADO');
 
                     //para bloquear o desbloquear botones y campos
@@ -94,7 +96,7 @@
                         $('#com_btn_guardar').button('enable');
                     }
                 }
-                else{ // se trata de una comunicacion nueva
+                else{ // se trata de una comunicacion nueva.... ESTO YA NO SIRVE, HABRIA QUE BORRARLO 31/03/15
                     //seteo el comunicardor
                     $("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
                     $("#comunico_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
@@ -241,11 +243,11 @@
                             "objetivo_2":$("#objetivo_2").val(),
                             "objetivo_3":$("#objetivo_3").val(),
                             "indicadores_exito":$("#indicadores_exito").val(),
-                            "compromiso":$("#compromiso").val(),
-                            "comunico":$("#comunico_id").val(),
+                            "compromiso":$("#compromiso").val()
+                            //"comunico":$("#comunico_id").val()
                             //cambio estado a COMUNICADO
-                            "estado": "COMUNICADO",
-                            "estado_cambio": ""
+                            //"estado": "COMUNICADO",
+                            //"estado_cambio": ""
 
                         };
 
@@ -261,11 +263,11 @@
                             "objetivo_2":$("#objetivo_2").val(),
                             "objetivo_3":$("#objetivo_3").val(),
                             "indicadores_exito":$("#indicadores_exito").val(),
-                            "compromiso":$("#compromiso").val(),
-                            "comunico":$("#comunico_id").val(),
+                            "compromiso":$("#compromiso").val()
+                            //"comunico":$("#comunico_id").val()
                             //cambio estado a COMUNICADO
-                            "estado": "COMUNICADO",
-                            "estado_cambio": ""
+                            //"estado": "COMUNICADO",
+                            //"estado_cambio": ""
                         };
 
             }
@@ -287,6 +289,47 @@
 
                     $("#dialog-msn").dialog("open");
                     $("#message").html("Registro actualizado en la BD");
+
+                },
+                type:"POST",
+                timeout:3000000,
+                crossdomain:true
+
+            });
+
+        }
+
+
+        function enviarComunicacion(){
+
+            var data={  "accion":"asignacion",
+                        "operacion":"sendComunicacion",
+                        "id":globalId, //id_asignacion
+                        "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
+                        //"comunico":$("#comunico_id").val(), //tomo el user en PHP
+                        //cambio estado a COMUNICADO
+                        "estado": "COMUNICADO",
+                        "estado_cambio": ""
+
+            };
+
+            $.ajax({
+                url: "index.php",
+                data:data,
+                contentType:"application/x-www-form-urlencoded",
+                dataType:"json",//xml,html,script,json
+                error:function(){
+
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
+
+                },
+                ifModified:false,
+                processData:true,
+                success:function(datas){
+
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("Comunicación enviada correctamente");
 
                 },
                 type:"POST",
@@ -375,7 +418,20 @@
                 width: 600,
                 modal:true,
                 title:"Agregar Registro",
-                buttons: [{
+                buttons: [
+                    {
+                        click: function() {
+                                enviarComunicacion();
+                                //seteo el comunicardor
+                                $("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+                                //$("#comunico_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
+
+                        },
+                        id: 'com_btn_send',
+                        text: "Enviar comunicación"
+
+                    },
+                    {
                     click: function() {
                         if($("#form_comunicacion").valid()){
                         guardar();

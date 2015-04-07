@@ -89,7 +89,7 @@ class Comunicacion
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
         //$obj_emp->executeQuery("select * from cap_comunicacion, empleados where cap_comunicacion.comunico = empleados.id_empleado and id_asignacion=$id");
-        $obj_emp->executeQuery("select * from cap_comunicacion co, empleados em, asignacion_plan ap where co.comunico = em.id_empleado and co.id_asignacion = ap.id_asignacion and ap.id_asignacion=$id");
+        $obj_emp->executeQuery("select * from cap_comunicacion co, empleados em, asignacion_plan ap where co.comunico = em.id_empleado (+) and co.id_asignacion = ap.id_asignacion and ap.id_asignacion=$id");
         return $obj_emp->fetchAll();
     }
 
@@ -120,11 +120,21 @@ class Comunicacion
 
     }
 
-    public function updateComunicacionNotificacion(){
+    public function updateComunicacionNotificacion(){ //Se actualiza la comunicacion a notificada
 
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="update cap_comunicacion set notificado=$this->notificado where id_comunicacion = $this->id_comunicacion";
+        $obj_user->executeQuery($query);
+        return $obj_user->getAffect();
+
+    }
+
+    public function updateComunicacionComunicacion(){ //Se actualiza la comunicacion... se settea el campo "comunico"
+
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $query="update cap_comunicacion set comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
         $obj_user->executeQuery($query);
         return $obj_user->getAffect();
 
@@ -163,8 +173,8 @@ class Comunicacion
 
         $f=new Factory();
         $obj_com=$f->returnsQuery();
-        $query="insert into cap_comunicacion (id_asignacion, situacion, indicadores_exito, compromiso, comunico, objetivo_1, objetivo_2, objetivo_3)".
-                " select ap.id_asignacion, pro.situacion, pro.indicadores_exito, pro.compromiso, sc.apr_solicito, pro.objetivo_1, pro.objetivo_2, pro.objetivo_3".
+        $query="insert into cap_comunicacion (id_asignacion, situacion, indicadores_exito, compromiso, objetivo_1, objetivo_2, objetivo_3)".
+                " select ap.id_asignacion, pro.situacion, pro.indicadores_exito, pro.compromiso, pro.objetivo_1, pro.objetivo_2, pro.objetivo_3".
                 " from solicitud_capacitacion sc, asignacion_plan ap, propuestas pro, plan_capacitacion pc".
                 " where pro.id_solicitud = sc.id_solicitud".
                 " and sc.id_solicitud = ap.id_solicitud".
@@ -177,6 +187,25 @@ class Comunicacion
 
     }
 
+
+    public function getDatosForSendComunicationMail(){
+        $f = new Factory();
+        $obj_com = $f->returnsQuery();
+        $query = "select pc.periodo, cu.nombre CURSO, em.apellido, em.nombre, us.login, pc.fecha_desde, pc.fecha_hasta".
+                " from plan_capacitacion pc, asignacion_plan ap, cursos cu, solicitud_capacitacion sc, empleados em, usuarios us".
+                " where ap.id_solicitud = sc.id_solicitud".
+                " and sc.id_empleado = em.id_empleado".
+                " and ap.id_plan = pc.id_plan".
+                " and pc.id_curso = cu.id_curso".
+                " and em.id_empleado = us.id_empleado".
+                " and ap.id_asignacion = 621";
+                //" and ap.id_asignacion = $this->id_asignacion";
+
+        $obj_com->executeQuery($query);
+        return $obj_com->fetchAll();
+
+
+    }
 
 
 
