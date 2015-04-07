@@ -343,12 +343,12 @@
                 title:"Agregar Registro",
                 buttons: [{
                         click: function() {
-                            //if($("#form").valid()){ //OJO valid() devuelve un booleano
+                            if($("#form_comunicacion").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#comunicacion").dialog("close");
                             //Llamada ajax para refrescar la grilla
                             $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid"});
-                            //}
+                            }
                         },
                         id: 'com_btn_guardar',
                         text: "Guardar"
@@ -372,7 +372,7 @@
                 },
                 close:function(){
                     $("#form_comunicacion")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
-                    //$('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                    $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
                 }
 
             });
@@ -498,9 +498,50 @@
 
 
             //llamada a funcion validar
+            $.validarComunicacion();
             $.validarEvaluacion();
 
+
+            //muestra el campo de mensaje si rechazo al hacer click en Rechazar del radio button
+
+            $("input:radio[name=group1]").click(function(){
+
+                if($("input:radio[name=group1]:checked").val()=="CANCELADO"){
+                    $('#div-mensaje').show();
+                }
+                else{
+                    $('#div-mensaje').hide();
+                    $('#div-mensaje #mensaje').val("");
+                    $('#form_comunicacion').validate().resetForm(); //para limpiar los errores validate
+                }
+
+            });
+
         });
+
+
+
+    $.validarComunicacion=function(){
+        $('#form_comunicacion').validate({
+            rules: {
+                mensaje: {
+                    required: function(){return $("input:radio[name=group1]:checked").val()=="CANCELADO" },
+                    maxlength: 250
+                },
+                notificado: {
+                    required: true
+                }
+
+            },
+            messages:{
+                mensaje: "Ingrese el motivo del rechazo",
+                notificado: "Debe aceptar o rechazar la comunicacion"
+
+            }
+
+        });
+
+    };
 
 
     //Declaracion de funcion para validar la evaluacion
@@ -628,7 +669,7 @@
 
 
                         <div class="sixteen_column section">
-                            <div class="sixteen_column">
+                            <div class="eight column">
                                 <div class="column_content">
 
                                     <div class="checkbox_individual">
@@ -636,12 +677,42 @@
 
                                         <div class="cbcheck">
                                             <div class="check"><input type="checkbox" id="notificado" name="notificado" /></div>
-                                            <div class="lab">He leído y acepto la comunicación propuesta</div>
+                                            <div class="lab">He leído la comunicación propuesta</div>
                                         </div>
 
                                     </div>
+
                                 </div>
                             </div>
+
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <div class="spinners">
+                                        <div class="cbcheck">
+                                            <div class="check"><input type="radio" name="group1" value="NOTIFICADO" checked></div>
+                                            <div class="lab">Acepto</div>
+                                        </div>
+                                        <div class="cbcheck">
+                                            <div class="check"><input type="radio" name="group1" value="CANCELADO"></div>
+                                            <div class="lab">Rechazo</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div id="div-mensaje" style="display: none" class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Motivo del rechazo</label><br/>
+                                    <textarea type="text" name="mensaje" id="mensaje" rows="3"/></textarea>
+                                </div>
+                            </div>
+
                         </div>
 
 
