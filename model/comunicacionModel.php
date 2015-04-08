@@ -198,8 +198,7 @@ class Comunicacion
                 " and ap.id_plan = pc.id_plan".
                 " and pc.id_curso = cu.id_curso".
                 " and em.id_empleado = us.id_empleado".
-                " and ap.id_asignacion = 621";
-                //" and ap.id_asignacion = $this->id_asignacion";
+                " and ap.id_asignacion = $this->id_asignacion";
 
         $obj_com->executeQuery($query);
         return $obj_com->fetchAll();

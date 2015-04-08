@@ -77,7 +77,7 @@ switch($operacion){
         $com=$view->c->getDatosForSendComunicationMail();
 
         //codigo para el envio de e-mail
-        //$para = $com['LOGIN'];
+        //$para = 'innsa@innertrip.com.ar';
         $para=$com[0]['LOGIN'];
         $asunto = 'Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
         $mensaje = $com[0]['APELLIDO'].' '.$com[0]['NOMBRE'].': '.
