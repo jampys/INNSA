@@ -79,15 +79,25 @@
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
                     $("#comunico_id").val(datas[0]['COMUNICO']);
                     $("#notificado").attr('checked', (datas[0]['NOTIFICADO']==1)? true:false);
+                    $("#mensaje").val(datas[0]['ESTADO_CAMBIO']);
+
+                    var estado=(datas[0]['ESTADO']=='COMUNICADO' || datas[0]['ESTADO']=='NOTIFICADO' || datas[0]['ESTADO']=='EVALUADO' || datas[0]['ESTADO']=='POST-EVALUADO')? 'NOTIFICADO': 'CANCELADO';
+                    $("input:radio[name=group1][value="+estado+"]").attr("checked", "checked"); //selecciona en el radio button
+                    ($("input:radio[name=group1][value=CANCELADO]").attr("checked"))? $('#div-mensaje').show(): $('#div-mensaje').hide();
+
                     /*si el empleado ya esta notificado (dio su conformidad con el check) el checkbox se inhabilita
                     para que no lo pueda volver a deltildar */
                     if(datas[0]['NOTIFICADO']==1){
                         $("#notificado").attr("disabled", true);
-                        $('#com_btn_guardar').button('disable');
+                        $('#com_btn_guardar').attr('disabled', true);
+                        $('input:radio[name=group1]').attr('disabled', true);
+                        $("#mensaje").attr('readonly', true);
                     }
                     else{
                         $("#notificado").attr("disabled", false);
-                        $('#com_btn_guardar').button('enable');
+                        $('#com_btn_guardar').attr('disabled', false);
+                        $('input:radio[name=group1]').attr('disabled', false);
+                        $("#mensaje").attr('readonly', false);
 
                     }
                 }
@@ -223,8 +233,8 @@
 
                             //cambio estado asignacion a NOTIFICADO
                             "id": globalId, //id_asignacion
-                            "estado": $('#notificado').prop('checked')? 'NOTIFICADO':'COMUNICADO',
-                            "estado_cambio": ''
+                            "estado": $("input:radio[name=group1]:checked").val(), //NOTIFICADO o CANCELADO
+                            "estado_cambio": $("#mensaje").val()
 
 
                         };

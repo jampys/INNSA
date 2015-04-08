@@ -88,12 +88,14 @@
                     //if(datas[0]['ESTADO']!='ASIGNADO' && datas[0]['ESTADO']!='COMUNICADO' ){
                     if(!(datas[0]['ESTADO']=='ASIGNADO' || datas[0]['ESTADO']=='COMUNICADO' )){ //es igual a la expresion de arriba
                         $("#form_comunicacion :input").attr("readonly", true);
-                        $('#com_btn_guardar').button('disable');
+                        $('#com_btn_guardar').attr('disabled', true);
+                        $('#com_btn_send').attr('disabled', true);
                     }
                     else{
                         //selecciona los input del form_comunicacion... less than 6 (osea del 0 al 5)
                         $("#form_comunicacion :input:lt(6)").attr("readonly", false);
-                        $('#com_btn_guardar').button('enable');
+                        $('#com_btn_guardar').attr('disabled', false);
+                        $('#com_btn_send').attr('disabled', false);
                     }
                 }
                 else{ // se trata de una comunicacion nueva.... ESTO YA NO SIRVE, HABRIA QUE BORRARLO 31/03/15
@@ -102,7 +104,7 @@
                     $("#comunico_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
                     //selecciona los input del form_comunicacion... less than 6 (osea del 0 al 5)
                     $("#form_comunicacion :input:lt(6)").attr("readonly", false);
-                    $('#com_btn_guardar').button('enable');
+                    $('#com_btn_guardar').attr('disabled', true);
                 }
 
 
