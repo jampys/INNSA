@@ -200,6 +200,7 @@ class Comunicacion
                 " and em.id_empleado = us.id_empleado".
                 " and ap.id_asignacion = $this->id_asignacion";
 
+
         $obj_com->executeQuery($query);
         return $obj_com->fetchAll();
 

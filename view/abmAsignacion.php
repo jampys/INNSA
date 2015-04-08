@@ -330,8 +330,12 @@
                 processData:true,
                 success:function(datas){
 
+                    /*if(datas.response == 'success'){
+                    }
+                    else if (datas.response == 'error'){
+                    }*/
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("Comunicación enviada correctamente");
+                    $("#message").html(datas['comment']);
 
                 },
                 type:"POST",

@@ -76,33 +76,46 @@ switch($operacion){
         $view->c->setIdAsignacion($_POST['id']);
         $com=$view->c->getDatosForSendComunicationMail();
 
-        //codigo para el envio de e-mail
-        //$para = 'innsa@innertrip.com.ar';
-        $para=$com[0]['LOGIN'];
-        $asunto = 'Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
-        $mensaje = $com[0]['APELLIDO'].' '.$com[0]['NOMBRE'].': '.
-        'Por la presente le informamos que esta inscripto en el curso de referencia a realizarse '.
-        'desde el '.$com[0]['FECHA_DESDE'].' hasta el '.$com[0]['FECHA_HASTA'].'.'.
-        'Mensaje enviado desde Sistema de Capacitación INNSA';
-        $cabeceras = 'From: webmaster@example.com' . "\r\n" .
-            'Reply-To: webmaster@example.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        if(!$com){ //Si la consulta SQL no devuelve ningun registro
+            $respuesta = array ('response'=>'error','comment'=>'Problemas con la consulta SQL');
+        }
+        else{ //si la consulta SQL devuelve 1 registro
 
-        if(mail($para, utf8_decode($asunto), $mensaje)){
+            //codigo para el envio de e-mail
+            //$para = 'nnsa@innertrip.com.ar';
+            $para=$com[0]['LOGIN'];
+            $asunto = 'Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
+            $mensaje = $com[0]['APELLIDO'].' '.$com[0]['NOMBRE'].': '.
+                'Por la presente le informamos que esta inscripto en el curso de referencia a realizarse '.
+                'desde el '.$com[0]['FECHA_DESDE'].' hasta el '.$com[0]['FECHA_HASTA'].'.'.
+                'Mensaje enviado desde Sistema de Capacitación INNSA';
+            $cabeceras = 'From: webmaster@example.com' . "\r\n" .
+                'Reply-To: webmaster@example.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
 
-            //Poner en la comunicacion el id de quien comunico
-            $view->c->setIdComunicacion($_POST['id_comunicacion']);
-            $view->c->setComunico($_SESSION['USER_ID_EMPLEADO']);
-            $rtax=$view->c->updateComunicacionComunicacion();
+            if(mail($para, utf8_decode($asunto), $mensaje)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
 
-            //cambio la asignacion a COMUNICADA
-            $view->u->setIdAsignacion($_POST['id']);
-            $view->u->setEstado($_POST['estado']);
-            $view->u->setEstadoCambio($_POST['estado_cambio']);
-            $rta=$view->u->updateEstadoAsignacionPlan();
-            print_r(json_encode($rta));
+                //Poner en la comunicacion el id de quien comunico
+                $view->c->setIdComunicacion($_POST['id_comunicacion']);
+                $view->c->setComunico($_SESSION['USER_ID_EMPLEADO']);
+                $rtax=$view->c->updateComunicacionComunicacion();
+
+                //cambio la asignacion a COMUNICADA
+                $view->u->setIdAsignacion($_POST['id']);
+                $view->u->setEstado($_POST['estado']);
+                $view->u->setEstadoCambio($_POST['estado_cambio']);
+                $rta=$view->u->updateEstadoAsignacionPlan();
+                $respuesta = array ('response'=>'success','comment'=>'Comunicación enviada correctamente');
+
+            }
+            else{ //No pudo enviar el e-mail
+                $respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
+            }
+
 
         }
+
+        print_r(json_encode($respuesta));
 
         exit;
         break;
