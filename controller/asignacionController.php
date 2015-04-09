@@ -84,24 +84,17 @@ switch($operacion){
             //codigo para el envio de e-mail
             $para=$com[0]['LOGIN'];
             $asunto = 'Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
-            $mensaje="
-                <html>
-                    <head></head>
-                    <body>
-                        <img src='public/img/logo.gif' alt='INNSA Comunicaciones'>
-                        <p style='font-weight: bold'>".$com[0]['APELLIDO']." ".$com[0]['NOMBRE'].":</p>
-                        <p>Por la presente le informamos que esta inscripto en el curso".$com[0]['CURSO']." a realizarse desde el
-                        ".$com[0]['FECHA_DESDE']." hasta el ".$com[0]['FECHA_HASTA'].".</p>
-                        <p>Le solicitamos ingresar al sistema para confirmar sus disposicion para participar del curso.</p>
-                        <br/>
-                        <p>Mensaje enviado desde Sistema de Capacitación INNSA</p>
-                    </body>
-                </html>
-            ";
+
+            //codigo para incluir en la variable $mensaje el template de correo de la comunicacion, que se encuentra en email/comunicacion.php
+            ob_start();
+            include ('email/comunicacion.php');
+            $mensaje= ob_get_contents();
+            ob_get_clean();
 
             //Cabecera que especifica que es un HMTL
-            $headers  = 'MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $headers = 'From: INNSA Capacitacion <no-reply@innsa.com>' . "\r\n";
+            $headers.= 'MIME-Version: 1.0' . "\r\n";
+            $headers.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
             if(mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
 
