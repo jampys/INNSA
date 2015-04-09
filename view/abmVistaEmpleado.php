@@ -545,7 +545,7 @@
             },
             messages:{
                 mensaje: "Ingrese el motivo del rechazo",
-                notificado: "Debe aceptar o rechazar la comunicacion"
+                notificado: "Debe_leer_la_comunicación"
 
             }
 
@@ -575,7 +575,7 @@
             messages:{
                 conceptos_importantes: "Ingrese los conceptos importantes",
                 aspectos_faltaron: "Ingrese los aspectos que faltaron",
-                mejorar_desempenio: "Ingrese la mejora de desempeño",
+                mejorar_desempenio: "Ingrese la mejora de desempeño"
             }
 
         });
