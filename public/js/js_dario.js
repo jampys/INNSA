@@ -36,6 +36,25 @@ $(document).ready(function(){
         $(this).next('tr').toggle();
     } );
 
+
+
+    $.periodos=function(){
+
+        //establece los periodos para los select del ABM plan de capacitacion y solicitud de capacitacion
+        var fecha = new Date();
+        var anioActual=fecha.getFullYear();
+        var mesActual=fecha.getMonth(); //devuelve los meses de 0 a 11
+        //hasta el mes 9 inclusive (octubre) muestra solo año actual, despues año actual y siguiente
+        var anioHasta= (mesActual<=9)? anioActual: anioActual+1;
+        var periodos=[];
+        for(var i=0; (i+anioActual)<=anioHasta; i++){
+            periodos[i]=i+anioActual;
+        }
+        return periodos;
+    }
+
+
+
 });
 
 

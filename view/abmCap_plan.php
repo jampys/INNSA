@@ -227,6 +227,29 @@
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
                 $("#curso").attr("readonly", true); //para no permitir editar el curso
+
+                //Rellenar el combo de periodos
+                var per=$.periodos();
+                $("#periodo").html('<option value="">Seleccione un periodo</option>');
+                $.each(per, function(indice, val){
+                    $("#periodo").append(new Option(val,val));
+                });
+
+                return false;
+            });
+
+
+            //Para ver un plan de capacitacion
+            $(document).on("click", ".view_link", function(){
+                globalOperacion='edit';
+                globalId=$(this).attr('id');
+                editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
+                $('#dialog').dialog('open');
+                //No debe permitir editar ningun campo
+                $(":input:not(.button-cancel)").attr("disabled", true);
+                /* Agrego el periodo de la solicitud seleccionada al select */
+                $("#periodo").html('<option value="'+$(this).attr("target")+'">'+$(this).attr("target")+'</option>');
+
                 return false;
             });
 
@@ -449,9 +472,7 @@
                                 <div class="column_content">
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
-                                        <option value="">Seleccione el periodo</option>
-                                        <!--<option value="2014">2014</option>
-                                        <option value="2015">2015</option>-->
+                                        <!--<option value="">Seleccione el periodo</option>
                                         <?php
                                         $periodos=Conexion::periodos();
                                         foreach ($periodos as $per){
@@ -459,7 +480,7 @@
                                             <option value="<?php echo $per; ?>"><?php echo $per; ?></option>
                                         <?php
                                         }
-                                        ?>
+                                        ?>-->
                                     </select>
                                 </div>
                             </div>

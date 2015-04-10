@@ -79,11 +79,10 @@
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){ //Si la solicitud esta autorizada/aprobada deshabilito los campos
+                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getYear() ){ //Si la solicitud esta autorizada/aprobada deshabilito los campos
                             //$('#table_plan tbody').find('a').eq(1).removeClass('eliminar_plan').addClass('link-desactivado');
                             $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
                             $('#table_plan tbody').find('a.editar_plan').removeClass('editar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
-                            $(":input:not(.button-cancel)").attr("disabled", true);
                         }
                     });
 
@@ -104,17 +103,18 @@
                         '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
+                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getYear() ){
                             $('#table_curso tbody').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         }
                     });
 
-                    //Si esta aprobada
+                    /*Si esta aprobada o autorizada
                     if(datas['solicitud'][0]['ESTADO']=='APROBADA' ||datas['solicitud'][0]['ESTADO']=='AUTORIZADA' ){
                         $('#new-plan').removeClass('new-plan-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         $('#new-propuesta').removeClass('new-propuesta-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                        $(":input:not(.button-cancel)").attr("disabled", true);
 
-                    }
+                    }*/
 
 
 
@@ -740,8 +740,35 @@
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
                 $("#empleado").attr("readonly", true); //para no permitir editar el empleado
+
+                //Rellenar el combo de periodos
+                var per=$.periodos();
+                $("#periodo").html('<option value="">Seleccione un periodo</option>');
+                $.each(per, function(indice, val){
+                    $("#periodo").append(new Option(val,val));
+                });
+
                 return false;
             });
+
+
+            //Para ver una solicitud de capacitacion
+            $(document).on("click", ".view_link", function(){
+                globalOperacion='edit';
+                globalId=$(this).attr('id');
+                editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
+                $('#dialog').dialog('open');
+                //No debe permitir editar ningun campo
+                $('#new-plan').removeClass('new-plan-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                $('#new-propuesta').removeClass('new-propuesta-link').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                $(":input:not(.button-cancel)").attr("disabled", true);
+                /* Agrego el periodo de la solicitud seleccionada al select */
+                $("#periodo").html('<option value="'+$(this).attr("target")+'">'+$(this).attr("target")+'</option>');
+
+                return false;
+            });
+
+
 
 
             //hover states on the static widgets
@@ -933,7 +960,7 @@
                                 <div class="column_content">
                                     <label>Periodo: </label>
                                     <select name="periodo" id="periodo">
-                                        <option value="">Seleccione el periodo</option>
+                                        <!--<option value="">Seleccione el periodo</option>
                                         <?php
                                         $periodos=Conexion::periodos();
                                         foreach ($periodos as $per){
@@ -941,7 +968,7 @@
                                             <option value="<?php echo $per; ?>"><?php echo $per; ?></option>
                                         <?php
                                         }
-                                        ?>
+                                        ?> -->
                                     </select>
                                 </div>
                             </div>

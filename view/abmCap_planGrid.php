@@ -25,6 +25,15 @@
             globalOperacion='insert';
             $('#dialog').dialog('open');
             $("#curso").attr("readonly", false);
+
+
+            //Rellenar el combo de periodos
+            var per=$.periodos();
+            $("#periodo").html('<option value="">Seleccione un periodo</option>');
+            $.each(per, function(indice, val){
+                $("#periodo").append(new Option(val,val));
+            });
+
             return false;
         });
 
@@ -66,8 +75,7 @@
                     <th>Importe</th>
                     <th>Moneda</th>
                     <th>Cant.</th>
-                    <th>Editar</th>
-                    <!--<th>Eliminar</th>-->
+                    <th>.</th>
 
                 </tr>
                 </thead>
@@ -84,8 +92,8 @@
                     <th>Importe</th>
                     <th>Moneda</th>
                     <th>Cant.</th>
-                    <th>Editar</th>
-                    <!--<th>Eliminar</th>-->
+                    <th>.</th>
+
                 </tr>
                 </tfoot>
                 <tbody>
@@ -102,8 +110,16 @@
                         <td><?php  echo $plan["IMPORTE"]; ?></td>
                         <td><?php  echo $plan["MONEDA"]; ?></td>
                         <td><?php  echo $plan["CANTIDAD"]; ?></td>
-                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
-                        <!--<td class="center"><a href="">Eliminar</a></td>-->
+
+                        <?php if($plan['PERIODO']!=date('Y')){ ?>
+
+                            <td class="center"><a href="javascript: void(0);" class="view_link" id="<?php  echo $plan["ID_PLAN"];  ?>" target="<?php  echo $plan["PERIODO"];  ?>" ><img title="Ver" src="public/img/search-icon.png" width="15px" height="15px"></a></td>
+
+                        <?php }else{ ?>
+                            <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <?php } ?>
+
+
                     </tr>
                 <?php }  ?>
 

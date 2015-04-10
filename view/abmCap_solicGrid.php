@@ -23,6 +23,13 @@
             $('#dialog').dialog('open');
             $("#empleado").attr("readonly", false);
 
+            //Rellenar el combo de periodos
+            var per=$.periodos();
+            $("#periodo").html('<option value="">Seleccione un periodo</option>');
+            $.each(per, function(indice, val){
+                $("#periodo").append(new Option(val,val));
+            });
+
             //codigo para setear automaticamente el apr_solicito
             /*
             $.ajax({
@@ -90,8 +97,7 @@
                     <th>Empleado</th>
                     <th>Solicitó</th>
                     <th>Estado</th>
-                    <th>Editar</th>
-                    <!--<th>Eliminar</th>-->
+                    <th>.</th>
 
                 </tr>
                 </thead>
@@ -102,8 +108,8 @@
                     <th>Empleado</th>
                     <th>Solicitó</th>
                     <th>Estado</th>
-                    <th>Editar</th>
-                    <!--<th>Eliminar</th>-->
+                    <th>.</th>
+
                 </tr>
                 </tfoot>
                 <tbody>
@@ -114,8 +120,15 @@
                         <td><?php  echo $sol["EMPLEADO_APELLIDO"]." ".$sol["EMPLEADO_NOMBRE"]; ?></td> <!-- apellido y nombre del empleado -->
                         <td><?php  echo $sol["SOLICITO_APELLIDO"].' '.$sol["SOLICITO_NOMBRE"]; ?></td> <!-- apellido y nombre de quien solicito-->
                         <td><?php  echo $sol["ESTADO"]; ?></td>
-                        <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
-                        <!--<td class="center"><a href="">Eliminar</a></td>-->
+                        <?php if($sol['ESTADO']=='APROBADA' || $sol['ESTADO']=='AUTORIZADA' || $sol['PERIODO']!=date('Y')){ ?>
+
+                            <td class="center"><a href="javascript: void(0);" class="view_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>" target="<?php  echo $sol["PERIODO"];  ?>" ><img title="Ver" src="public/img/search-icon.png" width="15px" height="15px"></a></td>
+
+                        <?php }else{ ?>
+                            <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <?php } ?>
+
+
                     </tr>
                 <?php }  ?>
 
