@@ -29,7 +29,7 @@ abstract class Conexion{
         return $cadena;
     }
 
-    public static function periodos(){
+    /*public static function periodos(){
         //establece los periodos para los select del ABM plan de capacitacion y solicitud de capacitacion
         $anioActual=date("Y");
         $mesActual=date("m");
@@ -41,7 +41,7 @@ abstract class Conexion{
             }
         return $periodos;
 
-    }
+    } */
 }
 
 abstract class sQuery{

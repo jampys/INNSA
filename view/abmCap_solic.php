@@ -962,12 +962,12 @@
                                     <select name="periodo" id="periodo">
                                         <!--<option value="">Seleccione el periodo</option>
                                         <?php
-                                        $periodos=Conexion::periodos();
+                                        /*$periodos=Conexion::periodos();
                                         foreach ($periodos as $per){
                                             ?>
                                             <option value="<?php echo $per; ?>"><?php echo $per; ?></option>
                                         <?php
-                                        }
+                                        } */
                                         ?> -->
                                     </select>
                                 </div>
