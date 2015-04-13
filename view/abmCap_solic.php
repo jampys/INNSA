@@ -79,7 +79,7 @@
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getYear() ){ //Si la solicitud esta autorizada/aprobada deshabilito los campos
+                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){ //Si la solicitud esta autorizada/aprobada deshabilito los campos
                             //$('#table_plan tbody').find('a').eq(1).removeClass('eliminar_plan').addClass('link-desactivado');
                             $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
                             $('#table_plan tbody').find('a.editar_plan').removeClass('editar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
@@ -103,7 +103,7 @@
                         '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getYear() ){
+                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){
                             $('#table_curso tbody').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         }
                     });
