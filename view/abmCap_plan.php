@@ -182,24 +182,32 @@
                 width: 600,
                 modal:true,
                 title:"Agregar Registro",
-                buttons: {
-                    "Guardar": function() {
+                buttons: [
+                    {
+                    class: "button-guardar",
+                    text: "Guardar",
+                    click: function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
                             $('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid"});
-                        }
+                            }
 
+                        }
                     },
-                    "Cancelar": function() {
+                    {
+                        class: "button-cancel",
+                        text: "Cancelar",
+                        click: function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
                         //Limpia los minDate y maxDate de los datepicker
                         $('#fecha_desde, #fecha_hasta').datepicker( "option" , {minDate: null, maxDate: null} );
                         $(this).dialog("close");
                     }
-                },
+                    }
+                ],
                 show: {
                     effect: "blind",
                     duration: 1000
@@ -213,6 +221,7 @@
                    $('#form').validate().resetForm(); //para limpiar los errores validate
                    //Limpia los minDate y maxDate de los datepicker
                    $('#fecha_desde, #fecha_hasta').datepicker( "option" , {minDate: null, maxDate: null} );
+                   $(":input").attr("disabled", false); //para volver a habilitar todos los campor, por si fueron deshabilitados
                 }
 
             });
