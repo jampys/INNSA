@@ -36,8 +36,10 @@ switch($operacion){
 
     case 'update':
 
-        $contenido=$view->u->getCapPlanById($_POST['id']);
-        print_r(json_encode($contenido));
+        $plan=$view->u->getCapPlanById($_POST['id']);
+        $empleados=$view->u->getEmpleadosByPlan($_POST['id']);
+        //print_r(json_encode($plan));
+        print_r(json_encode(array('plan'=>$plan, 'empleados'=>$empleados)));
         exit;
         break;
 

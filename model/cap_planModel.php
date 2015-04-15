@@ -276,14 +276,23 @@ class Cap_Plan
         return $obj_cp->getAffect();
     }
 
-    /*
-    function deleteCurso(){
+
+    public function getEmpleadosByPlan($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="delete from clientes where id=$this->id";
+        $query="select ap.id_asignacion, sc.id_solicitud, sc.estado, em.apellido, em.nombre, ap.comentarios, ap.viaticos".
+                " from empleados em, solicitud_capacitacion sc, propuestas pro, cursos cu, plan_capacitacion pc, asignacion_plan ap".
+                " where pro.id_solicitud = sc.id_solicitud".
+                " and sc.id_empleado = em.id_empleado".
+                " and ap.id_solicitud (+) = sc.id_solicitud".
+                " and pro.id_curso = cu.id_curso".
+                " and pc.id_curso = cu.id_curso".
+                " and pc.id_plan = $id";
         $obj_cp->executeQuery($query);
-        return $obj_cp->getAffect();
-    } */
+        return $obj_cp->fetchAll();
+    }
+
+
 
 
 }

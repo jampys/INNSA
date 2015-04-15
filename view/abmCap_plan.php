@@ -25,28 +25,53 @@
                 ifModified:false,
                 processData:true,
                 success:function(datas){
-                    $("#curso").val(datas[0]['NOMBRE']);
-                    $("#periodo").val(datas[0]['PERIODO']);
-                    $("#objetivo").val(datas[0]['OBJETIVO']);
-                    $("#modalidad").val(datas[0]['MODALIDAD']);
-                    $("#fecha_desde").val(datas[0]['FECHA_DESDE']);
-                    $("#fecha_hasta").val(datas[0]['FECHA_HASTA']);
-                    $("#duracion").val(datas[0]['DURACION']);
-                    $("#unidad").val(datas[0]['UNIDAD']);
-                    $("#prioridad").val(datas[0]['PRIORIDAD']);
-                    $("#estado").val(datas[0]['ESTADO']);
-                    $("#importe").val(parseFloat(datas[0]['IMPORTE'].replace(/,/, '.')));
-                    $("#moneda").val(datas[0]['MONEDA']);
-                    $("#tipo_cambio").val(parseFloat(datas[0]['TIPO_CAMBIO'].replace(/,/, '.')));
-                    $("#forma_pago").val(datas[0]['FORMA_PAGO']);
-                    $("#forma_financiacion").val(datas[0]['FORMA_FINANCIACION']);
-                    $("#profesor_1").val(datas[0]['PROFESOR_1']);
-                    $("#profesor_2").val(datas[0]['PROFESOR_2']);
-                    $("#comentarios").val(datas[0]['COMENTARIOS_PLAN']);
-                    $("#entidad").val(datas[0]['ENTIDAD_PLAN']);
+                    $("#curso").val(datas['plan'][0]['NOMBRE']);
+                    $("#periodo").val(datas['plan'][0]['PERIODO']);
+                    $("#objetivo").val(datas['plan'][0]['OBJETIVO']);
+                    $("#modalidad").val(datas['plan'][0]['MODALIDAD']);
+                    $("#fecha_desde").val(datas['plan'][0]['FECHA_DESDE']);
+                    $("#fecha_hasta").val(datas['plan'][0]['FECHA_HASTA']);
+                    $("#duracion").val(datas['plan'][0]['DURACION']);
+                    $("#unidad").val(datas['plan'][0]['UNIDAD']);
+                    $("#prioridad").val(datas['plan'][0]['PRIORIDAD']);
+                    $("#estado").val(datas['plan'][0]['ESTADO']);
+                    $("#importe").val(parseFloat(datas['plan'][0]['IMPORTE'].replace(/,/, '.')));
+                    $("#moneda").val(datas['plan'][0]['MONEDA']);
+                    $("#tipo_cambio").val(parseFloat(datas['plan'][0]['TIPO_CAMBIO'].replace(/,/, '.')));
+                    $("#forma_pago").val(datas['plan'][0]['FORMA_PAGO']);
+                    $("#forma_financiacion").val(datas['plan'][0]['FORMA_FINANCIACION']);
+                    $("#profesor_1").val(datas['plan'][0]['PROFESOR_1']);
+                    $("#profesor_2").val(datas['plan'][0]['PROFESOR_2']);
+                    $("#comentarios").val(datas['plan'][0]['COMENTARIOS_PLAN']);
+                    $("#entidad").val(datas['plan'][0]['ENTIDAD_PLAN']);
 
                     //para el campo tipo de cambio al editar
-                    (datas[0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
+                    (datas['plan'][0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
+
+
+
+                    //Se construye la tabla de empleados
+                    $.each(datas['empleados'], function(indice, val){
+
+                        var idCheck=datas['empleados'][indice]['ID_ASIGNACION'];
+                        var comentarios=(typeof(datas['empleados'][indice]['COMENTARIOS'])!='undefined')? datas['empleados'][indice]['COMENTARIOS']: '';
+                        var viaticos=(typeof(datas['empleados'][indice]['VIATICOS'])!='undefined')? datas['empleados'][indice]['VIATICOS']: '';
+
+                        $('#table_empleados tbody').append('<tr id_asignacion='+datas['empleados'][indice]['ID_ASIGNACION']+' id_solicitud='+datas['empleados'][indice]['ID_SOLICITUD']+'>' +
+                        '<td><input type="checkbox" id="check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
+                        '<td>'+datas['empleados'][indice]['APELLIDO']+' '+datas['empleados'][indice]['NOMBRE']+'</td>' +
+                        '<td><input type="text" value="'+comentarios+'" ></td>' +
+                        '<td><input type="text" value="'+viaticos+'" ></td>' +
+                        //'<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
+                        //'<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
+                        //'<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                        //'<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '</tr>');
+
+                        $("#check_"+idCheck+"").prop('checked', ((typeof (datas['empleados'][indice]['ID_ASIGNACION']))!="undefined")? true:false);
+                        (datas['empleados'][indice]['ESTADO']=='AUTORIZADA' || datas['empleados'][indice]['ESTADO']=='APROBADA')? $('#table_empleados tbody tr td input').attr('disabled', 'disabled'): '';
+
+                    });
 
                 },
                 type:"POST",
@@ -221,7 +246,8 @@
                    $('#form').validate().resetForm(); //para limpiar los errores validate
                    //Limpia los minDate y maxDate de los datepicker
                    $('#fecha_desde, #fecha_hasta').datepicker( "option" , {minDate: null, maxDate: null} );
-                   $(":input").attr("disabled", false); //para volver a habilitar todos los campor, por si fueron deshabilitados
+                   $(":input").attr("disabled", false); //para volver a habilitar todos los campos, por si fueron deshabilitados
+                   $('#table_empleados tbody tr').each(function(){ $(this).remove(); });
                 }
 
             });
@@ -686,6 +712,28 @@
                                 <div class="column_content">
                                     <label>Comentarios: </label>
                                     <textarea type="text" name="comentarios" id="comentarios" rows="2"/></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Empleados:</label><br/>
+                                    <table id="table_empleados" class="tablaSolicitud">
+                                        <thead>
+                                        <tr>
+                                            <td style="width: 10%">Check</td>
+                                            <td style="width: 40%">Apellido y nombre</td>
+                                            <td style="width: 40%">Comentarios</td>
+                                            <td style="width: 10%">Viaticos</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- el cuerpo se genera dinamicamente con javascript -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
