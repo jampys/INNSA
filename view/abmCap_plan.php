@@ -57,7 +57,7 @@
                         var comentarios=(typeof(datas['empleados'][indice]['COMENTARIOS'])!='undefined')? datas['empleados'][indice]['COMENTARIOS']: '';
                         var viaticos=(typeof(datas['empleados'][indice]['VIATICOS'])!='undefined')? datas['empleados'][indice]['VIATICOS']: '';
 
-                        $('#table_empleados tbody').append('<tr id_asignacion='+datas['empleados'][indice]['ID_ASIGNACION']+' id_solicitud='+datas['empleados'][indice]['ID_SOLICITUD']+'>' +
+                        $('#table_empleados tbody').append('<tr id_asignacion='+datas['empleados'][indice]['ID_ASIGNACION']+' id_solicitud="'+datas['empleados'][indice]['ID_SOLICITUD']+'">' +
                         '<td><input type="checkbox" id="check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
                         '<td>'+datas['empleados'][indice]['APELLIDO']+' '+datas['empleados'][indice]['NOMBRE']+'</td>' +
                         '<td><input type="text" value="'+comentarios+'" ></td>' +
@@ -69,7 +69,8 @@
                         '</tr>');
 
                         $("#check_"+idCheck+"").prop('checked', ((typeof (datas['empleados'][indice]['ID_ASIGNACION']))!="undefined")? true:false);
-                        (datas['empleados'][indice]['ESTADO']=='AUTORIZADA' || datas['empleados'][indice]['ESTADO']=='APROBADA')? $('#table_empleados tbody tr td input').attr('disabled', 'disabled'): '';
+                        //(datas['empleados'][indice]['ESTADO']=='AUTORIZADA' || datas['empleados'][indice]['ESTADO']=='APROBADA')? $('#table_empleados tbody tr td input').attr('disabled', 'disabled'): '';
+                        (datas['empleados'][indice]['ESTADO']=='AUTORIZADA' || datas['empleados'][indice]['ESTADO']=='APROBADA' || datas['empleados'][indice]['PERIODO']!= (new Date).getFullYear())? $("#table_empleados tbody tr:eq("+indice+") td input").attr('disabled', 'disabled'): '';
 
                     });
 
@@ -85,10 +86,34 @@
 
         function guardar(){
 
-            if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
+            //Codigo para recoger todas las filas de la tabla dinamica de planes
+            jsonObj = [];
+            $('#table_empleados tbody tr').each(function () {
+                item = {};
+                item['id_asignacion']=($(this).attr('id_asignacion')!='undefined')? $(this).attr('id_asignacion') : "";
+                item['id_solicitud']=$(this).attr('id_solicitud');
+                //item['id_plan']=$(this).attr('id_plan');
+                item['id_plan']=globalId; //id_plan
+                item['check']= ($(this).find('td').eq(0).find('[type=checkbox]').prop('checked'))? 1: 0;
+                item['comentarios']= $(this).find('td').eq(2).find('input').val();
+                item['viaticos']= $(this).find('td').eq(3).find('input').val();
+                // 4 posibles operaciones
+                if(item['id_asignacion']!='' && item['check']==1) item['operacion']='update';
+                else if(item['id_asignacion']!='' && item['check']==0) item['operacion']='delete';
+                else if(item['id_asignacion']=='' && item['check']==1) item['operacion']='insert';
+                else if(item['id_asignacion']=='' && item['check']==0) item['operacion']='null';
+
+                jsonObj.push(item);
+                //alert(item['id_plan']);
+            });
+
+
+
+            if(globalOperacion=="insert"){ //se va a guardar un plan nuevo
                 var url="index.php";
                 var data={  "accion":"cap_plan",
                             "operacion":"insert",
+                            "datos":JSON.stringify(jsonObj),
                             "curso":$("#curso_id").val(),
                             "periodo":$("#periodo").val(),
                             "objetivo":$("#objetivo").val(),
@@ -110,9 +135,10 @@
                             "entidad":$("#entidad").val()
                     };
             }
-            else{ //se va a guardar un curso editado
+            else{ //se va a guardar un plan editado
                 var data={  "accion":"cap_plan",
                             "operacion":"save",
+                            "datos":JSON.stringify(jsonObj),
                             "id":globalId,
                             //"curso":$("#curso").val(),
                             "periodo":$("#periodo").val(),

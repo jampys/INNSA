@@ -3,6 +3,7 @@ if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
 require_once("model/cap_planModel.php");
+require_once("model/cap_solicModel.php");
 $view->u=new Cap_Plan();
 
 
@@ -67,6 +68,28 @@ switch($operacion){
         $view->u->setEntidad($_POST['entidad']);
 
         $rta=$view->u->updateCapPlan();
+
+
+
+        //Actualizo las asignaciones del plan
+        $vector=json_decode($_POST["datos"]);
+        foreach ($vector as $v){
+            $u=new Asignacion_plan();
+            $u->setIdAsignacion($v->id_asignacion);
+            $u->setIdSolicitud($v->id_solicitud);
+            $u->setIdPlan($v->id_plan);
+            $u->setComentarios($v->comentarios);
+            $u->setViaticos($v->viaticos);
+
+
+            if($v->operacion=="insert") $u->insertAsignacionPlan($v->id_solicitud); //le paso parametro id_solicitud
+            else if($v->operacion=="update") $u->updateAsignacionPlan();
+            else if($v->operacion=="delete") $u->deleteAsignacionPlan();
+            }
+
+
+
+
         print_r(json_encode($rta));
         exit;
         break;
