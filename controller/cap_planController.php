@@ -80,7 +80,7 @@ switch($operacion){
             $u->setIdPlan($v->id_plan);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
-
+            $u->setEstado($v->estado);
 
             if($v->operacion=="insert") $u->insertAsignacionPlan($v->id_solicitud); //le paso parametro id_solicitud
             else if($v->operacion=="update") $u->updateAsignacionPlan();

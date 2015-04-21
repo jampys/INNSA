@@ -60,8 +60,8 @@
                         $('#table_empleados tbody').append('<tr id_asignacion='+datas['empleados'][indice]['ID_ASIGNACION']+' id_solicitud="'+datas['empleados'][indice]['ID_SOLICITUD']+'">' +
                         '<td><input type="checkbox" id="check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
                         '<td>'+datas['empleados'][indice]['APELLIDO']+' '+datas['empleados'][indice]['NOMBRE']+'</td>' +
-                        '<td><input type="text" value="'+comentarios+'" ></td>' +
-                        '<td><input type="text" value="'+viaticos+'" ></td>' +
+                        '<td><input type="text" class="emp_comentarios" value="'+comentarios+'" ></td>' +
+                        '<td><input type="text" class="emp_viaticos" value="'+viaticos+'" ></td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
                         //'<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
@@ -97,6 +97,7 @@
                 item['check']= ($(this).find('td').eq(0).find('[type=checkbox]').prop('checked'))? 1: 0;
                 item['comentarios']= $(this).find('td').eq(2).find('input').val();
                 item['viaticos']= $(this).find('td').eq(3).find('input').val();
+                item['estado'] = 'ASIGNADO';
                 // 4 posibles operaciones
                 if(item['id_asignacion']!='' && item['check']==1) item['operacion']='update';
                 else if(item['id_asignacion']!='' && item['check']==0) item['operacion']='delete';
@@ -484,6 +485,24 @@
 
 
     };
+
+    //validacion de inputs de tabla empleados
+
+    //personalizo los metodos http://stackoverflow.com/questions/3247305/how-to-add-messages-to-a-class-with-addclassrules
+    $.validator.addMethod("cMaxLength", $.validator.methods.maxlength,
+        "Máximo 100 caracteres");
+
+    //asigno metodos personalizados
+    jQuery.validator.addClassRules({
+        emp_comentarios: {
+            cMaxLength: 100
+        },
+        emp_viaticos: {
+            digits: true,
+            maxlength: 4
+        }
+    });
+
 
     </script>
 

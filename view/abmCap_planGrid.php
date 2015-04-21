@@ -74,7 +74,7 @@
                     <th>Estado</th>
                     <th>Importe</th>
                     <th>Moneda</th>
-                    <th>Cant.</th>
+                    <th title="Cant. de empleados asignados">Cant.</th>
                     <th>.</th>
 
                 </tr>

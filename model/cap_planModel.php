@@ -287,7 +287,7 @@ class Cap_Plan
                 " and ap.id_solicitud (+) = sc.id_solicitud".
                 " and pro.id_curso = cu.id_curso".
                 " and pc.id_curso = cu.id_curso".
-                " and pc.id_plan = $id order by sc.periodo asc";
+                " and pc.id_plan = $id order by ap.id_asignacion asc";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
     }
