@@ -33,7 +33,7 @@
 
     <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
     <nav class="nav">
-        <a href="index.php?accion=empleado">Recursos</a>
+        <a href="index.php?accion=empleado">Empleados</a>
     </nav>
     <?php   } ?>
 

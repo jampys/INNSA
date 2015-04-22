@@ -585,6 +585,7 @@
                                     <select name="entidad" id="entidad">
                                         <option value="">Seleccione la entidad</option>
                                         <option value="IAPG">IAPG</option>
+                                        <option value="IT COLLEGE">It College</option>
                                         <option value="PERSEUS">Perseus</option>
                                         <option value="UTN">UTN</option>
                                         <option value="OTRA">Otra</option>
@@ -664,7 +665,8 @@
                                     <select name="estado" id="estado">
                                         <option value="">Seleccione el estado</option>
                                         <option value="PROPUESTO" selected>Propuesto</option>
-                                        <option value="CANCELADO">Cancelado</option>
+                                        <!--<option value="CANCELADO">Cancelado</option>-->
+                                        <option value="SUSPENDIDO">Suspendido</option>
                                     </select>
                                 </div>
                             </div>
