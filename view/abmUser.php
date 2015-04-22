@@ -291,7 +291,9 @@
                             response($.map(data, function(item) {
                                 return {
                                     label: item.APELLIDO+" "+item.NOMBRE,
-                                    id: item.ID_EMPLEADO
+                                    id: item.ID_EMPLEADO,
+                                    n_legajo: item.N_LEGAJO,
+                                    empresa: item.EMPRESA
 
                                 };
                             }));
@@ -303,6 +305,7 @@
                 change: function(event, ui) {
                     $('#empleado_id').val(ui.item? ui.item.id : '');
                     $('#empleado').val(ui.item.label);
+                    $('#login').val(ui.item.empresa.substr(0,1)+ui.item.n_legajo);
                 }
             });
 
@@ -320,7 +323,7 @@
             /*lo pone en vacio, ya que por defecto es igual a hiddenn  (default: ":hidden"). Y asi evito que ignore el campo oculto http://jqueryvalidation.org/validate/ */
             ignore:"",
             rules: {
-                login: {
+                /*login: {
                     required: true,
                     maxlength: 40,
                     //minlength: 3,
@@ -337,7 +340,7 @@
                         }
                     }
 
-                },
+                }, */
                 /*password: {
                     required: true,
                     maxlength: 20,
@@ -357,11 +360,11 @@
                 }
             },
             messages:{
-                login:{
+                /*login:{
                     required: "Ingrese un usuario",
                     remote: "El usuario ya existe, intente con otro",
                     email: "El usuario debe ser un e-mail"
-                },
+                }, */
                 //password: "Ingrese un password",
                 perfil: "Seleccione un perfil",
                 estado: "Seleccione un estado",
@@ -432,14 +435,17 @@
                 <form id="form" action="">
                     <fieldset>
                         <legend>Datos Registro</legend>
+
                         <div class="sixteen_column section">
 
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Login: </label>
-                                    <input type="text" name="login" id="login"/>
+                                    <label>Empleado: </label>
+                                    <input type="text" name="empleado" id="empleado"/>
+                                    <input type="hidden" name="empleado_id" id="empleado_id"/>
                                 </div>
                             </div>
+
 
                             <div class="eight column">
                                 <div class="column_content">
@@ -453,9 +459,8 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Empleado: </label>
-                                    <input type="text" name="empleado" id="empleado"/>
-                                    <input type="hidden" name="empleado_id" id="empleado_id"/>
+                                    <label>Login: </label>
+                                    <input type="text" name="login" id="login" readonly/>
                                 </div>
                             </div>
                             <div class="eight column">

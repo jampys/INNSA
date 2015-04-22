@@ -237,6 +237,22 @@ class Empleado
     }
 
 
+    public function availableLegajo($l, $e){
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $obj_user->executeQuery("select * from empleados where n_legajo = $l and empresa = $e");
+
+        $r=$obj_user->fetchAll();
+        if($obj_user->getAffect()==0){
+            $output = true;
+        }
+        else{
+            $output = false;
+        }
+        return $output;
+    }
+
+
 
 
 }

@@ -77,6 +77,12 @@ switch($operacion){
         exit;
         break; */
 
+    case 'AvailableLegajo':
+        $rta=$view->u->availableLegajo($_POST['n_legajo'], $_POST['empresa']);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
     default:
         $view->empleados=$view->u->getEmpleados();
         $view->divisiones=$view->u->getDivisiones(); //para cargar dinamicamente el combo 'divsion' al agregar o editar empleado

@@ -191,7 +191,7 @@ class Comunicacion
     public function getDatosForSendComunicationMail(){
         $f = new Factory();
         $obj_com = $f->returnsQuery();
-        $query = "select pc.periodo, cu.nombre CURSO, em.apellido, em.nombre, us.login, pc.fecha_desde, pc.fecha_hasta".
+        $query = "select pc.periodo, cu.nombre CURSO, em.apellido, em.nombre, em.email, pc.fecha_desde, pc.fecha_hasta".
                 " from plan_capacitacion pc, asignacion_plan ap, cursos cu, solicitud_capacitacion sc, empleados em, usuarios us".
                 " where ap.id_solicitud = sc.id_solicitud".
                 " and sc.id_empleado = em.id_empleado".

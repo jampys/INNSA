@@ -122,9 +122,9 @@ class User
             " UNION".
             " select emx.id_empleado, emx.apellido, emx.nombre from empleados emx, usuarios us where us.id_empleado = emx.id_empleado and us.id_usuario = $user"; */
         //Se modifica consulta para que solo devuelva los empleados activos
-        $query="select em.id_empleado, em.apellido, em.nombre from empleados em where (em.nombre like UPPER ('%".$term."%') or em.apellido like UPPER ('%".$term."%')) and em.activo = 1 and em.id_empleado not in (select id_empleado from usuarios)".
+        $query="select em.id_empleado, em.apellido, em.nombre, em.n_legajo, em.empresa from empleados em where (em.nombre like UPPER ('%".$term."%') or em.apellido like UPPER ('%".$term."%')) and em.activo = 1 and em.id_empleado not in (select id_empleado from usuarios)".
             " UNION".
-            " select emx.id_empleado, emx.apellido, emx.nombre from empleados emx, usuarios us where us.id_empleado = emx.id_empleado and us.id_usuario = $user";
+            " select emx.id_empleado, emx.apellido, emx.nombre, emx.n_legajo, emx.empresa from empleados emx, usuarios us where us.id_empleado = emx.id_empleado and us.id_usuario = $user";
         $obj_cp->executeQuery($query);
         $obj_cp->cerrarConexion(); //cierra la conexion
         return $obj_cp->fetchAll();
@@ -197,7 +197,7 @@ class User
 
 
     //Funcion para validar que el nombre de usuario (login) no exista
-    public function availableUser($u){
+    /*public function availableUser($u){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $obj_user->executeQuery("select * from usuarios where login = '$u'");
@@ -210,7 +210,7 @@ class User
             $output = false;
         }
         return $output;
-    }
+    } */
 
 
 

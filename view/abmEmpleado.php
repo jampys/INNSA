@@ -241,8 +241,26 @@
                 nombre: {
                     required: true
                 },
-                n_legajo: {
+                /*n_legajo: {
+                    required: true,
                     digits: true
+                }, */
+                n_legajo: {
+                    required: true,
+                    digits: true,
+                    maxlength: 5,
+                    remote: {
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            n_legajo: function(){ return $("#n_legajo").val(); },
+                            empresa: function(){ return ($("#empresa").val()!='')? "'"+$("#empresa").val()+"'": 'empresa'; },
+                            accion: "empleado",
+                            operacion: "AvailableLegajo"
+                        }
+                    }
+
                 },
                 cuil: {
                     required: true,
@@ -265,13 +283,23 @@
                     required: true
                 },
                 email: {
-                    maxlength: 100
+                    required: true,
+                    email: true
                 }
             },
             messages:{
                 apellido: "Ingrese el apellido",
                 nombre: "Ingrese el nombre",
-                n_legajo: "Ingrese solo números",
+                /*n_legajo: {
+                    required: "Ingrese el número de legajo",
+                    digits:"Ingrese solo números"
+                }, */
+                n_legajo:{
+                    required: "Ingrese el número de legajo",
+                    digits: "El legajo debe ser numérico",
+                    remote: "El legajo ya existe, intente con otro",
+                    maxlength: "El legajo no debe superar los 5 dígitos"
+                },
                 cuil: "Ingrese el CUIL (sin guiones)",
                 lugar_trabajo: "Seleccione el lugar de trabajo",
                 empresa: "Seleccione la empresa",
@@ -279,7 +307,8 @@
                 fecha: "Seleccione la fecha de ingreso",
                 activo: "Seleccione el estado",
                 email: {
-                    maxlength: "Máximo 100 caracteres"
+                    required: "Ingrese el correo electrónico",
+                    email: "Ingrese un correo electrónico válido"
                 }
             }
 
@@ -336,21 +365,6 @@
                             </div>
                         </div>
 
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>N legajo: </label>
-                                    <input type="text" name="n_legajo" id="n_legajo"/>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>CUIL: </label>
-                                    <input type="text" name="cuil" id="cuil"/>
-                                </div>
-                            </div>
-                        </div>
-
 
                         <div class="sixteen_column section">
                             <div class="eight column">
@@ -373,8 +387,25 @@
                                     <label>Empresa: </label>
                                     <select name="empresa" id="empresa">
                                         <option value="">Ingrese una empresa</option>
-                                        <option value="INNOVISION" selected>Innovision</option>
+                                        <option value="INNOVISION">INNOVISION</option>
+                                        <option value="SEIP">SEIP</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>N legajo: </label>
+                                    <input type="text" name="n_legajo" id="n_legajo"/>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>CUIL: </label>
+                                    <input type="text" name="cuil" id="cuil"/>
                                 </div>
                             </div>
                         </div>
@@ -446,7 +477,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>E-mail: </label><br/>
-                                    <textarea type="text" name="email" id="email" rows="2"/></textarea>
+                                    <textarea type="text" name="email" id="email" rows="1"/></textarea>
                                 </div>
                             </div>
 

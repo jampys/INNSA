@@ -82,7 +82,7 @@ switch($operacion){
         else{ //si la consulta SQL devuelve 1 registro
 
             //codigo para el envio de e-mail
-            $para=$com[0]['LOGIN'];
+            $para=$com[0]['EMAIL'];
             $asunto = 'Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
 
             //codigo para incluir en la variable $mensaje el template de correo de la comunicacion, que se encuentra en email/comunicacion.php
