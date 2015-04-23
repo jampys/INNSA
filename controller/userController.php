@@ -32,7 +32,9 @@ switch($operacion){
 
             //codigo para el envio de e-mail
             $para=$emp[0]['EMAIL'];
-            $asunto = 'Usuario y password Sistema de Capacitación INNSA';
+            $asunto = 'INNSA - Nuevo usuario';
+            $body_usuario=$_POST['login'];
+            $body_pass=$pass;
 
             //codigo para incluir en la variable $mensaje el template de correo de la comunicacion, que se encuentra en email/comunicacion.php
             ob_start();

@@ -182,9 +182,9 @@
                 modal:true,
                 title:"Blanqueo de password",
                 buttons: {
-                    "Guardar": function() {
+                    "Aceptar": function() {
                         //$("#form").submit();
-                        if($('#form_password_clear').valid()){
+                        //if($('#form_password_clear').valid()){
                             //alert('todo ok');
 
                             $.ajax({
@@ -207,7 +207,8 @@
                                 success:function(datas){
 
                                     $("#dialog-msn").dialog("open");
-                                    $("#message").html("Registro actualizado en la BD");
+                                    //$("#message").html("Registro actualizado en la BD");
+                                    $("#message").html(datas['comment']);
 
 
                                 },
@@ -218,7 +219,7 @@
                             });
 
                             $("#password_clear").dialog("close");
-                        }
+                        //}
 
                     },
                     "Cancelar": function() {
@@ -311,7 +312,7 @@
 
             //llamada a funcion validar
             $.validar();
-            $.validar_clear_pass();
+            //$.validar_clear_pass();
 
 
         });
@@ -380,7 +381,7 @@
 
 
 
-    $.validar_clear_pass=function(){
+    /*$.validar_clear_pass=function(){
 
         //validacion de formulario
         $('#form_password_clear').validate({
@@ -401,7 +402,7 @@
 
         });
 
-    };
+    }; */
 
     </script>
 
@@ -528,7 +529,7 @@
                     <fieldset>
                         <legend>Blanqueo de password</legend>
 
-                        <div class="sixteen_column section">
+                        <!--<div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Ingrese password: </label>
@@ -544,6 +545,18 @@
                                     <input type="hidden" name="id_usuario" value='<?php echo $view->id_usuario; ?>' />
                                 </div>
                             </div>
+                        </div> -->
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>¿Desea blanquear el password?</label>
+                                    <br/>
+                                    <span>* Se enviará un nuevo password por email al empleado</span>
+                                </div>
+                            </div>
+
+
                         </div>
 
                     </fieldset>

@@ -83,7 +83,7 @@ switch($operacion){
 
             //codigo para el envio de e-mail
             $para=$com[0]['EMAIL'];
-            $asunto = 'Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
+            $asunto = 'INNSA - Plan de capacitación '.$com[0]['PERIODO'].' '.$com[0]['CURSO'];
 
             //codigo para incluir en la variable $mensaje el template de correo de la comunicacion, que se encuentra en email/comunicacion.php
             ob_start();

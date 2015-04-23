@@ -18,8 +18,8 @@
         <p style='font-weight: bold'><?php echo $emp[0]['APELLIDO'] ?> <?php echo $emp[0]['NOMBRE'] ?>:</p>
         <p>Por la presente le informamos su usuario y clave de acceso al sistema de capacitación de Innovisión SA.</p>
 
-        <p><span style="font-weight: bold">Usuario: </span><?php echo $_POST['login'] ?></p>
-        <p><span style="font-weight: bold">Password: </span><?php echo $pass ?></p>
+        <p><span style="font-weight: bold">Usuario: </span><?php echo $body_usuario ?></p>
+        <p><span style="font-weight: bold">Password: </span><?php echo $body_pass ?></p>
         <p>El sistema al acceder por primera vez le exigira cambiar el password para su seguridad.</p>
         <br/>
         <p>Mensaje enviado desde Sistema de Capacitación INNSA</p>
