@@ -225,7 +225,6 @@
 
                     },
                     "Cancelar": function() {
-                        $("#form_password_clear")[0].reset(); //para limpiar el formulario
                         $(this).dialog("close");
                     }
                 },
@@ -521,61 +520,17 @@
 
 
 
-<!-- dialog para cambio de password -->
+<!-- dialog para blanqueo de password -->
 <div id="password_clear">
 
-    <div class="grid_7">
-        <div class="clear"></div>
-        <div class="box">
-
-            <div class="block" id="forms">
-                <form id="form_password_clear" action="index.php" method="post">
-                    <fieldset>
-                        <legend>Blanqueo de password</legend>
-
-                        <!--<div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Ingrese password: </label>
-                                    <input type="password" name="pc_password" id="pc_password"/>
-                                </div>
-                            </div>
-
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Reingrese password: </label>
-                                    <input type="password" name="pc_password_again" id="pc_password_again"/>
-                                    <input type="hidden" name="operacion" value='clear_pass' />
-                                    <input type="hidden" name="id_usuario" value='<?php echo $view->id_usuario; ?>' />
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>¿Desea blanquear el password?</label>
-                                    <br/>
-                                    <span>* Se enviará un nuevo password por email al empleado</span>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                    </fieldset>
-
-                </form>
-            </div>
-        </div>
-
-
+    <div style='float: left; margin-top: 10px'><img src='public/img/warning-icon-yellow.png' width='30px' height='30px'></div>&nbsp;&nbsp;&nbsp;
+    <div style='float: left; margin-left: 10px; margin-top: 10px'>
+        ¿Desea blanquear el password?
+        <br/>
+        * Se enviará un nuevo password por email al empleado
     </div>
 
 </div>
-
-
-
 
 
 
