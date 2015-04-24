@@ -66,11 +66,12 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#nombre").val(datas[0]['NOMBRE_CURSO']);
-                    $("#descripcion").val(datas[0]['DESCRIPCION_CURSO']);
-                    $("#comentarios").val(datas[0]['COMENTARIOS_CURSO']);
-                    $("#entidad").val(datas[0]['ENTIDAD_CURSO']);
+                    $("#nombre").val(datas[0]['NOMBRE']);
+                    $("#descripcion").val(datas[0]['DESCRIPCION']);
+                    $("#comentarios").val(datas[0]['COMENTARIOS']);
+                    $("#entidad").val(datas[0]['ENTIDAD']);
                     $("#categoria").val(datas[0]['ID_CATEGORIA']);
+                    $("#tipo_curso").val(datas[0]['ID_TIPO_CURSO']);
                     cargarTemas(datas[0]['ID_TEMA']);
                     //$("#tema option[value='datas[5]']").attr("selected", true);
 
@@ -88,11 +89,11 @@
 
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
-                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val()};
+                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
             }
             else{ //se va a guardar un curso editado
                 var url="index.php";
-                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val()};
+                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
             }
 
             $.ajax({
@@ -312,6 +313,25 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
+                                    <label>Tipo de actividad: </label><br/>
+                                    <select name="tipo_curso" id="tipo_curso">
+                                        <option value="">Seleccione el tipo de actividad</option>
+                                        <?php foreach($tipo_curso as $tip){?>
+                                            <option value="<?php echo $tip['ID_TIPO_CURSO']?>"><?php echo $tip['NOMBRE']?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
                                     <label>Objetivo: </label><br/>
                                     <textarea name="descripcion" id="descripcion" rows="5"></textarea>
                                 </div>
@@ -332,10 +352,13 @@
                                     <label>Categoria: </label>
                                     <select name="categoria" id="categoria" onchange="cargarTemas();">
                                         <option value="">Seleccione una categoria</option>
-                                        <option value="1">Habilidades soft</option>
+                                        <!--<option value="1">Habilidades soft</option>
                                         <option value="2">Gestión</option>
                                         <option value="3">Industria Oil</option>
-                                        <option value="4">Técnico</option>
+                                        <option value="4">Técnico</option>-->
+                                        <?php foreach($categorias as $cat){?>
+                                            <option value="<?php echo $cat['ID_CATEGORIA']?>"><?php echo $cat['NOMBRE']?></option>
+                                        <?php }?>
                                     </select>
                                 </div>
                             </div>

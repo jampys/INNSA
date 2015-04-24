@@ -13,6 +13,7 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
+        $view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->insertCurso();
         print_r(json_encode($rta));
         exit;
@@ -31,6 +32,7 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
+        $view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->updateCurso();
         print_r(json_encode($rta));
         exit;
@@ -50,6 +52,8 @@ switch($operacion){
 
     default:
         $view->cursos=$view->u->getCursos();
+        $categorias=$view->u->getCategorias();
+        $tipo_curso=$view->u->getTipoCurso();
         break;
 
 }
