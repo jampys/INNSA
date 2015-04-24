@@ -67,7 +67,7 @@ switch($operacion){
 
         }
 
-        
+
         print_r(json_encode($respuesta));
         exit;
         break;
