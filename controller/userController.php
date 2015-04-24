@@ -19,48 +19,56 @@ switch($operacion){
         $view->u->setClearPass(1);
         $rta=$view->u->insertUsuario();
 
-        //***********************EMAIL**********************************
+        if($rta>0){ //si inserto el usuario correctamente
+            $respuesta=array ('response'=>'success','comment'=>'Registro actualizado en la BD');
 
-        //Obtener datos para enviar el mail
-        $view->e=new Empleado();
-        $emp=$view->e->getEmpleadoById($_POST['empleado']); //id_empleado
+            //***********************EMAIL**********************************
 
-        if(!$emp){ //Si la consulta SQL no devuelve ningun registro
-            //$respuesta = array ('response'=>'error','comment'=>'Problemas con la consulta SQL');
-        }
-        else{ //si la consulta SQL devuelve 1 registro
+            //Obtener datos para enviar el mail
+            $view->e=new Empleado();
+            $emp=$view->e->getEmpleadoById($_POST['empleado']); //id_empleado
 
-            //codigo para el envio de e-mail
-            $para=$emp[0]['EMAIL'];
-            $asunto = 'INNSA - Nuevo usuario';
-            $body_usuario=$_POST['login'];
-            $body_pass=$pass;
-
-            //codigo para incluir en la variable $mensaje el template de correo de la comunicacion, que se encuentra en email/comunicacion.php
-            ob_start();
-            include ('email/password.php');
-            $mensaje= ob_get_contents();
-            ob_get_clean();
-
-            //Cabecera que especifica que es un HMTL
-            $headers = 'From: INNSA Capacitacion <no-reply@innsa.com>' . "\r\n";
-            $headers.= 'MIME-Version: 1.0' . "\r\n";
-            $headers.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-            if(mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
-
-                //$respuesta = array ('response'=>'success','comment'=>'Comunicación enviada correctamente');
-
+            if(!$emp){ //Si la consulta SQL no devuelve ningun registro
+                //$respuesta = array ('response'=>'error','comment'=>'Problemas con la consulta SQL');
             }
-            else{ //No pudo enviar el e-mail
-                //$respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
+            else{ //si la consulta SQL devuelve 1 registro
+
+                //codigo para el envio de e-mail
+                $para=$emp[0]['EMAIL'];
+                $asunto = 'INNSA - Nuevo usuario';
+                $body_usuario=$_POST['login'];
+                $body_pass=$pass;
+
+                //codigo para incluir en la variable $mensaje el template de correo de la comunicacion, que se encuentra en email/comunicacion.php
+                ob_start();
+                include ('email/password.php');
+                $mensaje= ob_get_contents();
+                ob_get_clean();
+
+                //Cabecera que especifica que es un HMTL
+                $headers = 'From: INNSA Capacitacion <no-reply@innsa.com>' . "\r\n";
+                $headers.= 'MIME-Version: 1.0' . "\r\n";
+                $headers.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+                if(mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
+
+                    //$respuesta = array ('response'=>'success','comment'=>'Comunicación enviada correctamente');
+
+                }
+                else{ //No pudo enviar el e-mail
+                    //$respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
+                }
             }
+            //------------------FIN EMAIL----------------------------------------
+
+        }
+        else{ //si fallo el insert
+            $respuesta=array ('response'=>'error','comment'=>'Error al actualizar la BD');
 
         }
 
-        //------------------FIN EMAIL----------------------------------------
-
-        print_r(json_encode($rta));
+        
+        print_r(json_encode($respuesta));
         exit;
         break;
 
