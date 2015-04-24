@@ -169,6 +169,7 @@
                 close:function(){
                     $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                     $('#form').validate().resetForm(); //para limpiar los errores validate
+                    $("#empleado").prop('disabled', false);
                 }
 
             });
@@ -247,6 +248,8 @@
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
+                $("#empleado").prop('disabled', true);
+
                 return false;
             });
 
