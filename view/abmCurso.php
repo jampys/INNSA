@@ -197,15 +197,51 @@
 
             });
 
+            //Dialog de confirmacion de eliminacion
+            $("#delete_dialog").dialog({
+                    modal: true,
+                    title: 'Mensaje',
+                    autoOpen: false,
+                    width: '250',
+                    resizable: false,
+                    buttons: {
+                        Aceptar: function () {
+                            guardar(); //y dentro de guardar agrego la opcion de eliminar
+                            $(this).dialog("close");
+                        },
+                        Cancelar: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    show: {
+                        effect: "blind",
+                        duration: 1000
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    }
+
+                });
 
 
-            //Agregado por dario para editar
+
+            //Agregado para editar un curso
             $(document).on("click", ".edit_link", function(){
                 //globalOperacion=$(this).attr("media");
                 globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
                 $('#dialog').dialog('open');
+                return false;
+            });
+
+            //Para eliminar cursos
+            $(document).on("click", ".delete_link", function(){
+                globalOperacion='delete';
+                globalId=$(this).attr('id');
+                //editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
+                $('#delete_dialog').dialog('open');
                 return false;
             });
             //Fin agregado
@@ -234,7 +270,7 @@
             rules: {
                 nombre: {
                     required: true,
-                    maxlength: 100,
+                    maxlength: 100
                     //minlength: 5
                 },
                 descripcion: {
@@ -379,6 +415,17 @@
         </div>
 
 
+    </div>
+
+</div>
+
+
+<!-- dialog para blanqueo de password -->
+<div id="delete_dialog">
+
+    <div style='float: left; margin-top: 10px'><img src='public/img/warning-icon-yellow.png' width='30px' height='30px'></div>&nbsp;&nbsp;&nbsp;
+    <div style='float: left; margin-left: 10px; margin-top: 18px'>
+        ¿Desea eliminar el curso?
     </div>
 
 </div>
