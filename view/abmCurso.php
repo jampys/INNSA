@@ -91,9 +91,13 @@
                 var url="index.php";
                 var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
             }
-            else{ //se va a guardar un curso editado
+            else if(globalOperacion=="edit"){ //se va a guardar un curso editado
                 var url="index.php";
                 var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
+            }
+            else if(globalOperacion=="delete"){
+                var url="index.php";
+                var data={"accion":"curso","operacion":"delete", "id":globalId};
             }
 
             $.ajax({
@@ -112,7 +116,7 @@
                 success:function(datas){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("Registro actualizado en la BD");
+                    $("#message").html(datas['comment']);
 
                 },
                 type:"POST",
@@ -206,8 +210,10 @@
                     resizable: false,
                     buttons: {
                         Aceptar: function () {
-                            guardar(); //y dentro de guardar agrego la opcion de eliminar
+                            guardar();
                             $(this).dialog("close");
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"curso", operacion: "refreshGrid"});
                         },
                         Cancelar: function () {
                             $(this).dialog("close");
@@ -287,6 +293,9 @@
                 },
                 tema: {
                     required: true
+                },
+                tipo_curso: {
+                    required: true
                 }
             },
             messages:{
@@ -295,7 +304,8 @@
                 comentarios: "Máximo 150 caracteres",
                 //entidad: "Ingrese su entidad",
                 categoria: "Seleccione una categoria",
-                tema: "Seleccione un tema"
+                tema: "Seleccione un tema",
+                tipo_curso: "Seleccione un tipo de actividad"
             }
 
         });

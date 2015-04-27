@@ -23,7 +23,7 @@ switch($operacion){
         $view->u->setCuil($_POST['cuil']);
         $rta=$view->u->insertEmpleado();
         //print_r(json_encode($rta));
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Registro actualizado en la BD'):array ('response'=>'error','comment'=>'Error al actualizar la BD');
+        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado agregado correctamente'):array ('response'=>'error','comment'=>'Error al agregar el empleado');
         print_r(json_encode($respuesta));
         exit;
         break;
@@ -51,7 +51,7 @@ switch($operacion){
         $view->u->setCuil($_POST['cuil']);
         $rta=$view->u->updateEmpleado();
         //print_r(json_encode($rta));
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Registro actualizado en la BD'):array ('response'=>'error','comment'=>'Error al actualizar la BD');
+        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado actualizado correctamente'):array ('response'=>'error','comment'=>'Error al modificar el empleado ');
         print_r(json_encode($respuesta));
         exit;
         break;

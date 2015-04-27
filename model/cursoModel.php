@@ -135,15 +135,15 @@ class Curso
         return $obj_curso->getAffect();
     }
 
-    /*
+
     function deleteCurso(){
         $f=new Factory();
-        $obj_cliente=$f->returnsQuery();
-        $query="delete from clientes where id=$this->id";
-        $obj_cliente->executeQuery($query);
-        return $obj_cliente->getAffect();
+        $obj_curso=$f->returnsQuery();
+        $query="delete from cursos where id_curso=$this->id_curso";
+        $obj_curso->executeQuery($query);
+        return $obj_curso->getAffect();
     }
-    */
+
 
     public function getCategorias(){
         $f=new Factory();
