@@ -33,7 +33,7 @@ switch($operacion){
         $view->u->setEstado($_POST['estado']);
         $view->u->setAprSolicito($_POST['apr_solicito']);
         //Cuando insert solicitud devuelve el id, necesario para insert de planes asociados a la solicitud
-        $id_solicitud=$view->u->insertCapSolic();
+        $rta=$id_solicitud=$view->u->insertCapSolic();
 
         //Insert asignacion plan
         $vector=json_decode($_POST["datos"]);
@@ -45,7 +45,7 @@ switch($operacion){
             $u->setViaticos($v->viaticos);
             $u->setReemplazo($v->reemplazo);
             $u->setEstado($v->estado);
-            $u->insertAsignacionPlan($id_solicitud);
+            if(!$u->insertAsignacionPlan($id_solicitud)) $rta=0; //si algun insert falla, $rta se pone en 0.
         }
 
         //Insert cursos propuestos
@@ -61,13 +61,21 @@ switch($operacion){
             $c->setObjetivo3($v->objetivo_3);
             $c->setIndicadoresExito($v->indicadores_exito);
             $c->setCompromiso($v->compromiso);
-
-            $c->insertPropuesta();
+            if(!$c->insertPropuesta()) $rta=0; //si algun insert falla, $rta se pone en 0.
         }
 
 
-        $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
-        print_r(json_encode($rta));
+        if(($rta)>0){
+            sQueryOracle::hacerCommit();
+            $respuesta=array ('response'=>'success','comment'=>'Solicitud ingresada correctamente');
+        }
+        else{
+            sQueryOracle::hacerRollback();
+            $respuesta=array ('response'=>'error','comment'=>'Error al ingresar solicitud');
+        }
+
+        //$rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
+        print_r(json_encode($respuesta));
         exit;
         break;
 

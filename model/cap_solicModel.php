@@ -339,22 +339,22 @@ class Cap_Solic
 
     public function insertCapSolic(){
 
-        $conn=oci_connect('dario', 'dario', 'localhost');
+        /*$conn=oci_connect('dario', 'dario', 'localhost');
         $sql="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
             "values('$this->situacion_actual', '$this->situacion_deseada', '$this->objetivo_medible_1', '$this->objetivo_medible_2', '$this->objetivo_medible_3', SYSDATE, $this->periodo , $this->id_empleado, $this->dp_ingreso, $this->dp_crecimiento, $this->dp_promocion, $this->dp_futura_transfer, $this->dp_sustitucion_temp, $this->di_nuevas_tecnicas, $this->di_crecimiento, $this->di_competencias_emp, $this->rp_falta_comp, $this->rp_no_conformidad, $this->rp_req_externo, '$this->estado', $this->apr_solicito) returning id_solicitud into :id";
 
         $consulta=oci_parse($conn, $sql);
         oci_bind_by_name($consulta,':id',$id);
         oci_execute($consulta);
-        return $id;
+        return $id; */
 
 
         $f=new Factory();
         $obj_sc=$f->returnsQuery();
-        $query="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
-            " values(:situacion_actual, :situacion_deseada, :objetivo_medible_1, :objetivo_medible_2, :objetivo_medible_3, SYSDATE, :periodo, :id_empleado, :dp_ingreso, :dp_crecimiento, :dp_promocion, :dp_futura_transfer, :dp_sustitucion_temp, :di_nuevas_tecnicas, :di_crecimiento, :di_competencias_emp, :rp_falta_comp, :rp_no_conformidad, :rp_req_externo, :estado, :apr_solicito)".
+        $query="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
+            " values(:situacion_actual, :situacion_deseada, :objetivo_medible_1, :objetivo_medible_2, :objetivo_medible_3, :periodo, :id_empleado, :dp_ingreso, :dp_crecimiento, :dp_promocion, :dp_futura_transfer, :dp_sustitucion_temp, :di_nuevas_tecnicas, :di_crecimiento, :di_competencias_emp, :rp_falta_comp, :rp_no_conformidad, :rp_req_externo, :estado, :apr_solicito)".
             " returning id_solicitud into :id";
-        $obj_sc->dpParse($query);
+        $topo=$obj_sc->dpParse($query);
 
         $obj_sc->dpBind(':situacion_actual', $this->situacion_actual);
         $obj_sc->dpBind(':situacion_deseada', $this->situacion_deseada);
@@ -378,9 +378,10 @@ class Cap_Solic
         $obj_sc->dpBind(':apr_solicito', $this->apr_solicito);
 
         //Se asigna a la variable $id el valor :id devuelto por la consulta, si le saco el parametro $obj_sc da error
-        $obj_sc->dpBind($obj_sc, ':id', $id);
+        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
         $obj_sc->dpExecute();
         return $id;
+        //echo "el id es: ".$id;
 
     }
 
@@ -523,7 +524,7 @@ class Asignacion_plan{
         $obj_asig->dpBind(':id_plan', $this->id_plan);
 
         $obj_asig->dpExecute();
-        //return $obj_asig->getAffect();
+        return $obj_asig->getAffect();
     }
 
 
@@ -722,7 +723,7 @@ class Propuesta{
         $obj_cp = $f->returnsQuery();
         $query = "insert into propuestas (id_solicitud, id_curso, id_reemplazo, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso) values($this->id_solicitud, $this->id_curso, $this->id_reemplazo, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso')";
         $obj_cp->executeQuery($query);
-        //return $obj_user->getAffect();
+        return $obj_cp->getAffect();
     }
 
 
