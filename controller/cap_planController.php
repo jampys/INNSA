@@ -29,9 +29,17 @@ switch($operacion){
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
-
         $rta=$view->u->insertCapPlan();
-        print_r(json_encode($rta));
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Plan ingresado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al ingresar el plan');
+            sQueryOracle::hacerRollback();
+        }
+        print_r(json_encode($respuesta));
         exit;
         break;
 
@@ -45,6 +53,7 @@ switch($operacion){
         break;
 
     case 'save':
+        $rta=1;
         $view->u->setIdPlan($_POST['id']);
         //$view->u->setIdCurso($_POST['curso']);
         $view->u->setPeriodo($_POST['periodo']);
@@ -67,9 +76,7 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
 
-        $rta=$view->u->updateCapPlan();
-
-
+        if(!$view->u->updateCapPlan()) $rta=0;
 
         //Actualizo las asignaciones del plan
         $vector=json_decode($_POST["datos"]);
@@ -82,15 +89,21 @@ switch($operacion){
             $u->setViaticos($v->viaticos);
             $u->setEstado($v->estado);
 
-            if($v->operacion=="insert") $u->insertAsignacionPlan($v->id_solicitud); //le paso parametro id_solicitud
-            else if($v->operacion=="update") $u->updateAsignacionPlan();
-            else if($v->operacion=="delete") $u->deleteAsignacionPlan();
+            if($v->operacion=="insert") if(!$u->insertAsignacionPlan($v->id_solicitud)) $rta=0; //le paso parametro id_solicitud
+            else if($v->operacion=="update") if(!$u->updateAsignacionPlan()) $rta=0;
+            else if($v->operacion=="delete") if(!$u->deleteAsignacionPlan()) $rta=0;
             }
 
+        if($rta>0){
+            sQueryOracle::hacerCommit();
+            $respuesta=array ('response'=>'success','comment'=>'Plan modificado correctamente');
+        }
+        else{
+            sQueryOracle::hacerRollback();
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el plan');
+        }
 
-
-
-        print_r(json_encode($rta));
+        print_r(json_encode($respuesta));
         exit;
         break;
 

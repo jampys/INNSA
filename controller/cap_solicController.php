@@ -102,10 +102,8 @@ switch($operacion){
         //Update solicitud de capacitacion
         $rta=1;
         $view->u->setIdSolicitud($_POST['id']);
-
         $view->u->setPeriodo($_POST['periodo']);
         $view->u->setIdEmpleado($_POST['empleado']);
-
         $view->u->setDpIngreso($_POST['dp_ingreso']);
         $view->u->setDpCrecimiento($_POST['dp_crecimiento']);
         $view->u->setDpPromocion($_POST['dp_promocion']);
@@ -117,13 +115,11 @@ switch($operacion){
         $view->u->setRpFaltaComp($_POST['rp_falta_comp']);
         $view->u->setRpNoConformidad($_POST['rp_no_conformidad']);
         $view->u->setRpReqExterno($_POST['rp_req_externo']);
-
         $view->u->setSituacionActual($_POST['situacion_actual']);
         $view->u->setSituacionDeseada($_POST['situacion_deseada']);
         $view->u->setObjetivoMedible1($_POST['objetivo_medible_1']);
         $view->u->setObjetivoMedible2($_POST['objetivo_medible_2']);
         $view->u->setObjetivoMedible3($_POST['objetivo_medible_3']);
-
         $view->u->setAprSolicito($_POST['apr_solicito']);
 
         if(!$view->u->updateCapSolic()) $rta=0;
@@ -191,7 +187,7 @@ switch($operacion){
         }
         else{
             sQueryOracle::hacerRollback();
-            $respuesta=array ('response'=>'error','comment'=>'Error al modificar solicitud');
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar la solicitud');
         }
 
         //*****************************

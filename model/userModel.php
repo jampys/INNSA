@@ -90,7 +90,6 @@ class User
         //$query="update usuarios set login='$this->login', password='$this->password', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario";
         $query="update usuarios set login='$this->login', id_perfil=$this->id_perfil, id_empleado=$this->id_empleado, habilitado=$this->habilitado where id_usuario = $this->id_usuario";
         $obj_user->executeQuery($query);
-        $obj_user->cerrarConexion(); //cierra la conexion
         return $obj_user->getAffect();
 
     }
@@ -101,7 +100,6 @@ class User
         $query="insert into usuarios(login, password, id_perfil, id_empleado, habilitado, clear_pass)".
             "values('$this->login', '$this->password', $this->id_perfil , $this->id_empleado, $this->habilitado, $this->clear_pass)";
         $obj_user->executeQuery($query);
-        $obj_user->cerrarConexion(); //cierra la conexion
         return $obj_user->getAffect();
     }
 
@@ -126,7 +124,7 @@ class User
             " UNION".
             " select emx.id_empleado, emx.apellido, emx.nombre, emx.n_legajo, emx.empresa from empleados emx, usuarios us where us.id_empleado = emx.id_empleado and us.id_usuario = $user";
         $obj_cp->executeQuery($query);
-        $obj_cp->cerrarConexion(); //cierra la conexion
+        //$obj_cp->cerrarConexion(); //cierra la conexion
         return $obj_cp->fetchAll();
     }
 
@@ -150,7 +148,7 @@ class User
         $query="select * from usuarios, perfiles, empleados where login ='$login' and password = encrypt('$pass') and".
             " usuarios.id_perfil=perfiles.id_perfil and usuarios.id_empleado = empleados.id_empleado";
         $s->executeQuery($query);
-        $s->cerrarConexion(); //cierra la conexion
+        //$s->cerrarConexion(); //cierra la conexion
         $r=$s->fetchAll();
         //print_r($r);
         //echo $r[0]['HABILITADO'];

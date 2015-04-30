@@ -233,8 +233,8 @@
                 error:function(error){
 
                     $("#dialog-msn").dialog("open");
-                    //$("#message").html("ha ocurrido un error");
-                    $("#message").html(error.responseText);
+                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html(error.responseText);
 
                 },
                 ifModified:false,

@@ -22,8 +22,16 @@ switch($operacion){
         $view->u->setEmail($_POST['email']);
         $view->u->setCuil($_POST['cuil']);
         $rta=$view->u->insertEmpleado();
-        //print_r(json_encode($rta));
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado agregado correctamente'):array ('response'=>'error','comment'=>'Error al agregar el empleado');
+        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado agregado correctamente'):array ('response'=>'error','comment'=>'Error al agregar el empleado');
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Empleado agregado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al agregar el empleado');
+            sQueryOracle::hacerRollback();
+        }
+
         print_r(json_encode($respuesta));
         exit;
         break;
@@ -50,8 +58,16 @@ switch($operacion){
         $view->u->setEmail($_POST['email']);
         $view->u->setCuil($_POST['cuil']);
         $rta=$view->u->updateEmpleado();
-        //print_r(json_encode($rta));
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado actualizado correctamente'):array ('response'=>'error','comment'=>'Error al modificar el empleado ');
+        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado actualizado correctamente'):array ('response'=>'error','comment'=>'Error al modificar el empleado ');
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Empleado modificado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el empleado');
+            sQueryOracle::hacerRollback();
+        }
+
         print_r(json_encode($respuesta));
         exit;
         break;

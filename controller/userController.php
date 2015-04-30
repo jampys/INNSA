@@ -20,9 +20,10 @@ switch($operacion){
         $rta=$view->u->insertUsuario();
 
         if($rta>0){ //si inserto el usuario correctamente
-            $respuesta=array ('response'=>'success','comment'=>'Registro actualizado en la BD');
+            $respuesta=array ('response'=>'success','comment'=>'Usuario ingresado correctamente');
+            sQueryOracle::hacerCommit();
 
-            //***********************EMAIL**********************************
+            //***********************CODIGO PARA ENVIO DE EMAIL**********************************
 
             //Obtener datos para enviar el mail
             $view->e=new Empleado();
@@ -53,20 +54,18 @@ switch($operacion){
                 if(mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
 
                     //$respuesta = array ('response'=>'success','comment'=>'Comunicación enviada correctamente');
-
                 }
                 else{ //No pudo enviar el e-mail
                     //$respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
                 }
             }
-            //------------------FIN EMAIL----------------------------------------
+            //------------------FIN CODIGO ENVIO DE EMAIL----------------------------------------
 
         }
-        else{ //si fallo el insert
-            $respuesta=array ('response'=>'error','comment'=>'Error al actualizar la BD');
-
+        else{ //si fallo el insert del usuario
+            $respuesta=array ('response'=>'error','comment'=>'Error al ingresar el usuario');
+            sQueryOracle::hacerRollback();
         }
-
 
         print_r(json_encode($respuesta));
         exit;
@@ -77,7 +76,6 @@ switch($operacion){
         $rta=$view->u->getUsuarioById($_POST['id']);
         print_r(json_encode($rta));
         exit;
-
         break;
 
     case 'save':
@@ -89,7 +87,17 @@ switch($operacion){
         $view->u->setIdEmpleado($_POST['empleado']);
         $view->u->setHabilitado($_POST['estado']);
         $rta=$view->u->updateUsuario();
-        print_r(json_encode($rta));
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Usuario modificado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el usuario');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 

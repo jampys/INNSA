@@ -129,8 +129,6 @@ class Curso
         $obj_curso->dpBind(':entidad', $this->entidad);
         $obj_curso->dpBind(':id_tema', $this->id_tema);
         $obj_curso->dpBind(':id_tipo_curso', $this->id_tipo_curso);
-
-
         $obj_curso->dpExecute();
         return $obj_curso->getAffect();
     }

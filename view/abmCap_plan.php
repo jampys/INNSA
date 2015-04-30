@@ -169,9 +169,9 @@
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(error){
-                    alert(error.responseText);
-                    //$("#dialog-msn").dialog("open");
-                    //$("#message").html("ha ocurrido un error");
+                    //alert(error.responseText);
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
 
                 },
                 ifModified:false,
@@ -179,7 +179,7 @@
                 success:function(datas){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("Registro actualizado en la BD");
+                    $("#message").html(datas['comment']);
 
                 },
                 type:"POST",

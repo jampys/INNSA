@@ -159,11 +159,13 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
 
     //Al metodo Close() lo hereda
 
-    function clean() // libera la consulta
-    {oci_free_statement($this->consulta);}
+    function clean(){ // libera la consulta
+        oci_free_statement($this->consulta);
+    }
 
     function close(){
-        oci_close($this->coneccion);
+        //oci_close($this->coneccion);
+        oci_close(ConexionOracle::getConexion());
     }
 
 
@@ -196,18 +198,20 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
                 $rows[]=$row;
             }
         }
+        $this->clean(); //Agregado 30/04/15 para liberar la consulta!!
+
         return $rows;
     }
 
 
     public static function hacerCommit(){
         oci_commit(ConexionOracle::getConexion());
-        self::clean();
         self::close();
     }
 
     public static function hacerRollback(){
         oci_rollback(ConexionOracle::getConexion());
+        self::close();
     }
 
 

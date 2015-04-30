@@ -15,8 +15,16 @@ switch($operacion){
         $view->u->setIdTema($_POST['tema']);
         $view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->insertCurso();
-        //print_r(json_encode($rta));
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Curso agregado correctamente'):array ('response'=>'error','comment'=>'Error al agregar curso');
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Curso agregado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al agregar curso');
+            sQueryOracle::hacerRollback();
+        }
+
         print_r(json_encode($respuesta));
         exit;
         break;
@@ -36,7 +44,16 @@ switch($operacion){
         $view->u->setIdTema($_POST['tema']);
         $view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->updateCurso();
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Curso modificado correctamente'):array ('response'=>'error','comment'=>'Error al modificar curso');
+        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Curso modificado correctamente'):array ('response'=>'error','comment'=>'Error al modificar curso');
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Curso modificado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el curso');
+            sQueryOracle::hacerRollback();
+        }
+
         print_r(json_encode($respuesta));
         exit;
         break;
@@ -44,7 +61,16 @@ switch($operacion){
     case 'delete':
         $view->u->setIdCurso($_POST['id']);
         $rta=$view->u->deleteCurso();
-        $respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Curso eliminado correctamente'):array ('response'=>'error','comment'=>'Error al eliminar el curso');
+        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Curso eliminado correctamente'):array ('response'=>'error','comment'=>'Error al eliminar el curso');
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Curso eliminado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al eliminar el curso');
+            sQueryOracle::hacerRollback();
+        }
+
         print_r(json_encode($respuesta));
         exit;
         break;
