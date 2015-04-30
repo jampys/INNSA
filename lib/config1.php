@@ -163,7 +163,7 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
 
     //AGREGADA DARIO ULTIMO MOMENTO
     function cerrarConexion(){
-        $this->coneccion->Close();
+        //$this->coneccion->Close();
     }
 
     //-------------------------------

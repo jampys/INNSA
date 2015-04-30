@@ -65,7 +65,7 @@ switch($operacion){
         }
 
 
-        if(($rta)>0){
+        if($rta>0){
             sQueryOracle::hacerCommit();
             $respuesta=array ('response'=>'success','comment'=>'Solicitud ingresada correctamente');
         }
@@ -100,6 +100,7 @@ switch($operacion){
 
     case 'save':
         //Update solicitud de capacitacion
+        $rta=1;
         $view->u->setIdSolicitud($_POST['id']);
 
         $view->u->setPeriodo($_POST['periodo']);
@@ -125,7 +126,7 @@ switch($operacion){
 
         $view->u->setAprSolicito($_POST['apr_solicito']);
 
-        $view->u->updateCapSolic();
+        if(!$view->u->updateCapSolic()) $rta=0;
 
         //Update asignacion plan
         $vector=json_decode($_POST["datos"]);
@@ -140,14 +141,14 @@ switch($operacion){
             $u->setEstado($v->estado);
 
             if($v->id_asignacion==""){ //si no tiene id_asignacion=> es un insert
-                $u->insertAsignacionPlan($_POST['id']); //le paso parametro id_solicitud
+                if(!$u->insertAsignacionPlan($_POST['id'])) $rta=0; //le paso parametro id_solicitud
             }
             else{
                 if($v->operacion_asignacion=="update"){
-                    $u->updateAsignacionPlan();
+                    if(!$u->updateAsignacionPlan()) $rta=0;
                 }
                 if($v->operacion_asignacion=="delete"){
-                    $u->deleteAsignacionPlan();
+                    if(!$u->deleteAsignacionPlan()) $rta=0;
                 }
             }
         }
@@ -171,22 +172,31 @@ switch($operacion){
 
 
             if($v->id_propuesta==""){ //si no tiene id_propuesta=> es un insert
-                $c->insertPropuesta();
+                if(!$c->insertPropuesta()) $rta=0;
             }
             else {
                 if($v->operacion_curso=="update"){
-                    $c->updatePropuesta();
+                    if(!$c->updatePropuesta()) $rta=0;
                 }
                 if($v->operacion_curso=="delete"){
-                $c->deletePropuesta();
+                    if(!$c->deletePropuesta()) $rta=0;
                 }
 
             }
         }
 
+        if($rta>0){
+            sQueryOracle::hacerCommit();
+            $respuesta=array ('response'=>'success','comment'=>'Solicitud modificada correctamente');
+        }
+        else{
+            sQueryOracle::hacerRollback();
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar solicitud');
+        }
+
         //*****************************
-        $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
-        print_r(json_encode($rta));
+        //$rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
+        print_r(json_encode($respuesta));
         exit;
         break;
 

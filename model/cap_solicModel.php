@@ -322,7 +322,7 @@ class Cap_Solic
         $obj_sc->dpBind(':apr_solicito', $this->apr_solicito);
         $obj_sc->dpBind(':id_solicitud', $this->id_solicitud);
         $obj_sc->dpExecute();
-        //return $obj_sc->getAffect();
+        return $obj_sc->getAffect();
     }
 
 
@@ -351,8 +351,8 @@ class Cap_Solic
 
         $f=new Factory();
         $obj_sc=$f->returnsQuery();
-        $query="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
-            " values(:situacion_actual, :situacion_deseada, :objetivo_medible_1, :objetivo_medible_2, :objetivo_medible_3, :periodo, :id_empleado, :dp_ingreso, :dp_crecimiento, :dp_promocion, :dp_futura_transfer, :dp_sustitucion_temp, :di_nuevas_tecnicas, :di_crecimiento, :di_competencias_emp, :rp_falta_comp, :rp_no_conformidad, :rp_req_externo, :estado, :apr_solicito)".
+        $query="insert into solicitud_capacitacion (situacion_actual, situacion_deseada, objetivo_medible_1, objetivo_medible_2, objetivo_medible_3, fecha_solicitud, periodo, id_empleado, dp_ingreso, dp_crecimiento, dp_promocion, dp_futura_transfer, dp_sustitucion_temp, di_nuevas_tecnicas, di_crecimiento, di_competencias_emp, rp_falta_comp, rp_no_conformidad, rp_req_externo, estado, apr_solicito)".
+            " values(:situacion_actual, :situacion_deseada, :objetivo_medible_1, :objetivo_medible_2, :objetivo_medible_3, SYSDATE, :periodo, :id_empleado, :dp_ingreso, :dp_crecimiento, :dp_promocion, :dp_futura_transfer, :dp_sustitucion_temp, :di_nuevas_tecnicas, :di_crecimiento, :di_competencias_emp, :rp_falta_comp, :rp_no_conformidad, :rp_req_externo, :estado, :apr_solicito)".
             " returning id_solicitud into :id";
         $topo=$obj_sc->dpParse($query);
 
@@ -549,7 +549,7 @@ class Asignacion_plan{
         $obj_asig->dpBind(':id_asignacion', $this->id_asignacion);
 
         $obj_asig->dpExecute();
-        //return $obj_asig->getAffect();
+        return $obj_asig->getAffect();
     }
 
 
@@ -568,7 +568,7 @@ class Asignacion_plan{
         $obj_cp=$f->returnsQuery();
         $query="delete from asignacion_plan where id_asignacion=$this->id_asignacion";
         $obj_cp->executeQuery($query); // ejecuta la consulta para  borrar la asignacion
-        //return $obj_cp->getAffect();
+        return $obj_cp->getAffect();
     }
 
 
@@ -744,7 +744,7 @@ class Propuesta{
         $obj_pro->dpBind(':id_propuesta', $this->id_propuesta);
 
         $obj_pro->dpExecute();
-        //return $obj_asig->getAffect();
+        return $obj_pro->getAffect();
     }
 
 
@@ -753,7 +753,7 @@ class Propuesta{
         $obj_cp=$f->returnsQuery();
         $query="delete from propuestas where id_propuesta=$this->id_propuesta";
         $obj_cp->executeQuery($query);
-        //return $obj_cp->getAffect();
+        return $obj_cp->getAffect();
     }
 
 
