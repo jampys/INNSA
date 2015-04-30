@@ -198,7 +198,7 @@ class sQueryOracle extends sQuery   // se declara una clase para poder ejecutar 
                 $rows[]=$row;
             }
         }
-        $this->clean(); //Agregado 30/04/15 para liberar la consulta!!
+        //$this->clean(); //Agregado 30/04/15 para liberar la consulta!!
 
         return $rows;
     }

@@ -217,7 +217,8 @@
 
             if(globalOperacion=="edit"){ //Se cambia el estado de la asignacion
 
-                var data={  "accion":"asignacion",
+                var data={
+                    "accion":"asignacion",
                     "operacion":"save",
                     "id":globalId,
                     "estado":$("#estado").val(),
@@ -291,7 +292,7 @@
                 success:function(datas){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("Registro actualizado en la BD");
+                    $("#message").html(datas['comment']);
 
                 },
                 type:"POST",

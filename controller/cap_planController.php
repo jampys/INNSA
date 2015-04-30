@@ -89,9 +89,9 @@ switch($operacion){
             $u->setViaticos($v->viaticos);
             $u->setEstado($v->estado);
 
-            if($v->operacion=="insert") if(!$u->insertAsignacionPlan($v->id_solicitud)) $rta=0; //le paso parametro id_solicitud
-            else if($v->operacion=="update") if(!$u->updateAsignacionPlan()) $rta=0;
-            else if($v->operacion=="delete") if(!$u->deleteAsignacionPlan()) $rta=0;
+            if($v->operacion=="insert") {if(!$u->insertAsignacionPlan($v->id_solicitud)) $rta=0;} //le paso parametro id_solicitud
+            else if($v->operacion=="update") {if(!$u->updateAsignacionPlan()) $rta=0;}
+            else if($v->operacion=="delete") {if(!$u->deleteAsignacionPlan()) $rta=0;}
             }
 
         if($rta>0){

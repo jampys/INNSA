@@ -121,7 +121,7 @@
                 success:function(datas){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("Registro actualizado en la BD");
+                    $("#message").html(datas['comment']);
 
                 },
                 type:"POST",

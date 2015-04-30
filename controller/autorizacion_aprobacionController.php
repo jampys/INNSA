@@ -39,20 +39,30 @@ switch($operacion){
         break;
 
     case 'save':
+        $rta=1;
         //Aprobar/autorizar solicitud de capacitacion
         $view->u->setIdSolicitud($_POST['id']);
         $view->u->setAprAutorizo($_POST['apr_autorizo']);
         $view->u->setAprAprobo(($_POST['apr_aprobo']=='')? 'null': $_POST['apr_aprobo']);
         $view->u->setEstado($_POST['estado']);
 
-        $rta=$view->u->autorizar_aprobarCapSolic();
+        if(!$view->u->autorizar_aprobarCapSolic()) $rta=0;
         //*********Agregado para copiar propuesta en comunicacion
         if($_POST['estado']=='APROBADA'){
             $view->c=new Comunicacion();
-            $view->c->copyPropuestaIntoComunicacion($_POST['id']);
+            if(!$view->c->copyPropuestaIntoComunicacion($_POST['id'])) $rta=0;
         }
         //--------fin
-        print_r(json_encode($rta));
+        if($rta > 0){
+            $respuesta = array ('response'=>'success','comment'=>'Solicitud '.(($_POST['estado']=='APROBADA')? "aprobada":"autorizada").' correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta = array ('response'=>'error','comment'=>'Error al '.(($_POST['estado']=='APROBADA')? "aprobar":"autorizar").' la solicitud');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 

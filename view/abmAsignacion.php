@@ -290,7 +290,8 @@
                 success:function(datas){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("Registro actualizado en la BD");
+                    //$("#message").html("Registro actualizado en la BD");
+                    $("#message").html(datas['comment']);
 
                 },
                 type:"POST",
@@ -330,10 +331,6 @@
                 processData:true,
                 success:function(datas){
 
-                    /*if(datas.response == 'success'){
-                    }
-                    else if (datas.response == 'error'){
-                    }*/
                     $("#dialog-msn").dialog("open");
                     $("#message").html(datas['comment']);
 

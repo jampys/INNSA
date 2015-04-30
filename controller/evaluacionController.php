@@ -11,7 +11,7 @@ $view->u=new Evaluacion();
 switch($operacion){
 
     case 'insertEvaluacion':
-
+        $rta=1;
         $view->u->setIdAsignacion($_POST['id_asignacion']);
         $view->u->setConceptosImportantes($_POST['conceptos_importantes']);
         $view->u->setAspectosFaltaron($_POST['aspectos_faltaron']);
@@ -32,16 +32,26 @@ switch($operacion){
         $view->u->setObj2($_POST['obj_2']);
         $view->u->setObj3($_POST['obj_3']);
         $view->u->setComentarios($_POST['comentarios']);
+        if(!$view->u->insertEvaluacion()) $rta=0;
 
         //cambio la asignacion a EVALUADO
         $view->a=new Asignacion_plan();
         $view->a->setIdAsignacion($_POST['id_asignacion']);
         $view->a->setEstado($_POST['estado']);
         $view->a->setEstadoCambio($_POST['estado_cambio']);
-        $view->a->updateEstadoAsignacionPlan();
+        if(!$view->a->updateEstadoAsignacionPlan()) $rta=0;
 
-        $rta=$view->u->insertEvaluacion();
-        print_r(json_encode($rta));
+        if($rta > 0){
+            $respuesta = array ('response'=>'success','comment'=>'Evaluación ingresada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta = array ('response'=>'error','comment'=>'Error al ingresar la evaluación');
+            sQueryOracle::hacerRollback();
+        }
+
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 
@@ -56,7 +66,6 @@ switch($operacion){
     case 'saveEvaluacion':
 
         $view->u->setIdEvaluacion($_POST['id_evaluacion']);
-
         $view->u->setConceptosImportantes($_POST['conceptos_importantes']);
         $view->u->setAspectosFaltaron($_POST['aspectos_faltaron']);
         $view->u->setMejorarDesempenio($_POST['mejorar_desempenio']);
@@ -67,7 +76,6 @@ switch($operacion){
         $view->u->setEvIConsultas($_POST['ev_i_consultas']);
         $view->u->setEvIDidactico($_POST['ev_i_didactico']);
         $view->u->setEvIParticipacion($_POST['ev_i_participacion']);
-
         $view->u->setEvLDuracion($_POST['ev_l_duracion']);
         $view->u->setEvLComunicacion($_POST['ev_l_comunicacion']);
         $view->u->setEvLMaterial($_POST['ev_l_material']);
@@ -80,9 +88,18 @@ switch($operacion){
         $view->u->setObj3(isset($_POST['obj_3'])? $_POST['obj_3'] : 'null');
 
         $view->u->setComentarios($_POST['comentarios']);
-
         $rta=$view->u->updateEvaluacion();
-        print_r(json_encode($rta));
+
+        if($rta > 0){
+            $respuesta = array ('response'=>'success','comment'=>'Evaluación modificada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta = array ('response'=>'error','comment'=>'Error al modificar la evaluación');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 

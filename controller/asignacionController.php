@@ -19,9 +19,18 @@ switch($operacion){
         $view->c->setIndicadoresExito($_POST['indicadores_exito']);
         $view->c->setCompromiso($_POST['compromiso']);
         $view->c->setComunico($_POST['comunico']);
-
         $rta=$view->c->insertComunicacion();
-        print_r(json_encode($rta));
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Comunicación agregada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al agregar la comunicación');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 
@@ -34,25 +43,33 @@ switch($operacion){
 
 
     case 'updateComunicacionNotificacion':
+        $rta=1;
         $view->c=new Comunicacion();
         $view->c->setIdComunicacion($_POST['id_comunicacion']);
         $view->c->setNotificado($_POST['notificado']);
-
         //cambio esta asignacion a NOTIFICADO
         $view->u->setIdAsignacion($_POST['id']);
         $view->u->setEstado($_POST['estado']);
         $view->u->setEstadoCambio($_POST['estado_cambio']);
-        $view->u->updateEstadoAsignacionPlan();
+        if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
+        if(!$view->c->updateComunicacionNotificacion()) $rta=0;
 
-        $rta=$view->c->updateComunicacionNotificacion();
-        print_r(json_encode($rta));
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Notificación enviada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al enviar la notificación');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 
 
     case 'saveComunicacion':
         $view->c=new Comunicacion();
-
         //$view->c->setIdAsignacion($_POST['id']);
         $view->c->setIdComunicacion($_POST['id_comunicacion']);
         $view->c->setSituacion($_POST['situacion']);
@@ -62,21 +79,31 @@ switch($operacion){
         $view->c->setIndicadoresExito($_POST['indicadores_exito']);
         $view->c->setCompromiso($_POST['compromiso']);
         $view->c->setComunico($_POST['comunico']);
-
         $rta=$view->c->updateComunicacion();
-        print_r(json_encode($rta));
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Comunicación modificada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar la comunicación');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 
 
     case 'sendComunicacion':
-
+        $rta=1;
         //Obtener datos para enviar el mail
         $view->c=new Comunicacion();
         $view->c->setIdAsignacion($_POST['id']);
         $com=$view->c->getDatosForSendComunicationMail();
 
         if(!$com){ //Si la consulta SQL no devuelve ningun registro
+            $rta=0;
             $respuesta = array ('response'=>'error','comment'=>'Problemas con la consulta SQL');
         }
         else{ //si la consulta SQL devuelve 1 registro
@@ -101,25 +128,34 @@ switch($operacion){
                 //Poner en la comunicacion el id de quien comunico
                 $view->c->setIdComunicacion($_POST['id_comunicacion']);
                 $view->c->setComunico($_SESSION['USER_ID_EMPLEADO']);
-                $rtax=$view->c->updateComunicacionComunicacion();
+                //$rtax=$view->c->updateComunicacionComunicacion();
+                if(!$view->c->updateComunicacionComunicacion()) $rta=0;
 
                 //cambio la asignacion a COMUNICADA
                 $view->u->setIdAsignacion($_POST['id']);
                 $view->u->setEstado($_POST['estado']);
                 $view->u->setEstadoCambio($_POST['estado_cambio']);
-                $rta=$view->u->updateEstadoAsignacionPlan();
-                $respuesta = array ('response'=>'success','comment'=>'Comunicación enviada correctamente');
+                //$rta=$view->u->updateEstadoAsignacionPlan();
+                if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
 
             }
             else{ //No pudo enviar el e-mail
+                $rta=0;
                 $respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
             }
 
+        }
 
+        if($rta > 0){
+            $respuesta = array ('response'=>'success','comment'=>'Comunicación enviada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            //$respuesta lo trae de arriba
+            sQueryOracle::hacerRollback();
         }
 
         print_r(json_encode($respuesta));
-
         exit;
         break;
 

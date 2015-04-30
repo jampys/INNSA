@@ -27,7 +27,7 @@ switch($operacion){
         exit;
         break; */
 
-    case 'insertComunicacion':
+    case 'insertComunicacion': //creo que no lo uso
         $view->c=new Comunicacion();
 
         $view->c->setIdAsignacion($_POST['id']);
@@ -42,7 +42,7 @@ switch($operacion){
         exit;
         break;
 
-    case 'updateComunicacion':
+    case 'updateComunicacion': //creo que no lo uso
         $view->c=new Comunicacion();
 
         $rta=$view->c->getComunicacionByAsignacion($_POST['id']);
@@ -51,7 +51,7 @@ switch($operacion){
         break;
 
 
-    case 'saveComunicacion':
+    case 'saveComunicacion': //creo que no lo uso
         $view->c=new Comunicacion();
 
         //$view->c->setIdAsignacion($_POST['id']);
