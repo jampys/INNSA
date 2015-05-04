@@ -237,10 +237,10 @@ class Empleado
     }
 
 
-    public function availableLegajo($l, $e){
+    public function availableLegajo($l, $e, $id){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from empleados where n_legajo = $l and empresa = $e");
+        $obj_user->executeQuery("select * from empleados where n_legajo = $l and empresa = $e and $id not in (select id_empleado from empleados where n_legajo = $l and id_empleado = $id)");
 
         $r=$obj_user->fetchAll();
         if($obj_user->getAffect()==0){

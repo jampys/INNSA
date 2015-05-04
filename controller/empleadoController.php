@@ -94,7 +94,7 @@ switch($operacion){
         break; */
 
     case 'AvailableLegajo':
-        $rta=$view->u->availableLegajo($_POST['n_legajo'], $_POST['empresa']);
+        $rta=$view->u->availableLegajo($_POST['n_legajo'], $_POST['empresa'], $_POST['id']);
         print_r(json_encode($rta));
         exit;
         break;

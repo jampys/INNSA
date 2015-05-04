@@ -256,6 +256,7 @@
                         data: {
                             n_legajo: function(){ return $("#n_legajo").val(); },
                             empresa: function(){ return ($("#empresa").val()!='')? "'"+$("#empresa").val()+"'": 'empresa'; },
+                            id: function(){ return (globalOperacion=='insert')? 0: globalId; },
                             accion: "empleado",
                             operacion: "AvailableLegajo"
                         }
