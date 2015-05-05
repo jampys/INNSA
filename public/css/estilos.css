@@ -19,7 +19,7 @@ input{
 textarea{
     font-family:Arial !important;
     font-size: 10px !important;
-    text-transform: uppercase !important;
+    /*text-transform: uppercase !important; */
 }
 
 select{
@@ -288,6 +288,16 @@ select{
 #reportes > tbody > tr:not(.oculta) {
     cursor: pointer;
 }
+
+
+/* Estilo personalizado de los dataTables */
+.dataTable tbody tr td {
+    padding: 1px 10px 1px 10px; /* or whatever height you need to make them all consistent */
+    font-size: 10px;
+}
+
+
+
 
 
 
