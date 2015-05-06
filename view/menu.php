@@ -2,10 +2,10 @@
 <html>
     <head>
 
-        <script>
+        <script type="text/javascript">
 
-            //$(document).ready(function(){
-            $(window).load(function(){
+            $(document).ready(function(){
+            //$(window).load(function(){
                 $("#menux").menu();
             });
 
