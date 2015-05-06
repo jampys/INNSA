@@ -134,7 +134,8 @@
                 <div id="menuIzq">
                     <?php
                     if(isset($_SESSION["ses_id"])){
-                        include_once("menu.php");
+
+                        require_once("menu.php");
 
                     }
                     ?>
