@@ -4,7 +4,7 @@
 
         // dataTable
         var uTable = $('#example').dataTable( {
-            "scrollY": "200px",
+            "scrollY": "auto",
             "autoWidth": true,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
