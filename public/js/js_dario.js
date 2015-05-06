@@ -51,7 +51,13 @@ $(document).ready(function(){
             periodos[i]=i+anioActual;
         }
         return periodos;
-    }
+    };
+
+
+    //Funcion para setear el alto de los dataTables dinamicamente... no la estoy usando.
+    $.calcDataTableHeight = function() {
+        return Math.round($(window).height() * 0.58);
+    };
 
 
 
