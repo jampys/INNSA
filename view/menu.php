@@ -88,7 +88,7 @@
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
             <li><a href="#">Administración</a>
                 <ul style="z-index: 9999">
-                    <li><a href="index.php?accion=reportes">Categorías y Temas</a></li>
+                    <li><a href="index.php?accion=administracion">Categorías y Temas</a></li>
                 </ul>
             </li>
         <?   } ?>
