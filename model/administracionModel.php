@@ -6,7 +6,7 @@ class Categoria
     var $id_categoria;
     var $nombre;
     var $descripcion;
-    var $status;
+    var $estado;
 
     //Metodo ya implementado en cursoModel. Eliminarlo de ahi y llamar a este en el cursoController
     public function getCategorias(){
@@ -37,141 +37,48 @@ class Categoria
         return $obj_cat->fetchAll();
     }
 
-    public function autocompletarEmpleados($term, $id_empleado, $target){  //funcion usada para autocompletar de empleados (solo activos)
-        /* Si se le pasa el parametro 'BYUSER': Devuelve solos los empleados habilitados para que el usuario opere
-           Si se le para el parametro 'ALL': Devuelve todos los empleados
-        */
-        $f=new Factory();
-        $obj_cp=$f->returnsQuery();
-        //$query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
-        if($target=='BYUSER'){
-            $query="select em.*".
-                " from empleados em, division di, supervisor_division sd, empleados su".
-                " where em.id_division = di.id_division".
-                " and di.id_division = sd.id_division".
-                " and sd.id_empleado = su.id_empleado".
-                " and su.id_empleado = $id_empleado".
-                " and (em.nombre like UPPER ('%".$term."%') or em.apellido like UPPER ('%".$term."%'))".
-                " and em.activo = 1";
-        }else if ($target=='ALL'){
-            $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
-        }
-
-        $obj_cp->executeQuery($query);
-        return $obj_cp->fetchAll();
-    }
 
 
     // metodos que devuelven valores
-    function getIdEmpleado()
-    { return $this->id_empleado;}
+    function getIdCategoria()
+    { return $this->id_categoria;}
 
     function getNombre()
     { return $this->nombre;}
 
-    function getApellido()
-    { return $this->apellido;}
+    function getDescripcion()
+    { return $this->descripcion;}
 
-    function getLugarTrabajo()
-    { return $this->lugar_trabajo;}
+    function getEstado()
+    { return $this->estado;}
 
-    function getNLegajo()
-    { return $this->n_legajo;}
-
-    function getEmpresa()
-    { return $this->empresa;}
-
-    function getFuncion()
-    { return $this->funcion;}
-
-    function getCategoria()
-    { return $this->categoria;}
-
-    function getDivision()
-    { return $this->id_division;}
-
-    function getFechaIngreso()
-    { return $this->fecha_ingreso;}
-
-    function getActivo()
-    { return $this->activo;}
-
-    function getEmail()
-    { return $this->email;}
-
-    function getCuil()
-    { return $this->cuil;}
 
     // metodos que setean los valores
-    function setIdEmpleado($val)
-    { $this->id_empleado=$val;}
+    function setIdCategoria($val)
+    { $this->id_categoria=$val;}
 
     function setNombre($val)
     {  $this->nombre=$val;}
 
-    function setApellido($val)
-    {  $this->apellido=$val;}
+    function setDescripcion($val)
+    {  $this->descripcion=$val;}
 
-    function setLugarTrabajo($val)
-    {  $this->lugar_trabajo=$val;}
-
-    function setNLegajo($val)
-    {  $this->n_legajo=$val;}
-
-    function setEmpresa($val)
-    {  $this->empresa=$val;}
-
-    function setFuncion($val)
-    {  $this->funcion=$val;}
-
-    function setCategoria($val)
-    {  $this->categoria=$val;}
-
-    function setDivision($val)
-    {  $this->id_division=$val;}
-
-    function setFechaIngreso($val)
-    {  $this->fecha_ingreso=$val;}
-
-    function setActivo($val)
-    {  $this->activo=$val;}
-
-    function setEmail($val)
-    {  $this->email=$val;}
-
-    function setCuil($val)
-    {  $this->cuil=$val;}
+    function setEstado($val)
+    {  $this->estado=$val;}
 
 
 
-
-    public function updateEmpleado(){
-        /*
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        //$query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo=$this->n_legajo, empresa='$this->empresa', funcion='$this->funcion', categoria='$this->categoria', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
-        $query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo='$this->n_legajo', empresa='$this->empresa', funcion='$this->funcion', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
-        $obj_user->executeQuery($query);
-        return $obj_user->getAffect(); */
+    public function updateCategoria(){
 
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $query="update empleados set apellido= :apellido, nombre= :nombre, lugar_trabajo= :lugar_trabajo, n_legajo= :n_legajo, empresa= :empresa, funcion= :funcion, ".
-            " id_division= :division, fecha_ingreso=to_date(:fecha_ingreso,'DD/MM/YYYY'), activo= :activo, email= :email, cuil= :cuil where id_empleado = :id_empleado";
+        $query="update categorias set nombre= :nombre, descripcion= :descripcion, estado= :estado where id_categoria = :id_categoria";
         $obj_emp->dpParse($query);
 
-        $obj_emp->dpBind(':id_empleado', $this->id_empleado);
-        $obj_emp->dpBind(':apellido', $this->apellido);
-        $obj_emp->dpBind(':nombre', $this->nombre);
-        $obj_emp->dpBind(':lugar_trabajo', $this->lugar_trabajo);
-        $obj_emp->dpBind(':n_legajo', $this->n_legajo);
-        $obj_emp->dpBind(':empresa', $this->empresa);
-        $obj_emp->dpBind(':funcion', $this->funcion);
-        $obj_emp->dpBind(':division', $this->id_division);
-        $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
-        $obj_emp->dpBind(':activo', $this->activo);
-        $obj_emp->dpBind(':email', $this->email);
-        $obj_emp->dpBind(':cuil', $this->cuil);
+        $obj_emp->dpBind(':nombre', $this->getNombre());
+        $obj_emp->dpBind(':descripcion', $this->getDescripcion());
+        $obj_emp->dpBind(':estado', $this->getEstado());
+        $obj_emp->dpBind(':id_categoria', $this->getIdCategoria());
 
         $obj_emp->dpExecute();
         return $obj_emp->getAffect();
@@ -243,6 +150,62 @@ class Categoria
         return $output;
     }
 
+
+
+
+}
+
+
+class Tema{
+
+    var $id_tema;
+    var $id_categoria;
+    var $nombre;
+    var $estado;
+
+    // metodos que devuelven valores
+    function getIdTema()
+    { return $this->id_tema;}
+
+    function getIdCategoria()
+    { return $this->id_categoria;}
+
+    function getNombre()
+    { return $this->nombre;}
+
+
+    function getEstado()
+    { return $this->estado;}
+
+
+    // metodos que setean los valores
+    function setIdTema($val)
+    { $this->id_tema=$val;}
+
+    function setIdCategoria($val)
+    { $this->id_categoria=$val;}
+
+    function setNombre($val)
+    {  $this->nombre=$val;}
+
+    function setEstado($val)
+    {  $this->estado=$val;}
+
+
+    public function updateTema(){
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="update temas set nombre= :nombre, estado= :estado where id_tema = :id_tema";
+        $obj_emp->dpParse($query);
+
+        $obj_emp->dpBind(':nombre', $this->getNombre());
+        $obj_emp->dpBind(':estado', $this->getEstado());
+        $obj_emp->dpBind(':id_tema', $this->getIdTema());
+
+        $obj_emp->dpExecute();
+        return $obj_emp->getAffect();
+
+    }
 
 
 

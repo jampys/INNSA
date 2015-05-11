@@ -44,28 +44,32 @@ switch($operacion){
         exit;
         break;
 
-    case 'save':
-        $view->u->setIdEmpleado($_POST['id']);
-        $view->u->setApellido($_POST['apellido']);
-        $view->u->setNombre($_POST['nombre']);
-        $view->u->setLugarTrabajo($_POST['lugar_trabajo']);
-        $view->u->setNLegajo($_POST['n_legajo']);
-        $view->u->setEmpresa($_POST['empresa']);
-        $view->u->setFuncion($_POST['funcion']);
-        //$view->u->setCategoria($_POST['categoria']);
-        $view->u->setDivision($_POST['division']);
-        $view->u->setFechaIngreso($_POST['fecha_ingreso']);
-        $view->u->setActivo($_POST['activo']);
-        $view->u->setEmail($_POST['email']);
-        $view->u->setCuil($_POST['cuil']);
-        $rta=$view->u->updateEmpleado();
-        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado actualizado correctamente'):array ('response'=>'error','comment'=>'Error al modificar el empleado ');
+    case 'CategoriaSave':
+        $rta=1;
+        $view->c->setIdCategoria($_POST['id']);
+        $view->c->setNombre($_POST['categoria_nombre']);
+        $view->c->setDescripcion($_POST['categoria_descripcion']);
+        $view->c->setEstado($_POST['categoria_estado']);
+        if(!$rta=$view->c->updateCategoria()) $rta=0;
+
+        //Actualizo los temas de la categoria
+        $vector=json_decode($_POST["temas"]);
+        foreach ($vector as $v){
+            $t=new Tema();
+            $t->setIdTema($v->id_tema);
+            $t->setNombre($v->nombre);
+            $t->setEstado($v->check);
+
+            if($v->operacion=="update") {if(!$t->updateTema($v->id_tema)) $rta=0;}
+
+        }
+
         if($rta > 0){
-            $respuesta= array ('response'=>'success','comment'=>'Empleado modificado correctamente');
+            $respuesta= array ('response'=>'success','comment'=>'Categoría modificada correctamente');
             sQueryOracle::hacerCommit();
         }
         else{
-            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el empleado');
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar la categoría');
             sQueryOracle::hacerRollback();
         }
 
@@ -81,24 +85,11 @@ switch($operacion){
         break;
 
     case 'refreshGrid':
-        $view->empleados=$view->u->getEmpleados();
-        include_once('view/abmEmpleadoGrid.php');
+        $view->categorias=$view->c->getCategorias();
+        include_once('view/abmAdministracionGrid.php');
         exit;
         break;
 
-    /*
-    case 'getEmpleadoBySession':
-        $view->e=new User();
-        $rta=$view->e->getUsuarioById($_SESSION["ses_id"]);
-        print_r(json_encode($rta));
-        exit;
-        break; */
-
-    case 'AvailableLegajo':
-        $rta=$view->u->availableLegajo($_POST['n_legajo'], $_POST['empresa'], $_POST['id']);
-        print_r(json_encode($rta));
-        exit;
-        break;
 
     default:
         $view->categorias=$view->c->getCategorias();
