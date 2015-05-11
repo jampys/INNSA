@@ -22,9 +22,9 @@
 
 
         // Dialog Link
-        $('#dialog_link').click(function(){
-            globalOperacion='insert';
-            $('#dialog').dialog('open');
+        $('#categoria_new_link').click(function(){
+            globalOperacion='categoria_insert';
+            $('#categoria').dialog('open');
             return false;
         });
 
@@ -51,7 +51,7 @@
 
 
         <div class="block" id="list">
-            <a href="javascript:void(0);" id="dialog_link">Agregar Categoría</a>
+            <a href="javascript:void(0);" id="categoria_new_link">Agregar Categoría</a>
             <table cellpadding="0" cellspacing="0" border="0" id="example" style="width: 700px">
                 <thead>
                 <tr>

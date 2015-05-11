@@ -7,33 +7,39 @@ $view->c=new Categoria();
 
 
 switch($operacion){
-    case 'insert':
-        $view->u->setApellido($_POST['apellido']);
-        $view->u->setNombre($_POST['nombre']);
-        $view->u->setLugarTrabajo($_POST['lugar_trabajo']);
-        $view->u->setNLegajo($_POST['n_legajo']);
-        $view->u->setEmpresa($_POST['empresa']);
-        $view->u->setFuncion($_POST['funcion']);
-        //$view->u->setCategoria($_POST['categoria']);
-        $view->u->setDivision($_POST['division']);
-        $view->u->setFechaIngreso($_POST['fecha_ingreso']);
-        $view->u->setActivo($_POST['activo']);
-        $view->u->setEmail($_POST['email']);
-        $view->u->setCuil($_POST['cuil']);
-        $rta=$view->u->insertEmpleado();
-        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado agregado correctamente'):array ('response'=>'error','comment'=>'Error al agregar el empleado');
-        if($rta > 0){
-            $respuesta= array ('response'=>'success','comment'=>'Empleado agregado correctamente');
+
+    case 'categoriaInsert':
+        $rta=1;
+        //$view->c->setIdCategoria($_POST['id']);
+        $view->c->setNombre($_POST['categoria_nombre']);
+        $view->c->setDescripcion($_POST['categoria_descripcion']);
+        $view->c->setEstado($_POST['categoria_estado']);
+        //Cuando insert categoria devuelve el id, necesario para insert de temas asociados a la categoria
+        $rta=$id_categoria=$view->c->insertCategoria();
+
+        $vector=json_decode($_POST["temas"]);
+        foreach ($vector as $v){
+            $t=new Tema();
+            $t->setIdCategoria($id_categoria);
+            $t->setNombre($v->nombre);
+            $t->setEstado($v->check);
+            if($v->operacion=="insert") {if(!$t->insertTema()) $rta=0;}
+        }
+
+        if($rta>0){
             sQueryOracle::hacerCommit();
+            $respuesta=array ('response'=>'success','comment'=>'Categoría ingresada correctamente');
         }
         else{
-            $respuesta=array ('response'=>'error','comment'=>'Error al agregar el empleado');
             sQueryOracle::hacerRollback();
+            $respuesta=array ('response'=>'error','comment'=>'Error al ingresar la categoría');
         }
 
         print_r(json_encode($respuesta));
         exit;
         break;
+
+
 
     case 'categoriaUpdate':
 
@@ -44,7 +50,7 @@ switch($operacion){
         exit;
         break;
 
-    case 'CategoriaSave':
+    case 'categoriaSave':
         $rta=1;
         $view->c->setIdCategoria($_POST['id']);
         $view->c->setNombre($_POST['categoria_nombre']);
@@ -57,10 +63,12 @@ switch($operacion){
         foreach ($vector as $v){
             $t=new Tema();
             $t->setIdTema($v->id_tema);
+            $t->setIdCategoria($v->id_categoria);
             $t->setNombre($v->nombre);
             $t->setEstado($v->check);
 
             if($v->operacion=="update") {if(!$t->updateTema($v->id_tema)) $rta=0;}
+            else if($v->operacion=="insert") {if(!$t->insertTema()) $rta=0;}
 
         }
 

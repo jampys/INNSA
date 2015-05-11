@@ -33,14 +33,8 @@
                     $("#categoria_estado").val(datas['categoria'][0]['ESTADO']);
 
 
-                    //Se construye la tabla de cursos propuestos
+                    //Se construye la tabla de temas
                     $.each(datas['temas'], function(indice, val){
-
-                        /*$('#table_temas tbody').append('<tr id_tema='+datas['temas'][indice]['ID_TEMA']+' '+'id_categoria='+datas['temas'][indice]['ID_CATEGORIA']+'>' +
-                        '<td>'+datas['temas'][indice]['NOMBRE']+'</td>' +
-                        '<td>'+datas['temas'][indice]['ESTADO']+'</td>' +
-                        '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                        '</tr>'); */
 
                         var idCheck=datas['temas'][indice]['ID_TEMA'];
                         var nombre=(typeof(datas['temas'][indice]['NOMBRE'])!='undefined')? datas['temas'][indice]['NOMBRE']: '';
@@ -53,7 +47,6 @@
                         $("#tabla_temas_check_"+idCheck+"").prop('checked', ((datas['temas'][indice]['ESTADO'])=="ACTIVO")? true:false);
 
                     });
-
 
                 },
                 type:"POST",
@@ -83,25 +76,18 @@
             if(globalOperacion=="categoria_insert"){ //se va a guardar una nueva categoria
                 var url="index.php";
                 var data={  "accion":"administracion",
-                            "operacion":"insert",
-                            "apellido":$("#apellido").val(),
-                            "nombre":$("#nombre").val(),
-                            "lugar_trabajo":$("#lugar_trabajo").val(),
-                            "n_legajo":$("#n_legajo").val(),
-                            "empresa":$("#empresa").val(),
-                            "funcion":$("#funcion").val(),
-                            //"categoria":$("#categoria").val(),
-                            "division":$("#division").val(),
-                            "fecha_ingreso":$("#fecha").val(),
-                            "activo":$("#activo").val(),
-                            "email":$("#email").val(),
-                            "cuil":$("#cuil").val()
+                            "operacion":"categoriaInsert",
+                            "temas":JSON.stringify(jsonObj),
+                            "categoria_nombre":$("#categoria_nombre").val(),
+                            "categoria_estado":$("#categoria_estado").val(),
+                            "categoria_descripcion":$("#categoria_descripcion").val()
+
                         };
             }
             else if(globalOperacion=="categoria_edit"){ //se va a guardar una categoria editada
                 var url="index.php";
                 var data={  "accion":"administracion",
-                    "operacion":"CategoriaSave",
+                    "operacion":"categoriaSave",
                     "temas":JSON.stringify(jsonObj),
                     "id":globalId,
                     "categoria_nombre":$("#categoria_nombre").val(),
@@ -229,13 +215,16 @@
                 buttons: {
                     "Guardar": function() {
                         if($("#form_tema").valid()){
-
+                            //var idx=Math.floor(Math.random() * (9999 - 9000 + 1)) + 9000;
+                            //Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
                             $('#table_temas tbody').append('<tr operacion="insert">' +
                             '<td><input type="text" class="tabla_temas_nombre" value="'+$('#tema_nombre').val()+'" ></td>' +
-                            '<td><input type="checkbox" id="tabla_temas_check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
+                            //'<td><input type="checkbox" id="tabla_temas_check_'+idx+'" name="tabla_temas_check_'+idx+'"></td>' +
+                            '<td><input type="checkbox"'+(($('#tema_estado').val()=="ACTIVO")? "checked": "")+'></td>' +
                             '</tr>');
 
-                            $("#tabla_temas_check_"+idCheck+"").prop('checked', ((datas['temas'][indice]['ESTADO'])=="ACTIVO")? true:false);
+                            //$(this).closest('tr').index();
+                            //$("#tabla_temas_check_"+idx+"").prop('checked', ($('#tema_estado').val()=="ACTIVO")? true:false);
 
                         }
 
@@ -266,7 +255,6 @@
 
             //Agregado para editar
             $(document).on("click", ".categoria_edit_link", function(){
-                //globalOperacion=$(this).attr("media");
                 globalOperacion='categoria_edit';
                 globalId=$(this).attr('id');
                 editarCategoria(globalId); //le mando el id del usuario a editar que esta en el atributo id
@@ -371,8 +359,8 @@
                                 <div class="column_content">
                                     <label>Estado: </label>
                                     <select name="categoria_estado" id="categoria_estado">
-                                        <option value="">Seleccione el estado</option>
-                                        <option value="ACTIVA">ACTIVA</option>
+                                        <!--<option value="">Seleccione el estado</option>-->
+                                        <option value="ACTIVA" selected>ACTIVA</option>
                                         <option value="INACTIVA">INACTIVA</option>
                                     </select>
 
@@ -450,7 +438,7 @@
                         <div class="eight column">
                             <div class="column_content">
                                 <label>Estado: </label>
-                                <select name="categoria_estado" id="categoria_estado">
+                                <select name="tema_estado" id="tema_estado">
                                     <!--<option value="">Seleccione el estado</option>-->
                                     <option value="ACTIVO" selected>ACTIVO</option>
                                     <option value="INACTIVO">INACTIVO</option>

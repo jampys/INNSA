@@ -85,45 +85,26 @@ class Categoria
 
     }
 
-    public function insertEmpleado(){
-        /*
-        $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        $query="insert into empleados(apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, division, fecha_ingreso, activo, email, cuil)".
-            "values('$this->apellido', '$this->nombre', '$this->lugar_trabajo' , '$this->n_legajo', '$this->empresa', '$this->funcion', '$this->division', to_date('$this->fecha_ingreso','DD/MM/YYYY'), $this->activo, '$this->email', '$this->cuil')";
-        $obj_emp->executeQuery($query);
-        return $obj_emp->getAffect(); */
+    public function insertCategoria(){
 
         $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        $query="insert into empleados (apellido, nombre, lugar_trabajo, n_legajo, empresa, funcion, id_division, fecha_ingreso, activo, email, cuil)".
-            " values(:apellido, :nombre, :lugar_trabajo, :n_legajo, :empresa, :funcion, :division, to_date(:fecha_ingreso,'DD/MM/YYYY'), :activo, :email, :cuil)";
-        $obj_emp->dpParse($query);
+        $obj_sc=$f->returnsQuery();
+        $query="insert into categorias (nombre, descripcion, estado)".
+            " values(:nombre, :descripcion, :estado)".
+            " returning id_categoria into :id";
+        $topo=$obj_sc->dpParse($query);
 
-        $obj_emp->dpBind(':apellido', $this->apellido);
-        $obj_emp->dpBind(':nombre', $this->nombre);
-        $obj_emp->dpBind(':lugar_trabajo', $this->lugar_trabajo);
-        $obj_emp->dpBind(':n_legajo', $this->n_legajo);
-        $obj_emp->dpBind(':empresa', $this->empresa);
-        $obj_emp->dpBind(':funcion', $this->funcion);
-        $obj_emp->dpBind(':division', $this->id_division);
-        $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
-        $obj_emp->dpBind(':activo', $this->activo);
-        $obj_emp->dpBind(':email', $this->email);
-        $obj_emp->dpBind(':cuil', $this->cuil);
+        $obj_sc->dpBind(':nombre', $this->getNombre());
+        $obj_sc->dpBind(':descripcion', $this->getDescripcion());
+        $obj_sc->dpBind(':estado', $this->getEstado());
 
-        $obj_emp->dpExecute();
-        return $obj_emp->getAffect();
+        //Se asigna a la variable $id el valor :id devuelto por la consulta, si le saco el parametro $obj_sc da error
+        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
+        $obj_sc->dpExecute();
+        return $id;
+
     }
 
-    /*
-    function delete(){
-        $f=new Factory();
-        $obj_cliente=$f->returnsQuery();
-        $query="delete from clientes where id=$this->id";
-        $obj_cliente->executeQuery($query);
-        return $obj_cliente->getAffect();
-    }*/
 
 
     public function getDivisiones(){
@@ -205,6 +186,21 @@ class Tema{
         $obj_emp->dpExecute();
         return $obj_emp->getAffect();
 
+    }
+
+    public function insertTema(){
+
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="insert into temas (id_categoria, nombre, estado) values(:id_categoria, :nombre, :estado)";
+        $obj_emp->dpParse($query);
+
+        $obj_emp->dpBind(':id_categoria', $this->getIdCategoria());
+        $obj_emp->dpBind(':nombre', $this->getNombre());
+        $obj_emp->dpBind(':estado', $this->getEstado());
+
+        $obj_emp->dpExecute();
+        return $obj_emp->getAffect();
     }
 
 
