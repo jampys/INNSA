@@ -4,7 +4,9 @@ if(isset($_REQUEST['operacion']))
 
 require_once("model/cap_planModel.php");
 require_once("model/cap_solicModel.php");
+require_once("model/administracionModel.php");
 $view->u=new Cap_Plan();
+$view->a=new EntidadCapacitadora();
 
 
 switch($operacion){
@@ -129,6 +131,7 @@ switch($operacion){
 
     default:
         $view->cp=$view->u->getCapPlan();
+        $entidadesCapacitadoras=$view->a->getEntidadesCapacitadoras();
         break;
 
 }

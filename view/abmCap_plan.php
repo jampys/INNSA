@@ -584,11 +584,10 @@
                                     <label>Entidad: </label>
                                     <select name="entidad" id="entidad">
                                         <option value="">Seleccione la entidad</option>
-                                        <option value="IAPG">IAPG</option>
-                                        <option value="IT COLLEGE">It College</option>
-                                        <option value="PERSEUS">Perseus</option>
-                                        <option value="UTN">UTN</option>
-                                        <option value="OTRA">Otra</option>
+                                        <!--Entidades capacitadoras se cargan dinamicamente de la BD -->
+                                        <?php foreach($entidadesCapacitadoras as $ec){?>
+                                            <option value="<?php echo $ec['ID_ENTIDAD_CAPACITADORA']; ?>"><?php echo $ec['NOMBRE']; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>

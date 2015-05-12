@@ -107,32 +107,6 @@ class Categoria
 
 
 
-    public function getDivisiones(){
-        $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        $query="select * from division";
-        $obj_emp->executeQuery($query);
-        return $obj_emp->fetchAll(); // retorna todas las divisiones
-    }
-
-
-    public function availableLegajo($l, $e, $id){
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from empleados where n_legajo = $l and empresa = $e and $id not in (select id_empleado from empleados where n_legajo = $l and id_empleado = $id)");
-
-        $r=$obj_user->fetchAll();
-        if($obj_user->getAffect()==0){
-            $output = true;
-        }
-        else{
-            $output = false;
-        }
-        return $output;
-    }
-
-
-
 
 }
 
@@ -203,6 +177,79 @@ class Tema{
         return $obj_emp->getAffect();
     }
 
+
+
+}
+
+
+
+class EntidadCapacitadora{
+
+
+    var $id_entidad_capacitadora;
+    var $nombre;
+    var $estado;
+
+    // metodos que devuelven valores
+    function getIdEntidadCapacitadora()
+    { return $this->id_entidad_capacitadora;}
+
+    function getNombre()
+    { return $this->nombre;}
+
+    function getEstado()
+    { return $this->estado;}
+
+
+    // metodos que setean los valores
+    function setIdEntidadCapacitadora($val)
+    { $this->id_entidad_capacitadora=$val;}
+
+    function setNombre($val)
+    {  $this->nombre=$val;}
+
+    function setEstado($val)
+    {  $this->estado=$val;}
+
+
+    public function getEntidadesCapacitadoras(){
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="select * from entidades_capacitadoras";
+        $obj_ec->executeQuery($query);
+        return $obj_ec->fetchAll();
+    }
+
+
+    public function updateTema(){
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="update temas set nombre= :nombre, estado= :estado where id_tema = :id_tema";
+        $obj_emp->dpParse($query);
+
+        $obj_emp->dpBind(':nombre', $this->getNombre());
+        $obj_emp->dpBind(':estado', $this->getEstado());
+        $obj_emp->dpBind(':id_tema', $this->getIdTema());
+
+        $obj_emp->dpExecute();
+        return $obj_emp->getAffect();
+
+    }
+
+    public function insertTema(){
+
+        $f=new Factory();
+        $obj_emp=$f->returnsQuery();
+        $query="insert into temas (id_categoria, nombre, estado) values(:id_categoria, :nombre, :estado)";
+        $obj_emp->dpParse($query);
+
+        $obj_emp->dpBind(':id_categoria', $this->getIdCategoria());
+        $obj_emp->dpBind(':nombre', $this->getNombre());
+        $obj_emp->dpBind(':estado', $this->getEstado());
+
+        $obj_emp->dpExecute();
+        return $obj_emp->getAffect();
+    }
 
 
 }
