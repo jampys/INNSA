@@ -30,8 +30,9 @@
 
                     $("#tema").html('<option value="">Ingrese un tema</option>');
                     $.each(datas, function(indice, val){
-                        //$("#tema").append("<option value='"+datas[indice]['ID_TEMA']+"'>"+datas[indice]['NOMBRE']+"</option>");
-                        $("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
+                        var estado=(datas[indice]["ESTADO"]=="ACTIVO")? "":"disabled";
+                        $("#tema").append('<option value="'+datas[indice]["ID_TEMA"]+'"'+estado+'>'+datas[indice]["NOMBRE"]+'</option>');
+                        //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
 
 
                     });
@@ -398,12 +399,10 @@
                                     <label>Categoria: </label>
                                     <select name="categoria" id="categoria" onchange="cargarTemas();">
                                         <option value="">Seleccione una categoria</option>
-                                        <!--<option value="1">Habilidades soft</option>
-                                        <option value="2">Gestión</option>
-                                        <option value="3">Industria Oil</option>
-                                        <option value="4">Técnico</option>-->
-                                        <?php foreach($categorias as $cat){?>
-                                            <option value="<?php echo $cat['ID_CATEGORIA']?>"><?php echo $cat['NOMBRE']?></option>
+                                        <?php foreach($categorias as $cat){
+                                            $estado=($cat['ESTADO']=='ACTIVA')? "": "disabled";
+                                            ?>
+                                            <option value="<?php echo $cat['ID_CATEGORIA']?>" <?php echo $estado ?> ><?php echo $cat['NOMBRE']?> </option>
                                         <?php }?>
                                     </select>
                                 </div>
