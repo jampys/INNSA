@@ -28,7 +28,7 @@
                 processData:true,
                 success:function(datas){
 
-                    $("#tema").html('<option value="">Ingrese un tema</option>');
+                    $("#tema").html('<option value="">Seleccione un tema</option>');
                     $.each(datas, function(indice, val){
                         var estado=(datas[indice]["ESTADO"]=="ACTIVO")? "":"disabled";
                         $("#tema").append('<option value="'+datas[indice]["ID_TEMA"]+'"'+estado+'>'+datas[indice]["NOMBRE"]+'</option>');

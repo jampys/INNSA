@@ -264,4 +264,94 @@ class EntidadCapacitadora{
 }
 
 
+class Funcion{
+
+
+
+    var $id_funcion;
+    var $nombre;
+    var $estado;
+    var $id_division;
+
+    // metodos que devuelven valores
+    function getIdFuncion()
+    { return $this->id_funcion;}
+
+    function getNombre()
+    { return $this->nombre;}
+
+    function getEstado()
+    { return $this->estado;}
+
+    function getIdDivision()
+    { return $this->id_division;}
+
+
+    // metodos que setean los valores
+    function setIdFuncion($val)
+    { $this->id_funcion=$val;}
+
+    function setNombre($val)
+    {  $this->nombre=$val;}
+
+    function setEstado($val)
+    {  $this->estado=$val;}
+
+    function setIdDivision($val)
+    {  $this->id_division=$val;}
+
+
+    public function getFunciones($id){
+        $f=new Factory();
+        $obj_fn=$f->returnsQuery();
+        $query="select * from funciones where id_division = $id";
+        $obj_fn->executeQuery($query);
+        return $obj_fn->fetchAll();
+    }
+
+    public function getEntidadById($id){
+        $f=new Factory();
+        $obj_cat=$f->returnsQuery();
+        $query="select * from entidades_capacitadoras where id_entidad_capacitadora = :id";
+        $obj_cat->dpParse($query);
+        $obj_cat->dpBind(':id', $id);
+        $obj_cat->dpExecute();
+        return $obj_cat->fetchAll();
+    }
+
+
+    public function updateEntidad(){
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="update entidades_capacitadoras set nombre= :nombre, estado= :estado where id_entidad_capacitadora = :id_entidad_capacitadora";
+        $obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+        $obj_ec->dpBind(':id_entidad_capacitadora', $this->getIdEntidadCapacitadora());
+
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
+
+    }
+
+    public function insertEntidad(){
+
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="insert into entidades_capacitadoras(nombre, estado) values(:nombre, :estado)";
+        $obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
+    }
+
+
+}
+
+
+
 ?>

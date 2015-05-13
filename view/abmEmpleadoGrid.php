@@ -12,8 +12,8 @@
             "columnDefs": [
                 { "width": "150px", "targets": 0 },
                 { "width": "150px", "targets": 1 },
-                { "width": "200px", "targets": 5 },
-                { "width": "100px", "targets": 6 }
+                { "width": "100px", "targets": 5 },
+                { "width": "200px", "targets": 6 }
             ]
         } );
         $(window).bind('resize', function () {
@@ -74,9 +74,8 @@
                     <th>Lugar</th>
                     <th>Legajo</th>
                     <th>Empresa</th>
-                    <th>Función</th>
-                    <!--<th>Categoria</th>-->
                     <th>División</th>
+                    <th>Función</th>
                     <th>Editar</th>
                 </tr>
                 </tfoot>
@@ -88,9 +87,8 @@
                         <td><?php  echo $emp["LUGAR_TRABAJO"]; ?></td>
                         <td><?php  echo $emp["N_LEGAJO"]; ?></td>
                         <td><?php  echo $emp["EMPRESA"]; ?></td>
-                        <td><?php  echo $emp["FUNCION"]; ?></td>
-                        <!--<td><?php  echo $emp["CATEGORIA"]; ?></td>-->
                         <td><?php  echo $emp["DIVISION"]; ?></td>
+                        <td><?php  echo $emp["FUNCION"]; ?></td>
                         <td class="center"><a href="" class="edit_link" id="<?php  echo $emp["ID_EMPLEADO"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>

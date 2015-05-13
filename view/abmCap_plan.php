@@ -585,8 +585,10 @@
                                     <select name="entidad" id="entidad">
                                         <option value="">Seleccione la entidad</option>
                                         <!--Entidades capacitadoras se cargan dinamicamente de la BD -->
-                                        <?php foreach($entidadesCapacitadoras as $ec){?>
-                                            <option value="<?php echo $ec['ID_ENTIDAD_CAPACITADORA']; ?>"><?php echo $ec['NOMBRE']; ?></option>
+                                        <?php foreach($entidadesCapacitadoras as $ec){
+                                            $estado=(($ec['ESTADO']=='ACTIVA')? '':'disabled');
+                                            ?>
+                                            <option value="<?php echo $ec['ID_ENTIDAD_CAPACITADORA']; ?>"  <?php echo $estado ?> ><?php echo $ec['NOMBRE']; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>

@@ -152,6 +152,15 @@ switch($operacion){
         exit;
         break;
 
+    //**************************************** DIVISIONES Y FUNCIONES ***************************************************************
+
+    case 'getFunciones':
+        $view->fun=new Funcion();
+        $rta=$view->fun->getFunciones($_POST['id']);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
     default: //muestra la grilla de categorias y temas por defecto
         $view->categorias=$view->c->getCategorias();
         $view->content="view/abmAdministracion.php";

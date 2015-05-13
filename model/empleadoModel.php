@@ -22,8 +22,8 @@ class Empleado
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
         //$obj_emp->executeQuery("select * from empleados");
-        $query="select empleados.*, division.nombre DIVISION from empleados, division".
-                " where empleados.id_division = division.id_division (+)";
+        $query="select em.*, di.nombre DIVISION, fu.nombre FUNCION from empleados em, division di, funciones fu".
+                " where em.id_division = di.id_division (+) and em.funcion = fu.id_funcion (+)";
         $obj_emp->executeQuery($query);
         return $obj_emp->fetchAll(); // retorna todos los empleados
     }

@@ -8,6 +8,47 @@
     var globalOperacion;
     var globalId;
 
+
+    function cargarFunciones(opcionx){
+        var division=$("#division option:selected").val();
+        //alert(division);
+
+        $.ajax({
+            url:"index.php",
+            data:{"accion":"administracion","operacion":"getFunciones","id":division},
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",//xml,html,script,json
+            error:function(){
+
+                $("#dialog-msn").dialog("open");
+                $("#message").html("ha ocurrido un error");
+
+            },
+            ifModified:false,
+            processData:true,
+            success:function(datas){
+
+                $("#funcion").html('<option value="">Seleccione una función</option>');
+                $.each(datas, function(indice, val){
+                    var estado=(datas[indice]["ESTADO"]=="ACTIVA")? "":"disabled";
+                    $("#funcion").append('<option value="'+datas[indice]["ID_FUNCION"]+'"'+estado+'>'+datas[indice]["NOMBRE"]+'</option>');
+                    //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
+
+                });
+                if(opcionx!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
+                    $("#funcion").val(opcion);
+                }
+
+
+            },
+            type:"POST",
+            timeout:3000000,
+            crossdomain:true
+
+        });
+    }
+
+
         function editar(id_empleado){
             //alert(id_usuario);
 
@@ -38,6 +79,7 @@
                     $("#fecha").val(datas[0]['FECHA_INGRESO']);
                     $("#activo").val(datas[0]['ACTIVO']);
                     $("#email").val(datas[0]['EMAIL']);
+                    cargarFunciones(datas[0]['FUNCION']);
 
                 },
                 type:"POST",
@@ -414,44 +456,28 @@
 
 
                         <div class="sixteen_column section">
+
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Función: </label>
-                                    <select name="funcion" id="funcion">
-                                        <option value="">Ingrese una función</option>
-                                        <option value="ANALISTA FUNCIONAL JR.">Analista funcional JR.</option>
-                                        <option value="ANALISTA FUNCIONAL SR.">Analista funcional SR.</option>
-                                        <option value="COORDINADOR DESARROLLO">Coordinador desarrollo</option>
-                                        <option value="COORDINADOR FORMACIÓN Y GESTIÓN DEL CONOCIMIENTO">Coordinador formación y gestión del conocimiento</option>
-                                        <option value="COORDINADOR VENTAS">Coordinador ventas</option>
-                                        <option value="COORDINADOR CONSULTORÍA">Coordinador consultoría</option>
-                                        <option value="DATA ENTRY">Data entry</option>
-                                        <option value="DESARROLLADOR JR.">Desarrollador JR.</option>
-                                        <option value="DESARROLLADOR SR.">Desarrollador SR.</option>
-                                        <option value="ESPECIALISTA">Especialista</option>
-                                        <option value="GERENTE SISTEMAS">Gerente sistemas</option>
-                                        <option value="SOPORTE FUNCIONAL">Soporte funcional</option>
-                                        <option value="SOPORTE TÉCNICO">Soporte técnico</option>
-                                        <option value="OTROS">Otros</option>
+                                    <label>División: </label>
+                                    <select name="division" id="division" onchange="cargarFunciones();">
+                                        <option value="">Ingrese una división</option>
+                                        <?php foreach ($view->divisiones as $div){?>
+                                            <option value="<?php echo $div['ID_DIVISION'];?>"><?php echo $div['NOMBRE'];?></option>
+                                        <?php  } ?>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>División: </label>
-                                    <select name="division" id="division">
-                                        <option value="">Ingrese una división</option>
-                                        <?php foreach ($view->divisiones as $div){?>
-                                            <option value="<?php echo $div['ID_DIVISION'];?>"><?php echo $div['NOMBRE'];?></option>
-                                        <?php  } ?>
-                                        <!--<option value="1">Administración</option>
-                                        <option value="2">Dirección</option>
-                                        <option value="3">RRHH</option>
-                                        <option value="4">Sistemas</option>-->
+                                    <label>Función: </label>
+                                    <select name="funcion" id="funcion">
+                                        <!-- select dependiente... se carga dinamicamente al seleccionar la division -->
                                     </select>
                                 </div>
                             </div>
+
                         </div>
 
 
