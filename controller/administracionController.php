@@ -4,9 +4,11 @@ if(isset($_REQUEST['operacion']))
 
 require_once("model/administracionModel.php");
 $view->c=new Categoria();
-
+$view->ec=new EntidadCapacitadora();
 
 switch($operacion){
+
+    //******************************************CATEGORIAS Y TEMAS ************************************************
 
     case 'categoriaInsert':
         $rta=1;
@@ -85,29 +87,81 @@ switch($operacion){
         exit;
         break;
 
-    case 'autocompletar_empleados':
-        $target= (isset($_POST['target']) && $_POST['target']=='BYUSER')? 'BYUSER': 'ALL';
-        $rta=$view->u->autocompletarEmpleados($_POST['term'], $_SESSION['USER_ID_EMPLEADO'], $target);
-        print_r(json_encode($rta));
-        exit;
-        break;
 
-    case 'refreshGrid':
+    case 'refreshGridCategorias':
         $view->categorias=$view->c->getCategorias();
         include_once('view/abmAdministracionGrid.php');
         exit;
         break;
 
+    //*********************************************** ENTIDADES ***************************************************************
 
-    default:
-        $view->categorias=$view->c->getCategorias();
-        //$view->divisiones=$view->u->getDivisiones(); //para cargar dinamicamente el combo 'divsion' al agregar o editar empleado
+    case 'entidadUpdate':
+        $respuesta=$view->ec->getEntidadById($_POST['id']);
+        print_r(json_encode($respuesta));
+        exit;
         break;
+
+    case 'entidadInsert':
+        $view->ec->setNombre($_POST['entidad_nombre']);
+        $view->ec->setEstado($_POST['entidad_estado']);
+        $rta=$view->ec->insertEntidad();
+
+        if($rta>0){
+            sQueryOracle::hacerCommit();
+            $respuesta=array ('response'=>'success','comment'=>'Entidad ingresada correctamente');
+        }
+        else{
+            sQueryOracle::hacerRollback();
+            $respuesta=array ('response'=>'error','comment'=>'Error al ingresar la entidad');
+        }
+
+        print_r(json_encode($respuesta));
+        exit;
+        break;
+
+
+    case 'entidadSave':
+        $view->ec->setIdEntidadCapacitadora($_POST['id']);
+        $view->ec->setNombre($_POST['entidad_nombre']);
+        $view->ec->setEstado($_POST['entidad_estado']);
+        $rta=$view->ec->updateEntidad();
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Entidad modificada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar la entidad');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
+        exit;
+        break;
+
+
+    case 'entidades': //muestra la grilla de entidades
+        $view->entidadesCapacitadoras=$view->ec->getEntidadesCapacitadoras();
+        $view->content="view/abmAdminEntidades_capacitadoras.php";
+        break;
+
+    case 'refreshGridEntidades': //para refrescar la grilla de entidades
+        $view->entidadesCapacitadoras=$view->ec->getEntidadesCapacitadoras();
+        include_once('view/abmAdminEntidades_capacitadorasGrid.php');
+        exit;
+        break;
+
+    default: //muestra la grilla de categorias y temas por defecto
+        $view->categorias=$view->c->getCategorias();
+        $view->content="view/abmAdministracion.php";
+        break;
+
 
 }
 
 
-$view->content="view/abmAdministracion.php";
+//$view->content="view/abmAdministracion.php";
 
 
 ?>

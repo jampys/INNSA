@@ -89,6 +89,7 @@
             <li><a href="#">Administración</a>
                 <ul style="z-index: 9999">
                     <li><a href="index.php?accion=administracion">Categorías y Temas</a></li>
+                    <li><a href="index.php?accion=administracion&operacion=entidades">Entidades Capacitadoras</a></li>
                 </ul>
             </li>
         <?   } ?>

@@ -220,35 +220,44 @@ class EntidadCapacitadora{
         return $obj_ec->fetchAll();
     }
 
-
-    public function updateTema(){
+    public function getEntidadById($id){
         $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        $query="update temas set nombre= :nombre, estado= :estado where id_tema = :id_tema";
-        $obj_emp->dpParse($query);
+        $obj_cat=$f->returnsQuery();
+        $query="select * from entidades_capacitadoras where id_entidad_capacitadora = :id";
+        $obj_cat->dpParse($query);
+        $obj_cat->dpBind(':id', $id);
+        $obj_cat->dpExecute();
+        return $obj_cat->fetchAll();
+    }
 
-        $obj_emp->dpBind(':nombre', $this->getNombre());
-        $obj_emp->dpBind(':estado', $this->getEstado());
-        $obj_emp->dpBind(':id_tema', $this->getIdTema());
 
-        $obj_emp->dpExecute();
-        return $obj_emp->getAffect();
+    public function updateEntidad(){
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="update entidades_capacitadoras set nombre= :nombre, estado= :estado where id_entidad_capacitadora = :id_entidad_capacitadora";
+        $obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+        $obj_ec->dpBind(':id_entidad_capacitadora', $this->getIdEntidadCapacitadora());
+
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
 
     }
 
-    public function insertTema(){
+    public function insertEntidad(){
 
         $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        $query="insert into temas (id_categoria, nombre, estado) values(:id_categoria, :nombre, :estado)";
-        $obj_emp->dpParse($query);
+        $obj_ec=$f->returnsQuery();
+        $query="insert into entidades_capacitadoras(nombre, estado) values(:nombre, :estado)";
+        $obj_ec->dpParse($query);
 
-        $obj_emp->dpBind(':id_categoria', $this->getIdCategoria());
-        $obj_emp->dpBind(':nombre', $this->getNombre());
-        $obj_emp->dpBind(':estado', $this->getEstado());
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
 
-        $obj_emp->dpExecute();
-        return $obj_emp->getAffect();
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
     }
 
 

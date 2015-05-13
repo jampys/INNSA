@@ -22,11 +22,12 @@
 
 
         // Dialog Link
-        $('#categoria_new_link').click(function(){
-            globalOperacion='categoria_insert';
-            $('#categoria').dialog('open');
+        $('#entidad_new_link').click(function(){
+            globalOperacion='entidad_insert';
+            $('#entidad').dialog('open');
             return false;
         });
+
 
     });
 
@@ -46,17 +47,16 @@
 
     <div class="box" style="width: 700px">
         <h2>
-            <a href="#" id="toggle-list">Lista de Categorías</a>
+            <a href="#" id="toggle-list">Lista de Entidades Capacitadoras</a>
         </h2>
 
 
         <div class="block" id="list">
-            <a href="javascript:void(0);" id="categoria_new_link">Agregar Categoría</a>
+            <a href="javascript:void(0);" id="entidad_new_link">Agregar Entidad Capacitadora</a>
             <table cellpadding="0" cellspacing="0" border="0" id="example" style="width: 700px">
                 <thead>
                 <tr>
-                    <th style="width: 30%">Nombre</th>
-                    <th style="width: 45%">Descripción</th>
+                    <th style="width: 75%">Nombre</th>
                     <th style="width: 15%">Estado</th>
                     <th style="width: 10%">Editar</th>
                 </tr>
@@ -64,18 +64,16 @@
                 <tfoot>
                 <tr>
                     <th>Nombre</th>
-                    <th>Descripción</th>
                     <th>Estado</th>
                     <th>Editar</th>
                 </tr>
                 </tfoot>
                 <tbody>
-                <?php foreach ($view->categorias as $cat) {?>
+                <?php foreach ($view->entidadesCapacitadoras as $ec) {?>
                     <tr class="odd gradeA">
-                        <td><?php  echo $cat["NOMBRE"]; ?></td>
-                        <td><?php  echo $cat["DESCRIPCION"];  ?></td>
-                        <td><?php  echo $cat["ESTADO"]; ?></td>
-                        <td class="center" style="text-align: center"><a href="" class="categoria_edit_link" id="<?php  echo $cat["ID_CATEGORIA"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td><?php  echo $ec["NOMBRE"]; ?></td>
+                        <td><?php  echo $ec["ESTADO"]; ?></td>
+                        <td class="center" style="text-align: center"><a href="" class="entidad_edit_link" id="<?php  echo $ec["ID_ENTIDAD_CAPACITADORA"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>
 

@@ -178,7 +178,7 @@
                             guardarCategoria();
                             $("#categoria").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"administracion", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"administracion", operacion: "refreshGridCategorias"});
                         }
 
                     },
@@ -455,6 +455,7 @@
     </div>
 
 </div>
+
 
 
 
