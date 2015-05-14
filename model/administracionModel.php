@@ -309,44 +309,158 @@ class Funcion{
         return $obj_fn->fetchAll();
     }
 
-    public function getEntidadById($id){
+    public function getFuncionById($id){
+        $f=new Factory();
+        $obj_fun=$f->returnsQuery();
+        $query="select * from funciones where id_funcion = :id";
+        $obj_fun->dpParse($query);
+        $obj_fun->dpBind(':id', $id);
+        $obj_fun->dpExecute();
+        return $obj_fun->fetchAll();
+    }
+
+
+    public function updateFuncion(){
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="update funciones set nombre= :nombre, estado= :estado where id_funcion = :id_funcion";
+        $obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+        $obj_ec->dpBind(':id_funcion', $this->getIdFuncion());
+
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
+
+    }
+
+    public function insertFuncion(){
+
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="insert into funciones(nombre, estado, id_division) values(:nombre, :estado, :id_division)";
+        $obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+        $obj_ec->dpBind(':id_division', $this->getIdDivision());
+
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
+    }
+
+
+}
+
+
+
+
+class Division{
+
+
+
+    var $id_division;
+    var $nombre;
+    var $estado;
+
+    // metodos que devuelven valores
+    function getIdDivision()
+    { return $this->id_division;}
+
+    function getNombre()
+    { return $this->nombre;}
+
+    function getEstado()
+    { return $this->estado;}
+
+
+    // metodos que setean los valores
+    function setNombre($val)
+    {  $this->nombre=$val;}
+
+    function setEstado($val)
+    {  $this->estado=$val;}
+
+    function setIdDivision($val)
+    {  $this->id_division=$val;}
+
+
+    public function getDivisiones(){
+        $f=new Factory();
+        $obj_div=$f->returnsQuery();
+        $query="select * from division";
+        $obj_div->executeQuery($query);
+        return $obj_div->fetchAll();
+    }
+
+    public function getDivisionById($id){
+        $f=new Factory();
+        $obj_div=$f->returnsQuery();
+        $query="select * from division where id_division = :id";
+        $obj_div->dpParse($query);
+        $obj_div->dpBind(':id', $id);
+        $obj_div->dpExecute();
+        return $obj_div->fetchAll();
+    }
+
+
+    public function updateDivision(){
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="update division set nombre= :nombre, estado= :estado where id_division = :id_division";
+        $obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+        $obj_ec->dpBind(':id_division', $this->getIdDivision());
+
+        $obj_ec->dpExecute();
+        return $obj_ec->getAffect();
+
+    }
+
+    public function insertDivision(){
+
+        $f=new Factory();
+        $obj_ec=$f->returnsQuery();
+        $query="insert into division (nombre, estado) values(:nombre, :estado) returning id_division into :id";
+        $topo=$obj_ec->dpParse($query);
+
+        $obj_ec->dpBind(':nombre', $this->getNombre());
+        $obj_ec->dpBind(':estado', $this->getEstado());
+
+        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
+        $obj_ec->dpExecute();
+        return $id;
+
+
+        /*
+        $f=new Factory();
+        $obj_sc=$f->returnsQuery();
+        $query="insert into categorias (nombre, descripcion, estado)".
+            " values(:nombre, :descripcion, :estado)".
+            " returning id_categoria into :id";
+        $topo=$obj_sc->dpParse($query);
+
+        $obj_sc->dpBind(':nombre', $this->getNombre());
+        $obj_sc->dpBind(':descripcion', $this->getDescripcion());
+        $obj_sc->dpBind(':estado', $this->getEstado());
+
+        //Se asigna a la variable $id el valor :id devuelto por la consulta, si le saco el parametro $obj_sc da error
+        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
+        $obj_sc->dpExecute();
+        return $id; */
+    }
+
+    public function getFuncionesByDivision($id){
         $f=new Factory();
         $obj_cat=$f->returnsQuery();
-        $query="select * from entidades_capacitadoras where id_entidad_capacitadora = :id";
+        $query="select * from funciones where id_division = :id";
         $obj_cat->dpParse($query);
         $obj_cat->dpBind(':id', $id);
         $obj_cat->dpExecute();
         return $obj_cat->fetchAll();
-    }
-
-
-    public function updateEntidad(){
-        $f=new Factory();
-        $obj_ec=$f->returnsQuery();
-        $query="update entidades_capacitadoras set nombre= :nombre, estado= :estado where id_entidad_capacitadora = :id_entidad_capacitadora";
-        $obj_ec->dpParse($query);
-
-        $obj_ec->dpBind(':nombre', $this->getNombre());
-        $obj_ec->dpBind(':estado', $this->getEstado());
-        $obj_ec->dpBind(':id_entidad_capacitadora', $this->getIdEntidadCapacitadora());
-
-        $obj_ec->dpExecute();
-        return $obj_ec->getAffect();
-
-    }
-
-    public function insertEntidad(){
-
-        $f=new Factory();
-        $obj_ec=$f->returnsQuery();
-        $query="insert into entidades_capacitadoras(nombre, estado) values(:nombre, :estado)";
-        $obj_ec->dpParse($query);
-
-        $obj_ec->dpBind(':nombre', $this->getNombre());
-        $obj_ec->dpBind(':estado', $this->getEstado());
-
-        $obj_ec->dpExecute();
-        return $obj_ec->getAffect();
     }
 
 

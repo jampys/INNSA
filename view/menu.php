@@ -90,6 +90,7 @@
                 <ul style="z-index: 9999">
                     <li><a href="index.php?accion=administracion">Categorías y Temas</a></li>
                     <li><a href="index.php?accion=administracion&operacion=entidades">Entidades Capacitadoras</a></li>
+                    <li><a href="index.php?accion=administracion&operacion=divisiones">Divisiones y funciones</a></li>
                 </ul>
             </li>
         <?   } ?>

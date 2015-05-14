@@ -461,9 +461,11 @@
                                 <div class="column_content">
                                     <label>División: </label>
                                     <select name="division" id="division" onchange="cargarFunciones();">
-                                        <option value="">Ingrese una división</option>
-                                        <?php foreach ($view->divisiones as $div){?>
-                                            <option value="<?php echo $div['ID_DIVISION'];?>"><?php echo $div['NOMBRE'];?></option>
+                                        <option value="">Seleccione una división</option>
+                                        <?php foreach ($view->divisiones as $div){
+                                            $estado=($div['ESTADO']=='ACTIVA')? '': 'disabled';
+                                            ?>
+                                            <option value="<?php echo $div['ID_DIVISION'];?>" <?php echo $estado ?> ><?php echo $div['NOMBRE'];?></option>
                                         <?php  } ?>
                                     </select>
                                 </div>

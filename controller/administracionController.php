@@ -5,6 +5,7 @@ if(isset($_REQUEST['operacion']))
 require_once("model/administracionModel.php");
 $view->c=new Categoria();
 $view->ec=new EntidadCapacitadora();
+$view->div=new Division();
 
 switch($operacion){
 
@@ -154,10 +155,98 @@ switch($operacion){
 
     //**************************************** DIVISIONES Y FUNCIONES ***************************************************************
 
+
+    case 'divisionInsert':
+        $rta=1;
+        $view->div->setNombre($_POST['division_nombre']);
+        $view->div->setEstado($_POST['division_estado']);
+        //Cuando insert division devuelve el id, necesario para insert de funciones asociadas a la division
+        $rta=$id_division=$view->div->insertDivision();
+
+        $vector=json_decode($_POST["funciones"]);
+        foreach ($vector as $v){
+            $f=new Funcion();
+            $f->setIdDivision($id_division);
+            $f->setNombre($v->nombre);
+            $f->setEstado($v->check);
+            if($v->operacion=="insert") {if(!$f->insertFuncion()) $rta=0;}
+        }
+
+        if($rta>0){
+            sQueryOracle::hacerCommit();
+            $respuesta=array ('response'=>'success','comment'=>'División ingresada correctamente');
+        }
+        else{
+            sQueryOracle::hacerRollback();
+            $respuesta=array ('response'=>'error','comment'=>'Error al ingresar la división');
+        }
+
+        print_r(json_encode($respuesta));
+        exit;
+        break;
+
+
+
+    case 'divisionUpdate':
+
+        $division=$view->div->getDivisionById($_POST['id']);
+        $funciones=$view->div->getFuncionesByDivision($_POST['id']);
+        $respuesta=array('division'=>$division,'funciones'=>$funciones);
+        print_r(json_encode($respuesta));
+        exit;
+        break;
+
+    case 'divisionSave':
+        $rta=1;
+        $view->div->setIdDivision($_POST['id']);
+        $view->div->setNombre($_POST['division_nombre']);
+        $view->div->setEstado($_POST['division_estado']);
+        if(!$rta=$view->div->updateDivision()) $rta=0;
+
+        //Actualizo los temas de la categoria
+        $vector=json_decode($_POST["funciones"]);
+        foreach ($vector as $v){
+            $t=new Funcion();
+            $t->setIdFuncion($v->id_funcion);
+            $t->setIdDivision($v->id_division);
+            $t->setNombre($v->nombre);
+            $t->setEstado($v->check);
+
+            if($v->operacion=="update") {if(!$t->updateFuncion($v->id_funcion)) $rta=0;}
+            else if($v->operacion=="insert") {if(!$t->insertFuncion()) $rta=0;}
+
+        }
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'División modificada correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar la división');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
+        exit;
+        break;
+
+
     case 'getFunciones':
         $view->fun=new Funcion();
         $rta=$view->fun->getFunciones($_POST['id']);
         print_r(json_encode($rta));
+        exit;
+        break;
+
+    case 'divisiones': //muestra la grilla de divisiones y funciones
+        $view->divisiones=$view->div->getDivisiones();
+        $view->content="view/abmAdminDivisiones_funciones.php";
+        break;
+
+
+    case 'refreshGridDivisiones': //para refrescar la grilla de divisiones
+        $view->divisiones=$view->div->getDivisiones();
+        include_once('view/abmAdminDivisiones_funcionesGrid.php');
         exit;
         break;
 
