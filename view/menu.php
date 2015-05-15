@@ -41,15 +41,6 @@
     <body>
 
     <ul id="menux">
-        <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
-            <li><a href="index.php?accion=empleado">Empleados</a></li>
-        <?php   } ?>
-
-
-        <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
-            <li><a href="index.php?accion=curso">Cursos</a></li>
-        <?php   } ?>
-
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
                 <li><a href="index.php?accion=cap_plan">Plan capacitación</a></li>
@@ -67,11 +58,6 @@
         <?php   } ?>
 
 
-        <!-- Opciones de menu solo para usuario administrador -->
-        <?php if($_SESSION['ACCESSLEVEL']==2){ ?>
-                <li><a href="index.php?accion=user">Usuarios</a></li>
-        <?   } ?>
-
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
             <li><a href="#">Reportes</a>
@@ -88,6 +74,9 @@
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
             <li><a href="#">Administración</a>
                 <ul style="z-index: 9999">
+                    <li><a href="index.php?accion=empleado">Empleados</a></li>
+                    <li><a href="index.php?accion=user">Usuarios</a></li>
+                    <li><a href="index.php?accion=curso">Cursos</a></li>
                     <li><a href="index.php?accion=administracion">Categorías y Temas</a></li>
                     <li><a href="index.php?accion=administracion&operacion=entidades">Entidades Capacitadoras</a></li>
                     <li><a href="index.php?accion=administracion&operacion=divisiones">Divisiones y funciones</a></li>
