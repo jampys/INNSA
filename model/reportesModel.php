@@ -173,7 +173,7 @@ class Reportes
     public function getEmpleadosByPlan($lugar_trabajo, $id_plan){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $query="select em.apellido, em.nombre, em.lugar_trabajo, ap.viaticos".
+        $query="select em.apellido, em.nombre, em.lugar_trabajo, ap.viaticos, ap.id_asignacion, ap.aprobada".
                 " from empleados em, plan_capacitacion pc, asignacion_plan ap, solicitud_capacitacion sc".
                 " where pc.id_plan = ap.id_plan and ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
                 " and em.lugar_trabajo = $lugar_trabajo".

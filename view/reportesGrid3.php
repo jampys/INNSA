@@ -20,6 +20,7 @@
         <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
+        <th>Aprobar</th>
     </tr>
     </thead>
 
@@ -34,6 +35,7 @@
             <td style="background-color: #FFD699">$ <?php  echo $plan["UNITARIO"]; ?></td>
             <td style="background-color: #FFD699">$ <?php  echo $plan["SUBTOTAL"]; $sub_total_general+=$plan["SUBTOTAL"]; ?></td>
             <td style="background-color: #FFD699">$ <?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
+            <td style="background-color: #FFD699" class="center"><a href="#" title="Aprobar" class="aprobar_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
         <tr class="oculta">
             <td colspan="8">
@@ -97,6 +99,7 @@
         <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
+        <th>Aprobar</th>
     </tr>
     <!--Muestra el total general -->
     <tr>
@@ -108,6 +111,7 @@
         <th></th>
         <th><h6>$ <?php echo $sub_total_general; ?></h6></th>
         <th><h6>$ <?php echo $total_general; ?></h6></th>
+        <th></th>
     </tr>
     </tfoot>
 </table>
