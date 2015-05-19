@@ -188,7 +188,7 @@
                 modal:true,
                 title:"Aprobar plan capacitación",
                 buttons: {
-                    "Guardar": function() {
+                    "Aprobar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             guardarCategoria();
                             $("#categoria").dialog("close");

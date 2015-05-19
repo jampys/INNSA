@@ -28,9 +28,9 @@ class Cap_Plan
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         //$obj_user->executeQuery("select * from plan_capacitacion, cursos where plan_capacitacion.id_curso=cursos.id_curso");
-        $query="select pc.id_plan, cu.nombre, pc.periodo, pc.fecha_desde, pc.fecha_hasta, pc.duracion, pc.unidad, pc.estado, pc.importe, pc.moneda, pc.entidad, (select count(*)from asignacion_plan ap where ap.id_plan = pc.id_plan) as cantidad".
-                " from plan_capacitacion pc, cursos cu".
-                " where pc.id_curso=cu.id_curso";
+        $query="select pc.id_plan, cu.nombre, pc.periodo, pc.fecha_desde, pc.fecha_hasta, pc.duracion, pc.unidad, pc.estado, pc.importe, pc.moneda, ec.nombre ENTIDAD, (select count(*)from asignacion_plan ap where ap.id_plan = pc.id_plan) as cantidad".
+                " from plan_capacitacion pc, cursos cu, entidades_capacitadoras ec".
+                " where pc.id_curso=cu.id_curso and pc.entidad = ec.id_entidad_capacitadora";
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll();
     }
@@ -280,7 +280,7 @@ class Cap_Plan
     public function getEmpleadosByPlan($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos".
+        $query="select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
                 " from empleados em, solicitud_capacitacion sc, propuestas pro, cursos cu, plan_capacitacion pc, asignacion_plan ap".
                 " where pro.id_solicitud = sc.id_solicitud".
                 " and sc.id_empleado = em.id_empleado".

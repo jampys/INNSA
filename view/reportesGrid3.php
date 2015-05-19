@@ -9,7 +9,8 @@
 </script>
 
 
-<table cellpadding="0" cellspacing="0" width="100%" class="display" id="reportes">
+<!--<table cellpadding="0" cellspacing="0" style="width: 80%" class="display" id="reportes">-->
+<table cellpadding="0" cellspacing="0" style="width: 80%" id="reportes">
     <thead>
     <tr>
         <th>Período</th>
@@ -52,20 +53,22 @@
 
                 <table border="1">
                     <tr>
-                        <th>Apellido</th>
-                        <th>Nombre</th>
-                        <th>Lugar trabajo</th>
-                        <th>Viaticos</th>
+                        <th style="width: 25%">Apellido</th>
+                        <th style="width: 25%">Nombre</th>
+                        <th style="width: 15%">Lugar trabajo</th>
+                        <th style="width: 20%">Viaticos</th>
+                        <th style="width: 15%">Aprobado</th>
                     </tr>
 
                     <?php
 
                     foreach ($repox as $repo) {?>
                         <tr class="odd gradeA">
-                            <td style="width: 300px"><?php  echo $repo["APELLIDO"]; ?></td>
-                            <td style="width: 70px"><?php  echo $repo["NOMBRE"]; ?></td>
-                            <td style="width: 70px"><?php  echo $repo["LUGAR_TRABAJO"]; ?></td>
-                            <td style="width: 50px"><?php  echo $repo["VIATICOS"];  ?></td>
+                            <td><?php  echo $repo["APELLIDO"]; ?></td>
+                            <td><?php  echo $repo["NOMBRE"]; ?></td>
+                            <td><?php  echo $repo["LUGAR_TRABAJO"]; ?></td>
+                            <td><?php  echo $repo["VIATICOS"];  ?></td>
+                            <td class="center"><a href="javascript: void(0);"><img title="Aprobado" src="public/img/Ok-icon.png" width="15px" height="15px"></a></td>
                         </tr>
 
 
