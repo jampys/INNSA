@@ -66,6 +66,31 @@ class Cap_Plan
     }
 
 
+    public function getCursosTemas($term, $target){
+
+        if($target=='ALL'){
+            $query="select * from cursos where nombre like UPPER ('%".$term."%')";
+        }
+        else if($target=='BYPERIODO'){
+            $query="select (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+                " cu.id_curso, cu.nombre, cu.id_tema, pc.periodo, pc.fecha_desde, pc.modalidad, ec.nombre entidad".
+                " from cursos cu".
+                " left join plan_capacitacion pc on cu.id_curso = pc.id_curso and pc.fecha_desde >='".date('d/m/Y')."'".
+                " left join entidades_capacitadoras ec on pc.entidad = ec.id_entidad_capacitadora".
+                " where cu.nombre like UPPER ('%".$term."%')".
+                " UNION".
+                " select (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
+                " from temas te".
+                " where te.nombre like UPPER ('%".$term."%')";
+        }
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+
+        $obj_cp->executeQuery($query);
+        return $obj_cp->fetchAll();
+    }
+
+
 
     // metodos que devuelven valores
     function getIdPlan()

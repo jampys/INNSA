@@ -123,6 +123,14 @@ switch($operacion){
         exit;
         break;
 
+    case 'autocompletar_cursos_temas':
+        $target= (isset($_POST['target']) && $_POST['target']=='BYPERIODO')? 'BYPERIODO': 'ALL';
+        $rta=$view->u->getCursosTemas($_POST['term'], $target);
+        print_r(json_encode($rta));
+        //echo json_encode($rta);
+        exit;
+        break;
+
     case 'refreshGrid':
         $view->cp=$view->u->getCapPlan();
         include_once('view/abmCap_planGrid.php');

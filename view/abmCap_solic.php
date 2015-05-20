@@ -556,12 +556,12 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos", "target":"BYPERIODO"},
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos_temas", "target":"BYPERIODO"},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {
                                     //label: item.NOMBRE+' - '+item.FECHA_DESDE+' - '+item.MODALIDAD,
-                                    label: item.NOMBRE+' '+((typeof(item.FECHA_DESDE)=='undefined')? '': item.FECHA_DESDE)+'  '+((typeof(item.MODALIDAD)=='undefined')? '': item.MODALIDAD)+'  '+((typeof(item.ENTIDAD)=='undefined')? '': item.ENTIDAD),
+                                    label: item.TABLA+': '+item.NOMBRE+' '+((typeof(item.FECHA_DESDE)=='undefined')? '': item.FECHA_DESDE)+'  '+((typeof(item.MODALIDAD)=='undefined')? '': item.MODALIDAD)+'  '+((typeof(item.ENTIDAD)=='undefined')? '': item.ENTIDAD),
                                     id: item.ID_CURSO
 
                                 };
