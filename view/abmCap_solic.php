@@ -562,7 +562,8 @@
                                 return {
                                     //label: item.NOMBRE+' - '+item.FECHA_DESDE+' - '+item.MODALIDAD,
                                     label: item.TABLA+': '+item.NOMBRE+' '+((typeof(item.FECHA_DESDE)=='undefined')? '': item.FECHA_DESDE)+'  '+((typeof(item.MODALIDAD)=='undefined')? '': item.MODALIDAD)+'  '+((typeof(item.ENTIDAD)=='undefined')? '': item.ENTIDAD),
-                                    id: item.ID_CURSO
+                                    id_curso: item.ID_CURSO,
+                                    id_tema: item.ID_TEMA
 
                                 };
                             }));
@@ -571,7 +572,8 @@
                 },
                 minLength: 2,
                 change: function(event, ui) {
-                    $('#nc_curso_id').val(ui.item? ui.item.id : '');
+                    $('#nc_curso_id').val(ui.item? ui.item.id_curso : '');
+                    $('#nc_tema_id').val(ui.item? ui.item.id_tema : '');
                     $('#nc_curso').val(ui.item.label);
                 }
             });
@@ -623,6 +625,7 @@
                                 '<td style="display: none">'+$('#nc_objetivo_3').val()+'</td>' +
                                 '<td style="display: none">'+$('#nc_indicadores_exito').val()+'</td>' +
                                 '<td style="display: none">'+$('#nc_compromiso').val()+'</td>' +
+                                '<td style="display: none">'+$('#nc_tema_id').val()+'</td>' +
 
                                 '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                                 '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
@@ -882,7 +885,7 @@
                     required: function(item){return $('#nc_reemplazo').val().length>0;}
                 },
                 nc_curso_id:{
-                    required: function(item){return $('#nc_curso').val().length>0;}
+                    required: function(item){return $('#nc_curso').val().length>0 && $('#nc_tema_id').val().length<0 ;}
                 },
                 nc_situacion: {
                     required: true
@@ -906,8 +909,8 @@
 
             },
             messages:{
-                nc_curso: "Seleccione un curso",
-                nc_curso_id: "Seleccione un curso sugerido",
+                nc_curso: "Seleccione un curso o tema",
+                nc_curso_id: "Seleccione un curso o tema sugerido",
                 nc_reemplazo: "Seleccione el reemplazo",
                 nc_reemplazo_id: "Seleccione un empleado sugerido",
                 nc_situacion: "Ingrese la situacion",
@@ -1244,9 +1247,10 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Curso propuesto: </label><br/>
+                                    <label>Curso / tema propuesto: </label><br/>
                                     <input type="text" name="nc_curso" id="nc_curso"/>
                                     <input type="hidden" name="nc_curso_id" id="nc_curso_id"/>
+                                    <input type="hidden" name="nc_tema_id" id="nc_tema_id"/>
                                 </div>
                             </div>
                         </div>
