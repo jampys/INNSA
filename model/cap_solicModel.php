@@ -652,6 +652,7 @@ class Propuesta{
     var $objetivo_3;
     var $indicadores_exito;
     var $compromiso;
+    var $id_tema;
 
 
     // metodos que devuelven valores
@@ -685,6 +686,9 @@ class Propuesta{
     function getCompromiso()
     { return $this->compromiso;}
 
+    function getIdTema()
+    { return $this->id_tema;}
+
 
     // metodos que setean los valores
     function setIdPropuesta($val)
@@ -717,11 +721,14 @@ class Propuesta{
     function setCompromiso($val)
     {  $this->compromiso=$val;}
 
+    function setIdTema($val)
+    {  $this->id_tema=$val;}
+
 
     public function insertPropuesta(){
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "insert into propuestas (id_solicitud, id_curso, id_reemplazo, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso) values($this->id_solicitud, $this->id_curso, $this->id_reemplazo, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso')";
+        $query = "insert into propuestas (id_solicitud, id_curso, id_reemplazo, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, id_tema) values($this->id_solicitud, $this->id_curso, $this->id_reemplazo, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso', $this->id_tema)";
         $obj_cp->executeQuery($query);
         return $obj_cp->getAffect();
     }
@@ -731,7 +738,7 @@ class Propuesta{
 
         $f=new Factory();
         $obj_pro=$f->returnsQuery();
-        $query = "update propuestas set id_reemplazo=:id_reemplazo, situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso where id_propuesta=:id_propuesta";
+        $query = "update propuestas set id_reemplazo=:id_reemplazo, situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, id_tema=:id_tema where id_propuesta=:id_propuesta";
         $obj_pro->dpParse($query);
 
         $obj_pro->dpBind(':id_reemplazo', $this->id_reemplazo);
@@ -741,6 +748,7 @@ class Propuesta{
         $obj_pro->dpBind(':objetivo_3', $this->objetivo_3);
         $obj_pro->dpBind(':indicadores_exito', $this->indicadores_exito);
         $obj_pro->dpBind(':compromiso', $this->compromiso);
+        $obj_pro->dpBind(':id_tema', $this->id_tema);
         $obj_pro->dpBind(':id_propuesta', $this->id_propuesta);
 
         $obj_pro->dpExecute();
@@ -761,9 +769,14 @@ class Propuesta{
     public function getPropuestaBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        //$obj_sp->executeQuery("select * from propuestas, cursos where propuestas.id_curso = cursos.id_curso and id_solicitud=$id");
-        $query="select pro.*, cu.nombre curso_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre from propuestas pro, cursos cu, empleados em".
+        /*$query="select pro.*, cu.nombre curso_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre from propuestas pro, cursos cu, empleados em".
                 " where pro.id_curso = cu.id_curso".
+                " and pro.id_reemplazo = em.id_empleado".
+                " and pro.id_solicitud=$id";*/
+        $query="select pro.*, cu.nombre curso_nombre, te.nombre tema_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre".
+                " from propuestas pro, cursos cu, empleados em, temas te".
+                " where pro.id_curso = cu.id_curso (+)".
+                " and pro.id_tema = te.id_tema (+)".
                 " and pro.id_reemplazo = em.id_empleado".
                 " and pro.id_solicitud=$id";
         $obj_sp->executeQuery($query);

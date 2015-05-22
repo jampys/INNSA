@@ -42,21 +42,20 @@
 
     <ul id="menux">
 
+        <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
+            <li><a href="index.php?accion=cap_solic">Solicitud capacitación</a></li>
+        <?php   } ?>
+
+
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
                 <li><a href="index.php?accion=cap_plan">Plan capacitación</a></li>
         <?php   } ?>
 
 
-        <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
-                <li><a href="index.php?accion=cap_solic">Solicitud capacitación</a></li>
-        <?php   } ?>
-
-
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
-                <li><a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a></li>
                 <li><a href="index.php?accion=asignacion">Asignacion plan</a></li>
+                <li><a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a></li>
         <?php   } ?>
-
 
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>

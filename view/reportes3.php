@@ -145,8 +145,11 @@
 
             //Si se chequea un checkbox
             $(document).on("change", "input[name^='table_aprobar_check']", function() { //si hago check en un input que comience con table_aprobar_check
-                //alert("se modifico");
-                $(this).closest('tr').attr('operacion', 'aprobar');
+
+                if(this.checked) {
+                    $(this).closest('tr').attr('operacion', 'aprobar');
+                }
+
             });
 
 
@@ -193,7 +196,7 @@
                             guardarCategoria();
                             $("#categoria").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"administracion", operacion: "refreshGridCategorias"});
+                            //$('#subreporte').load('index.php',{accion:"reportes", operacion: "refreshGridReportes3", id_plan: globalId});
                         }
 
                     },

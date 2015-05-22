@@ -61,6 +61,7 @@ switch($operacion){
             $c->setObjetivo3($v->objetivo_3);
             $c->setIndicadoresExito($v->indicadores_exito);
             $c->setCompromiso($v->compromiso);
+            $c->setIdTema($v->id_tema);
             if(!$c->insertPropuesta()) $rta=0; //si algun insert falla, $rta se pone en 0.
         }
 
@@ -165,6 +166,7 @@ switch($operacion){
             $c->setObjetivo3($v->objetivo_3);
             $c->setIndicadoresExito($v->indicadores_exito);
             $c->setCompromiso($v->compromiso);
+            $c->setIdTema($v->id_tema);
 
 
             if($v->id_propuesta==""){ //si no tiene id_propuesta=> es un insert

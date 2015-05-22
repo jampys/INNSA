@@ -61,6 +61,7 @@ switch($operacion){
 
         break;
 
+
     default: //reportes de solicitudes de capacitacion
         $view->solicitud=$view->u->getCapSolic();
         $view->content="view/reportes.php";

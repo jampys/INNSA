@@ -90,8 +90,10 @@
                     //Se construye la tabla de cursos propuestos
                     $.each(datas['propuestas'], function(indice, val){
 
+                        var nombre= (typeof(datas['propuestas'][indice]['CURSO_NOMBRE'])!='undefined')? datas['propuestas'][indice]['CURSO_NOMBRE']: datas['propuestas'][indice]['TEMA_NOMBRE'];
+
                         $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
-                        '<td>'+datas['propuestas'][indice]['CURSO_NOMBRE']+'</td>' +
+                        '<td>'+nombre+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['ID_REEMPLAZO']+'</td>' +
                         '<td>'+datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE']+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
@@ -100,6 +102,7 @@
                         '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_3']+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['INDICADORES_EXITO']+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['COMPROMISO']+'</td>' +
+                        '<td style="display: none">'+datas['propuestas'][indice]['ID_TEMA']+'</td>' +
                         '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
@@ -150,7 +153,8 @@
             jsonObjCursos = [];
             $('#table_curso tbody tr').each(function () {
                 item = {};
-                item['id_curso']=$(this).attr('id_curso');
+                //item['id_curso']=$(this).attr('id_curso');
+                item['id_curso']=($(this).attr('id_curso').length>0)? $(this).attr('id_curso'): 'null' ;
                 item['reemplazo']= $(this).find('td').eq(1).html();
                 item['situacion']= $(this).find('td').eq(3).html();
                 item['objetivo_1']= $(this).find('td').eq(4).html();
@@ -158,6 +162,7 @@
                 item['objetivo_3']= $(this).find('td').eq(6).html();
                 item['indicadores_exito']= $(this).find('td').eq(7).html();
                 item['compromiso']= $(this).find('td').eq(8).html();
+                item['id_tema']= $(this).find('td').eq(9).html();
                 item['id_propuesta']=($(this).attr('id_propuesta'))? $(this).attr('id_propuesta') : "";
                 item['operacion_curso']=$(this).attr('operacion_curso');
                 jsonObjCursos.push(item);
@@ -233,8 +238,8 @@
                 error:function(error){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
-                    //$("#message").html(error.responseText);
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(error.responseText);
 
                 },
                 ifModified:false,
@@ -607,6 +612,7 @@
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(6).html($('#nc_objetivo_3').val());
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(7).html($('#nc_indicadores_exito').val());
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(8).html($('#nc_compromiso').val());
+                                $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(9).html($('#nc_tema_id').val());
                                 $("#form_curso")[0].reset();
                                 $(this).dialog("close");
 
