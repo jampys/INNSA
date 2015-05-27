@@ -133,7 +133,12 @@
                             "profesor_1":$("#profesor_1").val(),
                             "profesor_2":$("#profesor_2").val(),
                             "comentarios":$("#comentarios").val(),
-                            "entidad":$("#entidad").val()
+                            "entidad":$("#entidad").val(),
+                            //nuevo curso
+                            "nc_nombre": $('#asignar_plan').data('nc_nombre'),
+                            "nc_tipo_curso": $('#asignar_plan').data('nc_tipo_curso'),
+                            "nc_id_tema": $('#asignar_plan').data('nc_id_tema')
+
                     };
             }
             else{ //se va a guardar un plan editado
@@ -279,6 +284,63 @@
 
             });
 
+
+
+            //Funcionalidad para la tabla de asignar planes
+            $('#asignar_plan').dialog({
+                autoOpen: false,
+                width: 500,
+                modal:true,
+                title:"Seleccionar curso",
+                buttons: {
+                    "Guardar": function() {
+
+                        if($('input[name=radio_curso]').is(':checked')){ //si hay alguno radio button seleccionado
+                            //alert("hay alguno seleccionado");
+                            $('#curso_id').val($('input[name=radio_curso]:checked').val());
+                            $('#curso').val($('input[name=radio_curso]:checked').closest('tr').find('td').eq(0).html());
+                            $(this).dialog("close");
+                        }
+                        else{ //si ingreso un curso nuevo
+
+                            if($("#form_plan").valid()){
+
+                                $('#asignar_plan').data('nc_nombre', $('#nc_nombre').val());
+                                $('#curso').val($('#nc_nombre').val());
+                                $('#asignar_plan').data('nc_tipo_curso', $('#nc_tipo_curso').val());
+                                $('#asignar_plan').data('nc_id_tema', $('#curso_tema :selected').val());
+                                console.log($('#asignar_plan').data('nc_tipo_curso'));
+                                $("#form_plan")[0].reset();
+                                $(this).dialog("close");
+
+                            }
+
+                        }
+
+
+                    },
+                    "Cancelar": function() {
+                        $("#form_plan")[0].reset(); //para limpiar el formulario
+                        $('#form_plan').validate().resetForm(); //para limpiar los errores validate
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 300
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 300
+                },
+                close:function(){
+                    $("#form_plan")[0].reset(); //para limpiar el formulario cuando sale con x
+                    $('#form_plan').validate().resetForm(); //para limpiar los errores validate
+                    $('#table_cursos tbody tr').each(function(){ $(this).remove(); });
+                }
+
+            });
+
             //Aca estaba la llamada al dialog link
 
             //Agregado por dario para editar
@@ -312,6 +374,68 @@
                 /* Agrego el periodo de la solicitud seleccionada al select */
                 $("#periodo").html('<option value="'+$(this).attr("target")+'">'+$(this).attr("target")+'</option>');
 
+                return false;
+            });
+
+
+            $(document).on('change', '#curso_tema', function(){
+                var label=$('#curso_tema :selected').parent().attr('label');
+                if(label=='Temas'){
+                    var id_tema=$('#curso_tema :selected').val();
+
+                    $.ajax({
+                        url:"index.php",
+                        data:{"accion":"curso","operacion":"getCursosByTema","id_tema":id_tema},
+                        contentType:"application/x-www-form-urlencoded",
+                        dataType:"json",//xml,html,script,json
+                        error:function(){
+
+                            $("#dialog-msn").dialog("open");
+                            $("#message").html("ha ocurrido un error");
+
+                        },
+                        ifModified:false,
+                        processData:true,
+                        success:function(datas){
+
+                            //Se construye la de cursos by tema
+                            $.each(datas, function(indice, val){
+
+                                $('#table_cursos tbody').append('<tr id_curso='+datas[indice]['ID_CURSO']+'>' +
+                                '<td>'+datas[indice]['NOMBRE']+'</td>' +
+                                '<td><input type="radio" name="radio_curso" value="'+datas[indice]['ID_CURSO']+'"></td>' +
+                                '</tr>');
+
+                            });
+
+                        },
+                        type:"POST",
+                        timeout:3000000,
+                        crossdomain:true
+
+                    });
+
+
+                    //$('#asignar_plan').data('operacion', 'insert').dialog('open');
+                    $('#asignar_plan').dialog('open');
+                    return false;
+                }
+                else{
+
+                    $("#curso").val($('#curso_tema :selected').text());
+                    $("#curso_id").val($('#curso_tema :selected').val());
+
+                }
+
+            });
+
+
+            // nuevo curso
+            $(document).on('click', '.new-curso-link', function(){
+                $('#oculto').css('display', 'block')
+                //$('#asignar_plan').dialog('open');
+                //$('#proponer_curso').data('operacion', 'insert').dialog('open');
+                //$('#np_plan_capacitacion').attr('readonly', false); //Vuelve a habilitar el campo plan_capacitacion
                 return false;
             });
 
@@ -364,7 +488,7 @@
             );
 
             //Agregado dario para autocompletar cursos
-            $("#curso").autocomplete({
+            /*$("#curso").autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
@@ -388,7 +512,7 @@
                     $('#curso').val(ui.item.label);
                 }
 
-            });
+            });*/
 
 
             //Al cambiar el select de moneda. Si la moneda es USD se habilita el campo tipo_cambio, sino => se deshabilita
@@ -538,12 +662,51 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Curso: </label><br/>
-                                    <input type="text" name="curso" id="curso"/>
-                                    <input type="hidden" name="curso_id" id="curso_id"/>
+                                    <label>Curso / tema: </label><br/>
+                                    <!--<input type="text" name="curso" id="curso"/>
+                                    <input type="hidden" name="curso_id" id="curso_id"/>-->
+
+                                    <select name="curso_tema" id="curso_tema">
+                                        <option value="">Seleccione el curso /tema</option>
+                                        <optgroup label="Cursos">
+                                        <?php foreach($cursosTemasSinAsignacion as $cu) {
+                                            if ($cu['TABLA'] == 'CURSOS') {
+                                                ?>
+                                                <option value="<?php echo $cu['IDS']; ?>"><?php echo $cu['NOMBRE']; ?></option>
+                                            <?php
+                                            }
+                                        }
+                                            ?>
+                                        </optgroup>
+
+
+                                        <optgroup label="Temas">
+                                            <?php foreach($cursosTemasSinAsignacion as $te) {
+                                                if ($te['TABLA'] == 'TEMAS') {
+                                                    ?>
+                                                    <option value="<?php echo $te['IDS']; ?>"><?php echo $te['NOMBRE']; ?></option>
+                                                <?php
+                                                }
+                                                }
+                                            ?>
+                                        </optgroup>
+
+                                    </select>
+
+
                                 </div>
                             </div>
 
+                        </div>
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <input type="text" name="curso" id="curso" readonly/>
+                                    <input type="hidden" name="curso_id" id="curso_id"/>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -792,6 +955,103 @@
             </div>
         </div>
 
+
+    </div>
+
+</div>
+
+
+
+
+
+<div id="asignar_plan" >
+
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <div class="grid_7" style="width: 98%">
+
+        <div class="block" id="formus">
+            <form id="form_plan" name="form_plan" action="">
+                <fieldset>
+                    <!--<legend>Datos Registro</legend>-->
+
+                    <div class="sixteen_column section">
+                        <div class="sixteen_column">
+                            <div class="column_content">
+                                <table id="table_cursos" class="tablaSolicitud">
+                                    <thead>
+                                    <tr>
+                                        <td style="width: 70%">Curso</td>
+                                        <td>Seleccionar</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!-- el cuerpo se genera dinamicamente con javascript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sixteen_column section">
+                        <div class="eight column">
+                            <div class="column_content">
+                                <label>Nuevo curso: </label><br/>
+                                <a class="new-curso-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
+                            </div>
+                        </div>
+                        <div class="eight column">
+                            <div class="column_content">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="oculto" style="display: none">
+
+
+                        <div class="sixteen_column section">
+
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Nombre: </label>
+                                    <input type="text" name="nc_nombre" id="nc_nombre"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Tipo de actividad: </label><br/>
+                                    <select name="nc_tipo_curso" id="nc_tipo_curso">
+                                        <option value="">Seleccione el tipo de actividad</option>
+                                        <?php foreach($tipo_curso as $tip){?>
+                                            <option value="<?php echo $tip['ID_TIPO_CURSO']?>"><?php echo $tip['NOMBRE']?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                </fieldset>
+
+            </form>
+
+        </div>
 
     </div>
 

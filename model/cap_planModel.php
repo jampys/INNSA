@@ -319,6 +319,35 @@ class Cap_Plan
     }
 
 
+    public function getCursosTemasSinAsignacion(){
+
+        $f=new Factory();
+        $obj_cp=$f->returnsQuery();
+        $query="select DISTINCT (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+                " cu.id_curso ids, cu.nombre".
+                " from propuestas pro, solicitud_capacitacion sc, cursos cu".
+                " where pro.id_solicitud = sc.id_solicitud and pro.id_curso = cu.id_curso".
+                " and pro.id_curso not in".
+                " (select pcx.id_curso".
+                " from plan_capacitacion pcx, asignacion_plan apx, solicitud_capacitacion scx".
+                " where pcx.id_plan = apx.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_solicitud = sc.id_solicitud)".
+                " UNION".
+                " select DISTINCT (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%TEMAS%') tabla,".
+                " te.id_tema ids, te.nombre".
+                " from propuestas pro, solicitud_capacitacion sc, temas te".
+                " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".
+                " and pro.id_tema not in".
+                "(select cux.id_tema".
+                " from plan_capacitacion pcx, asignacion_plan apx, solicitud_capacitacion scx, cursos cux".
+                " where pcx.id_plan = apx.id_plan and apx.id_solicitud = scx.id_solicitud and pcx.id_curso = cux.id_curso and scx.id_solicitud = sc.id_solicitud)".
+                " and pro.id_curso is null";
+
+
+        $obj_cp->executeQuery($query);
+        return $obj_cp->fetchAll();
+    }
+
+
 
 
 }

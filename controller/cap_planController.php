@@ -5,6 +5,7 @@ if(isset($_REQUEST['operacion']))
 require_once("model/cap_planModel.php");
 require_once("model/cap_solicModel.php");
 require_once("model/administracionModel.php");
+require_once("model/cursoModel.php");
 $view->u=new Cap_Plan();
 $view->a=new EntidadCapacitadora();
 
@@ -140,6 +141,9 @@ switch($operacion){
     default:
         $view->cp=$view->u->getCapPlan();
         $entidadesCapacitadoras=$view->a->getEntidadesCapacitadoras();
+        $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
+        $view->cu=new Curso();
+        $tipo_curso=$view->cu->getTipoCurso();
         break;
 
 }

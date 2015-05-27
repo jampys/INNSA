@@ -81,6 +81,13 @@ switch($operacion){
         exit;
         break;
 
+
+    case 'getCursosByTema':
+        $rta=$view->u->getCursosByTema($_POST['id_tema']);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
     case 'refreshGrid':
         $view->cursos=$view->u->getCursos();
         include_once('view/abmCursoGrid.php');

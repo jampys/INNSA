@@ -158,6 +158,14 @@ class Curso
     }
 
 
+    public function getCursosByTema($id_tema){
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $obj_user->executeQuery("select * from cursos where id_tema=$id_tema");
+        return $obj_user->fetchAll();
+    }
+
+
 
 
 }
