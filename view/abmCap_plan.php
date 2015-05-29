@@ -312,11 +312,9 @@
                                 console.log($('#asignar_plan').data('nc_tipo_curso'));
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
-
                             }
 
                         }
-
 
                     },
                     "Cancelar": function() {
@@ -432,10 +430,8 @@
 
             // nuevo curso
             $(document).on('click', '.new-curso-link', function(){
-                $('#oculto').css('display', 'block')
-                //$('#asignar_plan').dialog('open');
-                //$('#proponer_curso').data('operacion', 'insert').dialog('open');
-                //$('#np_plan_capacitacion').attr('readonly', false); //Vuelve a habilitar el campo plan_capacitacion
+                $('#oculto').css('display', 'block');
+                $('input[name=radio_curso]').attr('checked', false);
                 return false;
             });
 
@@ -523,6 +519,7 @@
 
             //llamada a funcion validar
             $.validar();
+            $.validarCurso();
 
         });
 
@@ -537,7 +534,7 @@
                     required: true
                 },
                 curso_id:{
-                    required: function(){return ($('#curso').val().length>0 && globalOperacion!='edit');}
+                    //required: function(){return ($('#curso').val().length>0 && globalOperacion!='edit');}
                 },
                 periodo: {
                     required: true
@@ -610,6 +607,33 @@
 
     };
 
+
+    $.validarCurso=function(){
+        $('#form_plan').validate({
+            /*lo pone en vacio, ya que por defecto es igual a hiddenn  (default: ":hidden"). Y asi evito que ignore el campo oculto http://jqueryvalidation.org/validate/ */
+            ignore:"",
+            rules: {
+                nc_nombre: {
+                    required: function(){return !$('input[name=radio_curso]').is(':checked')}, //si no selecciono ninguno de los sugeridos es required
+                    maxlength: 100
+                },
+                nc_tipo_curso:{
+                    required: function(){return !$('input[name=radio_curso]').is(':checked')} //si no selecciono ninguno de los sugeridos es required
+                }
+            },
+            messages:{
+                nc_nombre: {
+                    required: "Ingrese el nombre del curso",
+                    maxlength: "Max. 100 caracteres "
+                },
+                nc_tipo_curso: "Seleccione el tipo de curso"
+            }
+
+        });
+
+
+    };
+
     //validacion de inputs de tabla empleados
 
     //personalizo los metodos http://stackoverflow.com/questions/3247305/how-to-add-messages-to-a-class-with-addclassrules
@@ -657,7 +681,7 @@
             <div class="block" id="forms">
                 <form id="form" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">

@@ -12,7 +12,21 @@ $view->a=new EntidadCapacitadora();
 
 switch($operacion){
     case 'insert':
-        $view->u->setIdCurso($_POST['curso']);
+        //nuevo
+        $rta=1;
+        if($_POST['curso']==""){ //si el id_curso viene vacio => hay que insertarlo
+            $cu=new Curso();
+            $cu->setNombre($_POST['nc_nombre']);
+            $cu->setIdTipoCurso($_POST['nc_tipo_curso']);
+            $cu->setIdTema($_POST['nc_id_tema']);
+            (!$id_curso=$cu->insertCursoAndGetId())? $rta=0 : $view->u->setIdCurso($id_curso);;
+        }
+        else{
+            $view->u->setIdCurso($_POST['curso']);
+        }
+        //fin nuevo
+
+        //$view->u->setIdCurso($_POST['curso']);
         $view->u->setPeriodo($_POST['periodo']);
         $view->u->setObjetivo($_POST['objetivo']);
         $view->u->setModalidad($_POST['modalidad']);

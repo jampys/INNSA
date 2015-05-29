@@ -305,7 +305,7 @@ class Cap_Plan
     public function getEmpleadosByPlan($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
+        /*$query="select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
                 " from empleados em, solicitud_capacitacion sc, propuestas pro, cursos cu, plan_capacitacion pc, asignacion_plan ap".
                 " where pro.id_solicitud = sc.id_solicitud".
                 " and sc.id_empleado = em.id_empleado".
@@ -313,7 +313,23 @@ class Cap_Plan
                 " and pro.id_curso = cu.id_curso".
                 " and pc.id_curso = cu.id_curso".
                 " and pc.id_plan  = ap.id_plan (+)".
-                " and pc.id_plan = $id order by ap.id_asignacion asc";
+                " and pc.id_plan = $id order by ap.id_asignacion asc"; */
+        $query="select ap.id_asignacion, scx.id_solicitud, scx.estado, scx.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
+" from propuestas pro".
+" join plan_capacitacion pc on pro.id_curso = pc.id_curso and pc.id_plan = $id".
+" left join asignacion_plan ap on pc.id_plan = ap.id_plan".
+" left join solicitud_capacitacion sc on ap.id_solicitud = sc.id_solicitud".
+" join solicitud_capacitacion scx on pro.id_solicitud = scx.id_solicitud".
+" join empleados em on scx.id_empleado = em.id_empleado".
+" UNION".
+" select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
+" from propuestas pro".
+" join solicitud_capacitacion sc on pro.id_solicitud = sc.id_solicitud".
+" join empleados em on sc.id_empleado = em.id_empleado".
+" left join asignacion_plan ap on sc.id_solicitud = ap.id_solicitud and ap.id_plan = $id".
+" left join plan_capacitacion pc on ap.id_plan = pc.id_plan".
+" left join cursos cu on pc.id_curso = cu.id_curso".
+" left join propuestas prox on cu.id_tema = prox.id_tema";
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
     }

@@ -134,6 +134,27 @@ class Curso
     }
 
 
+    public function insertCursoAndGetId(){
+
+        $f=new Factory();
+        $obj_curso=$f->returnsQuery();
+        $query="insert into cursos(nombre, descripcion, comentarios, entidad, id_tema, id_tipo_curso) values(:nombre, :descripcion, :comentarios, :entidad, :id_tema, :id_tipo_curso) returning id_curso into :id";
+        $obj_curso->dpParse($query);
+        $topo=$obj_curso->dpParse($query);
+
+        $obj_curso->dpBind(':nombre', $this->nombre);
+        $obj_curso->dpBind(':descripcion', $this->descripcion);
+        $obj_curso->dpBind(':comentarios', $this->comentarios);
+        $obj_curso->dpBind(':entidad', $this->entidad);
+        $obj_curso->dpBind(':id_tema', $this->id_tema);
+        $obj_curso->dpBind(':id_tipo_curso', $this->id_tipo_curso);
+
+        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
+        $obj_curso->dpExecute();
+        return $id;
+    }
+
+
     function deleteCurso(){
         $f=new Factory();
         $obj_curso=$f->returnsQuery();
