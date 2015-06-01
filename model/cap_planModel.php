@@ -305,16 +305,27 @@ class Cap_Plan
     public function getEmpleadosByPlan($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        /*$query="select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
-                " from empleados em, solicitud_capacitacion sc, propuestas pro, cursos cu, plan_capacitacion pc, asignacion_plan ap".
+        $query="select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
+                " from propuestas pro, solicitud_capacitacion sc, empleados em, asignacion_plan ap, plan_capacitacion pc, plan_capacitacion pcx".
                 " where pro.id_solicitud = sc.id_solicitud".
                 " and sc.id_empleado = em.id_empleado".
-                " and ap.id_solicitud = sc.id_solicitud (+)".
-                " and pro.id_curso = cu.id_curso".
-                " and pc.id_curso = cu.id_curso".
-                " and pc.id_plan  = ap.id_plan (+)".
-                " and pc.id_plan = $id order by ap.id_asignacion asc"; */
-        $query="select ap.id_asignacion, scx.id_solicitud, scx.estado, scx.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
+                " and sc.id_solicitud = ap.id_solicitud (+)".
+                " and ap.id_plan = pc.id_plan (+)".
+                " and pro.id_curso = pcx.id_curso".
+                " and pcx.id_plan = $id".
+                " UNION".
+                " select ap.id_asignacion, sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
+                " from propuestas pro, cursos cu, plan_capacitacion pc, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
+                " where pro.id_solicitud = sc.id_solicitud".
+                " and sc.id_empleado = em.id_empleado".
+                " and pro.id_tema in (select cup.id_tema from cursos cup, plan_capacitacion pcp where pcp.id_curso = cup.id_curso and pcp.id_plan = $id)".
+                " and pro.id_tema = cu.id_tema".
+                " and cu.id_curso = pc.id_curso".
+                " and pc.id_plan = ap.id_plan (+)".
+                " and pc.id_plan = $id".
+                " and pro.id_curso is null";
+
+        /*$query="select ap.id_asignacion, scx.id_solicitud, scx.estado, scx.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.aprobada".
 " from propuestas pro".
 " join plan_capacitacion pc on pro.id_curso = pc.id_curso and pc.id_plan = $id".
 " left join asignacion_plan ap on pc.id_plan = ap.id_plan".
@@ -329,7 +340,7 @@ class Cap_Plan
 " left join asignacion_plan ap on sc.id_solicitud = ap.id_solicitud and ap.id_plan = $id".
 " left join plan_capacitacion pc on ap.id_plan = pc.id_plan".
 " left join cursos cu on pc.id_curso = cu.id_curso".
-" left join propuestas prox on cu.id_tema = prox.id_tema";
+" left join propuestas prox on cu.id_tema = prox.id_tema"; */
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
     }
