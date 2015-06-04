@@ -864,7 +864,7 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Importe: </label><br/>
+                                    <label>Importe unitario: </label><br/>
                                     <input type="text" name="importe" id="importe"/>
                                 </div>
                             </div>
