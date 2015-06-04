@@ -238,7 +238,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Plan de Capacitación",
                 buttons: [
                     {
                     class: "button-guardar",

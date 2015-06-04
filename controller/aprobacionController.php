@@ -45,7 +45,7 @@ switch($operacion){
             $t=new Aprobacion();
             if($v->operacion=="aprobar") {
                 if(!$t->aprobarPlan($v->check, $v->id_asignacion)) $rta=0;
-                if(!$t->copyPropuestaIntoComunicacion($v->id_asignacion)) $rta=0;
+                //if(!$t->copyPropuestaIntoComunicacion($v->id_asignacion)) $rta=0;
             }
 
         }
