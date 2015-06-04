@@ -67,7 +67,7 @@
                             <td><?php  echo $repo["NOMBRE"]; ?></td>
                             <td><?php  echo $repo["LUGAR_TRABAJO"]; ?></td>
                             <td><?php  echo $repo["VIATICOS"];  ?></td>
-                            <td class="center"><a href="javascript: void(0);" class="<?php echo $repo['APROBADA']==0? 'link-desactivado': '' ?>" ><img title="<?php echo $repo['APROBADA']==0? 'No aprobada': 'Aprobada' ?>" src="public/img/Ok-icon.png" width="15px" height="15px"></a></td>
+                            <td class="center"><a href="javascript: void(0);" class="<?php echo $repo['APROBADA']==0? 'link-invisible': '' ?>" ><img title="<?php echo $repo['APROBADA']==0? 'No aprobada': 'Aprobada' ?>" src="public/img/Ok-icon.png" width="15px" height="15px"></a></td>
                         </tr>
 
 

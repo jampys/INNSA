@@ -884,9 +884,9 @@
                 nc_curso: {
                     required: true
                 },
-                nc_reemplazo: {
+                /*nc_reemplazo: {
                     required: true
-                },
+                },*/
                 nc_reemplazo_id:{
                     required: function(item){return $('#nc_reemplazo').val().length>0;}
                 },
@@ -917,7 +917,7 @@
             messages:{
                 nc_curso: "Seleccione un curso o tema",
                 nc_curso_id: "Seleccione un curso o tema sugerido",
-                nc_reemplazo: "Seleccione el reemplazo",
+                /*nc_reemplazo: "Seleccione el reemplazo", */
                 nc_reemplazo_id: "Seleccione un empleado sugerido",
                 nc_situacion: "Ingrese la situacion",
                 nc_objetivo_1: "Ingrese el objetivo 1",

@@ -298,6 +298,13 @@ select{
 
 
 
+/* para ocultar una imagen, o poner en invisible*/
+.link-invisible img {
+    display: none;
+}
+
+
+
 
 
 
