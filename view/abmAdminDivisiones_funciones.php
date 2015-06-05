@@ -168,7 +168,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"División y funciones",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
@@ -207,7 +207,7 @@
                 autoOpen: false,
                 width: 500,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Función",
                 buttons: {
                     "Guardar": function() {
                         if($("#form_funcion").valid()){

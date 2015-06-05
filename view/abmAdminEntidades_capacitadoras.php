@@ -129,7 +129,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Entidad capacitadora",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano

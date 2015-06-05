@@ -47,12 +47,12 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de Empleados</a>
+            <a href="#" id="toggle-list">Lista de colaboradores</a>
         </h2>
 
 
         <div class="block" id="list">
-            <a href="javascript:void(0);" id="dialog_link">Agregar Empleado</a>
+            <a href="javascript:void(0);" id="dialog_link">Agregar colaborador</a>
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                 <thead>
                 <tr>

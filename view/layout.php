@@ -80,6 +80,10 @@
 
     <script type="text/javascript" language="JavaScript" src="public/js/js_dario.js"></script>
 
+    <!-- datetimepicker -->
+    <script language="javascript" src="public/js/jquery-ui-timepicker-addon.js"></script>
+    <link rel="stylesheet" href="public/css/jquery-ui-timepicker-addon.css" />
+
 
     <script type="text/javascript" language="javascript">
 

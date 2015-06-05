@@ -304,7 +304,7 @@
                 autoOpen: false,
                 width: 700,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Solicitud de Capacitación",
                 buttons: [
                     {
                         class: "button-guardar",
@@ -365,7 +365,7 @@
                 autoOpen: false,
                 width: 500,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Agignar curso",
                 buttons: {
                     "Guardar": function() {
                         if($("#form_plan").valid()){
@@ -589,7 +589,7 @@
                 autoOpen: false,
                 width: 500,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Proponer curso",
                 buttons: [{
                     class: "button-save",
                     text: "Guardar",
@@ -962,7 +962,7 @@
             <div class="block" id="forms">
                 <form id="form" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="eight column">
@@ -983,7 +983,7 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Empleado: </label>
+                                    <label>Colaborador: </label>
                                     <input type="text" name="empleado" id="empleado">
                                     <input type="hidden" name="empleado_id" id="empleado_id">
                                 </div>
@@ -1157,7 +1157,7 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Asignación de planes: </label><br/>
+                                    <label>Cursos asignados: </label><br/>
                                     <a id="new-plan" class="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
                                 </div>
                             </div>
@@ -1248,12 +1248,12 @@
             <div class="block" id="forms">
                 <form id="form_curso" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Curso / tema propuesto: </label><br/>
+                                    <label>Cursos del plan de capacitación: </label><br/>
                                     <input type="text" name="nc_curso" id="nc_curso"/>
                                     <input type="hidden" name="nc_curso_id" id="nc_curso_id"/>
                                     <input type="hidden" name="nc_tema_id" id="nc_tema_id"/>
@@ -1343,7 +1343,7 @@
         <div class="block" id="formus">
             <form id="form_plan" name="form_plan" action="">
                 <fieldset>
-                    <legend>Datos Registro</legend>
+                    <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">

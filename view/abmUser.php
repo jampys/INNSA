@@ -142,7 +142,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title: "Registro de usuarios",
+                title: "Usuarios",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
@@ -438,13 +438,13 @@
             <div class="block" id="forms">
                 <form id="form" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
 
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Empleado: </label>
+                                    <label>Colaborador: </label>
                                     <input type="text" name="empleado" id="empleado"/>
                                     <input type="hidden" name="empleado_id" id="empleado_id"/>
                                 </div>

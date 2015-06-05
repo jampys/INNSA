@@ -452,14 +452,14 @@
 
 
             //Date picker modificados con validacion de fecha desde y hasta
-            $("#fecha_desde").datepicker({
+            $("#fecha_desde").datetimepicker({
                 dateFormat:"dd/mm/yy",
                 onClose: function() {
                     $("#fecha_hasta").datepicker("change", { minDate: $('#fecha_desde').val()}
                     );
                 }
             });
-            $("#fecha_hasta").datepicker({
+            $("#fecha_hasta").datetimepicker({
                 dateFormat:"dd/mm/yy",
                 onClose: function() {
                     $("#fecha_desde").datepicker("change", { maxDate: $('#fecha_hasta').val()}

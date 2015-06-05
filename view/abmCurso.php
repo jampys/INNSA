@@ -170,7 +170,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Curso",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
@@ -346,7 +346,7 @@
             <div class="block" id="forms">
                 <form id="form" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
                         <div class="sixteen_column section">
 
                             <div class="sixteen_column">

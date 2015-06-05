@@ -26,9 +26,9 @@ $.datepicker.setDefaults($.datepicker.regional['es']);
 */
 
 
+
+
 //oculta y desoculta el detalle de cada fila del reporte. El selector :not(.oculta) es para evitar que ocurra al clickear sobre tr que tienen la clase "oculta"
-
-
 $(document).ready(function(){
 
     //$('#reportes > tbody > tr:not(.oculta)').on('click', function(){

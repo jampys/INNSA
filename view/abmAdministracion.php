@@ -171,7 +171,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Categorías y Temas",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
@@ -210,7 +210,7 @@
                 autoOpen: false,
                 width: 500,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Tema",
                 buttons: {
                     "Guardar": function() {
                         if($("#form_tema").valid()){

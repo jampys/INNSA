@@ -73,7 +73,7 @@
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
             <li><a href="#">Administración</a>
                 <ul style="z-index: 9999">
-                    <li><a href="index.php?accion=empleado">Empleados</a></li>
+                    <li><a href="index.php?accion=empleado">Colaboradores</a></li>
                     <li><a href="index.php?accion=user">Usuarios</a></li>
                     <li><a href="index.php?accion=curso">Cursos</a></li>
                     <li><a href="index.php?accion=administracion">Categorías y Temas</a></li>
