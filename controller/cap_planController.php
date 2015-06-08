@@ -36,7 +36,8 @@ switch($operacion){
         $view->u->setUnidad($_POST['unidad']);
         $view->u->setPrioridad($_POST['prioridad']);
         $view->u->setEstado($_POST['estado']);
-        $view->u->setImporte($_POST['importe']);
+        //$view->u->setImporte($_POST['importe']);
+        $view->u->setImporte(($_POST['importe']!='')? $_POST['importe'] : 0);
         $view->u->setMoneda($_POST['moneda']);
         //Si tipo_cambio trae valor=> envia el valor, sino 1 o ('null')
         $view->u->setTipoCambio(($_POST['tipo_cambio']!='')? $_POST['tipo_cambio'] : 1);

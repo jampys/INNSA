@@ -600,6 +600,14 @@
                     required: true
                 },
                 importe: {
+                    required: function(){ return $('#caracter_actividad').val()=='ABIERTA';},
+                    number: true
+                },
+                cantidad_participantes: {
+                    required: true,
+                    number: true
+                },
+                importe_total: {
                     required: true,
                     number: true
                 },
@@ -631,7 +639,18 @@
                 prioridad: "Seleccione la prioridad",
                 estado: "Seleccione el estado",
                 caracter_actividad: "Seleccione el carácter de la actividad",
-                importe: "Ingrese el importe",
+                importe: {
+                    required: "Ingrese importe unitario",
+                    number: "Solo números"
+                },
+                importe_total: {
+                    required: "Ingrese importe total",
+                    number: "Solo números"
+                },
+                cantidad_participantes: {
+                    required: "Ingrese la cantidad de participantes",
+                    number: "Solo números"
+                },
                 moneda: "Seleccione la moneda",
                 tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)",
                 comentarios: "Max. 150 caracteres"
@@ -837,42 +856,6 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Fecha desde: </label><br/>
-                                    <input type="text" name="fecha_desde" id="fecha_desde">
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Fecha hasta: </label>
-                                    <input type="text" name="fecha_hasta" id="fecha_hasta">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Duración: </label><br/>
-                                    <input type="text" name="duracion" id="duracion"/>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Unidad: </label>
-                                    <select name="unidad" id="unidad">
-                                        <option value="">Seleccione la unidad</option>
-                                        <option value="HORAS">Horas</option>
-                                        <option value="DIAS">Dias</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
                                     <label>Prioridad: </label><br/>
                                     <select name="prioridad" id="prioridad">
                                         <option value="">Seleccione la prioridad</option>
@@ -895,8 +878,42 @@
                             </div>
                         </div>
 
-                        <fieldset>
+
                         <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Fecha desde: </label><br/>
+                                    <input type="text" name="fecha_desde" id="fecha_desde">
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Fecha hasta: </label>
+                                    <input type="text" name="fecha_hasta" id="fecha_hasta">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+
+                            <div class="four column">
+                                <div class="column_content">
+                                    <label>Duración: </label><br/>
+                                    <input type="text" name="duracion" id="duracion"/>
+                                </div>
+                            </div>
+
+                            <div class="four column">
+                                <div class="column_content">
+                                    <label>Unidad: </label>
+                                    <select name="unidad" id="unidad">
+                                        <option value="">Unidad</option>
+                                        <option value="HORAS">Horas</option>
+                                        <option value="DIAS">Dias</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Carácter de la actividad: <img src="public/img/information-icon.png" width="12px" height="12px" title="
@@ -911,13 +928,9 @@
                                 </div>
                             </div>
 
-                            <div class="eight column">
-                                <div class="column_content">
-
-                                </div>
-                            </div>
 
                         </div>
+
 
                         <div class="sixteen_column section">
                             <div class="eight column">
@@ -966,7 +979,7 @@
                             </div>
 
                         </div>
-                        </fieldset>
+
 
                         <div class="sixteen_column section">
                             <div class="eight column">
