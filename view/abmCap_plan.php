@@ -45,6 +45,10 @@
                     $("#comentarios").val(datas['plan'][0]['COMENTARIOS_PLAN']);
                     $("#entidad").val(datas['plan'][0]['ENTIDAD_PLAN']);
 
+                    $("#caracter_actividad").val(datas['plan'][0]['CARACTER_ACTIVIDAD']);
+                    $("#cantidad_participantes").val(datas['plan'][0]['CANTIDAD_PARTICIPANTES']);
+                    $("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
+
                     //para el campo tipo de cambio al editar
                     (datas['plan'][0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
 
@@ -134,6 +138,9 @@
                             "profesor_2":$("#profesor_2").val(),
                             "comentarios":$("#comentarios").val(),
                             "entidad":$("#entidad").val(),
+                            "caracter_actividad": $("#caracter_actividad").val(),
+                            "cantidad_participantes": $("#cantidad_participantes").val(),
+                            "importe_total": $("#importe_total").val(),
                             //nuevo curso
                             "nc_nombre": $('#asignar_plan').data('nc_nombre'),
                             "nc_tipo_curso": $('#asignar_plan').data('nc_tipo_curso'),
@@ -164,7 +171,10 @@
                             "profesor_1":$("#profesor_1").val(),
                             "profesor_2":$("#profesor_2").val(),
                             "comentarios":$("#comentarios").val(),
-                            "entidad":$("#entidad").val()
+                            "entidad":$("#entidad").val(),
+                            "caracter_actividad": $("#caracter_actividad").val(),
+                            "cantidad_participantes": $("#cantidad_participantes").val(),
+                            "importe_total": $("#importe_total").val()
                         };
             }
 
@@ -174,9 +184,9 @@
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
                 error:function(error){
-                    //alert(error.responseText);
-                    $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    alert(error.responseText);
+                    //$("#dialog-msn").dialog("open");
+                    //$("#message").html("ha ocurrido un error");
 
                 },
                 ifModified:false,
@@ -515,6 +525,27 @@
             $('#moneda').change(function() {
                 $('#tipo_cambio').val('');
                 ($('#moneda').val()=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true) ;
+            });
+
+            //Al cambiar el select de caracter de actividad
+            $('#caracter_actividad').change(function() {
+                $('#importe').val('');
+                $('#importe_total').val('');
+                if($('#caracter_actividad').val()=='ABIERTA'){
+                    $('#importe').attr('readonly', false);
+                    $('#importe_total').attr('readonly', true);
+                }
+                else{
+                    $('#importe').attr('readonly', true);
+                    $('#importe_total').attr('readonly', false);
+
+                }
+
+            });
+
+            //calculo del total automaticamente
+            $('#importe, #cantidad_participantes').on('blur', function() {
+                $('#importe_total').val($('#cantidad_participantes').val()*$('#importe').val());
             });
 
             //llamada a funcion validar
@@ -864,7 +895,7 @@
                             </div>
                         </div>
 
-
+                        <fieldset>
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
@@ -879,22 +910,43 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Cantidad participantes:</label>
+                                    <input type="text" name="cantidad_participantes" id="cantidad_participantes"/>
+                                </div>
+                            </div>
+
+                            <div class="four column">
                                 <div class="column_content">
                                     <label>Importe unitario: </label><br/>
                                     <input type="text" name="importe" id="importe"/>
                                 </div>
                             </div>
+
+                            <div class="four column">
+                                <div class="column_content">
+                                    <label>Importe Total: </label><br/>
+                                    <input type="text" name="importe_total" id="importe_total"/>
+                                </div>
+                            </div>
+
+
                         </div>
 
 
                         <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Tipo cambio: </label><br/>
-                                    <input type="text" name="tipo_cambio" id="tipo_cambio" readonly="readonly"/>
-                                </div>
-                            </div>
+
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Moneda: </label>
@@ -905,8 +957,16 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Tipo cambio: </label><br/>
+                                    <input type="text" name="tipo_cambio" id="tipo_cambio" readonly="readonly"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        </fieldset>
 
                         <div class="sixteen_column section">
                             <div class="eight column">

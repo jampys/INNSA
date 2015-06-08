@@ -46,6 +46,11 @@ switch($operacion){
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
+
+        $view->u->setCaracterActividad($_POST['caracter_actividad']);
+        $view->u->setCantidadParticipantes($_POST['cantidad_participantes']);
+        $view->u->setImporteTotal($_POST['importe_total']);
+
         $rta=$view->u->insertCapPlan();
 
         if($rta > 0){
@@ -92,6 +97,10 @@ switch($operacion){
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
+
+        $view->u->setCaracterActividad($_POST['caracter_actividad']);
+        $view->u->setCantidadParticipantes($_POST['cantidad_participantes']);
+        $view->u->setImporteTotal($_POST['importe_total']);
 
         if(!$view->u->updateCapPlan()) $rta=0;
 
