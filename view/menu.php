@@ -85,10 +85,11 @@
 
 
 
-            <li><a href="index.php?accion=vista_empleado">Cursos <?php
+            <!--<li><a href="index.php?accion=vista_empleado">Cursos <?php
                 $firstName=explode(" ", $_SESSION["USER_NOMBRE"]);
                 echo $firstName[0]; ?>
-            </a></li>
+            </a></li>-->
+            <li><a href="index.php?accion=vista_empleado">Mis cursos</a></li>
 
 
 

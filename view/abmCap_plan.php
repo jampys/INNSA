@@ -565,6 +565,9 @@
                 estado:{
                     required: true
                 },
+                caracter_actividad:{
+                    required: true
+                },
                 importe: {
                     required: true,
                     number: true
@@ -596,6 +599,7 @@
                 unidad: "Seleccione la unidad",
                 prioridad: "Seleccione la prioridad",
                 estado: "Seleccione el estado",
+                caracter_actividad: "Seleccione el carácter de la actividad",
                 importe: "Ingrese el importe",
                 moneda: "Seleccione la moneda",
                 tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)",
@@ -864,18 +868,21 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Importe unitario: </label><br/>
-                                    <input type="text" name="importe" id="importe"/>
+                                    <label>Carácter de la actividad: <img src="public/img/information-icon.png" width="12px" height="12px" title="
+                                    Abierta: Actividad abierta al público en general<br/>
+                                    Cerrada: Actividad organizada específicamente para la empresa solicitante
+                                    "></label>
+                                    <select name="caracter_actividad" id="caracter_actividad">
+                                        <option value="">Seleccione el carácter</option>
+                                        <option value="ABIERTA">Abierta</option>
+                                        <option value="CERRADA">Cerrada</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Moneda: </label>
-                                    <select name="moneda" id="moneda">
-                                        <option value="">Seleccione la moneda</option>
-                                        <option value="$">$</option>
-                                        <option value="USD">USD</option>
-                                    </select>
+                                    <label>Importe unitario: </label><br/>
+                                    <input type="text" name="importe" id="importe"/>
                                 </div>
                             </div>
                         </div>
@@ -890,7 +897,12 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-
+                                    <label>Moneda: </label>
+                                    <select name="moneda" id="moneda">
+                                        <option value="">Seleccione la moneda</option>
+                                        <option value="$">$</option>
+                                        <option value="USD">USD</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
