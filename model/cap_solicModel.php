@@ -735,10 +735,11 @@ class Propuesta{
 
 
     public function updatePropuesta(){
-
+        /*
         $f=new Factory();
         $obj_pro=$f->returnsQuery();
-        $query = "update propuestas set id_reemplazo=:id_reemplazo, situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, id_tema=:id_tema where id_propuesta=:id_propuesta";
+        $query="update propuestas set id_reemplazo=:id_reemplazo, situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, id_tema=:id_tema where id_propuesta=:id_propuesta";
+        echo $query;
         $obj_pro->dpParse($query);
 
         $obj_pro->dpBind(':id_reemplazo', $this->id_reemplazo);
@@ -752,7 +753,15 @@ class Propuesta{
         $obj_pro->dpBind(':id_propuesta', $this->id_propuesta);
 
         $obj_pro->dpExecute();
-        return $obj_pro->getAffect();
+        return $obj_pro->getAffect(); */
+
+        // la escribo de manera convencional porque con el parse y bind no funciona....
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query="update propuestas set id_reemplazo= $this->id_reemplazo, situacion= '$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', id_tema=$this->id_tema where id_propuesta=$this->id_propuesta";
+        $obj_cp->executeQuery($query);
+        return $obj_cp->getAffect();
+
     }
 
 
@@ -777,7 +786,7 @@ class Propuesta{
                 " from propuestas pro, cursos cu, empleados em, temas te".
                 " where pro.id_curso = cu.id_curso (+)".
                 " and pro.id_tema = te.id_tema (+)".
-                " and pro.id_reemplazo = em.id_empleado".
+                " and pro.id_reemplazo = em.id_empleado (+)".
                 " and pro.id_solicitud=$id";
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll(); // retorna todas las propuestas que corresponden con el id de solicitud
