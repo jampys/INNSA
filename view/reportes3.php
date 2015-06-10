@@ -184,7 +184,7 @@
             });
 
 
-            // Ventana modal de categorias
+            // Ventana modal para aprobar curso individualmente
             $('#categoria').dialog({
                 autoOpen: false,
                 width: 600,
@@ -222,6 +222,64 @@
 
             });
 
+            //Ventana modal de confirmacion para la aprobacion masiva
+            $('#password_clear').dialog({
+                autoOpen: false,
+                width: 450,
+                modal:true,
+                title:"Blanqueo de password",
+                buttons: {
+                    "Aceptar": function() {
+
+                        $.ajax({
+                            url:"index.php",
+                            data:{  "accion":"login",
+                                "operacion":"clear_pass_first",
+                                "id_usuario":globalId, //id_usuario
+                                "password": $('#pc_password').val()
+                            },
+                            contentType:"application/x-www-form-urlencoded",
+                            dataType:"json",//xml,html,script,json
+                            error:function(){
+
+                                $("#dialog-msn").dialog("open");
+                                $("#message").html("ha ocurrido un error");
+
+                            },
+                            ifModified:false,
+                            processData:true,
+                            success:function(datas){
+
+                                $("#dialog-msn").dialog("open");
+                                //$("#message").html("Registro actualizado en la BD");
+                                $("#message").html(datas['comment']);
+
+
+                            },
+                            type:"POST",
+                            timeout:3000000,
+                            crossdomain:true
+
+                        });
+
+                        $("#password_clear").dialog("close");
+
+                    },
+                    "Cancelar": function() {
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+
+            });
+
 
 
             //Aca estaba el llamado al dialog link
@@ -233,6 +291,13 @@
                 aprobarPlan(globalId); //le mando el id del plan
                 $('#categoria').dialog('open');
 
+                return false;
+            });
+
+            $(document).on("click", ".aprobar_todos_link", function(){
+                //globalOperacion='edit';
+                globalId=$(this).attr('id');
+                $('#password_clear').dialog('open');
                 return false;
             });
 
@@ -407,6 +472,19 @@
         </div>
 
 
+    </div>
+
+</div>
+
+
+
+<!-- Contenido de la ventana modal de confirmacion de aprobacion masiva -->
+<div id="password_clear">
+
+    <div style='float: left; margin-top: 10px'><img src='public/img/warning-icon-yellow.png' width='30px' height='30px'></div>&nbsp;&nbsp;&nbsp;
+    <div style='float: left; margin-left: 10px; margin-top: 10px'>
+        ¿Desea aprobar el curso para todos los colaboradores asignados?
+        <br/>
     </div>
 
 </div>

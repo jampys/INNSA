@@ -38,7 +38,7 @@
             <td style="background-color: #FFD699">$ <?php  echo $plan["SUBTOTAL"]; $sub_total_general+=$plan["SUBTOTAL"]; ?></td>
             <td style="background-color: #FFD699">$ <?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
             <td style="background-color: #FFD699; text-align: center" class="center" ><a href="#" title="Aprobar" class="aprobar_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
-            <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar" class="aprobar_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
+            <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="aprobar_todos_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
         <tr class="oculta">
             <td colspan="8">
