@@ -42,7 +42,7 @@
         var globalOperacion;
         var globalId;
 
-        function aprobarPlan(id_plan){
+        function editar(id_plan){
 
             $.ajax({
                 url:"index.php",
@@ -85,28 +85,39 @@
         }
 
 
-        function guardarCategoria(){
+        function aprobarPlan(){
 
-            //Codigo para recoger todas las filas de la table_aprobar
-            jsonObj = [];
-            $('#table_aprobar tbody tr').each(function () {
-                item = {};
-                item['id_asignacion']=$(this).attr('id_asignacion');
-                //item['id_plan']=globalId; //id_plan
-                item['check']= ($(this).find('td').eq(1).find('[type=checkbox]').prop('checked'))? 1: 0;
-                item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
-                jsonObj.push(item);
-                //alert(item['id_plan']);
-            });
+            if(globalOperacion=="aprobar_plan_individualmente"){ //para aprobacion individual
 
-            if(globalOperacion=="aprobar_plan"){ //se va a guardar una nueva categoria
+                //Codigo para recoger todas las filas de la table_aprobar
+                jsonObj = [];
+                $('#table_aprobar tbody tr').each(function () {
+                    item = {};
+                    item['id_asignacion']=$(this).attr('id_asignacion');
+                    //item['id_plan']=globalId; //id_plan
+                    item['check']= ($(this).find('td').eq(1).find('[type=checkbox]').prop('checked'))? 1: 0;
+                    item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
+                    jsonObj.push(item);
+                    //alert(item['id_plan']);
+                });
+
                 var url="index.php";
                 var data={  "accion":"aprobacion",
-                            "operacion":"save",
+                            "operacion":"aprobacionIndividual",
                             "asignaciones_aprobar":JSON.stringify(jsonObj),
                             "id_plan": globalId
 
                 };
+            }
+            else if(globalOperacion=="aprobar_plan_masivamente"){ //para aprobacion masiva
+
+                var url="index.php";
+                var data={  "accion":"aprobacion",
+                            "operacion":"aprobacionMasiva",
+                            "id_plan": globalId
+
+                };
+
             }
 
 
@@ -193,7 +204,7 @@
                 buttons: {
                     "Aprobar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
-                            guardarCategoria();
+                            aprobarPlan();
                             $("#categoria").dialog("close");
                             //Llamada ajax para refrescar la grilla
                             //$('#subreporte').load('index.php',{accion:"reportes", operacion: "refreshGridReportes3", id_plan: globalId});
@@ -231,38 +242,11 @@
                 buttons: {
                     "Aceptar": function() {
 
-                        $.ajax({
-                            url:"index.php",
-                            data:{  "accion":"login",
-                                "operacion":"clear_pass_first",
-                                "id_usuario":globalId, //id_usuario
-                                "password": $('#pc_password').val()
-                            },
-                            contentType:"application/x-www-form-urlencoded",
-                            dataType:"json",//xml,html,script,json
-                            error:function(){
+                        aprobarPlan()
+                        $(this).dialog("close");
+                        //Llamada ajax para refrescar la grilla
+                        //$('#principal').load('index.php',{accion:"curso", operacion: "refreshGrid"});
 
-                                $("#dialog-msn").dialog("open");
-                                $("#message").html("ha ocurrido un error");
-
-                            },
-                            ifModified:false,
-                            processData:true,
-                            success:function(datas){
-
-                                $("#dialog-msn").dialog("open");
-                                //$("#message").html("Registro actualizado en la BD");
-                                $("#message").html(datas['comment']);
-
-
-                            },
-                            type:"POST",
-                            timeout:3000000,
-                            crossdomain:true
-
-                        });
-
-                        $("#password_clear").dialog("close");
 
                     },
                     "Cancelar": function() {
@@ -286,16 +270,16 @@
 
             //Agregado para editar
             $(document).on("click", ".aprobar_link", function(){
-                globalOperacion='aprobar_plan';
+                globalOperacion='aprobar_plan_individualmente';
                 globalId=$(this).attr('id');
-                aprobarPlan(globalId); //le mando el id del plan
+                editar(globalId); //le mando el id del plan
                 $('#categoria').dialog('open');
 
                 return false;
             });
 
             $(document).on("click", ".aprobar_todos_link", function(){
-                //globalOperacion='edit';
+                globalOperacion='aprobar_plan_masivamente';
                 globalId=$(this).attr('id');
                 $('#password_clear').dialog('open');
                 return false;
@@ -445,12 +429,12 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Empleados: </label><br/>
+                                    <label>Colaboradores: </label><br/>
                                     <table id="table_aprobar" class="tablaSolicitud">
                                         <thead>
                                         <tr>
                                             <td style="width: 90%">Nombre</td>
-                                            <td style="width: 10%">Estado</td>
+                                            <td style="width: 10%">Aprobar</td>
                                         </tr>
                                         </thead>
                                         <tbody>

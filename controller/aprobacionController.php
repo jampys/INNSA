@@ -37,18 +37,39 @@ switch($operacion){
         exit;
         break;*/
 
-    case 'save':
+    case 'aprobacionIndividual':
         $rta=1;
 
         $vector=json_decode($_POST["asignaciones_aprobar"]);
         foreach ($vector as $v){
             $t=new Aprobacion();
             if($v->operacion=="aprobar") {
-                if(!$t->aprobarPlan($v->check, $v->id_asignacion)) $rta=0;
+                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion)) $rta=0;
                 if(!$t->copyPropuestaIntoComunicacion($v->id_asignacion)) $rta=0;
             }
 
         }
+
+        if($rta > 0){
+            $respuesta = array ('response'=>'success','comment'=>'Plan aprobado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta = array ('response'=>'error','comment'=>'Error al aprobar el plan');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
+        exit;
+        break;
+
+
+    case 'aprobacionMasiva':
+        $rta=1;
+
+        $t=new Aprobacion();
+        if(!$t->aprobarPlanMasivamente(1, $_POST['id_plan'])) $rta=0; //
+        if(!$t->copyPropuestaIntoComunicacionMasivamente($_POST['id_plan'])) $rta=0;
 
         if($rta > 0){
             $respuesta = array ('response'=>'success','comment'=>'Plan aprobado correctamente');
