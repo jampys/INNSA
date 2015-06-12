@@ -10,7 +10,7 @@
 
 
 <!--<table cellpadding="0" cellspacing="0" style="width: 80%" class="display" id="reportes">-->
-<table cellpadding="0" cellspacing="0" style="width: 80%" id="reportes">
+<table cellpadding="0" cellspacing="0" style="width: 90%" id="reportes">
     <thead>
     <tr>
         <th>Período</th>
@@ -18,6 +18,7 @@
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
+        <th>Caracter</th>
         <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
@@ -34,14 +35,15 @@
             <td style="background-color: #FFD699"><?php  echo $plan["CANTIDAD"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["DURACION"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["UNIDAD"]; ?></td>
+            <td style="background-color: #FFD699"><?php  echo $plan["CARACTER_ACTIVIDAD"]; ?></td>
             <td style="background-color: #FFD699">$ <?php  echo $plan["UNITARIO"]; ?></td>
             <td style="background-color: #FFD699">$ <?php  echo $plan["SUBTOTAL"]; $sub_total_general+=$plan["SUBTOTAL"]; ?></td>
             <td style="background-color: #FFD699">$ <?php  echo $plan["TOTAL"]; $total_general+=$plan["TOTAL"]; ?></td>
-            <td style="background-color: #FFD699; text-align: center" class="center" ><a href="#" title="Aprobar" class="aprobar_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
+            <td style="background-color: #FFD699; text-align: center" class="<?php  echo ($plan["CARACTER_ACTIVIDAD"]=='ABIERTA')? 'aprobar_link' : 'link-desactivado';    ?>"><a href="#" title="Aprobar" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
             <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="aprobar_todos_link" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
         <tr class="oculta">
-            <td colspan="8">
+            <td colspan="9">
 
 
                 <?php
@@ -99,6 +101,7 @@
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
+        <th>Caracter</th>
         <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
@@ -107,6 +110,7 @@
     </tr>
     <!--Muestra el total general -->
     <tr>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>

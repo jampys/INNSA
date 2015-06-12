@@ -168,7 +168,20 @@ class Reportes
             " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
             " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
             " and pc.periodo = $periodo".
-            " and em.lugar_trabajo = $lugar_trabajo";
+            " and em.lugar_trabajo = $lugar_trabajo".
+            " and pc.caracter_actividad = 'ABIERTA'".
+            " UNION ".
+            " select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, pc.caracter_actividad, pc.importe_total,".
+            " cantidad_participantes as cantidad,".
+            " ((pc.importe_total * pc.tipo_cambio)/pc.cantidad_participantes) as unitario,".
+            " pc.importe_total * pc.tipo_cambio as subtotal,".
+            " pc.importe_total * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as total".
+            " from plan_capacitacion pc, cursos cu, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
+            " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
+            " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
+            " and pc.periodo = $periodo".
+            " and em.lugar_trabajo = $lugar_trabajo".
+            " and pc.caracter_actividad = 'CERRADA'";
 
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
