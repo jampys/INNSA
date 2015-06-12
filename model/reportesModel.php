@@ -159,6 +159,7 @@ class Reportes
             " and pc.periodo = $periodo".
             " and em.lugar_trabajo = $lugar_trabajo"; */
 
+            /* para planes abiertos */
         $query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, pc.caracter_actividad, pc.importe_total,".
             " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as cantidad,".
             " (pc.importe *pc.tipo_cambio) as unitario,".
@@ -171,6 +172,7 @@ class Reportes
             " and em.lugar_trabajo = $lugar_trabajo".
             " and pc.caracter_actividad = 'ABIERTA'".
             " UNION ".
+            /* para planes cerrados */
             " select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, pc.caracter_actividad, pc.importe_total,".
             " cantidad_participantes as cantidad,".
             " ((pc.importe_total * pc.tipo_cambio)/pc.cantidad_participantes) as unitario,".
