@@ -92,11 +92,12 @@
 
                         //var nombre= (typeof(datas['propuestas'][indice]['ID_CURSO'])!='undefined')? 'CURSO: '+datas['propuestas'][indice]['CURSO_NOMBRE']: 'TEMA: '+datas['propuestas'][indice]['TEMA_NOMBRE'];
                         var nombre= (typeof(datas['propuestas'][indice]['ID_CURSO'])!='undefined')? datas['propuestas'][indice]['CURSO_NOMBRE']: datas['propuestas'][indice]['TEMA_NOMBRE'];
+                        var id_reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['ID_REEMPLAZO'] : '';
                         var reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE'] : '';
 
                         $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
                         '<td>'+nombre+'</td>' +
-                        '<td style="display: none">'+datas['propuestas'][indice]['ID_REEMPLAZO']+'</td>' +
+                        '<td style="display: none">'+id_reemplazo+'</td>' +
                         '<td>'+reemplazo+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +

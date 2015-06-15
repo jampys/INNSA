@@ -758,9 +758,11 @@ class Propuesta{
         // la escribo de manera convencional porque con el parse y bind no funciona....
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query="update propuestas set id_reemplazo= $this->id_reemplazo, situacion= '$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', id_tema=$this->id_tema where id_propuesta=$this->id_propuesta";
+        //$query="update propuestas set id_reemplazo= $this->id_reemplazo, situacion= '$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', id_tema=$this->id_tema where id_propuesta=$this->id_propuesta";
+        $query="update propuestas set id_reemplazo= $this->id_reemplazo, situacion= '$this->situacion', objetivo_1='$this->objetivo_1', objetivo_2='$this->objetivo_2', objetivo_3='$this->objetivo_3', indicadores_exito='$this->indicadores_exito', compromiso='$this->compromiso', id_tema=$this->id_tema, id_curso = $this->id_curso where id_propuesta=$this->id_propuesta";
         $obj_cp->executeQuery($query);
         return $obj_cp->getAffect();
+        //echo $query;
 
     }
 
