@@ -100,6 +100,7 @@
                         }
                         var id_reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['ID_REEMPLAZO'] : '';
                         var reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE'] : '';
+                        var asignada= (typeof(datas['propuestas'][indice]['ASIGNADA'])!='undefined')? datas['propuestas'][indice]['ASIGNADA'] : '';
 
                         $('#table_curso tbody').append('<tr id_curso='+id_curso+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
                         '<td>'+nombre+'</td>' +
@@ -112,12 +113,13 @@
                         '<td style="display: none">'+datas['propuestas'][indice]['INDICADORES_EXITO']+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['COMPROMISO']+'</td>' +
                         '<td style="display: none">'+datas['propuestas'][indice]['ID_TEMA']+'</td>' +
+                        '<td style="display: none">'+asignada+'</td>' +
                         '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-
-                        if(datas['propuestas'][indice]['ASIGNADA']!='undefined' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){
-                            $('#table_curso tbody').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                        if(asignada !='' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){
+                            //$('#table_curso tbody').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
+                            $('#table_curso tbody tr:last').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         }
                     });
 
@@ -656,6 +658,7 @@
                 close:function(){
                     $("#form_curso")[0].reset(); //para limpiar el formulario cuando sale con x
                     $('#form_curso').validate().resetForm(); //para limpiar los errores validate
+                    $('#nc_curso').attr('readonly', false);
                 }
 
             });
@@ -691,9 +694,10 @@
                 $('#nc_indicadores_exito').val($(this).closest('tr').find('td').eq(7).html());
                 $('#nc_compromiso').val($(this).closest('tr').find('td').eq(8).html());
                 $('#nc_tema_id').val($(this).closest('tr').find('td').eq(9).html());
-                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
-                //con el metodo .data() en formato json.
+                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
+                //Verifico si la propuesta tiene asignacion, si es asi => el campo curso/tema se inhabilita
+                ($(this).closest('tr').find('td').eq(10).html()!='')? $('#nc_curso').attr('readonly', true): $('#nc_curso').attr('readonly', false);
                 $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
                 return false;
 
@@ -736,10 +740,9 @@
 
             //Para editar una solicitud de capacitacion
             $(document).on("click", ".edit_link", function(){
-                //globalOperacion=$(this).attr("media");
                 globalOperacion='edit';
                 globalId=$(this).attr('id');
-                editar(globalId); //le mando el id del usuario a editar que esta en el atributo id
+                editar(globalId); //le mando el id de la solicitud
                 $('#dialog').dialog('open');
                 $("#empleado").attr("readonly", true); //para no permitir editar el empleado
 

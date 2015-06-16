@@ -801,7 +801,8 @@ class Propuesta{
                 " where pro.id_curso = cu.id_curso (+)".
                 " and pro.id_tema = te.id_tema (+)".
                 " and pro.id_reemplazo = em.id_empleado (+)".
-                " and pro.id_solicitud=$id";
+                " and pro.id_solicitud=$id".
+                " order by pro.id_propuesta asc";
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll(); // retorna todas las propuestas que corresponden con el id de solicitud
     }
