@@ -513,7 +513,16 @@ class Asignacion_plan{
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
         //$query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, estado, id_plan) values($id_solicitud, :objetivo, :comentarios, :viaticos, :reemplazo, :estado, :id_plan)";
-        $query = "insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan) values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan)";
+        /*$query = "insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan) values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan)"; */
+        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)".
+                " values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan,".
+                " (select pro.id_propuesta".
+                " from propuestas pro, plan_capacitacion pc, cursos cu, temas te".
+                " where pro.id_solicitud = $id_solicitud".
+                " and ((pc.id_curso = pro.id_curso) OR (pc.id_curso = cu.id_curso and cu.id_tema = te.id_tema and te.id_tema = pro.id_tema ))".
+                " and pc.id_plan = :id_plan)".
+                " )";
+
         $obj_asig->dpParse($query);
 
         //$obj_asig->dpBind(':objetivo', $this->objetivo);
@@ -780,11 +789,14 @@ class Propuesta{
     public function getPropuestaBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        /*$query="select pro.*, cu.nombre curso_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre from propuestas pro, cursos cu, empleados em".
-                " where pro.id_curso = cu.id_curso".
-                " and pro.id_reemplazo = em.id_empleado".
-                " and pro.id_solicitud=$id";*/
-        $query="select pro.*, cu.nombre curso_nombre, te.nombre tema_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre".
+        /*$query="select pro.*, cu.nombre curso_nombre, te.nombre tema_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre".
+                " from propuestas pro, cursos cu, empleados em, temas te".
+                " where pro.id_curso = cu.id_curso (+)".
+                " and pro.id_tema = te.id_tema (+)".
+                " and pro.id_reemplazo = em.id_empleado (+)".
+                " and pro.id_solicitud=$id"; */
+        $query="select pro.*, cu.nombre curso_nombre, te.nombre tema_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre, cu.comentarios,".
+                " (select apx.id_asignacion from asignacion_plan apx where apx.id_propuesta = pro.id_propuesta) as asignada".
                 " from propuestas pro, cursos cu, empleados em, temas te".
                 " where pro.id_curso = cu.id_curso (+)".
                 " and pro.id_tema = te.id_tema (+)".

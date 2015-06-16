@@ -69,18 +69,14 @@
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
-                        //'<td style="display: none">'+datas['planes'][indice]['OBJETIVO']+'</td>' +
                         '<td style="display: none">'+comentarios+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
-                        //'<td style="display: none">'+datas['planes'][indice]['REEMPLAZO']+'</td>' +
-                        //'<td style="display: none">'+datas['planes'][indice]['APELLIDO_REEMPLAZO']+' '+datas['planes'][indice]['NOMBRE_REEMPLAZO']+'</td>' +
                         '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                         if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){ //Si la solicitud esta autorizada/aprobada deshabilito los campos
-                            //$('#table_plan tbody').find('a').eq(1).removeClass('eliminar_plan').addClass('link-desactivado');
                             $('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
                             $('#table_plan tbody').find('a.editar_plan').removeClass('editar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         }
@@ -90,12 +86,22 @@
                     //Se construye la tabla de cursos propuestos
                     $.each(datas['propuestas'], function(indice, val){
 
-                        //var nombre= (typeof(datas['propuestas'][indice]['ID_CURSO'])!='undefined')? 'CURSO: '+datas['propuestas'][indice]['CURSO_NOMBRE']: 'TEMA: '+datas['propuestas'][indice]['TEMA_NOMBRE'];
-                        var nombre= (typeof(datas['propuestas'][indice]['ID_CURSO'])!='undefined')? datas['propuestas'][indice]['CURSO_NOMBRE']: datas['propuestas'][indice]['TEMA_NOMBRE'];
+                        //var nombre= (typeof(datas['propuestas'][indice]['ID_CURSO'])!='undefined')? datas['propuestas'][indice]['CURSO_NOMBRE']: datas['propuestas'][indice]['TEMA_NOMBRE'];
+                        var nombre;
+                        var id_curso;
+                        if(typeof(datas['propuestas'][indice]['ID_CURSO'])!='undefined'){
+                            nombre= 'CURSO: '+datas['propuestas'][indice]['CURSO_NOMBRE'];
+                            id_curso=datas['propuestas'][indice]['ID_CURSO'];
+                        }
+                        else{
+                            nombre='TEMA: '+datas['propuestas'][indice]['TEMA_NOMBRE'];
+                            id_curso='null';
+
+                        }
                         var id_reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['ID_REEMPLAZO'] : '';
                         var reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE'] : '';
 
-                        $('#table_curso tbody').append('<tr id_curso='+datas['propuestas'][indice]['ID_CURSO']+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
+                        $('#table_curso tbody').append('<tr id_curso='+id_curso+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
                         '<td>'+nombre+'</td>' +
                         '<td style="display: none">'+id_reemplazo+'</td>' +
                         '<td>'+reemplazo+'</td>' +
@@ -109,7 +115,8 @@
                         '<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="eliminar_curso" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
-                        if(datas['solicitud'][0]['ESTADO']=='APROBADA' || datas['solicitud'][0]['ESTADO']=='AUTORIZADA' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){
+
+                        if(datas['propuestas'][indice]['ASIGNADA']!='undefined' || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){
                             $('#table_curso tbody').find('a.eliminar_curso').removeClass('eliminar_curso').addClass('link-desactivado').click(function(e){e.preventDefault();});
                         }
                     });
@@ -121,7 +128,6 @@
                         $(":input:not(.button-cancel)").attr("disabled", true);
 
                     }*/
-
 
 
                 },
@@ -141,24 +147,20 @@
             $('#table_plan tbody tr').each(function () {
                 item = {};
                 item['id_plan']=$(this).attr('id_plan');
-                //item['objetivo']= $(this).find('td').eq(1).html();
                 item['comentarios']= $(this).find('td').eq(1).html();
                 item['viaticos']= $(this).find('td').eq(4).html();
-                //item['reemplazo']= $(this).find('td').eq(6).html();
                 item['id_asignacion']=($(this).attr('id_asignacion'))? $(this).attr('id_asignacion') : "";
                 item['operacion_asignacion']=$(this).attr('operacion_asignacion');
                 item['estado'] = 'ASIGNADO';
                 jsonObj.push(item);
-                //alert(item['id_asignacion']);
             });
 
             //Codigo para recoger todas las filas de la tabla dinamica de propuestas
             jsonObjCursos = [];
             $('#table_curso tbody tr').each(function () {
                 item = {};
-                //item['id_curso']=$(this).attr('id_curso');
-                item['id_curso']=($(this).attr('id_curso').length>0)? $(this).attr('id_curso'): 'null' ;
-                //item['reemplazo']= $(this).find('td').eq(1).html();
+                //item['id_curso']=($(this).attr('id_curso').length>0)? $(this).attr('id_curso'): 'null' ;
+                item['id_curso']=($(this).prop('id_curso', 'null'))? 'null': $(this).attr('id_curso') ;
                 item['reemplazo']=($(this).find('td').eq(1).html().length>0)? $(this).find('td').eq(1).html(): 'null' ;
                 item['situacion']= $(this).find('td').eq(3).html();
                 item['objetivo_1']= $(this).find('td').eq(4).html();
@@ -251,7 +253,6 @@
                 success:function(datas){
 
                         $("#dialog-msn").dialog("open");
-                        //$("#message").html("Registro actualizado en la BD");
                         $("#message").html(datas['comment']);
 
                 },
@@ -382,11 +383,8 @@
                                 //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
                                 $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
-                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_objetivo').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_comentarios').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(4).html($('#np_viaticos').val());
-                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(6).html($('#np_reemplazo_id').val());
-                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(7).html($('#np_reemplazo').val());
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
 
@@ -397,13 +395,10 @@
                                 //$('#table_plan tr:last').after('<tr>' +
                                 $('#table_plan tbody').append('<tr id_plan='+$("#np_plan_capacitacion_id").val()+'>' +
                                 '<td>'+$('#np_plan_capacitacion').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_objetivo').val()+'</td>' +
                                 '<td style="display: none">'+$('#np_comentarios').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_duracion').val()+'</td>' +
                                 '<td>'+$('#np_plan_capacitacion_costo').val()+'</td>' +
                                 '<td style="text-align: center">'+$('#np_viaticos').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_reemplazo_id').val()+'</td>' +
-                                //'<td style="display: none">'+$('#np_reemplazo').val()+'</td>' +
                                 '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                                 '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                                 '</tr>');
@@ -412,9 +407,6 @@
                             }
 
                         }
-
-
-
 
                     },
                     "Cancelar": function() {
@@ -460,11 +452,8 @@
                 $(this).closest('tr').attr('operacion_asignacion', 'update');
                 $('#np_plan_capacitacion_id').val($(this).closest('tr').attr('id_plan'));
                 $('#np_plan_capacitacion').val($(this).closest('tr').find('td').eq(0).html());
-                //$('#np_objetivo').val($(this).closest('tr').find('td').eq(1).html());
                 $('#np_comentarios').val($(this).closest('tr').find('td').eq(1).html());
                 $('#np_viaticos').val($(this).closest('tr').find('td').eq(4).html());
-                //$('#np_reemplazo_id').val($(this).closest('tr').find('td').eq(6).html());
-                //$('#np_reemplazo').val($(this).closest('tr').find('td').eq(7).html());
                 //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion
                 //con el metodo .data() en formato json.
                 var row_index=$(this).closest('tr').index();
@@ -476,7 +465,6 @@
 
 
             // new plan link
-            //$('#new-plan-link').click(function(){
             $(document).on('click', '.new-plan-link', function(){
                 //$('#asignar_plan').dialog('open');
                 $('#asignar_plan').data('operacion', 'insert').dialog('open');
@@ -922,7 +910,6 @@
             messages:{
                 nc_curso: "Seleccione un curso o tema",
                 nc_curso_id: "Seleccione un curso o tema sugerido",
-                /*nc_reemplazo: "Seleccione el reemplazo", */
                 nc_reemplazo_id: "Seleccione un empleado sugerido",
                 nc_situacion: "Ingrese la situacion",
                 nc_objetivo_1: "Ingrese el objetivo 1",
@@ -1163,7 +1150,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Cursos asignados: </label><br/>
-                                    <a id="new-plan" class="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
+                                    <!--<a id="new-plan" class="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>-->
                                 </div>
                             </div>
                             <div class="eight column">
@@ -1180,10 +1167,10 @@
                                     <table id="table_plan" class="tablaSolicitud">
                                         <thead>
                                             <tr>
-                                                <td style="width: 55%">Plan</td>
+                                                <td style="width: 55%">Curso</td>
                                                 <td style="width: 10%">Duración</td>
-                                                <td style="width: 10%">Costo</td>
-                                                <td style="width: 10%">Viaticos</td>
+                                                <td style="width: 10%">Imp. Un.</td>
+                                                <td style="width: 10%">Viáticos</td>
                                                 <td>Editar</td>
                                                 <td>Eliminar</td>
                                             </tr>
