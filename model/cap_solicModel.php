@@ -763,6 +763,7 @@ class Propuesta{
         $query = "insert into propuestas (id_solicitud, id_curso, id_reemplazo, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, id_tema) values($this->id_solicitud, $this->id_curso, $this->id_reemplazo, '$this->situacion', '$this->objetivo_1', '$this->objetivo_2', '$this->objetivo_3', '$this->indicadores_exito', '$this->compromiso', $this->id_tema)";
         $obj_cp->executeQuery($query);
         return $obj_cp->getAffect();
+        //echo $query;
     }
 
 

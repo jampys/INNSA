@@ -597,9 +597,9 @@
                             // si se trata de un update
                             if($('#proponer_curso').data('operacion')=='editar'){
                                 var row_index=$('#proponer_curso').data('row_index');
-                                //console.log($('#asignar_plan').data('operacion'));
+                                var id_curso= ($("#nc_curso_id").val()=='')? 'null' : $("#nc_curso_id").val();
                                 //Cambio el atributo id_plan del tr por el del plan que eligio el usuario
-                                $('#table_curso tbody').find('tr').eq(row_index).attr('id_curso',$("#nc_curso_id").val());
+                                $('#table_curso tbody').find('tr').eq(row_index).attr('id_curso',id_curso);
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(0).html($('#nc_curso').val());
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(1).html($('#nc_reemplazo_id').val());
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(2).html($('#nc_reemplazo').val());
@@ -618,7 +618,8 @@
 
                                 //Se agrega fila a la tabla de planes
                                 //$('#table_plan tr:last').after('<tr>' +
-                                $('#table_curso tbody').append('<tr id_curso='+$("#nc_curso_id").val()+'>' +
+                                var id_curso= ($("#nc_curso_id").val()=='')? 'null' : $("#nc_curso_id").val();
+                                $('#table_curso tbody').append('<tr id_curso='+id_curso+'>' +
                                 '<td>'+$('#nc_curso').val()+'</td>' +
                                 '<td style="display: none">'+$('#nc_reemplazo_id').val()+'</td>' +
                                 '<td>'+$('#nc_reemplazo').val()+'</td>' +
