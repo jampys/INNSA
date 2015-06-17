@@ -101,7 +101,9 @@
                         }
                         var id_reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['ID_REEMPLAZO'] : '';
                         var reemplazo= (typeof(datas['propuestas'][indice]['ID_REEMPLAZO'])!='undefined')? datas['propuestas'][indice]['REEMPLAZO_APELLIDO']+' '+datas['propuestas'][indice]['REEMPLAZO_NOMBRE'] : '';
-                        var asignada= (typeof(datas['propuestas'][indice]['ASIGNADA'])!='undefined')? datas['propuestas'][indice]['ASIGNADA'] : '';
+                        //var asignada= (typeof(datas['propuestas'][indice]['ASIGNADA'])!='undefined')? datas['propuestas'][indice]['ASIGNADA'] : '';
+                        //Si la propuesta tiene alguna asignacion, no se puede eliminar
+                        var asignada= (datas['propuestas'][indice]['ASIGNADA'] > 0)? datas['propuestas'][indice]['ASIGNADA'] : '';
 
                         $('#table_curso tbody').append('<tr id_curso='+id_curso+' '+'id_propuesta='+datas['propuestas'][indice]['ID_PROPUESTA']+'>' +
                         '<td>'+nombre+'</td>' +

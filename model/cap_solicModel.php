@@ -819,7 +819,8 @@ class Propuesta{
                 " and pro.id_reemplazo = em.id_empleado (+)".
                 " and pro.id_solicitud=$id"; */
         $query="select pro.*, cu.nombre curso_nombre, te.nombre tema_nombre, em.apellido reemplazo_apellido, em.nombre reemplazo_nombre, cu.comentarios,".
-                " (select apx.id_asignacion from asignacion_plan apx where apx.id_propuesta = pro.id_propuesta) as asignada".
+                " (select count(apx.id_asignacion) from asignacion_plan apx where apx.id_propuesta = pro.id_propuesta) as asignada". /*count() si la propuesta es por curso
+            puede tener una unica asignacion, pero si es por tema puede tener 1 o mas. */
                 " from propuestas pro, cursos cu, empleados em, temas te".
                 " where pro.id_curso = cu.id_curso (+)".
                 " and pro.id_tema = te.id_tema (+)".

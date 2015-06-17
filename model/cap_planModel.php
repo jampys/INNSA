@@ -482,7 +482,8 @@ class Cap_Plan
             " te.id_tema ids, te.nombre".
             " from propuestas pro, solicitud_capacitacion sc, temas te, cursos cu".
             " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".
-            " and te.id_tema = cu.id_tema";
+            " and te.id_tema = cu.id_tema".
+            " and pro.id_curso is null";
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
