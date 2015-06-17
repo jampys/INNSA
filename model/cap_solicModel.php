@@ -512,16 +512,39 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        //$query = "insert into asignacion_plan (id_solicitud, objetivo, comentarios, viaticos, reemplazo, estado, id_plan) values($id_solicitud, :objetivo, :comentarios, :viaticos, :reemplazo, :estado, :id_plan)";
-        /*$query = "insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan) values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan)"; */
-        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)".
+        /*$query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)".
                 " values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan,".
                 " (select pro.id_propuesta".
                 " from propuestas pro, plan_capacitacion pc, cursos cu, temas te".
                 " where pro.id_solicitud = $id_solicitud".
                 " and ((pc.id_curso = pro.id_curso) OR (pc.id_curso = cu.id_curso and cu.id_tema = te.id_tema and te.id_tema = pro.id_tema ))".
                 " and pc.id_plan = :id_plan)".
-                " )";
+                " )"; */
+
+        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)".
+                " values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan,".
+                    /* por curso */
+                    "(select pro.id_propuesta".
+                    " from propuestas pro, plan_capacitacion pc".
+                    " where pro.id_curso = pc.id_curso".
+                    " and pro.id_solicitud = $id_solicitud".
+                    " and pc.id_plan = :id_plan".
+                    " UNION".
+                    /* por tema */
+                    " select pro.id_propuesta".
+                    " from propuestas pro, plan_capacitacion pc, cursos cu, temas te".
+                    " where pc.id_curso = cu.id_curso and cu.id_tema = te.id_tema and te.id_tema = pro.id_tema".
+                    " and pro.id_solicitud = $id_solicitud".
+                    " and pc.id_plan = :id_plan".
+                    " and NOT EXISTS(". /* por si existe alguna propuesta de curso, pero tambien la de tema */
+                            " select pro.id_propuesta".
+                            " from propuestas pro, plan_capacitacion pc".
+                            " where pro.id_curso = pc.id_curso".
+                            " and pro.id_solicitud = $id_solicitud".
+                            " and pc.id_plan = :id_plan".
+                            " )".
+                    " )".
+            " )";
 
         $obj_asig->dpParse($query);
 

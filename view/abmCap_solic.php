@@ -17,10 +17,11 @@
                 data:{"accion":"cap_solic","operacion":"update","id":id_plan},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(error){
 
                 $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
+                //$("#message").html("Error al abrir solicitud de capacitación");
+                $("#message").html(error.responseText);
 
                 },
                 ifModified:false,
