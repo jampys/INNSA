@@ -162,7 +162,7 @@
             $('#table_curso tbody tr').each(function () {
                 item = {};
                 //item['id_curso']=($(this).attr('id_curso').length>0)? $(this).attr('id_curso'): 'null' ;
-                item['id_curso']=($(this).prop('id_curso', 'null'))? 'null': $(this).attr('id_curso') ;
+                item['id_curso']=($(this).attr('id_curso')== 'null')? 'null': $(this).attr('id_curso') ;
                 item['reemplazo']=($(this).find('td').eq(1).html().length>0)? $(this).find('td').eq(1).html(): 'null' ;
                 item['situacion']= $(this).find('td').eq(3).html();
                 item['objetivo_1']= $(this).find('td').eq(4).html();
@@ -555,7 +555,7 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos_temas", "target":"BYPERIODO"},
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos_temas", "target":"BYPERIODO", "id_solicitud": globalId},
                         success: function(data) {
                             response($.map(data, function(item) {
                                 return {

@@ -151,7 +151,8 @@ switch($operacion){
 
     case 'autocompletar_cursos_temas':
         $target= (isset($_POST['target']) && $_POST['target']=='BYPERIODO')? 'BYPERIODO': 'ALL';
-        $rta=$view->u->getCursosTemas($_POST['term'], $target);
+        //$rta=$view->u->getCursosTemas($_POST['term'], $target);
+        $rta=$view->u->getCursosTemas($_POST['term'], $target, $_POST['id_solicitud']);
         print_r(json_encode($rta));
         //echo json_encode($rta);
         exit;
