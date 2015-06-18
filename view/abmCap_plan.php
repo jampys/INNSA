@@ -90,7 +90,7 @@
 
         function guardar(){
 
-            //Codigo para recoger todas las filas de la tabla dinamica de planes
+            //Codigo para recoger todas las filas de la tabla dinamica empleados
             jsonObj = [];
             $('#table_empleados tbody tr').each(function () {
                 item = {};
@@ -345,6 +345,7 @@
                     $("#form_plan")[0].reset(); //para limpiar el formulario cuando sale con x
                     $('#form_plan').validate().resetForm(); //para limpiar los errores validate
                     $('#table_cursos tbody tr').each(function(){ $(this).remove(); });
+                    $('#curso_tema').val(''); //para resetear el combo de curso_tema
                 }
 
             });
@@ -388,6 +389,7 @@
 
             $(document).on('change', '#curso_tema', function(){
                 var label=$('#curso_tema :selected').parent().attr('label');
+                $('#oculto').css('display', 'none');
                 if(label=='Temas'){
                     var id_tema=$('#curso_tema :selected').val();
 
