@@ -78,7 +78,7 @@ switch($operacion){
     case 'save':
         $rta=1;
         $view->u->setIdPlan($_POST['id']);
-        //$view->u->setIdCurso($_POST['curso']);
+        $view->u->setIdCurso($_POST['id_curso']);
         $view->u->setPeriodo($_POST['periodo']);
         $view->u->setObjetivo($_POST['objetivo']);
         $view->u->setModalidad($_POST['modalidad']);

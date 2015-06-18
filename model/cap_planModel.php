@@ -41,10 +41,14 @@ class Cap_Plan
     public function getCapPlanById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        /*$query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH:MI') as fecha_hasta, pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.entidad entidad_plan, cu.* from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan=$id"; */
-        $query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH:MI') as fecha_hasta, pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.entidad entidad_plan, cu.*,".
+        /*$query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH:MI') as fecha_hasta, pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.entidad entidad_plan, cu.*,".
             " pc.caracter_actividad, pc.cantidad_participantes, pc.importe_total".
-            " from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan=$id";
+            " from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan=$id"; */
+        $query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH:MI') as fecha_hasta,".
+                " pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.entidad entidad_plan, cu.*,".
+                " pc.caracter_actividad, pc.cantidad_participantes, pc.importe_total,".
+                " (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) as asignados".
+                " from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan = $id";
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
@@ -279,11 +283,12 @@ class Cap_Plan
                 " duracion = :duracion, unidad = :unidad, prioridad = :prioridad, estado = :estado, importe = :importe, moneda = :moneda, tipo_cambio = :tipo_cambio, forma_pago = :forma_pago,".
                 " forma_financiacion = :forma_financiacion, profesor_1 = :profesor_1, profesor_2 = :profesor_2, comentarios_plan = :comentarios, entidad = :entidad where id_plan = :id_plan";*/
 
-        $query="update plan_capacitacion set periodo = :periodo, objetivo = :objetivo, modalidad = :modalidad, fecha_desde = TO_DATE( :fecha_desde,'DD/MM/YYYY HH24:MI'), fecha_hasta = TO_DATE( :fecha_hasta,'DD/MM/YYYY HH24:MI'),".
+        $query="update plan_capacitacion set id_curso = :id_curso, periodo = :periodo, objetivo = :objetivo, modalidad = :modalidad, fecha_desde = TO_DATE( :fecha_desde,'DD/MM/YYYY HH24:MI'), fecha_hasta = TO_DATE( :fecha_hasta,'DD/MM/YYYY HH24:MI'),".
                 " duracion = :duracion, unidad = :unidad, prioridad = :prioridad, estado = :estado, importe = :importe, moneda = :moneda, tipo_cambio = :tipo_cambio, forma_pago = :forma_pago,".
                 " forma_financiacion = :forma_financiacion, profesor_1 = :profesor_1, profesor_2 = :profesor_2, comentarios_plan = :comentarios, entidad = :entidad, caracter_actividad = :caracter_actividad, cantidad_participantes = :cantidad_participantes, importe_total = :importe_total where id_plan = :id_plan";
         $obj_cp->dpParse($query);
 
+        $obj_cp->dpBind(':id_curso', $this->getIdCurso());
         $obj_cp->dpBind(':periodo', $this->periodo);
         $obj_cp->dpBind(':objetivo', $this->objetivo);
         $obj_cp->dpBind(':modalidad', $this->modalidad);

@@ -19,13 +19,14 @@
                 error:function(){
 
                 $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
+                $("#message").html("Error al editar el plan de capacitación");
 
                 },
                 ifModified:false,
                 processData:true,
                 success:function(datas){
                     $("#curso").val(datas['plan'][0]['NOMBRE']);
+                    $("#curso_id").val(datas['plan'][0]['ID_CURSO']);
                     $("#periodo").val(datas['plan'][0]['PERIODO']);
                     $("#objetivo").val(datas['plan'][0]['OBJETIVO']);
                     $("#modalidad").val(datas['plan'][0]['MODALIDAD']);
@@ -49,8 +50,9 @@
                     $("#cantidad_participantes").val(datas['plan'][0]['CANTIDAD_PARTICIPANTES']);
                     $("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
 
-                    //para el campo tipo de cambio al editar
+                    //define si estos campos se puede editar o no
                     (datas['plan'][0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
+                    (datas['plan'][0]['ASIGNADOS']>0)? $('#curso_tema').attr('disabled', true) : $('#curso_tema').attr('disabled', false);
 
 
 
@@ -65,7 +67,7 @@
                         '<td><input type="checkbox" id="check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
                         '<td>'+datas['empleados'][indice]['APELLIDO']+' '+datas['empleados'][indice]['NOMBRE']+'</td>' +
                         '<td><input type="text" class="emp_comentarios" value="'+comentarios+'" ></td>' +
-                        '<td><input type="text" class="emp_viaticos" value="'+viaticos+'" ></td>' +
+                        '<td><input style="text-align: right" type="text" class="emp_viaticos" value="'+viaticos+'" ></td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
                         //'<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
@@ -119,7 +121,7 @@
                 var data={  "accion":"cap_plan",
                             "operacion":"insert",
                             "datos":JSON.stringify(jsonObj),
-                            "curso":$("#curso_id").val(),
+                            "id_curso":$("#curso_id").val(),
                             "periodo":$("#periodo").val(),
                             "objetivo":$("#objetivo").val(),
                             "modalidad":$("#modalidad").val(),
@@ -153,7 +155,7 @@
                             "operacion":"save",
                             "datos":JSON.stringify(jsonObj),
                             "id":globalId,
-                            //"curso":$("#curso").val(),
+                            "id_curso":$("#curso_id").val(),
                             "periodo":$("#periodo").val(),
                             "objetivo":$("#objetivo").val(),
                             "modalidad":$("#modalidad").val(),
@@ -935,56 +937,55 @@
 
 
                         <div class="sixteen_column section">
-                            <div class="eight column">
+                            <div class="four column">
                                 <div class="column_content">
-                                    <label>Cantidad participantes:</label>
-                                    <input type="text" name="cantidad_participantes" id="cantidad_participantes"/>
+                                    <label>Cant. participantes:</label>
+                                    <input style="text-align: right" type="text" name="cantidad_participantes" id="cantidad_participantes"/>
                                 </div>
                             </div>
 
                             <div class="four column">
                                 <div class="column_content">
                                     <label>Importe unitario: </label><br/>
-                                    <input type="text" name="importe" id="importe"/>
+                                    <input style="text-align: right" type="text" name="importe" id="importe"/>
                                 </div>
                             </div>
 
                             <div class="four column">
                                 <div class="column_content">
                                     <label>Importe Total: </label><br/>
-                                    <input type="text" name="importe_total" id="importe_total"/>
+                                    <input style="text-align: right" type="text" name="importe_total" id="importe_total"/>
                                 </div>
                             </div>
 
-
-                        </div>
-
-
-                        <div class="sixteen_column section">
-
-                            <div class="eight column">
+                            <div class="four column">
                                 <div class="column_content">
                                     <label>Moneda: </label>
                                     <select name="moneda" id="moneda">
                                         <option value="">Seleccione la moneda</option>
-                                        <option value="$">$</option>
+                                        <option value="$">ARS</option>
                                         <option value="USD">USD</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Tipo cambio: </label><br/>
-                                    <input type="text" name="tipo_cambio" id="tipo_cambio" readonly="readonly"/>
-                                </div>
-                            </div>
 
                         </div>
 
 
+
+
                         <div class="sixteen_column section">
-                            <div class="eight column">
+
+                            <div class="five column">
+                                <div class="column_content">
+                                    <label>Tipo cambio: </label><br/>
+                                    <input style="text-align: right" type="text" name="tipo_cambio" id="tipo_cambio" readonly="readonly"/>
+                                </div>
+                            </div>
+
+
+                            <div class="six column">
                                 <div class="column_content">
                                     <label>Forma pago: </label><br/>
                                     <select name="forma_pago" id="forma_pago">
@@ -996,7 +997,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="eight column">
+                            <div class="five column">
                                 <div class="column_content">
                                     <label>Forma financiación: </label>
                                     <select name="forma_financiacion" id="forma_financiacion">
