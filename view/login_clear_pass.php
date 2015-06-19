@@ -15,7 +15,7 @@
                 autoOpen: true,
                 width: 400,
                 modal:true,
-                title:"Blanqueo de password",
+                title:"Ingrese un nuevo password",
                 buttons: {
                     "Guardar": function() {
                         $("#form").submit();
@@ -78,7 +78,7 @@
             <div class="block" id="forms">
                 <form id="form" action="index.php" method="post">
                     <fieldset>
-                        <legend>Ingrese su nuevo password</legend>
+                        <!--<legend>Ingrese su nuevo password</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="eight column">

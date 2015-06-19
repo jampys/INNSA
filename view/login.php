@@ -78,7 +78,7 @@
             <div class="block" id="forms">
                 <form id="form" action="index.php" method="post">
                     <fieldset>
-                        <legend>Ingrese sus datos</legend>
+                        <!--<legend>Ingrese sus datos</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="eight column">

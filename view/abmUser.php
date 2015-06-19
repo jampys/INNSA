@@ -77,10 +77,10 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(datas){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    $("#message").html(datas['comment']);
 
                 },
                 ifModified:false,
@@ -201,7 +201,8 @@
                                 error:function(){
 
                                     $("#dialog-msn").dialog("open");
-                                    $("#message").html("ha ocurrido un error");
+                                    //$("#message").html("ha ocurrido un error");
+                                    $("#message").html(datas['comment']);
 
                                 },
                                 ifModified:false,
