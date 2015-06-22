@@ -200,14 +200,14 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Aprobar plan capacitación",
+                title:"Aprobar curso",
                 buttons: {
                     "Aprobar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
                             aprobarPlan();
                             $("#categoria").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            //$('#subreporte').load('index.php',{accion:"reportes", operacion: "refreshGridReportes3", id_plan: globalId});
+                            $('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, filtro: "filtro"});
                         }
 
                     },
@@ -238,14 +238,14 @@
                 autoOpen: false,
                 width: 450,
                 modal:true,
-                title:"Blanqueo de password",
+                title:"Aprobar curso",
                 buttons: {
                     "Aceptar": function() {
 
                         aprobarPlan()
                         $(this).dialog("close");
                         //Llamada ajax para refrescar la grilla
-                        //$('#principal').load('index.php',{accion:"curso", operacion: "refreshGrid"});
+                        $('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, filtro: "filtro"});
 
 
                     },
@@ -437,7 +437,7 @@
                                         <thead>
                                         <tr>
                                             <td style="width: 90%">Nombre</td>
-                                            <td style="width: 10%">Aprobar</td>
+                                            <td style="width: 10%">Seleccionar</td>
                                         </tr>
                                         </thead>
                                         <tbody>

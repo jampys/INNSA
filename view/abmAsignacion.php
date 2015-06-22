@@ -334,6 +334,8 @@
 
                     $("#dialog-msn").dialog("open");
                     $("#message").html(datas['comment']);
+                    (datas['response']!='error')? $("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>') : '';
+
 
                 },
                 type:"POST",
@@ -427,7 +429,7 @@
                         click: function() {
                                 enviarComunicacion();
                                 //seteo el comunicardor
-                                $("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+                                //$("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
                                 //$("#comunico_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
 
                         },

@@ -24,11 +24,11 @@ switch($operacion){
         $rta=$view->u->insertEmpleado();
         //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado agregado correctamente'):array ('response'=>'error','comment'=>'Error al agregar el empleado');
         if($rta > 0){
-            $respuesta= array ('response'=>'success','comment'=>'Empleado agregado correctamente');
+            $respuesta= array ('response'=>'success','comment'=>'Colaborador agregado correctamente');
             sQueryOracle::hacerCommit();
         }
         else{
-            $respuesta=array ('response'=>'error','comment'=>'Error al agregar el empleado');
+            $respuesta=array ('response'=>'error','comment'=>'Error al agregar el colaborador');
             sQueryOracle::hacerRollback();
         }
 
@@ -60,11 +60,11 @@ switch($operacion){
         $rta=$view->u->updateEmpleado();
         //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado actualizado correctamente'):array ('response'=>'error','comment'=>'Error al modificar el empleado ');
         if($rta > 0){
-            $respuesta= array ('response'=>'success','comment'=>'Empleado modificado correctamente');
+            $respuesta= array ('response'=>'success','comment'=>'Colaborador modificado correctamente');
             sQueryOracle::hacerCommit();
         }
         else{
-            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el empleado');
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el colaborador');
             sQueryOracle::hacerRollback();
         }
 
