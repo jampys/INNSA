@@ -474,7 +474,7 @@ class Cap_Plan
                 " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".
                 " and te.id_tema = cu.id_tema"; */
 
-        $query="select (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+        $query="select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
                 " cu.id_curso ids, cu.nombre".
                 " from propuestas pro, solicitud_capacitacion sc, cursos cu".
                 " where pro.id_solicitud = sc.id_solicitud and pro.id_curso = cu.id_curso".
@@ -483,7 +483,7 @@ class Cap_Plan
                 " from asignacion_plan apx".
                 " where apx.id_propuesta = pro.id_propuesta)".
             " UNION".
-            " select DISTINCT(SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%TEMAS%') tabla,".
+            " select DISTINCT(SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla,".
             " te.id_tema ids, te.nombre".
             " from propuestas pro, solicitud_capacitacion sc, temas te, cursos cu".
             " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".

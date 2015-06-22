@@ -342,9 +342,12 @@
 
 </script>
 
-<h5>
-    <a href="#" id="toggle-list">REPORTE: Costos de capacitación</a>
-</h5>
+
+<div class="box" style="width: 88%">
+    <h2>
+        <a href="#" id="toggle-list">Aprobar cursos</a>
+    </h2>
+</div>
 
 
 <div class="sixteen_column section">

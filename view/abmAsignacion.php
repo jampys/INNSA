@@ -324,7 +324,8 @@
                 error:function(){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(datas['comment']);
 
                 },
                 ifModified:false,
@@ -420,7 +421,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Comunicación",
                 buttons: [
                     {
                         click: function() {
@@ -478,7 +479,7 @@
                 autoOpen: false,
                 width: 680,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Evaluación",
                 buttons: {
                     "Salir": function() {
                         $("#form_evaluacion")[0].reset(); //para limpiar los campos del formulario
@@ -586,9 +587,9 @@
                 }
             },
             messages:{
-                situacion: "Ingrese la situacion",
+                situacion: "Ingrese la situación",
                 objetivo_1: "Ingrese al menos un objetivo",
-                indicadores_exito: "Ingrese los indicadores de exito",
+                indicadores_exito: "Ingrese los indicadores de éxito",
                 compromiso: "Ingrese el compromiso"
             }
 
@@ -627,7 +628,7 @@
             <div class="block" id="forms">
                 <form id="form" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
@@ -674,7 +675,7 @@
             <div class="block" id="forms">
                 <form id="form_comunicacion" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
@@ -766,7 +767,7 @@
             <div class="block" id="forms">
                 <form id="form_evaluacion" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">

@@ -54,7 +54,9 @@
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
                 <li><a href="index.php?accion=asignacion">Asignacion plan</a></li>
-                <li><a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a></li>
+                <!--<li><a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a></li>-->
+                <li> <a href="index.php?accion=reportes&operacion=reportes3">Aprobación</a></li>
+
         <?php   } ?>
 
 
@@ -64,7 +66,6 @@
                     <li><a href="index.php?accion=reportes">Reporte Solicitudes</a></li>
                     <li><a href="index.php?accion=reportes&operacion=reportes1">Reporte Asignaciones</a></li>
                     <li><a href="index.php?accion=reportes&operacion=reportes2">Reporte cursos propuestos</a></li>
-                    <li> <a href="index.php?accion=reportes&operacion=reportes3">Reporte gerencia</a></li>
                 </ul>
             </li>
         <?   } ?>

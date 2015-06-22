@@ -1,3 +1,6 @@
+<!-- ESTA FUNCIONALIDAD NO SE USA -->
+
+
 <?php
 if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}

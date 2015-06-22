@@ -102,10 +102,7 @@ switch($operacion){
         $view->c->setIdAsignacion($_POST['id']);
         $com=$view->c->getDatosForSendComunicationMail();
 
-        if(!$com){ //Si la consulta SQL no devuelve ningun registro
-            $rta=0;
-            $respuesta = array ('response'=>'error','comment'=>'Problemas con la consulta SQL');
-        }
+        if(!$com){ $rta=0; } //Si la consulta SQL no devuelve ningun registro
         else{ //si la consulta SQL devuelve 1 registro
 
             //codigo para el envio de e-mail
@@ -123,7 +120,7 @@ switch($operacion){
             $headers.= 'MIME-Version: 1.0' . "\r\n";
             $headers.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
-            if(mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
+            if(@mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
 
                 //Poner en la comunicacion el id de quien comunico
                 $view->c->setIdComunicacion($_POST['id_comunicacion']);
@@ -139,10 +136,7 @@ switch($operacion){
                 if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
 
             }
-            else{ //No pudo enviar el e-mail
-                $rta=0;
-                $respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
-            }
+            else{ $rta=-1;}
 
         }
 
@@ -151,7 +145,8 @@ switch($operacion){
             sQueryOracle::hacerCommit();
         }
         else{
-            //$respuesta lo trae de arriba
+            if($rta=0) $respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación');
+            if($rta=-1) $respuesta = array ('response'=>'error','comment'=>'Error al enviar la comunicación. Servidor de e-mail inactivo');
             sQueryOracle::hacerRollback();
         }
 
