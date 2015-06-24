@@ -73,6 +73,7 @@
                         '</tr>');
 
                         $("#table_aprobar_check_"+idCheck+"").prop('checked', ((datas[indice]['APROBADA'])==1)? true:false);
+                        $("#table_aprobar_check_"+idCheck+"").attr('disabled', ((datas[indice]['APROBADA'])==1)? true:false);
                     });
 
                 },

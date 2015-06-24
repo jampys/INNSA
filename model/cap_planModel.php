@@ -95,7 +95,7 @@ class Cap_Plan
                 " from temas te".
                 " where te.nombre like UPPER ('%".$term."%')"; */
 
-            $query="select (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+            $query="select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
                 " cu.id_curso, cu.nombre, cu.id_tema, pc.periodo, pc.fecha_desde, pc.modalidad, ec.nombre entidad".
                 " from cursos cu".
                 " join temas te on cu.id_tema = te.id_tema".
@@ -104,7 +104,7 @@ class Cap_Plan
                 " where (cu.nombre like UPPER ('%".$term."%') OR te.nombre like UPPER ('%".$term."%'))".
                 " and cu.id_curso not in(select prox.id_curso from propuestas prox, solicitud_capacitacion scx where prox.id_solicitud = scx.id_solicitud and prox.id_curso is not null and scx.id_solicitud = $id_solicitud)".
                 " UNION".
-                " select (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
+                " select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
                 " from temas te".
                 " where te.nombre like UPPER ('%".$term."%')".
                 " and te.id_tema not in(select prox.id_tema from propuestas prox, solicitud_capacitacion scx where prox.id_solicitud = scx.id_solicitud and prox.id_curso is null and scx.id_solicitud = $id_solicitud)";

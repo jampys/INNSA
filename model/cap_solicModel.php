@@ -608,8 +608,7 @@ class Asignacion_plan{
     public function getAsignacionPlanBySolicitud($id){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        //$obj_sp->executeQuery("select ap.objetivo OBJETIVO, ap.estado ESTADO, ap.comentarios COMENTARIOS, ap.viaticos VIATICOS, ap.id_plan ID_PLAN, ap.id_asignacion ID_ASIGNACION, ap.reemplazo REEMPLAZO, em.apellido APELLIDO_REEMPLAZO, em.nombre NOMBRE_REEMPLAZO, cu.nombre NOMBRE, pc.fecha_desde FECHA_DESDE, pc.modalidad MODALIDAD, pc.duracion DURACION, pc.unidad UNIDAD, pc.moneda MONEDA, pc.importe IMPORTE from asignacion_plan ap, plan_capacitacion pc, cursos cu, empleados em where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso and ap.reemplazo = em.id_empleado and id_solicitud=$id order by pc.fecha_desde ASC");
-        $query="select cu.nombre, ap.estado ESTADO, ap.comentarios, ap.viaticos, ap.id_plan, ap.id_asignacion, pc.fecha_desde, pc.modalidad, pc.duracion, pc.unidad, pc.moneda, pc.importe".
+        $query="select cu.nombre, ap.estado ESTADO, ap.comentarios, ap.viaticos, ap.id_plan, ap.id_asignacion, pc.fecha_desde, pc.modalidad, pc.duracion, pc.unidad, pc.moneda, pc.importe, ap.aprobada".
                 " from asignacion_plan ap, plan_capacitacion pc, cursos cu".
                 " where ap.id_plan = pc.id_plan and pc.id_curso = cu.id_curso".
                 " and id_solicitud=$id".

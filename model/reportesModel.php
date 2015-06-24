@@ -165,6 +165,7 @@ class Reportes
             " (pc.importe *pc.tipo_cambio) as unitario,".
             " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) * pc.importe * pc.tipo_cambio as subtotal,".
             " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) * pc.importe * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as total".
+            " ,((select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) - (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.aprobada = 1) ) as diferencia ".
             " from plan_capacitacion pc, cursos cu, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
             " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
             " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
@@ -178,6 +179,7 @@ class Reportes
             " ((pc.importe_total * pc.tipo_cambio)/pc.cantidad_participantes) as unitario,".
             " pc.importe_total * pc.tipo_cambio as subtotal,".
             " pc.importe_total * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as total".
+            " ,((select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) - (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.aprobada = 1) ) as diferencia ".
             " from plan_capacitacion pc, cursos cu, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
             " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
             " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".

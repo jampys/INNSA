@@ -62,7 +62,8 @@ class Aprobacion{
             " and sc.id_solicitud = ap.id_solicitud".
             " and ap.id_plan = pc.id_plan".
             " and ((pro.id_curso = cu.id_curso and cu.id_curso = pc.id_plan) OR (pro.id_tema = te.id_tema and cu.id_tema = te.id_tema and cu.id_curso = pc.id_curso))". //si fue asignado por curso OR fue asignado por tema
-            " and pc.id_plan = $id_plan";
+            " and pc.id_plan = $id_plan".
+            " and ap.aprobada is null";
 
         $obj_com->executeQuery($query);
         return $obj_com->getAffect();
