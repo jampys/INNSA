@@ -61,9 +61,8 @@
                     <th>Lugar</th>
                     <th>Legajo</th>
                     <th>Empresa</th>
-                    <th>Función</th>
-                    <!--<th>Categoria</th>-->
                     <th>División</th>
+                    <th>Función</th>
                     <th>Editar</th>
                 </tr>
                 </thead>

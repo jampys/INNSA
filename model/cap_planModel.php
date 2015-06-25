@@ -78,7 +78,7 @@ class Cap_Plan
 
 
     public function getCursosTemas($term, $target, $id_solicitud){ //Se al completar propuestas en la solicitud de capacitacion
-
+        $query="";
         if($target=='ALL'){
             $query="select * from cursos where nombre like UPPER ('%".$term."%')";
         }
@@ -108,8 +108,6 @@ class Cap_Plan
                 " from temas te".
                 " where te.nombre like UPPER ('%".$term."%')".
                 " and te.id_tema not in(select prox.id_tema from propuestas prox, solicitud_capacitacion scx where prox.id_solicitud = scx.id_solicitud and prox.id_curso is null and scx.id_solicitud = $id_solicitud)";
-
-
 
         }
         $f=new Factory();

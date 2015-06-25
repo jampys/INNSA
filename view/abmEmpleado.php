@@ -320,6 +320,9 @@
                 division: {
                     required: true
                 },
+                funcion: {
+                    required: true
+                },
                 fecha:{
                     required: true
                 },
@@ -347,7 +350,8 @@
                 cuil: "Ingrese el CUIL (sin guiones)",
                 lugar_trabajo: "Seleccione el lugar de trabajo",
                 empresa: "Seleccione la empresa",
-                division: "Seleccione la division",
+                division: "Seleccione la división",
+                funcion: "Seleccione la función",
                 fecha: "Seleccione la fecha de ingreso",
                 activo: "Seleccione el estado",
                 email: {

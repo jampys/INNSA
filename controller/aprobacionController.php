@@ -68,8 +68,9 @@ switch($operacion){
         $rta=1;
 
         $t=new Aprobacion();
-        if(!$t->copyPropuestaIntoComunicacionMasivamente($_POST['id_plan'])) $rta=0;
-        if(!$t->aprobarPlanMasivamente(1, $_POST['id_plan'])) $rta=0;
+        $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'lugar_trabajo';
+        if(!$t->copyPropuestaIntoComunicacionMasivamente($_POST['id_plan'], $lugar_trabajo)) $rta=0;
+        if(!$t->aprobarPlanMasivamente(1, $_POST['id_plan'], $lugar_trabajo)) $rta=0;
 
         if($rta > 0){
             $respuesta = array ('response'=>'success','comment'=>'Plan aprobado correctamente');

@@ -115,7 +115,8 @@
                 var url="index.php";
                 var data={  "accion":"aprobacion",
                             "operacion":"aprobacionMasiva",
-                            "id_plan": globalId
+                            "id_plan": globalId,
+                            "lugar_trabajo": $('#lugar_trabajo').val()
 
                 };
 
@@ -208,7 +209,7 @@
                             aprobarPlan();
                             $("#categoria").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, filtro: "filtro"});
+                            $('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, "lugar_trabajo": $('#lugar_trabajo').val(), filtro: "filtro"});
                         }
 
                     },
@@ -246,7 +247,7 @@
                         aprobarPlan()
                         $(this).dialog("close");
                         //Llamada ajax para refrescar la grilla
-                        $('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, filtro: "filtro"});
+                        $('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, "lugar_trabajo": $('#lugar_trabajo').val(), filtro: "filtro"});
 
 
                     },
