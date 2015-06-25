@@ -573,12 +573,18 @@
                         }
                     });
                 },
-                minLength: 2,
+                minLength: 0,
                 change: function(event, ui) {
                     $('#nc_curso_id').val(ui.item? ui.item.id_curso : '');
                     $('#nc_tema_id').val(ui.item? ui.item.id_tema : '');
                     $('#nc_curso').val(ui.item.label);
+                },
+                open: function(){
+                    $('.ui-autocomplete').css({'max-height': '200px', 'max-width': '407px', 'overflow-y': 'scroll', 'padding-right': '20px'} );
+
                 }
+            }).click(function() {
+                $(this).autocomplete("search", $(this).val());
             });
 
 
