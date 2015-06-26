@@ -377,6 +377,7 @@
                                 <div class="column_content">
                                     <label>Temas de la categoría: </label><br/>
                                     <a class="tema_new_link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>
+                                    <div id="" style="overflow-y:scroll; overflow-x:hidden; max-height:400px;">
                                     <table id="table_temas" class="tablaSolicitud">
                                         <thead>
                                         <tr>
@@ -388,6 +389,7 @@
                                         <!-- el cuerpo se genera dinamicamente con javascript -->
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
