@@ -552,8 +552,16 @@
             //Funcionalidad para la tabla cursos propuestos
 
 
+
+
+
+
+
+
+
             //Agregado dario para autocompletar cursos
             $("#nc_curso").autocomplete({
+
                 source: function( request, response ) {
                     $.ajax({
                         url: "index.php",
@@ -561,14 +569,27 @@
                         dataType: "json",
                         data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos_temas", "target":"BYPERIODO", "id_solicitud": globalId},
                         success: function(data) {
-                            response($.map(data, function(item) {
-                                return {
-                                    //label: item.NOMBRE+' - '+item.FECHA_DESDE+' - '+item.MODALIDAD,
-                                    label: item.TABLA+': '+item.NOMBRE+' '+((typeof(item.FECHA_DESDE)=='undefined')? '': item.FECHA_DESDE)+'  '+((typeof(item.MODALIDAD)=='undefined')? '': item.MODALIDAD)+'  '+((typeof(item.ENTIDAD)=='undefined')? '': item.ENTIDAD),
-                                    id_curso: item.ID_CURSO,
-                                    id_tema: item.ID_TEMA
 
-                                };
+                            jsonObjTemas = [];
+                            jsonObjCursos = [];
+                            $('#table_curso tbody tr').each(function () {
+                                itemT = $(this).find('td').eq(9).html();
+                                itemC = ($(this).attr('id_curso')== 'null')? 'null': $(this).attr('id_curso') ;
+                                jsonObjTemas.push(itemT);
+                                jsonObjCursos.push(itemC);
+                            });
+
+                            response($.map(data, function(item) {
+
+                                if( ($.inArray(item.ID_CURSO, jsonObjCursos)==-1  && item.TABLA=='CURSOS') ||  ( $.inArray(item.ID_TEMA, jsonObjTemas)==-1)  ) { // ==-1 si no esta
+
+                                    return {
+                                        label: item.TABLA + ': ' + item.NOMBRE + ' ' + ((typeof(item.FECHA_DESDE) == 'undefined') ? '' : item.FECHA_DESDE) + '  ' + ((typeof(item.MODALIDAD) == 'undefined') ? '' : item.MODALIDAD) + '  ' + ((typeof(item.ENTIDAD) == 'undefined') ? '' : item.ENTIDAD),
+                                        id_curso: item.ID_CURSO,
+                                        id_tema: item.ID_TEMA
+                                    };
+
+                                }
                             }));
                         }
                     });
