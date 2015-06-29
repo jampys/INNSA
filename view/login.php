@@ -11,6 +11,15 @@
 
         $(document).ready(function(){
 
+            //para submit form de logueo al presionar Enter
+            $("#password").keypress(function(event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    $("form").submit();
+                }
+            });
+
+
             $('#dialog').dialog({
                 autoOpen: true,
                 width: 400,
@@ -42,7 +51,7 @@
                 rules: {
                     usuario: {
                         required: true,
-                        maxlength: 40,
+                        maxlength: 40
                         //minlength: 3
                     },
                     password: {

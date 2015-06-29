@@ -54,13 +54,13 @@
                     $("#apr_solicito").val(datas['solicitud'][0]['APELLIDO_SOLICITO']+' '+datas['solicitud'][0]['NOMBRE_SOLICITO']);
                     $("#apr_solicito_id").val(datas['solicitud'][0]['ID_SOLICITO']);
 
-                    if(datas['solicitud'][0]['APELLIDO_AUTORIZO'] && datas['solicitud'][0]['NOMBRE_AUTORIZO']){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
+                    /*if(datas['solicitud'][0]['APELLIDO_AUTORIZO'] && datas['solicitud'][0]['NOMBRE_AUTORIZO']){ //Si el array autorizo tiene datos =>esta autorizada y se completan los campos.
                         $("#apr_autorizo").val(datas['solicitud'][0]['APELLIDO_AUTORIZO']+' '+datas['solicitud'][0]['NOMBRE_AUTORIZO']);
-                    }
+                    }*/
 
-                    if(datas['solicitud'][0]['APELLIDO_APROBO'] && datas['solicitud'][0]['NOMBRE_APROBO']){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
+                    /*if(datas['solicitud'][0]['APELLIDO_APROBO'] && datas['solicitud'][0]['NOMBRE_APROBO']){ //Si el array aprobo tiene datos =>esta autorizada y se completan los campos.
                         $("#apr_aprobo").val(datas['solicitud'][0]['APELLIDO_APROBO']+' '+datas['solicitud'][0]['NOMBRE_APROBO']);
-                    }
+                    }*/
                     //Fin completa los campos Solicito, autorizo, aprobo
 
                     //Se construye la tabla de asignaciones de planes
@@ -574,7 +574,7 @@
 
                             response($.map(data, function(item) {
 
-                                if( $.inArray(item.ID_CURSO, jsonObjCursos)==-1 && ($.inArray(item.ID_TEMA, jsonObjTemas)==-1 || item.TABLA=='CURSOS'    )   ) { // ==-1 si no esta
+                                if( $.inArray(item.ID_CURSO, jsonObjCursos)==-1 && ($.inArray(item.ID_TEMA, jsonObjTemas)==-1 || item.TABLA=='CURSO')  ) { // ==-1 si no esta
 
                                     return {
                                         label: item.TABLA + ': ' + item.NOMBRE + ' ' + ((typeof(item.FECHA_DESDE) == 'undefined') ? '' : item.FECHA_DESDE) + '  ' + ((typeof(item.MODALIDAD) == 'undefined') ? '' : item.MODALIDAD) + '  ' + ((typeof(item.ENTIDAD) == 'undefined') ? '' : item.ENTIDAD),
@@ -1222,13 +1222,13 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Autorizó - Gerencia de RRHH: </label><br/>
-                                    <input type="text" name="apr_autorizo" id="apr_autorizo" readonly/>
+                                    <!--<label>Autorizó - Gerencia de RRHH: </label><br/>
+                                    <input type="text" name="apr_autorizo" id="apr_autorizo" readonly/>-->
                                 </div>
                             </div>
                         </div>
 
-                        <div class="sixteen_column section">
+                        <!--<div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Aprobó - Dirección: </label><br/>
@@ -1240,7 +1240,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
 
 
