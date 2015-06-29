@@ -36,7 +36,7 @@
 
                 });
                 if(opcionx!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
-                    $("#funcion").val(opcion);
+                    $("#funcion").val(opcionx);
                 }
 
 
@@ -73,9 +73,10 @@
                     $("#cuil").val(datas[0]['CUIL']);
                     $("#lugar_trabajo").val(datas[0]['LUGAR_TRABAJO']);
                     $("#empresa").val(datas[0]['EMPRESA']);
-                    $("#funcion").val(datas[0]['FUNCION']);
+
                     //$("#categoria").val(datas[0]['CATEGORIA']);
                     $("#division").val(datas[0]['DIVISION']);
+                    $("#funcion").val(datas[0]['FUNCION']);
                     $("#fecha").val(datas[0]['FECHA_INGRESO']);
                     $("#activo").val(datas[0]['ACTIVO']);
                     $("#email").val(datas[0]['EMAIL']);
