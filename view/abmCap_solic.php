@@ -552,13 +552,6 @@
             //Funcionalidad para la tabla cursos propuestos
 
 
-
-
-
-
-
-
-
             //Agregado dario para autocompletar cursos
             $("#nc_curso").autocomplete({
 
@@ -574,14 +567,14 @@
                             jsonObjCursos = [];
                             $('#table_curso tbody tr').each(function () {
                                 itemT = $(this).find('td').eq(9).html();
-                                itemC = ($(this).attr('id_curso')== 'null')? 'null': $(this).attr('id_curso') ;
-                                jsonObjTemas.push(itemT);
-                                jsonObjCursos.push(itemC);
+                                itemC = $(this).attr('id_curso') ;
+                                if($(this).attr('id_curso')== 'null') jsonObjTemas.push(itemT);
+                                if($(this).attr('id_curso')!= 'null')jsonObjCursos.push(itemC);
                             });
 
                             response($.map(data, function(item) {
 
-                                if( ($.inArray(item.ID_CURSO, jsonObjCursos)==-1  && item.TABLA=='CURSOS') ||  ( $.inArray(item.ID_TEMA, jsonObjTemas)==-1)  ) { // ==-1 si no esta
+                                if( $.inArray(item.ID_CURSO, jsonObjCursos)==-1 && ($.inArray(item.ID_TEMA, jsonObjTemas)==-1 || item.TABLA=='CURSOS'    )   ) { // ==-1 si no esta
 
                                     return {
                                         label: item.TABLA + ': ' + item.NOMBRE + ' ' + ((typeof(item.FECHA_DESDE) == 'undefined') ? '' : item.FECHA_DESDE) + '  ' + ((typeof(item.MODALIDAD) == 'undefined') ? '' : item.MODALIDAD) + '  ' + ((typeof(item.ENTIDAD) == 'undefined') ? '' : item.ENTIDAD),
