@@ -94,7 +94,7 @@
 
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
-                    <th>Empleado</th>
+                    <th>Colaborador</th>
                     <th>Solicitó</th>
                     <th>Estado</th>
                     <th>.</th>
@@ -105,7 +105,7 @@
                 <tr>
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
-                    <th>Empleado</th>
+                    <th>Colaborador</th>
                     <th>Solicitó</th>
                     <th>Estado</th>
                     <th>.</th>

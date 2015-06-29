@@ -49,7 +49,7 @@
                     <!--<th>Password</th>-->
                     <th>Fecha alta</th>
                     <th>Perfil</th>
-                    <th>Empleado</th>
+                    <th>Colaborador</th>
                     <th>Estado</th>
                     <th>Editar</th>
                     <th>Password</th>
@@ -62,7 +62,7 @@
                     <!--<th>Password</th>-->
                     <th>Fecha alta</th>
                     <th>Perfil</th>
-                    <th>Empleado</th>
+                    <th>Colaborador</th>
                     <th>Estado</th>
                     <th>Editar</th>
                     <th>Password</th>

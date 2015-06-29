@@ -373,8 +373,8 @@
                 //password: "Ingrese un password",
                 perfil: "Seleccione un perfil",
                 estado: "Seleccione un estado",
-                empleado: "Seleccione un empleado",
-                empleado_id: "Seleccione un empleado sugerido"
+                empleado: "Seleccione un colaborador",
+                empleado_id: "Seleccione un colaborador sugerido"
             }
 
         });
@@ -480,10 +480,10 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Perfil:<img src="public/img/information-icon.png" width="12px" height="12px" title="
-                                    Dirección: Aprobar solicitud<br/>
+                                    Dirección: Aprobar cursos<br/>
                                     RRHH: Personal de recursos humanos<br/>
-                                    Referente: Crear solicitud de capacitación<br/>
-                                    Empleado: Visualizar sus planes de capacitación
+                                    Referente: Crear solicitudes de capacitación<br/>
+                                    Colaborador: Visualizar sus cursos
                                     "></label>
                                     <select name="perfil" id="perfil">
                                         <option value="">Ingrese un perfil</option>
@@ -492,13 +492,13 @@
                                         <option value="1">Dirección</option>
                                         <option value="2">RRHH</option>
                                         <option value="3">Referente</option>
-                                        <option value="4">Empleado</option>
+                                        <option value="4">Colaborador</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Habilitacion: </label>
+                                    <label>Habilitación: </label>
                                     <select name="estado" id="estado">
                                         <option value="">Ingrese un estado</option>
                                         <option value="1" selected>Habilitado</option>
