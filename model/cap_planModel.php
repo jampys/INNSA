@@ -83,7 +83,7 @@ class Cap_Plan
             $query="select * from cursos where nombre like UPPER ('%".$term."%')";
         }
         else if($target=='BYPERIODO'){
-            $query="select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+            $query="select (SELECT 'CURSO' FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
                 " cu.id_curso, cu.nombre, cu.id_tema, pc.periodo, pc.fecha_desde, pc.modalidad, ec.nombre entidad".
                 " from cursos cu".
                 " join temas te on cu.id_tema = te.id_tema".
@@ -91,7 +91,7 @@ class Cap_Plan
                 " left join entidades_capacitadoras ec on pc.entidad = ec.id_entidad_capacitadora".
                 " where (cu.nombre like UPPER ('%".$term."%') OR te.nombre like UPPER ('%".$term."%'))".
                 " UNION".
-                " select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
+                " select (SELECT 'TEMA' FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
                 " from temas te".
                 " where te.nombre like UPPER ('%".$term."%')";
 
