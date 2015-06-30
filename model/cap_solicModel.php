@@ -218,28 +218,7 @@ class Cap_Solic
         return $obj_cp->fetchAll();
     }
 
-    /*
-    public function getCapSolicSolicito($id){
-        $f=new Factory();
-        $obj_cp=$f->returnsQuery();
-        $obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.apr_solicito = em.id_empleado and sc.id_solicitud=$id");
-        return $obj_cp->fetchAll();
-    }
 
-    public function getCapSolicAutorizo($id){
-        $f=new Factory();
-        $obj_cp=$f->returnsQuery();
-        $obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.apr_autorizo = em.id_empleado and sc.id_solicitud=$id");
-        return $obj_cp->fetchAll();
-    }
-
-    public function getCapSolicAprobo($id){
-        $f=new Factory();
-        $obj_cp=$f->returnsQuery();
-        $obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.apr_aprobo = em.id_empleado and sc.id_solicitud=$id");
-        return $obj_cp->fetchAll();
-    }
-    */
 
     //Funcion que devuelve los totales
     public function getCapSolicTotalesById($id){
@@ -333,7 +312,7 @@ class Cap_Solic
         $obj_cp=$f->returnsQuery();
         $query="update solicitud_capacitacion set apr_autorizo=$this->apr_autorizo, apr_aprobo=$this->apr_aprobo, estado='$this->estado' where id_solicitud=$this->id_solicitud";
         $obj_cp->executeQuery($query);
-        return $obj_cp->getAffect(); // retorna todos los registros afectados
+        return $obj_cp->getAffect();
 
     }
 

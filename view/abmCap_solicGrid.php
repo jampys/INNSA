@@ -93,7 +93,7 @@
                 <tr>
 
                     <th>Fecha solicitud</th>
-                    <th>Periodo</th>
+                    <th>Período</th>
                     <th>Colaborador</th>
                     <th>Solicitó</th>
                     <th>Estado</th>
@@ -104,7 +104,7 @@
                 <tfoot>
                 <tr>
                     <th>Fecha solicitud</th>
-                    <th>Periodo</th>
+                    <th>Período</th>
                     <th>Colaborador</th>
                     <th>Solicitó</th>
                     <th>Estado</th>
@@ -119,8 +119,8 @@
                         <td><?php  echo $sol["PERIODO"]; ?></td>
                         <td><?php  echo $sol["EMPLEADO_APELLIDO"]." ".$sol["EMPLEADO_NOMBRE"]; ?></td> <!-- apellido y nombre del empleado -->
                         <td><?php  echo $sol["SOLICITO_APELLIDO"].' '.$sol["SOLICITO_NOMBRE"]; ?></td> <!-- apellido y nombre de quien solicito-->
-                        <td><?php  echo $sol["ESTADO"]; ?></td>
-                        <?php if($sol['ESTADO']=='APROBADA' || $sol['ESTADO']=='AUTORIZADA' || $sol['PERIODO']!=date('Y')){ ?>
+                        <td><?php  echo ($sol["PERIODO"]== date('Y'))? 'ABIERTA': 'CERRADA' ?></td>
+                        <?php if($sol['PERIODO']!=date('Y')){ ?>
 
                             <td class="center"><a href="javascript: void(0);" class="view_link" id="<?php  echo $sol["ID_SOLICITUD"];  ?>" target="<?php  echo $sol["PERIODO"];  ?>" ><img title="Ver" src="public/img/search-icon.png" width="15px" height="15px"></a></td>
 

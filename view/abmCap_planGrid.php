@@ -69,7 +69,7 @@
                     <th>Entidad</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
-                    <th>Duracion</th>
+                    <th>Duración</th>
                     <th>Unidad</th>
                     <th>Estado</th>
                     <th>Importe</th>
@@ -86,7 +86,7 @@
                     <th>Entidad</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
-                    <th>Duracion</th>
+                    <th>Duración</th>
                     <th>Unidad</th>
                     <th>Estado</th>
                     <th>Importe</th>

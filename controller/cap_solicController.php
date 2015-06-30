@@ -91,10 +91,6 @@ switch($operacion){
         $view->pro=new Propuesta();
         $propuestas=$view->pro->getPropuestaBySolicitud($_POST['id']);
 
-        //$solicito=$view->u->getCapSolicSolicito($_POST['id']);
-        //$autorizo=$view->u->getCapSolicAutorizo($_POST['id']);
-        //$aprobo=$view->u->getCapSolicAprobo($_POST['id']);
-
         print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'propuestas'=>$propuestas)));
         exit;
         break;
