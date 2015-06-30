@@ -28,8 +28,8 @@ class Cap_Solic
     var $rp_req_externo;
 
     var $apr_solicito;
-    var $apr_autorizo;
-    var $apr_aprobo;
+    //var $apr_autorizo;
+    //var $apr_aprobo;
 
     var $estado;
 
@@ -99,11 +99,11 @@ class Cap_Solic
     function getAprSolicito()
     { return $this->apr_solicito;}
 
-    function getAprAutorizo()
-    { return $this->apr_autorizo;}
+    /*function getAprAutorizo()
+    { return $this->apr_autorizo;}*/
 
-    function getAprAprobo()
-    { return $this->apr_aprobo;}
+    /*function getAprAprobo()
+    { return $this->apr_aprobo;}*/
 
     function getEstado()
     { return $this->estado;}
@@ -174,25 +174,25 @@ class Cap_Solic
     function setAprSolicito($val)
     {  $this->apr_solicito=$val;}
 
-    function setAprAutorizo($val)
-    {  $this->apr_autorizo=$val;}
+    /*function setAprAutorizo($val)
+    {  $this->apr_autorizo=$val;}*/
 
-    function setAprAprobo($val)
-    {  $this->apr_aprobo=$val;}
+    /*function setAprAprobo($val)
+    {  $this->apr_aprobo=$val;}*/
 
     function setEstado($val)
     {  $this->estado=$val;}
 
 
-
+    // retorna todas las solicitudes de capacitacion
     public static function getCapSolic(){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        //$obj_sp->executeQuery("select * from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
         $obj_sp->executeQuery("select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
-        return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
+        return $obj_sp->fetchAll();
     }
 
+    // retorna una determinada solicitud de capacitacion por id
     public function getCapSolicById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
@@ -214,17 +214,14 @@ class Cap_Solic
             " where sc.id_empleado = em.id_empleado and sc.id_solicitud=$id";
 
         $obj_cp->executeQuery($query);
-        //$obj_cp->executeQuery("select * from solicitud_capacitacion sc, empleados em where sc.id_empleado = em.id_empleado and sc.id_solicitud=$id");
         return $obj_cp->fetchAll();
     }
-
 
 
     //Funcion que devuelve los totales
     public function getCapSolicTotalesById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-
         $query= "select * from".
                 " (select sum(viaticos) as viaticos from asignacion_plan where id_solicitud=$id),".
                 " (select sum (pc.importe) as pesos from plan_capacitacion pc, asignacion_plan ap".
@@ -237,13 +234,11 @@ class Cap_Solic
     }
 
 
-    public static function getPlanes($term, $id_solicitud){
     /*funcion usada para autocompletar planes (solo los propuestos, no los cancelados), ademas solo trae planes con fecha >= a la vigente
-    y planes de cursos que estan cargados como propuestos.
-    */
+    y planes de cursos que estan cargados como propuestos */
+    public static function getPlanes($term, $id_solicitud){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        //$query="select * from plan_capacitacion, cursos where plan_capacitacion.id_curso = cursos.id_curso and nombre like UPPER ('%".$term."%') and estado = 'PROPUESTO'";
         $query="select pc.*, cu.nombre".
                 " from plan_capacitacion pc, cursos cu, propuestas pro, solicitud_capacitacion sc".
                 " where pc.id_curso = cu.id_curso".
@@ -305,16 +300,15 @@ class Cap_Solic
     }
 
 
-
-    public function autorizar_aprobarCapSolic()
-    {
+    /*ESTA FUNCION NO SE USA MAS */
+    public function autorizar_aprobarCapSolic(){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
         $query="update solicitud_capacitacion set apr_autorizo=$this->apr_autorizo, apr_aprobo=$this->apr_aprobo, estado='$this->estado' where id_solicitud=$this->id_solicitud";
         $obj_cp->executeQuery($query);
         return $obj_cp->getAffect();
-
     }
+
 
     public function insertCapSolic(){
 
@@ -391,7 +385,7 @@ class Asignacion_plan{
 
     var $estado;
     var $estado_cambio;
-    var $reemplazo;
+    //var $reemplazo;
 
 
     // metodos que devuelven valores
@@ -419,8 +413,8 @@ class Asignacion_plan{
     function getEstadoCambio()
     { return $this->estado_cambio;}
 
-    function getReemplazo()
-    { return $this->reemplazo;}
+    /*function getReemplazo()
+    { return $this->reemplazo;}*/
 
 
 
@@ -449,8 +443,8 @@ class Asignacion_plan{
     function setEstadoCambio($val)
     {  $this->estado_cambio=$val;}
 
-    function setReemplazo($val)
-    {  $this->reemplazo=$val;}
+    /*function setReemplazo($val)
+    {  $this->reemplazo=$val;}*/
 
 
 
@@ -549,13 +543,14 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, id_plan=:id_plan where id_asignacion=:id_asignacion";
         $obj_asig->dpParse($query);
 
         $obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->viaticos);
-        $obj_asig->dpBind(':reemplazo', $this->reemplazo);
+        //$obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
         $obj_asig->dpBind(':id_asignacion', $this->id_asignacion);
 

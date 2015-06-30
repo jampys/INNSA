@@ -12,31 +12,14 @@ $view->u=new Cap_Solic();
 
 switch($operacion){
 
-    /*
-    case 'insert':
-        $view->u->setAprSolicito($_POST['apr_solicito']);
-        //Cuando insert solicitud devuelve el id, necesario para insert de planes asociados a la solicitud
-        $id_solicitud=$view->u->insertCapSolic();
-
-
-        $rta=1; //estas 2 ultimas lineas estan para que devuelva algo en json y no arroje el error (igual sin ellas insert ok)
-        print_r(json_encode($rta));
-        exit;
-        break;
-        */
-
     case 'update':
 
         $solicitud=$view->u->getCapSolicById($_POST['id']);
         $view->p=new Asignacion_plan();
-        $planes=$view->p->getAsignacionPlanBySolicitud($_POST['id']);
 
-        //$solicito=$view->u->getCapSolicSolicito($_POST['id']);
-        //$autorizo=$view->u->getCapSolicAutorizo($_POST['id']);
-        //$aprobo=$view->u->getCapSolicAprobo($_POST['id']);
+        $planes=$view->p->getAsignacionPlanBySolicitud($_POST['id']);
         $totales=$view->u->getCapSolicTotalesById($_POST['id']);
 
-        //print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'solicito'=>$solicito, 'autorizo'=>$autorizo, 'aprobo'=>$aprobo)));
         print_r(json_encode(array('solicitud'=>$solicitud, 'planes'=>$planes, 'totales'=>$totales)));
         exit;
         break;
