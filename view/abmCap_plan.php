@@ -1043,7 +1043,7 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Empleados:</label><br/>
+                                    <label>Colaboradores:</label><br/>
                                     <table id="table_empleados" class="tablaSolicitud">
                                         <thead>
                                         <tr>

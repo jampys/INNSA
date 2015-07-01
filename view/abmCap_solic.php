@@ -281,6 +281,9 @@
 
             $(document).tooltip();
 
+            //Al hacer click en un link desactivado, evita que el foco se vaya para arriba
+            $(document).on('click', '.link-desactivado',  function(e){e.preventDefault()});
+
 
             // menu superfish
             $('#navigationTop').superfish();
