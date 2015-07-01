@@ -74,8 +74,10 @@
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
                         '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
-                        '<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
-                        '<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        //'<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                        //'<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td style="text-align: center"><a class="<?php  echo ($_SESSION['ACCESSLEVEL']==2)? "editar_plan": "link-desactivado"      ?>" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
+                        '<td style="text-align: center"><a class="<?php  echo ($_SESSION['ACCESSLEVEL']==2)? "eliminar_plan": "link-desactivado"      ?>" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '</tr>');
                         if(datas['planes'][indice]['APROBADA']==1 || datas['solicitud'][0]['PERIODO']!=(new Date).getFullYear() ){ //Si la asignacion esta aprobada deshabilito los campos
                             //$('#table_plan tbody').find('a.eliminar_plan').removeClass('eliminar_plan').addClass('link-desactivado').click(function(e){e.preventDefault();});
