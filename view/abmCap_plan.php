@@ -328,6 +328,8 @@
 
                         }
 
+                        $('#table_empleados tbody tr').each(function(){ $(this).remove(); }); //limpia la tabla de empleados
+
                     },
                     "Cancelar": function() {
                         $("#form_plan")[0].reset(); //para limpiar el formulario
