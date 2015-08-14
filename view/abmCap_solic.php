@@ -610,7 +610,7 @@
 
             $('#proponer_curso').dialog({
                 autoOpen: false,
-                width: 500,
+                width: 550,
                 modal:true,
                 title:"Proponer curso",
                 buttons: [{
@@ -920,22 +920,28 @@
                     required: function(item){return $('#nc_curso').val().length>0 && $('#nc_tema_id').val().length<0 ;}
                 },
                 nc_situacion: {
-                    required: true
+                    required: true,
+                    maxlength: 500
                 },
                 nc_objetivo_1: {
-                    required: true
+                    required: true,
+                    maxlength: 100
                 },
                 nc_objetivo_2: {
-                    required: true
+                    required: true,
+                    maxlength: 100
                 },
                 nc_objetivo_3: {
-                    required: true
+                    required: true,
+                    maxlength: 100
                 },
                 nc_indicadores_exito: {
-                    required: true
+                    required: true,
+                    maxlength: 500
                 },
                 nc_compromiso: {
-                    required: true
+                    required: true,
+                    maxlength: 500
                 }
 
 
@@ -944,12 +950,30 @@
                 nc_curso: "Seleccione un curso o tema",
                 nc_curso_id: "Seleccione un curso o tema sugerido",
                 nc_reemplazo_id: "Seleccione un empleado sugerido",
-                nc_situacion: "Ingrese la situacion",
-                nc_objetivo_1: "Ingrese el objetivo 1",
-                nc_objetivo_2: "Ingrese el objetivo 2",
-                nc_objetivo_3: "Ingrese el objetivo 3",
-                nc_indicadores_exito: "Ingrese los indicadores de éxito",
-                nc_compromiso: "Ingrese el compromiso"
+                nc_situacion: {
+                    required: "Ingrese la situación",
+                    maxlength: "Máximo 500 caracteres"
+                },
+                nc_objetivo_1: {
+                    required: "Ingrese el objetivo 1",
+                    maxlength: "Máximo 100 caracteres"
+                },
+                nc_objetivo_2: {
+                    required: "Ingrese el objetivo 2",
+                    maxlength: "Máximo 100 caracteres"
+                },
+                nc_objetivo_3: {
+                    required: "Ingrese el objetivo 3",
+                    maxlength: "Máximo 100 caracteres"
+                },
+                nc_indicadores_exito: {
+                    required: "Ingrese los indicadores de éxito",
+                    maxlength: "Máximo 500 caracteres"
+                },
+                nc_compromiso: {
+                    required: "Ingrese el compromiso",
+                    maxlenth: "Máximo 500 caracteres"
+                }
             }
 
         });
@@ -1117,7 +1141,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivo medible 1: </label><br/>
-                                    <textarea name="objetivo_medible_1" id="objetivo_medible_1" rows="1"></textarea>
+                                    <textarea name="objetivo_medible_1" id="objetivo_medible_1" rows="2"></textarea>
                                 </div>
                             </div>
 
@@ -1127,7 +1151,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivo medible 2: </label><br/>
-                                    <textarea name="objetivo_medible_2" id="objetivo_medible_2" rows="1"></textarea>
+                                    <textarea name="objetivo_medible_2" id="objetivo_medible_2" rows="2"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1136,7 +1160,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivo medible 3: </label><br/>
-                                    <textarea name="objetivo_medible_3" id="objetivo_medible_3" rows="1"></textarea>
+                                    <textarea name="objetivo_medible_3" id="objetivo_medible_3" rows="2"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1317,9 +1341,9 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivos: Que esperamos lograr con esto</label><br/>
-                                    <textarea type="text" name="nc_objetivo_1" id="nc_objetivo_1" rows="1"/></textarea>
-                                    <textarea type="text" name="nc_objetivo_2" id="nc_objetivo_2" rows="1"/></textarea>
-                                    <textarea type="text" name="nc_objetivo_3" id="nc_objetivo_3" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_1" id="nc_objetivo_1" rows="2"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_2" id="nc_objetivo_2" rows="2"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_3" id="nc_objetivo_3" rows="2"/></textarea>
                                 </div>
                             </div>
 

@@ -385,7 +385,7 @@ class Asignacion_plan{
 
     var $estado;
     var $estado_cambio;
-    //var $reemplazo;
+    var $reemplazo;
 
 
     // metodos que devuelven valores
@@ -413,8 +413,8 @@ class Asignacion_plan{
     function getEstadoCambio()
     { return $this->estado_cambio;}
 
-    /*function getReemplazo()
-    { return $this->reemplazo;}*/
+    function getReemplazo()
+    { return $this->reemplazo;}
 
 
 
@@ -443,8 +443,8 @@ class Asignacion_plan{
     function setEstadoCambio($val)
     {  $this->estado_cambio=$val;}
 
-    /*function setReemplazo($val)
-    {  $this->reemplazo=$val;}*/
+    function setReemplazo($val)
+    {  $this->reemplazo=$val;}
 
 
 
@@ -543,14 +543,14 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
-        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, id_plan=:id_plan where id_asignacion=:id_asignacion";
         $obj_asig->dpParse($query);
 
         $obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->viaticos);
-        //$obj_asig->dpBind(':reemplazo', $this->reemplazo);
+        $obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
         $obj_asig->dpBind(':id_asignacion', $this->id_asignacion);
 
