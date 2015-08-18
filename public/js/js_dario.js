@@ -60,6 +60,18 @@ $(document).ready(function(){
     };
 
 
+    //Para ajustar los textarea al tamaño del texto: http://stackoverflow.com/questions/3179385/val-doesnt-trigger-change-in-jquery
+    $.each($('textarea'), function() {
+        var offset = this.offsetHeight - this.clientHeight;
+
+        var resizeTextarea = function(el) {
+            $(el).css('height', 'auto').css('height', el.scrollHeight + offset);
+        };
+        $(this).on('keyup input change', function() { resizeTextarea(this); });
+    });
+
+
+
 
 });
 

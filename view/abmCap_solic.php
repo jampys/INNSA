@@ -32,9 +32,9 @@
                     $("#empleado_id").val(datas['solicitud'][0]['ID_EMPLEADO']);
                     $("#situacion_actual").val(datas['solicitud'][0]['SITUACION_ACTUAL']);
                     $("#situacion_deseada").val(datas['solicitud'][0]['SITUACION_DESEADA']);
-                    $("#objetivo_medible_1").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_1']);
-                    $("#objetivo_medible_2").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_2']);
-                    $("#objetivo_medible_3").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_3']);
+                    $("#objetivo_medible_1").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_1']).change(); //.trigger('change')
+                    $("#objetivo_medible_2").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_2']).change();
+                    $("#objetivo_medible_3").val(datas['solicitud'][0]['OBJETIVO_MEDIBLE_3']).change();
 
                     $("#dp_ingreso").prop('checked', (datas['solicitud'][0]['DP_INGRESO']==1)? true:false);
                     $("#dp_crecimiento").prop('checked', (datas['solicitud'][0]['DP_CRECIMIENTO']==1)? true:false);
@@ -1141,7 +1141,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivo medible 1: </label><br/>
-                                    <textarea name="objetivo_medible_1" id="objetivo_medible_1" rows="2"></textarea>
+                                    <textarea name="objetivo_medible_1" id="objetivo_medible_1" rows="1"></textarea>
                                 </div>
                             </div>
 
@@ -1151,7 +1151,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivo medible 2: </label><br/>
-                                    <textarea name="objetivo_medible_2" id="objetivo_medible_2" rows="2"></textarea>
+                                    <textarea name="objetivo_medible_2" id="objetivo_medible_2" rows="1"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1160,7 +1160,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivo medible 3: </label><br/>
-                                    <textarea name="objetivo_medible_3" id="objetivo_medible_3" rows="2"></textarea>
+                                    <textarea name="objetivo_medible_3" id="objetivo_medible_3" rows="1"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1341,9 +1341,9 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Objetivos: Que esperamos lograr con esto</label><br/>
-                                    <textarea type="text" name="nc_objetivo_1" id="nc_objetivo_1" rows="2"/></textarea>
-                                    <textarea type="text" name="nc_objetivo_2" id="nc_objetivo_2" rows="2"/></textarea>
-                                    <textarea type="text" name="nc_objetivo_3" id="nc_objetivo_3" rows="2"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_1" id="nc_objetivo_1" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_2" id="nc_objetivo_2" rows="1"/></textarea>
+                                    <textarea type="text" name="nc_objetivo_3" id="nc_objetivo_3" rows="1"/></textarea>
                                 </div>
                             </div>
 

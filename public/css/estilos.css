@@ -305,6 +305,15 @@ select{
 
 
 
+/*Para ajustar los textarea al tamaño del texto: http://stackoverflow.com/questions/3179385/val-doesnt-trigger-change-in-jquery */
+textarea {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+}
+
+
+
 
 
 
