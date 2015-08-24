@@ -712,23 +712,25 @@
             //Al presionar el lapiz para editar los cursos propuestos de la solicitud
             $(document).on("click",".editar_curso",function(){
                 //alert($(this).closest('tr').attr('id_asignacion'));
+                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion con el metodo .data() en formato json.
+                var row_index=$(this).closest('tr').index();
+                //Verifico si la propuesta tiene asignacion, si es asi => el campo curso/tema se inhabilita
+                ($(this).closest('tr').find('td').eq(10).html()!='')? $('#nc_curso').attr('readonly', true): $('#nc_curso').attr('readonly', false);
+                $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
+
                 $(this).closest('tr').attr('operacion_curso', 'update');
                 $('#nc_curso_id').val($(this).closest('tr').attr('id_curso'));
                 $('#nc_curso').val($(this).closest('tr').find('td').eq(0).html());
                 $('#nc_reemplazo_id').val($(this).closest('tr').find('td').eq(1).html());
                 $('#nc_reemplazo').val($(this).closest('tr').find('td').eq(2).html());
                 $('#nc_situacion').val($(this).closest('tr').find('td').eq(3).html());
-                $('#nc_objetivo_1').val($(this).closest('tr').find('td').eq(4).html());
-                $('#nc_objetivo_2').val($(this).closest('tr').find('td').eq(5).html());
-                $('#nc_objetivo_3').val($(this).closest('tr').find('td').eq(6).html());
+                $('#nc_objetivo_1').val($(this).closest('tr').find('td').eq(4).html()).change();
+                $('#nc_objetivo_2').val($(this).closest('tr').find('td').eq(5).html()).change();
+                $('#nc_objetivo_3').val($(this).closest('tr').find('td').eq(6).html()).change();
                 $('#nc_indicadores_exito').val($(this).closest('tr').find('td').eq(7).html());
                 $('#nc_compromiso').val($(this).closest('tr').find('td').eq(8).html());
                 $('#nc_tema_id').val($(this).closest('tr').find('td').eq(9).html());
-                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion con el metodo .data() en formato json.
-                var row_index=$(this).closest('tr').index();
-                //Verifico si la propuesta tiene asignacion, si es asi => el campo curso/tema se inhabilita
-                ($(this).closest('tr').find('td').eq(10).html()!='')? $('#nc_curso').attr('readonly', true): $('#nc_curso').attr('readonly', false);
-                $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
+
                 return false;
 
             });
@@ -837,19 +839,24 @@
                     required: function(item){return $('#empleado').val().length>0;}
                 },
                 situacion_actual: {
-                    required: true
+                    required: true,
+                    maxlength: 500
                 },
                 situacion_deseada: {
-                    required: true
+                    required: true,
+                    maxlength: 500
                 },
                 objetivo_medible_1: {
-                    required: true
+                    required: true,
+                    maxlength: 150
                 },
                 objetivo_medible_2: {
-                    required: true
+                    required: true,
+                    maxlength: 150
                 },
                 objetivo_medible_3:{
-                    required: true
+                    required: true,
+                    maxlength: 150
                 }
 
             },
@@ -857,11 +864,26 @@
                 periodo: "Seleccione el periodo",
                 empleado: "Seleccione un empleado",
                 empleado_id: "Seleccione un empleado sugerido",
-                situacion_actual: "Ingrese la situación actual",
-                situacion_deseada: "Ingrese la situacion deseada",
-                objetivo_medible_1: "Ingrese el objetivo medible 1",
-                objetivo_medible_2: "Ingrese el objetivo medible 2",
-                objetivo_medible_3: "Ingrese el objetivo medible 3"
+                situacion_actual: {
+                    required: "Ingrese la situación actual",
+                    maxlenth: "Máximo 500 caracteres"
+                },
+                situacion_deseada: {
+                    required: "Ingrese la situación deseada",
+                    maxlenth: "Máximo 500 caracteres"
+                },
+                objetivo_medible_1: {
+                    required: "Ingrese el objetivo medible 1",
+                    maxlenth: "Máximo 100 caracteres"
+                },
+                objetivo_medible_2: {
+                    required: "Ingrese el objetivo medible 2",
+                    maxlenth: "Máximo 100 caracteres"
+                },
+                objetivo_medible_3: {
+                    required: "Ingrese el objetivo medible 3",
+                    maxlenth: "Máximo 100 caracteres"
+                }
             }
 
         });
@@ -925,15 +947,15 @@
                 },
                 nc_objetivo_1: {
                     required: true,
-                    maxlength: 100
+                    maxlength: 150
                 },
                 nc_objetivo_2: {
                     required: true,
-                    maxlength: 100
+                    maxlength: 150
                 },
                 nc_objetivo_3: {
                     required: true,
-                    maxlength: 100
+                    maxlength: 150
                 },
                 nc_indicadores_exito: {
                     required: true,
@@ -956,15 +978,15 @@
                 },
                 nc_objetivo_1: {
                     required: "Ingrese el objetivo 1",
-                    maxlength: "Máximo 100 caracteres"
+                    maxlength: "Máximo 150 caracteres"
                 },
                 nc_objetivo_2: {
                     required: "Ingrese el objetivo 2",
-                    maxlength: "Máximo 100 caracteres"
+                    maxlength: "Máximo 150 caracteres"
                 },
                 nc_objetivo_3: {
                     required: "Ingrese el objetivo 3",
-                    maxlength: "Máximo 100 caracteres"
+                    maxlength: "Máximo 150 caracteres"
                 },
                 nc_indicadores_exito: {
                     required: "Ingrese los indicadores de éxito",
