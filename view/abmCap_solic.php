@@ -711,12 +711,6 @@
 
             //Al presionar el lapiz para editar los cursos propuestos de la solicitud
             $(document).on("click",".editar_curso",function(){
-                //alert($(this).closest('tr').attr('id_asignacion'));
-                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion con el metodo .data() en formato json.
-                var row_index=$(this).closest('tr').index();
-                //Verifico si la propuesta tiene asignacion, si es asi => el campo curso/tema se inhabilita
-                ($(this).closest('tr').find('td').eq(10).html()!='')? $('#nc_curso').attr('readonly', true): $('#nc_curso').attr('readonly', false);
-                $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
 
                 $(this).closest('tr').attr('operacion_curso', 'update');
                 $('#nc_curso_id').val($(this).closest('tr').attr('id_curso'));
@@ -730,6 +724,16 @@
                 $('#nc_indicadores_exito').val($(this).closest('tr').find('td').eq(7).html());
                 $('#nc_compromiso').val($(this).closest('tr').find('td').eq(8).html());
                 $('#nc_tema_id').val($(this).closest('tr').find('td').eq(9).html());
+
+                //Guardo en row_index el identificador de la fila y luego envio ese identificador y la operacion con el metodo .data() en formato json.
+                var row_index=$(this).closest('tr').index();
+                //Verifico si la propuesta tiene asignacion, si es asi => el campo curso/tema se inhabilita
+                ($(this).closest('tr').find('td').eq(10).html()!='')? $('#nc_curso').attr('readonly', true): $('#nc_curso').attr('readonly', false);
+                $('#proponer_curso').data({'row_index':row_index, 'operacion':'editar'}).dialog('open');
+
+                $('#nc_objetivo_1').change();
+                $('#nc_objetivo_2').change();
+                $('#nc_objetivo_3').change();
 
                 return false;
 
