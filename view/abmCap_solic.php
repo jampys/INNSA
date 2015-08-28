@@ -637,6 +637,9 @@
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(8).html($('#nc_compromiso').val());
                                 $('#table_curso tbody').find('tr').eq(row_index).find('td').eq(9).html($('#nc_tema_id').val());
                                 $("#form_curso")[0].reset();
+                                //Agregado 25/08/15
+                                $('#table_curso tbody tr:eq('+row_index+')').attr('operacion_curso', 'update'); //Se coloca aca para que solo ponga el attr "update" cuando el usuario guarda los cambios
+
                                 $(this).dialog("close");
 
                             }
@@ -712,7 +715,7 @@
             //Al presionar el lapiz para editar los cursos propuestos de la solicitud
             $(document).on("click",".editar_curso",function(){
 
-                $(this).closest('tr').attr('operacion_curso', 'update');
+                //$(this).closest('tr').attr('operacion_curso', 'update'); //Se elimina para que el atributo se ponga en "update" solo si el usuario acepta los cambios y no siempre
                 $('#nc_curso_id').val($(this).closest('tr').attr('id_curso'));
                 $('#nc_curso').val($(this).closest('tr').find('td').eq(0).html());
                 $('#nc_reemplazo_id').val($(this).closest('tr').find('td').eq(1).html());
