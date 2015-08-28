@@ -13,7 +13,7 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
-        $view->u->setIdTipoCurso($_POST['tipo_curso']);
+        //$view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->insertCurso();
 
         if($rta > 0){
@@ -42,7 +42,7 @@ switch($operacion){
         $view->u->setComentarios($_POST['comentarios']);
         $view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
-        $view->u->setIdTipoCurso($_POST['tipo_curso']);
+        //$view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->updateCurso();
         //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Curso modificado correctamente'):array ('response'=>'error','comment'=>'Error al modificar curso');
         if($rta > 0){
@@ -97,7 +97,7 @@ switch($operacion){
     default:
         $view->cursos=$view->u->getCursos();
         $categorias=$view->u->getCategorias();
-        $tipo_curso=$view->u->getTipoCurso();
+        //$tipo_curso=$view->u->getTipoCurso();
         break;
 
 }

@@ -14,15 +14,15 @@ switch($operacion){
     case 'insert':
         //nuevo
         $rta=1;
-        if($_POST['curso']==""){ //si el id_curso viene vacio => hay que insertarlo
+        if($_POST['id_curso']==""){ //si el id_curso viene vacio => hay que insertarlo
             $cu=new Curso();
             $cu->setNombre($_POST['nc_nombre']);
-            $cu->setIdTipoCurso($_POST['nc_tipo_curso']);
+            //$cu->setIdTipoCurso($_POST['nc_tipo_curso']);
             $cu->setIdTema($_POST['nc_id_tema']);
             (!$id_curso=$cu->insertCursoAndGetId())? $rta=0 : $view->u->setIdCurso($id_curso);;
         }
         else{
-            $view->u->setIdCurso($_POST['curso']);
+            $view->u->setIdCurso($_POST['id_curso']);
         }
         //fin nuevo
 
@@ -51,6 +51,7 @@ switch($operacion){
         $view->u->setCaracterActividad($_POST['caracter_actividad']);
         $view->u->setCantidadParticipantes($_POST['cantidad_participantes']);
         $view->u->setImporteTotal($_POST['importe_total']);
+        $view->u->setIdTipoCurso($_POST['tipo_curso']);
 
         $rta=$view->u->insertCapPlan();
 
@@ -103,6 +104,7 @@ switch($operacion){
         $view->u->setCaracterActividad($_POST['caracter_actividad']);
         $view->u->setCantidadParticipantes($_POST['cantidad_participantes']);
         $view->u->setImporteTotal($_POST['importe_total']);
+        $view->u->setIdTipoCurso($_POST['tipo_curso']);
 
         if(!$view->u->updateCapPlan()) $rta=0;
 
@@ -168,8 +170,8 @@ switch($operacion){
         $view->cp=$view->u->getCapPlan();
         $entidadesCapacitadoras=$view->a->getEntidadesCapacitadoras();
         $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
-        $view->cu=new Curso();
-        $tipo_curso=$view->cu->getTipoCurso();
+        //$view->cu=new Curso();
+        $tipo_curso=$view->u->getTipoCurso();
         break;
 
 }

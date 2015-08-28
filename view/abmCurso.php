@@ -294,10 +294,10 @@
                 },
                 tema: {
                     required: true
-                },
-                tipo_curso: {
-                    required: true
                 }
+                /*tipo_curso: {
+                    required: true
+                }*/
             },
             messages:{
                 nombre: "Ingrese su nombre",
@@ -305,8 +305,8 @@
                 comentarios: "Máximo 150 caracteres",
                 //entidad: "Ingrese su entidad",
                 categoria: "Seleccione una categoria",
-                tema: "Seleccione un tema",
-                tipo_curso: "Seleccione un tipo de actividad"
+                tema: "Seleccione un tema"
+                //tipo_curso: "Seleccione un tipo de actividad"
             }
 
         });
@@ -357,7 +357,7 @@
                             </div>
                         </div>
 
-                        <div class="sixteen_column section">
+                        <!--<div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Tipo de actividad: </label><br/>
@@ -374,7 +374,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="sixteen_column section">
                             <div class="eight column">

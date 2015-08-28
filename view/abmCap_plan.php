@@ -49,6 +49,7 @@
                     $("#caracter_actividad").val(datas['plan'][0]['CARACTER_ACTIVIDAD']);
                     $("#cantidad_participantes").val(datas['plan'][0]['CANTIDAD_PARTICIPANTES']);
                     $("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
+                    $("#tipo_curso").val(datas['plan'][0]['ID_TIPO_CURSO']);
 
                     //define si estos campos se puede editar o no
                     (datas['plan'][0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
@@ -143,9 +144,10 @@
                             "caracter_actividad": $("#caracter_actividad").val(),
                             "cantidad_participantes": $("#cantidad_participantes").val(),
                             "importe_total": $("#importe_total").val(),
+                            "tipo_curso": $("#tipo_curso").val(),
                             //nuevo curso
                             "nc_nombre": $('#asignar_plan').data('nc_nombre'),
-                            "nc_tipo_curso": $('#asignar_plan').data('nc_tipo_curso'),
+                            //"nc_tipo_curso": $('#asignar_plan').data('nc_tipo_curso'),
                             "nc_id_tema": $('#asignar_plan').data('nc_id_tema')
 
                     };
@@ -176,7 +178,8 @@
                             "entidad":$("#entidad").val(),
                             "caracter_actividad": $("#caracter_actividad").val(),
                             "cantidad_participantes": $("#cantidad_participantes").val(),
-                            "importe_total": $("#importe_total").val()
+                            "importe_total": $("#importe_total").val(),
+                            "tipo_curso": $("#tipo_curso").val()
                         };
             }
 
@@ -319,9 +322,9 @@
 
                                 $('#asignar_plan').data('nc_nombre', $('#nc_nombre').val());
                                 $('#curso').val($('#nc_nombre').val());
-                                $('#asignar_plan').data('nc_tipo_curso', $('#nc_tipo_curso').val());
+                                //$('#asignar_plan').data('nc_tipo_curso', $('#nc_tipo_curso').val());
                                 $('#asignar_plan').data('nc_id_tema', $('#curso_tema :selected').val());
-                                console.log($('#asignar_plan').data('nc_tipo_curso'));
+                                //console.log($('#asignar_plan').data('nc_tipo_curso'));
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
                             }
@@ -626,6 +629,9 @@
                 },
                 comentarios: {
                     maxlength: 150
+                },
+                tipo_curso: {
+                    required: true
                 }
 
             },
@@ -659,7 +665,8 @@
                 },
                 moneda: "Seleccione la moneda",
                 tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)",
-                comentarios: "Max. 150 caracteres"
+                comentarios: "Max. 150 caracteres",
+                tipo_curso: "Seleccione un tipo de actividad"
             }
 
         });
@@ -676,17 +683,17 @@
                 nc_nombre: {
                     required: function(){return !$('input[name=radio_curso]').is(':checked')}, //si no selecciono ninguno de los sugeridos es required
                     maxlength: 100
-                },
-                nc_tipo_curso:{
-                    required: function(){return !$('input[name=radio_curso]').is(':checked')} //si no selecciono ninguno de los sugeridos es required
                 }
+                /*nc_tipo_curso:{
+                    required: function(){return !$('input[name=radio_curso]').is(':checked')} //si no selecciono ninguno de los sugeridos es required
+                }*/
             },
             messages:{
                 nc_nombre: {
                     required: "Ingrese el nombre del curso",
                     maxlength: "Max. 100 caracteres "
-                },
-                nc_tipo_curso: "Seleccione el tipo de curso"
+                }
+                //nc_tipo_curso: "Seleccione el tipo de curso"
             }
 
         });
@@ -840,11 +847,19 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="eight column">
                                 <div class="column_content">
-
+                                    <label>Tipo de actividad: </label><br/>
+                                    <select name="tipo_curso" id="tipo_curso">
+                                        <option value="">Seleccione el tipo de actividad</option>
+                                        <?php foreach($tipo_curso as $tip){?>
+                                            <option value="<?php echo $tip['ID_TIPO_CURSO']?>"><?php echo $tip['NOMBRE']?></option>
+                                        <?php }?>
+                                    </select>
                                 </div>
                             </div>
+
                         </div>
 
 
@@ -1135,7 +1150,7 @@
                             </div>
                         </div>
 
-                        <div class="sixteen_column section">
+                        <!--<div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Tipo de actividad: </label><br/>
@@ -1152,7 +1167,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
 
 

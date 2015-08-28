@@ -8,7 +8,7 @@ class Curso
     var $comentarios;
     var $entidad;
     var $id_tema;
-    var $id_tipo_curso;
+    //var $id_tipo_curso;
 
     public static function getCursos(){
         $f=new Factory();
@@ -58,8 +58,8 @@ class Curso
     function getIdTema()
     { return $this->id_tema;}
 
-    function getIdTipoCurso()
-    { return $this->id_tipo_curso;}
+    /*function getIdTipoCurso()
+    { return $this->id_tipo_curso;}*/
 
     // metodos que setean los valores
     function setIdCurso($val)
@@ -80,8 +80,8 @@ class Curso
     function setIdTema($val)
     {  $this->id_tema=$val;}
 
-    function setIdTipoCurso($val)
-    { $this->id_tipo_curso=$val;}
+    /*function setIdTipoCurso($val)
+    { $this->id_tipo_curso=$val;}*/
 
 
 
@@ -171,12 +171,12 @@ class Curso
         return $obj_curso->fetchAll();
     }
 
-    public function getTipoCurso(){
+    /*public function getTipoCurso(){
         $f=new Factory();
         $obj_curso=$f->returnsQuery();
         $obj_curso->executeQuery("select * from tipo_curso");
         return $obj_curso->fetchAll();
-    }
+    }*/
 
 
     public function getCursosByTema($id_tema){
