@@ -11,7 +11,8 @@
             "sPaginationType": "full_numbers",
             "columnDefs": [
                 { "width": "350px", "targets": 0 }
-            ]
+            ],
+            "order": []
         } );
 
         $(window).bind('resize', function () {

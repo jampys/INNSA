@@ -35,7 +35,7 @@ class Cap_Plan
         $query="select pc.id_plan, cu.nombre, pc.periodo, pc.fecha_desde, pc.fecha_hasta, pc.duracion, pc.unidad, pc.estado, pc.importe, pc.moneda, ec.nombre ENTIDAD, (select count(*)from asignacion_plan ap where ap.id_plan = pc.id_plan) as cantidad".
                 " from plan_capacitacion pc, cursos cu, entidades_capacitadoras ec".
                 " where pc.id_curso=cu.id_curso and pc.entidad = ec.id_entidad_capacitadora".
-                " order by pc.importe asc";
+                " order by pc.fecha_desde asc";
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll();
     }
