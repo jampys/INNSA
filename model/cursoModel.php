@@ -13,8 +13,18 @@ class Curso
     public static function getCursos(){
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        //$obj_user->executeQuery("select * from cursos");
-        $obj_user->executeQuery("select cu.id_curso, cu.nombre nombre_curso, ca.nombre nombre_categoria, te.nombre nombre_tema from cursos cu, temas te, categorias ca where cu.id_tema = te.id_tema and te.id_categoria = ca.id_categoria ");
+        //$query="select cu.id_curso, cu.nombre nombre_curso, ca.nombre nombre_categoria, te.nombre nombre_tema from cursos cu, temas te, categorias ca where cu.id_tema = te.id_tema and te.id_categoria = ca.id_categoria ";
+        $query="select cu.id_curso, cu.nombre nombre_curso, ca.nombre nombre_categoria, te.nombre nombre_tema,".
+                    " (select '1' from dual where exists(".
+                            " select 1 from propuestas prox where prox.id_curso = cu.id_curso".
+                            " UNION".
+                            " select 1 from plan_capacitacion pcx where pcx.id_curso = cu.id_curso".
+                            " UNION".
+                            " select 1 from plan_capacitacion_historico pchx where pchx.id_curso = cu.id_curso".
+                    " )) as bloquear".
+                " from cursos cu, temas te, categorias ca".
+                " where cu.id_tema = te.id_tema and te.id_categoria = ca.id_categoria";
+        $obj_user->executeQuery($query);
         return $obj_user->fetchAll();
     }
 

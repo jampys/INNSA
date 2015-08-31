@@ -81,7 +81,8 @@
                         <td><?php  echo $curso["NOMBRE_CATEGORIA"]; ?></td>
                         <td><?php  echo $curso["NOMBRE_TEMA"]; ?></td>
                         <td class="center"><a href="javascript: void(0);" class="edit_link" id="<?php  echo $curso["ID_CURSO"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
-                        <td class="center"><a href="javascript: void(0);" class="delete_link" id="<?php  echo $curso["ID_CURSO"];  ?>"><img title="Eliminar" src="public/img/delete-icon.png" width="15px" height="15px"></a></td>
+                        <!--<td class="center"><a href="javascript: void(0);" class="delete_link" id="<?php  //echo $curso["ID_CURSO"];  ?>"><img title="Eliminar" src="public/img/delete-icon.png" width="15px" height="15px"></a></td>-->
+                        <td class="center"><a href="javascript: void(0);" class="<?php echo($curso["BLOQUEAR"]==1)? 'link-desactivado':'delete_link' ?>" id="<?php  echo $curso["ID_CURSO"];  ?>"><img title="Eliminar" src="public/img/delete-icon.png" width="15px" height="15px"></a></td>
                         <!--<td class="center"><a href="">Eliminar</a></td>-->
                     </tr>
                 <?php }  ?>
