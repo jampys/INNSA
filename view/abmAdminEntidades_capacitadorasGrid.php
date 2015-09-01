@@ -2,7 +2,7 @@
 
     $(document).ready(function(){
 
-        /* dataTable
+        //dataTable
         var uTable = $('#example').dataTable( {
             "scrollY": "auto",
             "scrollX": true,
@@ -10,15 +10,14 @@
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "columnDefs": [
-                { "width": "150px", "targets": 0 },
-                { "width": "150px", "targets": 1 },
-                { "width": "200px", "targets": 5 },
-                { "width": "100px", "targets": 6 }
+                { "width": "150px", "targets": 0 }
+                /*{ "width": "50px", "targets": 1 },
+                { "width": "50px", "targets": 2 }*/
             ]
         } );
         $(window).bind('resize', function () {
             uTable.fnAdjustColumnSizing();
-        } ); */
+        } );
 
 
         // Dialog Link

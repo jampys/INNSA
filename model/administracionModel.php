@@ -215,7 +215,7 @@ class EntidadCapacitadora{
     public function getEntidadesCapacitadoras(){
         $f=new Factory();
         $obj_ec=$f->returnsQuery();
-        $query="select * from entidades_capacitadoras";
+        $query="select * from entidades_capacitadoras order by nombre asc";
         $obj_ec->executeQuery($query);
         return $obj_ec->fetchAll();
     }
