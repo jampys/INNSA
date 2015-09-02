@@ -24,6 +24,7 @@
         }
         #tabla_cursos{
             position: fixed;
+            z-index: 100; /* para que siempre se mantenga al frente */
         }
 
         #tabla_empleados tr td{
@@ -35,6 +36,28 @@
             padding-bottom: 1px;
         }
 
+        /* estilos para el tooltip */
+        .example-content {
+            position:absolute;
+            bottom: 25px;
+            left: 25px;
+            height: auto;
+            width: 110px;
+            background:#2E3732;
+            color: #FFFFFF;
+            display:none;
+            text-shadow: none;
+            z-index: 1000;
+            padding: 5px;
+            line-height: 19px;
+            text-align: left /*justify; */
+            opacity: 0.8;
+        }
+        .tooltip-target {
+            display: block; /* required */
+            position: relative; /* required */
+        }
+
 
 
     </style>
@@ -43,7 +66,16 @@
 
         $(document).ready(function(){
 
-            $(document).tooltip();
+            $(".tooltip-target").mouseenter(function(e){
+                e.preventDefault();
+                $(this).children(".example-content").fadeIn("slow");
+            });
+            $(".tooltip-target").mouseleave(function(e){
+                e.preventDefault();
+                $(this).children(".example-content").fadeOut("fast");
+            });
+
+
 
             //alert($('#tabla_empleados').find('tr')[0].cells.length);
             var tam=$('#tabla_empleados').find('tr')[0].cells.length*120+600;
@@ -335,10 +367,14 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                                         }
 
                                         $titulo='Estado: '.$cuerpo[$cont]['ESTADO'].' Período: '.$cuerpo[$cont]['PERIODO'].' Fecha: '.$cuerpo[$cont]['FECHA_DESDE'];
+
+
                                         ?>
-                                        <a href="" title="<?php echo $titulo; ?>"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
+                                        <div style="float: left" class="tooltip-target"><a href="#"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
+                                        <div class="example-content"><?php echo $titulo ?></div>
+                                        </div><!-- .tooltip-target -->
                                         <?php
-                                        //$titulo="";
+
 
                                         $cont++;
                                     }
