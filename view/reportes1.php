@@ -42,7 +42,7 @@
             bottom: 25px;
             left: 25px;
             height: auto;
-            width: 110px;
+            width: 150px;
             background:#2E3732;
             color: #FFFFFF;
             display:none;
@@ -366,13 +366,18 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                                             $icon='red';
                                         }
 
-                                        $titulo='Estado: '.$cuerpo[$cont]['ESTADO'].' Período: '.$cuerpo[$cont]['PERIODO'].' Fecha: '.$cuerpo[$cont]['FECHA_DESDE'];
+                                        //$titulo='Estado: '.$cuerpo[$cont]['ESTADO'].' Período: '.$cuerpo[$cont]['PERIODO'].' Fecha: '.$cuerpo[$cont]['FECHA_DESDE'];
 
 
                                         ?>
                                         <div style="float: left" class="tooltip-target"><a href="#"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
-                                        <div class="example-content"><?php echo $titulo ?></div>
-                                        </div><!-- .tooltip-target -->
+                                            <div class="example-content">
+                                                <span style="display: block">Estado: <?php echo $cuerpo[$cont]['ESTADO'] ?></span>
+                                                <span style="display: block">Período: <?php echo $cuerpo[$cont]['PERIODO'] ?></span>
+                                                <span style="display: block">Fecha: <?php echo $cuerpo[$cont]['FECHA_DESDE'] ?></span>
+
+                                            </div>
+                                        </div>
                                         <?php
 
 
@@ -385,7 +390,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
 
                             }
 
-                            /*if($coincidencia==1){
+                            if($coincidencia==1){
                                 $coincidencia=0;
                             }
                             else{
@@ -393,7 +398,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                                 ?>
                                 <img src="public/img/document-icon.png" width="15px" height="15px">
                             <?php
-                            }*/
+                            }
 
                             //--------------------- fin revisar -----------------------------------------------
 
