@@ -284,7 +284,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                             <?php
 
 
-                            foreach($cuerpo as $cu){
+                            /*foreach($cuerpo as $cu){
                                 if($cu['ID_EMPLEADO']==$e['ID_EMPLEADO'] && $cu['ID_CURSO']==$c['ID_CURSO']){
                                     if($cu['ESTADO']=='EVALUADO' || $cu['ESTADO']=='POST-EVALUADO'){
                                         $icon='green';
@@ -304,16 +304,62 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                             }
                             if($coincidencia==1){
                                 $coincidencia=0;
-                            }else{
+                            }
+                            else{
 
                                 ?>
                                 <!-- la demora en renderizar la grilla se debe a la carga de las imagenes -->
                                 <img src="public/img/document-icon.png" width="15px" height="15px">
                                 <?php
+                            }*/
+
+
+                            //************** revisar **************************
+
+                            $titulo="";
+                            for($i=0; $i< sizeof($cuerpo); $i++){
+                                if($cuerpo[$i]['ID_EMPLEADO']==$e['ID_EMPLEADO'] && $cuerpo[$i]['ID_CURSO']==$c['ID_CURSO']){
+
+                                    $coincidencia=1;
+                                    $cont=$i;
+                                    while($cuerpo[$cont]['ID_EMPLEADO']==$e['ID_EMPLEADO'] && $cuerpo[$cont]['ID_CURSO']==$c['ID_CURSO']){
+
+                                        if($cuerpo[$cont]['ESTADO']=='EVALUADO' || $cuerpo[$cont]['ESTADO']=='POST-EVALUADO'){
+                                            $icon='green';
+                                        }
+                                        else if($cuerpo[$cont]['ESTADO']=='ASIGNADO' || $cuerpo[$cont]['ESTADO']=='COMUNICADO' || $cuerpo[$cont]['ESTADO']=='NOTIFICADO'){
+                                            $icon='yellow';
+                                        }
+                                        else if($cuerpo[$cont]['ESTADO']=='CANCELADO' || $cuerpo[$cont]['ESTADO']=='SUSPENDIDO'){
+                                            $icon='red';
+                                        }
+
+                                        $titulo='Estado: '.$cuerpo[$cont]['ESTADO'].' Período: '.$cuerpo[$cont]['PERIODO'].' Fecha: '.$cuerpo[$cont]['FECHA_DESDE'];
+                                        ?>
+                                        <a href="" title="<?php echo $titulo; ?>"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
+                                        <?php
+                                        //$titulo="";
+
+                                        $cont++;
+                                    }
+                                    break;
+
+
+                                }
+
                             }
 
+                            /*if($coincidencia==1){
+                                $coincidencia=0;
+                            }
+                            else{
 
+                                ?>
+                                <img src="public/img/document-icon.png" width="15px" height="15px">
+                            <?php
+                            }*/
 
+                            //--------------------- fin revisar -----------------------------------------------
 
                             ?>
                         </td>

@@ -60,24 +60,23 @@ class Reportes
 
 
     public function getEstadoAsignacion1(){
-        /*
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        $query="select sc.id_empleado, pc.id_curso, ap.estado".
-                " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
-                " where ap.id_solicitud = sc.id_solicitud".
-                " and ap.id_plan = pc.id_plan";
-        $obj_user->executeQuery($query);
-        return $obj_user->fetchAll(); */
 
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        $query="select sc.id_empleado, pc.id_curso, ap.estado".
+        /*$query="select sc.id_empleado, pc.id_curso, ap.estado".
             " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
             " where ap.id_solicitud = sc.id_solicitud".
             " and ap.id_plan = pc.id_plan".
             " UNION".
-            " select ah.id_empleado, ah.id_curso, ah.estado from asignacion_plan_historico ah";
+            " select ah.id_empleado, ah.id_curso, ah.estado from asignacion_plan_historico ah";*/
+        $query="(select sc.id_empleado, pc.id_curso, ap.estado, pc.periodo, pc.fecha_desde".
+                " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
+                " where ap.id_solicitud = sc.id_solicitud".
+                " and ap.id_plan = pc.id_plan".
+                " UNION".
+                " select aph.id_empleado, pch.id_curso, aph.estado, pch.periodo, pch.fecha_desde".
+                " from asignacion_plan_historico aph, solicitud_capacitacion sc, plan_capacitacion_historico pch".
+                " where aph.id_plan_historico = pch.id_plan_historico) order by id_empleado asc";
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll();
 
