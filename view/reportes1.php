@@ -370,7 +370,7 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
 
 
                                         ?>
-                                        <div style="float: left" class="tooltip-target"><a href="#"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
+                                        <div style="display: inline-block" class="tooltip-target"><a href="#"><img src="public/img/<?php echo $icon; ?>-ok-icon.png" width="15px" height="15px"></a>
                                             <div class="example-content">
                                                 <span style="display: block">Estado: <?php echo $cuerpo[$cont]['ESTADO'] ?></span>
                                                 <span style="display: block">Período: <?php echo $cuerpo[$cont]['PERIODO'] ?></span>
