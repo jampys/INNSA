@@ -573,7 +573,7 @@
             rules: {
                 situacion: {
                     required: true,
-                    maxlength: 250
+                    maxlength: 500
                 },
                 objetivo_1: {
                     required: true,
