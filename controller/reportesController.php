@@ -61,6 +61,18 @@ switch($operacion){
 
         break;
 
+    case 'empleadoPorCurso':
+        require_once("model/cursoModel.php");
+        $view->u=new Curso();
+        $categorias=$view->u->getCategorias();
+        //$periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'pc.periodo';
+        //$lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+
+        //$view->planes=$view->u->getPlanesCapacitacion($periodo, $lugar_trabajo);
+        $view->content="view/reporteEmpleadoPorCurso.php";
+
+        break;
+
 
     default: //reportes de solicitudes de capacitacion
         $view->solicitud=$view->u->getCapSolic();

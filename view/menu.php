@@ -66,6 +66,8 @@
                     <li><a href="index.php?accion=reportes">Reporte Solicitudes</a></li>
                     <li><a href="index.php?accion=reportes&operacion=reportes1">Reporte Asignaciones</a></li>
                     <li><a href="index.php?accion=reportes&operacion=reportes2">Reporte cursos propuestos</a></li>
+                    <li><a href="index.php?accion=reportes&operacion=empleadoPorCurso">Reporte Colaboradores por Curso</a></li>
+                    <li><a href="#">Reporte Cursos por Colaborador</a></li>
                 </ul>
             </li>
         <?   } ?>
