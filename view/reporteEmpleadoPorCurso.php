@@ -190,6 +190,14 @@
             });
 
 
+
+
+            $('#buscar').click(function(){
+                //guardar();
+                $('#principal').load('index.php',{accion:"reportes", operacion: "empleadoPorCurso", buscar: ""});
+
+            });
+
             // Dialog
             //$('#dialog').dialog({
             $('#dialog').dialog({
