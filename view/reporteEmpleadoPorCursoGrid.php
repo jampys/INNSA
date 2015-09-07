@@ -66,7 +66,7 @@
                 </tr>
                 </tfoot>
                 <tbody>
-                <?php foreach ($view->empleados as $emp) {?>
+                <?php foreach ($view->busqueda as $emp) {?>
                     <tr class="odd gradeA">
                         <td><?php  echo $emp["APELLIDO"]; ?></td>
                         <td><?php  echo $emp["NOMBRE"];  ?></td>

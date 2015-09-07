@@ -65,7 +65,11 @@ switch($operacion){
 
         if(isset($_POST['buscar'])){
             //Refresh grid
-            //$view->busqueda=$view->u->getCursos();
+
+            require_once("model/empleadoModel.php"); //borrar prueba
+            $view->u=new Empleado(); //borrar prueba
+
+            $view->busqueda=$view->u->getEmpleados();
             include_once('view/reporteEmpleadoPorCursoGrid.php');
             exit;
             break;

@@ -376,7 +376,7 @@
 
 <body>
 
-<div id="principal">
+<!--<div id="principal">-->
     <div class="container_10">
 
         <header>
@@ -437,8 +437,12 @@
                 </div>
 
 
-                <!-- Aca se llama a la grilla en el archivo reporteEmpleadoPorCursoGrid.php -->
-                <?php require_once('reporteEmpleadoPorCursoGrid.php') ?>
+                <div id="principal">
+
+                    <!-- Aca se llama a la grilla en el archivo reporteEmpleadoPorCursoGrid.php -->
+                    <?php require_once('reporteEmpleadoPorCursoGrid.php') ?>
+
+                </div>
 
             </div>
 
@@ -446,7 +450,7 @@
 
         </div>
 
-</div>
+<!--</div> -->
 
 <!-- ui-dialog mensaje -->
 <div id="dialog-msn">
