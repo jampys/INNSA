@@ -197,6 +197,17 @@ class Curso
     }
 
 
+    public function autocompletarCursosByTema($term, $id_tema){
+        $f=new Factory();
+        $obj_user=$f->returnsQuery();
+        $query="select * from cursos where nombre like UPPER ('%".$term."%') and id_tema=$id_tema";
+        $obj_user->executeQuery($query);
+        return $obj_user->fetchAll();
+    }
+
+
+
+
 
 
 }

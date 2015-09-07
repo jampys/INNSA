@@ -88,6 +88,13 @@ switch($operacion){
         exit;
         break;
 
+    case 'autocompletarCursosByTema':
+        $id_tema= ($_POST['id_tema']!='')? "'".$_POST['id_tema']."'" : 'id_tema';
+        $rta=$view->u->autocompletarCursosByTema($_POST['term'], $id_tema);
+        print_r(json_encode($rta));
+        exit;
+        break;
+
     case 'refreshGrid':
         $view->cursos=$view->u->getCursos();
         include_once('view/abmCursoGrid.php');

@@ -9,12 +9,51 @@
     var globalId;
 
 
+    function cargarTemas(){
+        var categoria=$("#categoria option:selected").val();
+
+        $.ajax({
+            url:"index.php",
+            data:{"accion":"curso","operacion":"getTemas","id":categoria},
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",//xml,html,script,json
+            error:function(){
+
+                $("#dialog-msn").dialog("open");
+                $("#message").html("ha ocurrido un error");
+
+            },
+            ifModified:false,
+            processData:true,
+            success:function(datas){
+
+                $("#tema").html('<option value="">Todos</option>');
+                $.each(datas, function(indice, val){
+                    var estado=(datas[indice]["ESTADO"]=="ACTIVO")? "":"disabled";
+                    $("#tema").append('<option value="'+datas[indice]["ID_TEMA"]+'"'+estado+'>'+datas[indice]["NOMBRE"]+'</option>');
+                    //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
+
+                });
+
+
+            },
+            type:"POST",
+            timeout:3000000,
+            crossdomain:true
+
+        });
+    }
 
 
 
 
 
 
+
+
+
+
+        //borrar este metodo
         function guardar(){
 
             if(globalOperacion=="insert"){ //se va a guardar un usuario nuevo
@@ -94,6 +133,39 @@
 
 
             //Aca estaba el dataTable
+
+
+            //autocompletar curos segun la categoria y temas ingresados
+            $("#curso").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term,
+                            "accion":"curso",
+                            "operacion":"autocompletarCursosByTema",
+                            "id_tema": $("#tema option:selected").val() //60 //id_tema
+                        },
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.NOMBRE,
+                                    id: item.ID_CURSO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                delay: 0,
+                minLength: 2,
+                change: function(event, ui) {
+                    $('#curso_id').val(ui.item? ui.item.id : '');
+                    $('#curso').val(ui.item.label);
+                }
+            });
+
 
             // Dialog mensaje
             $('#dialog-msn').dialog({
@@ -297,9 +369,74 @@
 <body>
 
 <div id="principal">
+    <div class="container_10">
 
-<!-- Aca se llama a la grilla en el archivo reporteEmpleadoPorCursoGrid.php -->
-    <?php require_once('reporteEmpleadoPorCursoGrid.php') ?>
+        <header>
+            <div class="clear"></div>
+        </header>
+
+        <div class="box">
+
+            <h2>
+                <a href="#" id="toggle-list">Reporte de colaboradores por curso/tema</a>
+            </h2>
+
+            <div class="block" id="list">
+
+                <div class="sixteen_column section">
+
+                    <div class="two column">
+                        <div class="column_content">
+                            <label>Categoria: </label>
+                            <select name="categoria" id="categoria" onchange="cargarTemas();">
+                                <option value="">Todas</option>
+                                <?php foreach($categorias as $cat){
+                                    $estado=($cat['ESTADO']=='ACTIVA')? "": "disabled";
+                                    ?>
+                                    <option value="<?php echo $cat['ID_CATEGORIA']?>" <?php echo $estado ?> ><?php echo $cat['NOMBRE']?> </option>
+                                <?php }?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="two column">
+                        <div class="column_content">
+                            <label>Tema: </label>
+                            <select name="tema" id="tema">
+                                <!-- select dependiente... se carga dinamicamente al seleccionar la categoria -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="four column">
+                        <div class="column_content">
+                            <label>Curso: </label>
+                            <input type="text" name="curso" id="curso"/>
+                            <input type="hidden" name="curso_id" id="curso_id"/>
+                        </div>
+                    </div>
+
+                    <div class="two column">
+                        <div class="column_content">
+                            <label>.</label>
+                            <input type="button" name="buscar" id="buscar" value="Buscar"/>
+                        </div>
+                    </div>
+
+                    <div class="six column">
+
+                    </div>
+                </div>
+
+
+                <!-- Aca se llama a la grilla en el archivo reporteEmpleadoPorCursoGrid.php -->
+                <?php require_once('reporteEmpleadoPorCursoGrid.php') ?>
+
+            </div>
+
+         </div>
+
+        </div>
 
 </div>
 
