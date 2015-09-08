@@ -203,7 +203,7 @@ class Reportes
     }
 
 
-    public function getEmpleadosByCursoReporte($id_categoria, $id_tema, $id_curso){
+    public function getEmpleadosByCursoReporte($id_categoria, $id_tema, $id_curso, $activos){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
         $query="(".
@@ -221,6 +221,7 @@ class Reportes
         " and cu.id_curso = $id_curso".
         " and cu.id_tema = $id_tema".
         " and ca.id_categoria = $id_categoria".
+        " and em.activo = $activos".
 
 " UNION".
 
@@ -236,6 +237,7 @@ class Reportes
             " and cu.id_curso = $id_curso".
             " and cu.id_tema = $id_tema".
             " and ca.id_categoria = $id_categoria".
+            " and em.activo = $activos".
 " )".
 " order by apellido, nombre asc";
         $obj_sp->executeQuery($query);

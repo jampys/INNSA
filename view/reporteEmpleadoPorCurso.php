@@ -200,7 +200,7 @@
                                                     id_categoria: $("#categoria option:selected").val(),
                                                     id_tema: $("#tema option:selected").val(),
                                                     id_curso: $("#curso_id").val(),
-                                                    activos: ($('.check_activos').attr('checked', true))? 1:0
+                                                    activos: $('#check_activos').prop('checked')? 1:0
                                                 });
 
             });
@@ -438,7 +438,7 @@
                                 <!--<div class="cbtitulo">Conformidad comunicación:</div>-->
 
                                 <div class="cbcheck">
-                                    <div class="check" style="margin-top: 6px"><input type="checkbox" id="check_activos" name="check_activos" /></div>
+                                    <div class="check" style="margin-top: 6px"><input type="checkbox" id="check_activos" name="check_activos" checked /></div>
                                     <div class="lab" style="margin-top: 6px">Solo activos</div>
                                 </div>
 
