@@ -194,7 +194,13 @@
 
             $('#buscar').click(function(){
                 //guardar();
-                $('#principal').load('index.php',{accion:"reportes", operacion: "empleadoPorCurso", buscar: ""});
+                $('#principal').load('index.php',{  accion:"reportes",
+                                                    operacion: "empleadoPorCurso",
+                                                    buscar: "",
+                                                    id_categoria: $("#categoria option:selected").val(),
+                                                    id_tema: $("#tema option:selected").val(),
+                                                    id_curso: $("#curso_id").val()
+                                                });
 
             });
 

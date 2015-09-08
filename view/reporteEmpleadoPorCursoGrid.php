@@ -13,25 +13,16 @@
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
             "columnDefs": [
-                { "width": "150px", "targets": 0 },
-                { "width": "150px", "targets": 1 },
-                { "width": "100px", "targets": 5 },
-                { "width": "200px", "targets": 6 }
+                { "width": "120px", "targets": 0 },
+                { "width": "120px", "targets": 1 },
+                { "width": "200px", "targets": 3 }
             ]
         } );
         $(window).bind('resize', function () {
             uTable.fnAdjustColumnSizing();
         } );
 
-
-        // Dialog Link
-        $('#dialog_link').click(function(){
-            //globalOperacion=$(this).attr("media");
-            globalOperacion='insert';
-            $('#dialog').dialog('open');
-            return false;
-        });
-
+        
 
     });
 
@@ -46,38 +37,47 @@
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Lugar</th>
-                    <th>Legajo</th>
-                    <th>Empresa</th>
-                    <th>División</th>
-                    <th>Función</th>
-                    <th>Editar</th>
+                    <th>Curso</th>
+                    <th>Período</th>
+                    <th>Fecha</th>
+                    <th>Tema</th>
+                    <th>Categoría</th>
+                    <th>Modalidad</th>
+                    <th>Entidad</th>
+                    <th>Tipo Act.</th>
                 </tr>
                 </thead>
-                <tfoot>
+                <!--<tfoot>
                 <tr>
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Lugar</th>
-                    <th>Legajo</th>
-                    <th>Empresa</th>
-                    <th>División</th>
-                    <th>Función</th>
-                    <th>Editar</th>
+                    <th>Curso</th>
+                    <th>Período</th>
+                    <th>Fecha</th>
+                    <th>Tema</th>
+                    <th>Categoría</th>
+                    <th>Modalidad</th>
+                    <th>Entidad</th>
+                    <th>Tipo Act.</th>
                 </tr>
-                </tfoot>
+                </tfoot>-->
                 <tbody>
-                <?php foreach ($view->busqueda as $emp) {?>
+                <?php if (isset($view->busqueda)){foreach ($view->busqueda as $emp) {?>
                     <tr class="odd gradeA">
                         <td><?php  echo $emp["APELLIDO"]; ?></td>
                         <td><?php  echo $emp["NOMBRE"];  ?></td>
                         <td><?php  echo $emp["LUGAR_TRABAJO"]; ?></td>
-                        <td><?php  echo $emp["N_LEGAJO"]; ?></td>
-                        <td><?php  echo $emp["EMPRESA"]; ?></td>
-                        <td><?php  echo $emp["DIVISION"]; ?></td>
-                        <td><?php  echo $emp["FUNCION"]; ?></td>
-                        <td class="center"><a href="" class="edit_link" id="<?php  echo $emp["ID_EMPLEADO"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td><?php  echo $emp["CURSO"]; ?></td>
+                        <td><?php  echo $emp["PERIODO"]; ?></td>
+                        <td><?php  echo $emp["FECHA_DESDE"]; ?></td>
+                        <td><?php  echo $emp["TEMA"]; ?></td>
+                        <td><?php  echo $emp["CATEGORIA"]; ?></td>
+                        <td><?php  echo $emp["MODALIDAD"]; ?></td>
+                        <td><?php  echo $emp["ENTIDAD"]; ?></td>
+                        <td><?php  echo $emp["TIPO_CURSO"]; ?></td>
                     </tr>
-                <?php }  ?>
+                <?php }}  ?>
 
                 </tbody>
             </table>

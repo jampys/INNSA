@@ -203,6 +203,48 @@ class Reportes
     }
 
 
+    public function getEmpleadosByCursoReporte($id_categoria, $id_tema, $id_curso){
+        $f=new Factory();
+        $obj_sp=$f->returnsQuery();
+        $query="(".
+        " select em.apellido, em.nombre, em.lugar_trabajo, cu.nombre as curso, pc.periodo, pc.fecha_desde, te.nombre as tema, ca.nombre as categoria, pc.modalidad, ec.nombre as entidad, tc.nombre as tipo_curso".
+" from empleados em, asignacion_plan ap, plan_capacitacion pc, solicitud_capacitacion sc, cursos cu, categorias ca, temas te, entidades_capacitadoras ec, tipo_curso tc".
+" where em.id_empleado = sc.id_empleado".
+        " and sc.id_solicitud = ap.id_solicitud".
+        " and ap.id_plan = pc.id_plan".
+        " and pc.id_curso = cu.id_curso".
+        " and cu.id_tema = te.id_tema".
+        " and te.id_categoria = ca.id_categoria".
+        " and pc.entidad = ec.id_entidad_capacitadora".
+        " and pc.id_tipo_curso = tc.id_tipo_curso".
+        //filtros
+        " and cu.id_curso = $id_curso".
+        " and cu.id_tema = $id_tema".
+        " and ca.id_categoria = $id_categoria".
+
+" UNION".
+
+" select em.apellido, em.nombre, em.lugar_trabajo, cu.nombre as curso, pch.periodo, pch.fecha_desde, te.nombre as tema, ca.nombre as categoria, pch.modalidad, ec.nombre as entidad, null".
+" from empleados em, asignacion_plan_historico aph, plan_capacitacion_historico pch, cursos cu, categorias ca, temas te, entidades_capacitadoras ec".
+" where em.id_empleado = aph.id_empleado".
+        " and aph.id_plan_historico = pch.id_plan_historico".
+        " and pch.id_curso = cu.id_curso".
+        " and cu.id_tema = te.id_tema".
+        " and te.id_categoria = ca.id_categoria".
+        " and pch.id_entidad = ec.id_entidad_capacitadora".
+        //filtros
+            " and cu.id_curso = $id_curso".
+            " and cu.id_tema = $id_tema".
+            " and ca.id_categoria = $id_categoria".
+" )".
+" order by apellido, nombre asc";
+        $obj_sp->executeQuery($query);
+        return $obj_sp->fetchAll();
+    }
+
+
+
+
 
 
 
