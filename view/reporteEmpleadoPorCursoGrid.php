@@ -22,7 +22,7 @@
             uTable.fnAdjustColumnSizing();
         } );
 
-        
+
 
     });
 
@@ -37,7 +37,7 @@
                     <th>Apellido</th>
                     <th>Nombre</th>
                     <th>Lugar</th>
-                    <th>Curso</th>
+                    <th>Capacitación</th>
                     <th>Período</th>
                     <th>Fecha</th>
                     <th>Tema</th>
@@ -68,7 +68,7 @@
                         <td><?php  echo $emp["APELLIDO"]; ?></td>
                         <td><?php  echo $emp["NOMBRE"];  ?></td>
                         <td><?php  echo $emp["LUGAR_TRABAJO"]; ?></td>
-                        <td><?php  echo $emp["CURSO"]; ?></td>
+                        <td><?php  echo $emp["CAPACITACION"]; ?></td>
                         <td><?php  echo $emp["PERIODO"]; ?></td>
                         <td><?php  echo $emp["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $emp["TEMA"]; ?></td>

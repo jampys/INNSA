@@ -69,7 +69,8 @@ switch($operacion){
             $id_categoria= ($_POST['id_categoria']!='')? "'".$_POST['id_categoria']."'" : 'te.id_categoria';
             $id_tema= ($_POST['id_tema']!='')? "'".$_POST['id_tema']."'" : 'te.id_tema';
             $id_curso= ($_POST['id_curso']!='')? "'".$_POST['id_curso']."'" : 'cu.id_curso';
-            $view->busqueda=$view->u->getEmpleadosByCursoReporte($id_categoria, $id_tema, $id_curso);
+            $activos= ($_POST['activos']=='1')? 1: 0;
+            $view->busqueda=$view->u->getEmpleadosByCursoReporte($id_categoria, $id_tema, $id_curso, $activos);
             include_once('view/reporteEmpleadoPorCursoGrid.php');
             exit;
             break;

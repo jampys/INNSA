@@ -199,7 +199,8 @@
                                                     buscar: "",
                                                     id_categoria: $("#categoria option:selected").val(),
                                                     id_tema: $("#tema option:selected").val(),
-                                                    id_curso: $("#curso_id").val()
+                                                    id_curso: $("#curso_id").val(),
+                                                    activos: ($('.check_activos').attr('checked', true))? 1:0
                                                 });
 
             });
@@ -427,6 +428,22 @@
                             <label>Curso: </label>
                             <input type="text" name="curso" id="curso"/>
                             <input type="hidden" name="curso_id" id="curso_id"/>
+                        </div>
+                    </div>
+
+                    <div class="two column">
+                        <div class="column_content">
+                            <label>.</label>
+                            <div class="checkbox_individual" style="margin-left: 15px">
+                                <!--<div class="cbtitulo">Conformidad comunicación:</div>-->
+
+                                <div class="cbcheck">
+                                    <div class="check" style="margin-top: 6px"><input type="checkbox" id="check_activos" name="check_activos" /></div>
+                                    <div class="lab" style="margin-top: 6px">Solo activos</div>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
 
