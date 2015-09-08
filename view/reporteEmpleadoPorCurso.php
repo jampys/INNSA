@@ -12,36 +12,41 @@
     function cargarTemas(){
         var categoria=$("#categoria option:selected").val();
 
-        $.ajax({
-            url:"index.php",
-            data:{"accion":"curso","operacion":"getTemas","id":categoria},
-            contentType:"application/x-www-form-urlencoded",
-            dataType:"json",//xml,html,script,json
-            error:function(){
+        if(categoria>=1){ //Si eligio alguna categoria
 
-                $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
+            $.ajax({
+                url:"index.php",
+                data:{"accion":"curso","operacion":"getTemas","id":categoria},
+                contentType:"application/x-www-form-urlencoded",
+                dataType:"json",//xml,html,script,json
+                error:function(){
 
-            },
-            ifModified:false,
-            processData:true,
-            success:function(datas){
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
 
-                $("#tema").html('<option value="">Todos</option>');
-                $.each(datas, function(indice, val){
-                    var estado=(datas[indice]["ESTADO"]=="ACTIVO")? "":"disabled";
-                    $("#tema").append('<option value="'+datas[indice]["ID_TEMA"]+'"'+estado+'>'+datas[indice]["NOMBRE"]+'</option>');
-                    //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
+                },
+                ifModified:false,
+                processData:true,
+                success:function(datas){
 
-                });
+                    $("#tema").html('<option value="">Todos</option>');
+                    $.each(datas, function(indice, val){
+                        var estado=(datas[indice]["ESTADO"]=="ACTIVO")? "":"disabled";
+                        $("#tema").append('<option value="'+datas[indice]["ID_TEMA"]+'"'+estado+'>'+datas[indice]["NOMBRE"]+'</option>');
+                        //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
+
+                    });
 
 
-            },
-            type:"POST",
-            timeout:3000000,
-            crossdomain:true
+                },
+                type:"POST",
+                timeout:3000000,
+                crossdomain:true
 
-        });
+            });
+
+        }
+
     }
 
 
@@ -204,6 +209,27 @@
                                                 });
 
             });
+
+
+            $('#categoria').change(function(){
+
+                if($('#categoria option:selected').val()==''){
+                    //alert('selecciono el cero');
+                    $('#tema')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option value="">Todos</option>')
+                        //.val('whatever')
+                    ;
+
+                }
+
+                $("#curso").val('');
+                $("#curso_id").val('');
+                $('#check_activos').prop('checked', true);
+            });
+
 
             // Dialog
             //$('#dialog').dialog({
