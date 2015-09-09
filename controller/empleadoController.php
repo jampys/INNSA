@@ -73,7 +73,8 @@ switch($operacion){
         break;
 
     case 'autocompletar_empleados':
-        $target= (isset($_POST['target']) && $_POST['target']=='BYUSER')? 'BYUSER': 'ALL';
+        //$target= (isset($_POST['target']) && $_POST['target']=='BYUSER')? 'BYUSER': 'ALL';
+        if(isset($_POST['target'])){ $target=$_POST['target']; }
         $rta=$view->u->autocompletarEmpleados($_POST['term'], $_SESSION['USER_ID_EMPLEADO'], $target);
         print_r(json_encode($rta));
         exit;

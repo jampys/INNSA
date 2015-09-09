@@ -65,6 +65,9 @@ class Empleado
         }else if ($target=='ALL'){
             $query="select * from empleados where (nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')) and activo = 1";
         }
+        else if ($target=='ALL_ACTIVE_INACTIVE'){ //todos: tanto activos como inactivos
+            $query="select * from empleados where nombre like UPPER ('%".$term."%') or apellido like UPPER ('%".$term."%')";
+        }
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();

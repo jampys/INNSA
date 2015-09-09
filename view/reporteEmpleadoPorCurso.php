@@ -172,6 +172,36 @@
             });
 
 
+            //Autocompletar empleados
+            $("#empleado").autocomplete({
+                source: function( request, response ) {
+                    $.ajax({
+                        url: "index.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { "term": request.term, "accion":"empleado", "operacion":"autocompletar_empleados", "target":"ALL_ACTIVE_INACTIVE"},
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                return {
+                                    label: item.APELLIDO+" "+item.NOMBRE,
+                                    id: item.ID_EMPLEADO
+
+                                };
+                            }));
+                        }
+                    });
+                },
+                minLength: 2,
+                change: function(event, ui) {
+                    $('#empleado_id').val(ui.item? ui.item.id : '');
+                    $('#empleado').val(ui.item.label);
+                }
+            });
+
+
+
+
+
             // Dialog mensaje
             $('#dialog-msn').dialog({
                 autoOpen: false,
@@ -205,6 +235,7 @@
                                                     id_categoria: $("#categoria option:selected").val(),
                                                     id_tema: $("#tema option:selected").val(),
                                                     id_curso: $("#curso_id").val(),
+                                                    id_empleado: $("#empleado_id").val(),
                                                     activos: $('#check_activos').prop('checked')? 1:0
                                                 });
 
@@ -227,6 +258,8 @@
 
                 $("#curso").val('');
                 $("#curso_id").val('');
+                $("#empleado").val('');
+                $("#empleado_id").val('');
                 $('#check_activos').prop('checked', true);
             });
 
@@ -454,6 +487,14 @@
                             <label>Curso: </label>
                             <input type="text" name="curso" id="curso"/>
                             <input type="hidden" name="curso_id" id="curso_id"/>
+                        </div>
+                    </div>
+
+                    <div class="four column">
+                        <div class="column_content">
+                            <label>Colaborador: </label>
+                            <input type="text" name="empleado" id="empleado"/>
+                            <input type="hidden" name="empleado_id" id="empleado_id"/>
                         </div>
                     </div>
 
