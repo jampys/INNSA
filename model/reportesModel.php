@@ -207,7 +207,7 @@ class Reportes
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
         $query="(".
-        " select em.apellido, em.nombre, em.lugar_trabajo, pc.objetivo as capacitacion, pc.periodo, pc.fecha_desde, te.nombre as tema, ca.nombre as categoria, pc.modalidad, ec.nombre as entidad, tc.nombre as tipo_curso".
+        " select em.apellido, em.nombre, em.lugar_trabajo, pc.objetivo as capacitacion, pc.periodo, pc.fecha_desde, te.nombre as tema, ca.nombre as categoria, pc.modalidad, ec.nombre as entidad, tc.nombre as tipo_curso, ap.estado".
 " from empleados em, asignacion_plan ap, plan_capacitacion pc, solicitud_capacitacion sc, cursos cu, categorias ca, temas te, entidades_capacitadoras ec, tipo_curso tc".
 " where em.id_empleado = sc.id_empleado".
         " and sc.id_solicitud = ap.id_solicitud".
@@ -226,7 +226,7 @@ class Reportes
 
 " UNION".
 
-" select em.apellido, em.nombre, em.lugar_trabajo, pch.objetivo as capacitacion, pch.periodo, pch.fecha_desde, te.nombre as tema, ca.nombre as categoria, pch.modalidad, ec.nombre as entidad, null".
+" select em.apellido, em.nombre, em.lugar_trabajo, pch.objetivo as capacitacion, pch.periodo, pch.fecha_desde, te.nombre as tema, ca.nombre as categoria, pch.modalidad, ec.nombre as entidad, null, aph.estado".
 " from empleados em, asignacion_plan_historico aph, plan_capacitacion_historico pch, cursos cu, categorias ca, temas te, entidades_capacitadoras ec".
 " where em.id_empleado = aph.id_empleado".
         " and aph.id_plan_historico = pch.id_plan_historico".

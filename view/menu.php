@@ -40,7 +40,7 @@
     </head>
     <body>
 
-    <ul id="menux">
+    <ul id="menux" style="text-align: left">
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2 || $_SESSION['ACCESSLEVEL']==3){  ?>
             <li><a href="index.php?accion=cap_solic">Solicitud capacitación</a></li>
@@ -61,13 +61,12 @@
 
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
-            <li><a href="#">Reportes</a>
+            <li><a href="#">Consultas</a>
                 <ul style="z-index: 9999">
-                    <li><a href="index.php?accion=reportes">Reporte Solicitudes</a></li>
-                    <li><a href="index.php?accion=reportes&operacion=reportes1">Reporte Asignaciones</a></li>
-                    <li><a href="index.php?accion=reportes&operacion=reportes2">Reporte cursos propuestos</a></li>
-                    <li><a href="index.php?accion=reportes&operacion=empleadoPorCurso">Reporte Colaboradores por Curso</a></li>
-                    <li><a href="#">Reporte Cursos por Colaborador</a></li>
+                    <li><a href="index.php?accion=reportes">Solicitudes</a></li>
+                    <li><a href="index.php?accion=reportes&operacion=reportes1">Asignaciones</a></li>
+                    <li><a href="index.php?accion=reportes&operacion=reportes2">Cursos propuestos</a></li>
+                    <li><a href="index.php?accion=reportes&operacion=empleadoPorCurso">Asignación de actividades</a></li>
                 </ul>
             </li>
         <?   } ?>
