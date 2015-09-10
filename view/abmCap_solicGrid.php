@@ -82,7 +82,7 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de Solicitudes de Capacitación</a>
+            <a href="#" id="toggle-list">Solicitudes de Capacitación</a>
         </h2>
 
 

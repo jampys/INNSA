@@ -612,7 +612,7 @@
                 autoOpen: false,
                 width: 550,
                 modal:true,
-                title:"Proponer curso",
+                title:"Proponer capacitación",
                 buttons: [{
                     class: "button-save",
                     text: "Guardar",
@@ -1235,7 +1235,7 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Cursos asignados: </label><br/>
+                                    <label>Capacitaciones asignadas: </label><br/>
                                     <!--<a id="new-plan" class="new-plan-link" href="#"><img src="public/img/add-icon.png" width="15px" height="15px"></a>-->
                                 </div>
                             </div>
@@ -1331,7 +1331,7 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Cursos del plan de capacitación: </label><br/>
+                                    <label>Capacitación propuesta: </label><br/>
                                     <input type="text" name="nc_curso" id="nc_curso"/>
                                     <input type="hidden" name="nc_curso_id" id="nc_curso_id"/>
                                     <input type="hidden" name="nc_tema_id" id="nc_tema_id"/>

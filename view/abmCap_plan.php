@@ -253,7 +253,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Plan de Capacitación",
+                title:"Capacitación",
                 buttons: [
                     {
                     class: "button-guardar",
@@ -370,7 +370,7 @@
 
                 //Rellenar el combo de periodos
                 var per=$.periodos();
-                $("#periodo").html('<option value="">Seleccione un periodo</option>');
+                $("#periodo").html('<option value="">Seleccione un período</option>');
                 $.each(per, function(indice, val){
                     $("#periodo").append(new Option(val,val));
                 });
@@ -753,7 +753,7 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Curso / tema: </label><br/>
+                                    <label>Capacitación: </label><br/>
                                     <!--<input type="text" name="curso" id="curso"/>
                                     <input type="hidden" name="curso_id" id="curso_id"/>-->
 

@@ -56,12 +56,12 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de Planes de Capacitación</a>
+            <a href="#" id="toggle-list">Lista de Capacitaciones</a>
         </h2>
 
 
         <div class="block" id="list">
-            <a href="javascript:void(0);" id="dialog_link">Agregar plan capacitación</a>
+            <a href="javascript:void(0);" id="dialog_link">Agregar capacitación</a>
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                 <thead>
                 <tr>
@@ -75,7 +75,7 @@
                     <th>Estado</th>
                     <th>Importe</th>
                     <th>Moneda</th>
-                    <th title="Cant. de empleados asignados">Cant.</th>
+                    <th title="Cant. de colaboradores asignados">Cant.</th>
                     <th>.</th>
 
                 </tr>

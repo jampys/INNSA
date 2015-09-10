@@ -48,12 +48,12 @@
 
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
-                <li><a href="index.php?accion=cap_plan">Plan capacitación</a></li>
+                <li><a href="index.php?accion=cap_plan">Capacitación</a></li>
         <?php   } ?>
 
 
         <?php if($_SESSION['ACCESSLEVEL']==1 || $_SESSION['ACCESSLEVEL']==2){  ?>
-                <li><a href="index.php?accion=asignacion">Asignacion plan</a></li>
+                <li><a href="index.php?accion=asignacion">Asignación capacitación</a></li>
                 <!--<li><a href="index.php?accion=autorizacion_aprobacion">Autorización/Aprobación</a></li>-->
                 <li> <a href="index.php?accion=reportes&operacion=reportes3">Aprobación</a></li>
 
@@ -66,7 +66,7 @@
                     <li><a href="index.php?accion=reportes">Solicitudes</a></li>
                     <li><a href="index.php?accion=reportes&operacion=reportes1">Asignaciones</a></li>
                     <li><a href="index.php?accion=reportes&operacion=reportes2">Cursos propuestos</a></li>
-                    <li><a href="index.php?accion=reportes&operacion=empleadoPorCurso">Asignación de actividades</a></li>
+                    <li><a href="index.php?accion=reportes&operacion=empleadoPorCurso">Asignación capacitación</a></li>
                 </ul>
             </li>
         <?   } ?>
