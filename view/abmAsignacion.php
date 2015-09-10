@@ -73,9 +73,9 @@
                     //console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']);
                     //$("#objetivos").val(datas[0]['OBJETIVOS']);
-                    $("#objetivo_1").val(datas[0]['OBJETIVO_1']);
-                    $("#objetivo_2").val(datas[0]['OBJETIVO_2']);
-                    $("#objetivo_3").val(datas[0]['OBJETIVO_3']);
+                    $("#objetivo_1").val(datas[0]['OBJETIVO_1']).change();
+                    $("#objetivo_2").val(datas[0]['OBJETIVO_2']).change();
+                    $("#objetivo_3").val(datas[0]['OBJETIVO_3']).change();
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
                     $("#compromiso").val(datas[0]['COMPROMISO']);
                     //$("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
