@@ -45,7 +45,7 @@
 
 <div class="box" style="width: 98%">
     <h2>
-        <a href="#" id="toggle-list">REPORTE: Cursos propuestos con asignación pendiente</a>
+        <a href="#" id="toggle-list">Consulta de cursos propuestos con asignación pendiente</a>
     </h2>
 </div>
 

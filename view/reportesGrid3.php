@@ -14,7 +14,7 @@
     <thead>
     <tr>
         <th>Período</th>
-        <th>Plan capacitación</th>
+        <th>Capacitación</th>
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
@@ -22,7 +22,7 @@
         <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
-        <th>Aprobar</th>
+        <th>Aprobar individual</th>
         <th>Aprobar todos</th>
     </tr>
     </thead>
@@ -97,7 +97,7 @@
     <tfoot>
     <tr>
         <th>Período</th>
-        <th>Plan capacitación</th>
+        <th>Capacitación</th>
         <th>Cant. recursos</th>
         <th>Duración</th>
         <th>Unidad</th>
@@ -105,7 +105,7 @@
         <th>Precio unitario</th>
         <th>Subtotal s/viáticos (pesos)</th>
         <th>Total c/viáticos (pesos)</th>
-        <th>Aprobar</th>
+        <th>Aprobar individual</th>
         <th>Aprobar todos</th>
     </tr>
     <!--Muestra el total general -->

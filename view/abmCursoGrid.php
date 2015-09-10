@@ -47,7 +47,7 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de Cursos</a>
+            <a href="#" id="toggle-list">Cursos</a>
         </h2>
 
 

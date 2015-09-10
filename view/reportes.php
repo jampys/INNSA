@@ -44,7 +44,7 @@
 
 <div class="box" style="width: 98%">
     <h2>
-        <a href="#" id="toggle-list">REPORTE: Solicitudes de capacitación</a>
+        <a href="#" id="toggle-list">Consulta de solicitudes de capacitación</a>
     </h2>
 </div>
 

@@ -46,7 +46,7 @@
 
     <div class="box" style="width: 700px">
         <h2>
-            <a href="#" id="toggle-list">Lista de Divisiones</a>
+            <a href="#" id="toggle-list">Divisiones y funciones</a>
         </h2>
 
 
@@ -55,14 +55,14 @@
             <table cellpadding="0" cellspacing="0" border="0" id="example" style="width: 700px">
                 <thead>
                 <tr>
-                    <th style="width: 75%">Nombre</th>
+                    <th style="width: 75%">División</th>
                     <th style="width: 15%">Estado</th>
                     <th style="width: 10%">Editar</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>Nombre</th>
+                    <th>División</th>
                     <th>Estado</th>
                     <th>Editar</th>
                 </tr>

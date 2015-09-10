@@ -47,7 +47,7 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de colaboradores</a>
+            <a href="#" id="toggle-list">Colaboradores</a>
         </h2>
 
 

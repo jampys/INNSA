@@ -202,7 +202,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Aprobar curso",
+                title:"Aprobar capacitación invididualmente",
                 buttons: {
                     "Aprobar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
@@ -238,9 +238,9 @@
             //Ventana modal de confirmacion para la aprobacion masiva
             $('#password_clear').dialog({
                 autoOpen: false,
-                width: 450,
+                width: 460,
                 modal:true,
-                title:"Aprobar curso",
+                title:"Aprobar capacitación a todos",
                 buttons: {
                     "Aceptar": function() {
 
@@ -347,7 +347,7 @@
 
 <div class="box" style="width: 88%">
     <h2>
-        <a href="#" id="toggle-list">Aprobar cursos</a>
+        <a href="#" id="toggle-list">Aprobación de capacitación</a>
     </h2>
 </div>
 
@@ -471,8 +471,8 @@
 <div id="password_clear">
 
     <div style='float: left; margin-top: 10px'><img src='public/img/warning-icon-yellow.png' width='30px' height='30px'></div>&nbsp;&nbsp;&nbsp;
-    <div style='float: left; margin-left: 10px; margin-top: 10px'>
-        ¿Desea aprobar el curso para todos los colaboradores asignados?
+    <div style='float: left; margin-left: 10px'>
+        ¿Desea aprobar la capacitación para todos los colaboradores asignados?
         <br/>
     </div>
 

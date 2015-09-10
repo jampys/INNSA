@@ -368,7 +368,7 @@
                                     <table id="table_funciones" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td style="width: 90%">Nombre</td>
+                                            <td style="width: 90%">Función</td>
                                             <td style="width: 10%">Estado</td>
                                         </tr>
                                         </thead>

@@ -381,7 +381,7 @@
                 autoOpen: false,
                 width: 500,
                 modal:true,
-                title:"Agignar curso",
+                title:"Agignar capacitación",
                 buttons: {
                     "Guardar": function() {
                         if($("#form_plan").valid()){
@@ -1216,7 +1216,7 @@
                                     <table id="table_curso" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td style="width: 45%">Curso</td>
+                                            <td style="width: 45%">Capacitación</td>
                                             <td style="width: 40%">Reemplazo</td>
                                             <td style="text-align: center">Editar</td>
                                             <td style="text-align: center">Eliminar</td>
@@ -1253,7 +1253,7 @@
                                     <table id="table_plan" class="tablaSolicitud">
                                         <thead>
                                             <tr>
-                                                <td style="width: 55%">Curso</td>
+                                                <td style="width: 55%">Capacitación</td>
                                                 <td style="width: 10%">Duración</td>
                                                 <td style="width: 10%">Imp. Un.</td>
                                                 <td style="width: 10%">Viáticos</td>
@@ -1426,7 +1426,7 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Plan capacitación: </label><br/>
+                                    <label>Capacitación asignada: </label><br/>
                                     <input type="text" name="np_plan_capacitacion" id="np_plan_capacitacion"/>
                                     <input type="hidden" name="np_plan_capacitacion_id" id="np_plan_capacitacion_id"/>
                                     <input type="hidden" name="np_plan_capacitacion_duracion" id="np_plan_capacitacion_duracion"/>

@@ -41,7 +41,7 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de Asignaciones</a>
+            <a href="#" id="toggle-list">Asignaciones de capacitación</a>
         </h2>
 
 
@@ -52,7 +52,7 @@
                 <tr>
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
-                    <th>Empleado</th>
+                    <th>Colaborador</th>
                     <th>Curso</th>
                     <th>Fecha inicio</th>
                     <th>Modalidad</th>
@@ -66,7 +66,7 @@
                 <tr>
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
-                    <th>Empleado</th>
+                    <th>Colaborador</th>
                     <th>Curso</th>
                     <th>Fecha inicio</th>
                     <th>Modalidad</th>

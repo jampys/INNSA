@@ -5,7 +5,7 @@
         // dataTable
         var uTable = $('#example').dataTable( {
             "scrollY": "auto",
-            "scrollX": true,
+            //"scrollX": true,
             "autoWidth": true,
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",
@@ -40,7 +40,7 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de cursos <?php echo $_SESSION['USER_APELLIDO'].' '.$_SESSION['USER_NOMBRE']; ?></a>
+            <a href="#" id="toggle-list">Capacitaciones de <?php echo $_SESSION['USER_APELLIDO'].' '.$_SESSION['USER_NOMBRE']; ?></a>
         </h2>
 
 
@@ -49,8 +49,8 @@
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                 <thead>
                 <tr>
-                    <th>Periodo</th>
-                    <th>Curso</th>
+                    <th>Período</th>
+                    <th>Capacitación</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
                     <th>Duración</th>
@@ -63,8 +63,8 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>Periodo</th>
-                    <th>Curso</th>
+                    <th>Período</th>
+                    <th>Capacitación</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
                     <th>Duración</th>

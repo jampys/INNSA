@@ -56,7 +56,7 @@
 
     <div class="box">
         <h2>
-            <a href="#" id="toggle-list">Lista de Capacitaciones</a>
+            <a href="#" id="toggle-list">Capacitaciones</a>
         </h2>
 
 

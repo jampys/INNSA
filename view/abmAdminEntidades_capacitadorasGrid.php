@@ -46,7 +46,7 @@
 
     <div class="box" style="width: 700px">
         <h2>
-            <a href="#" id="toggle-list">Lista de Entidades Capacitadoras</a>
+            <a href="#" id="toggle-list">Entidades Capacitadoras</a>
         </h2>
 
 

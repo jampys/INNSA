@@ -13,7 +13,7 @@
     <tr>
         <th>Período</th>
         <th>Fecha de solicitud</th>
-        <th>Empleado</th>
+        <th>Colaborador</th>
         <th>Lugar de trabajo</th>
     </tr>
     </thead>
@@ -21,7 +21,7 @@
     <tr>
         <th>Período</th>
         <th>Fecha de solicitud</th>
-        <th>Empleado</th>
+        <th>Colaborador</th>
         <th>Lugar de trabajo</th>
     </tr>
     </tfoot>
@@ -49,7 +49,7 @@
 
                 <table border="1">
                     <tr>
-                        <th>Curso</th>
+                        <th>Capacitación</th>
                         <th>Modalidad</th>
                         <th>Fecha inicio</th>
                         <th>Estado</th>
