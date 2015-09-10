@@ -939,9 +939,6 @@
                 nc_curso: {
                     required: true
                 },
-                /*nc_reemplazo: {
-                    required: true
-                },*/
                 nc_reemplazo_id:{
                     required: function(item){return $('#nc_reemplazo').val().length>0;}
                 },
@@ -957,11 +954,11 @@
                     maxlength: 150
                 },
                 nc_objetivo_2: {
-                    required: true,
+                    //required: true,
                     maxlength: 150
                 },
                 nc_objetivo_3: {
-                    required: true,
+                    //required: true,
                     maxlength: 150
                 },
                 nc_indicadores_exito: {
@@ -984,15 +981,15 @@
                     maxlength: "Máximo 500 caracteres"
                 },
                 nc_objetivo_1: {
-                    required: "Ingrese el objetivo 1",
+                    required: "Ingrese al menos un objetivo",
                     maxlength: "Máximo 150 caracteres"
                 },
                 nc_objetivo_2: {
-                    required: "Ingrese el objetivo 2",
+                    //required: "Ingrese el objetivo 2",
                     maxlength: "Máximo 150 caracteres"
                 },
                 nc_objetivo_3: {
-                    required: "Ingrese el objetivo 3",
+                    //required: "Ingrese el objetivo 3",
                     maxlength: "Máximo 150 caracteres"
                 },
                 nc_indicadores_exito: {

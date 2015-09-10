@@ -577,22 +577,50 @@
                 },
                 objetivo_1: {
                     required: true,
-                    maxlength: 100
+                    maxlength: 150
+                },
+                objetivo_2: {
+                    //required: true,
+                    maxlength: 150
+                },
+                objetivo_3: {
+                    //required: true,
+                    maxlength: 150
                 },
                 indicadores_exito: {
                     required: true,
-                    maxlength: 250
+                    maxlength: 500
                 },
                 compromiso: {
                     required: true,
-                    maxlength: 250
+                    maxlength: 500
                 }
             },
             messages:{
-                situacion: "Ingrese la situación",
-                objetivo_1: "Ingrese al menos un objetivo",
-                indicadores_exito: "Ingrese los indicadores de éxito",
-                compromiso: "Ingrese el compromiso"
+                situacion: {
+                    required: "Ingrese la situación",
+                    maxlength: "Máximo 500 caracteres"
+                },
+                objetivo_1: {
+                    required: "Ingrese al menos un objetivo",
+                    maxlength: "Máximo 150 caracteres"
+                },
+                objetivo_2: {
+                    //required: "Ingrese el objetivo 2",
+                    maxlength: "Máximo 150 caracteres"
+                },
+                objetivo_3: {
+                    //required: "Ingrese el objetivo 3",
+                    maxlength: "Máximo 150 caracteres"
+                },
+                indicadores_exito: {
+                    required: "Ingrese los indicadores de éxito",
+                    maxlength: "Máximo 500 caracteres"
+                },
+                compromiso: {
+                    required: "Ingrese el compromiso",
+                    maxlenth: "Máximo 500 caracteres"
+                }
             }
 
         });
