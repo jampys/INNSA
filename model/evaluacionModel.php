@@ -244,7 +244,6 @@ class Evaluacion
 
         $obj_eva->dpExecute();
         return $obj_eva->getAffect();
-        echo $query;
 
     }
 

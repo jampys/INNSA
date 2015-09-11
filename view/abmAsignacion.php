@@ -71,13 +71,12 @@
                     globalOperacion='updateComunicacion';
                     $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
                     //console.log( $('#comunicacion').data('id_comunicacion'));
-                    $("#situacion").val(datas[0]['SITUACION']);
-                    //$("#objetivos").val(datas[0]['OBJETIVOS']);
+                    $("#situacion").val(datas[0]['SITUACION']).change();
                     $("#objetivo_1").val(datas[0]['OBJETIVO_1']).change();
                     $("#objetivo_2").val(datas[0]['OBJETIVO_2']).change();
                     $("#objetivo_3").val(datas[0]['OBJETIVO_3']).change();
-                    $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
-                    $("#compromiso").val(datas[0]['COMPROMISO']);
+                    $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']).change();
+                    $("#compromiso").val(datas[0]['COMPROMISO']).change();
                     //$("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
                     //$("#comunico_id").val(datas[0]['COMUNICO']);
                     $("#comunico").val((typeof (datas[0]['COMUNICO'])=='undefined')? 'NO COMUNICADO': datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']); //si todavia no se comunico
@@ -180,9 +179,9 @@
                     //$("#evaluacion").data('id_evaluacion',datas['evaluacion'][0]['ID_EVALUACION']);
                     //console.log( $('#evaluacion').data('id_evaluacion'));
 
-                    $("#conceptos_importantes").val(datas['evaluacion'][0]['CONCEPTOS_IMPORTANTES']);
-                    $("#aspectos_faltaron").val(datas['evaluacion'][0]['ASPECTOS_FALTARON']);
-                    $("#mejorar_desempenio").val(datas['evaluacion'][0]['MEJORAR_DESEMPENIO']);
+                    $("#conceptos_importantes").val(datas['evaluacion'][0]['CONCEPTOS_IMPORTANTES']).change();
+                    $("#aspectos_faltaron").val(datas['evaluacion'][0]['ASPECTOS_FALTARON']).change();
+                    $("#mejorar_desempenio").val(datas['evaluacion'][0]['MEJORAR_DESEMPENIO']).change();
 
                     $("#obj_1").val(datas['evaluacion'][0]['OBJ_1']);
                     $("#obj_2").val(datas['evaluacion'][0]['OBJ_2']);
@@ -202,7 +201,7 @@
                     $("#ev_l_break").val(datas['evaluacion'][0]['EV_L_BREAK']);
                     $("#ev_l_hotel").val(datas['evaluacion'][0]['EV_L_HOTEL']);
 
-                    $("#comentarios").val(datas['evaluacion'][0]['COMENTARIOS']);
+                    $("#comentarios").val(datas['evaluacion'][0]['COMENTARIOS']).change();
 
                 }
 
@@ -711,7 +710,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Situación: Porque te vamos a capacitar</label><br/>
-                                    <textarea type="text" name="situacion" id="situacion" rows="5"/></textarea>
+                                    <textarea type="text" name="situacion" id="situacion" rows="2"/></textarea>
                                 </div>
                             </div>
 
@@ -735,7 +734,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Indicadores de éxito:</label><br/>
-                                    <textarea type="text" name="indicadores_exito" id="indicadores_exito" rows="5"/></textarea>
+                                    <textarea type="text" name="indicadores_exito" id="indicadores_exito" rows="2"/></textarea>
                                 </div>
                             </div>
 
@@ -746,7 +745,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Compromiso:</label><br/>
-                                    <textarea type="text" name="compromiso" id="compromiso" rows="5"/></textarea>
+                                    <textarea type="text" name="compromiso" id="compromiso" rows="2"/></textarea>
                                 </div>
                             </div>
 
@@ -803,7 +802,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Mencione los tres conceptos mas importantes que haya aprendido en la actividad</label><br/>
-                                    <textarea type="text" name="conceptos_importantes" id="conceptos_importantes" rows="5" /></textarea>
+                                    <textarea type="text" name="conceptos_importantes" id="conceptos_importantes" rows="2" /></textarea>
                                 </div>
                             </div>
 
@@ -814,7 +813,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Mencione aspectos que no le gustaron / faltaron / no cumplió expectativas</label><br/>
-                                    <textarea type="text" name="aspectos_faltaron" id="aspectos_faltaron" rows="5" /></textarea>
+                                    <textarea type="text" name="aspectos_faltaron" id="aspectos_faltaron" rows="2" /></textarea>
                                 </div>
                             </div>
 
@@ -825,7 +824,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Mencione tres maneras concretas en que cree puede mejorar su desempeño como resultado</label><br/>
-                                    <textarea type="text" name="mejorar_desempenio" id="mejorar_desempenio" rows="5" /></textarea>
+                                    <textarea type="text" name="mejorar_desempenio" id="mejorar_desempenio" rows="2" /></textarea>
                                 </div>
                             </div>
 
@@ -925,7 +924,7 @@
                             <div class="sixteen_column">
                                 <div class="column_content">
                                     <label>Comentarios</label><br/>
-                                    <textarea type="text" name="comentarios" id="comentarios" rows="3" /></textarea>
+                                    <textarea type="text" name="comentarios" id="comentarios" rows="2" /></textarea>
                                 </div>
                             </div>
 
