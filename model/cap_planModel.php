@@ -468,22 +468,7 @@ class Cap_Plan
 
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        /*$query="select DISTINCT (SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%CURSOS%') tabla,".
-                " cu.id_curso ids, cu.nombre".
-                " from propuestas pro, solicitud_capacitacion sc, cursos cu".
-                " where pro.id_solicitud = sc.id_solicitud and pro.id_curso = cu.id_curso".
-                " and not EXISTS".
-                " (select 1".
-                " from plan_capacitacion pcx, asignacion_plan apx, solicitud_capacitacion scx".
-                " where pcx.id_plan = apx.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_solicitud = sc.id_solicitud)".
-                " UNION".
-                " select DISTINCT(SELECT TABLE_NAME FROM all_tables WHERE table_name LIKE '%TEMAS%') tabla,".
-                " te.id_tema ids, te.nombre".
-                " from propuestas pro, solicitud_capacitacion sc, temas te, cursos cu".
-                " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".
-                " and te.id_tema = cu.id_tema"; */
-
-        $query="select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+        /*$query="select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
                 " cu.id_curso ids, cu.nombre".
                 " from propuestas pro, solicitud_capacitacion sc, cursos cu".
                 " where pro.id_solicitud = sc.id_solicitud and pro.id_curso = cu.id_curso".
@@ -497,7 +482,25 @@ class Cap_Plan
             " from propuestas pro, solicitud_capacitacion sc, temas te, cursos cu".
             " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".
             " and te.id_tema = cu.id_tema".
-            " and pro.id_curso is null";
+            " and pro.id_curso is null"; */
+
+        $query="(".
+            "select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
+            " cu.id_curso ids, cu.nombre".
+            " from propuestas pro, solicitud_capacitacion sc, cursos cu".
+            " where pro.id_solicitud = sc.id_solicitud and pro.id_curso = cu.id_curso".
+            " and not EXISTS".
+            " (select 1".
+            " from asignacion_plan apx".
+            " where apx.id_propuesta = pro.id_propuesta)".
+            " UNION".
+            " select DISTINCT(SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla,".
+            " te.id_tema ids, te.nombre".
+            " from propuestas pro, solicitud_capacitacion sc, temas te, cursos cu".
+            " where pro.id_solicitud = sc.id_solicitud and pro.id_tema = te.id_tema".
+            " and te.id_tema = cu.id_tema".
+            " and pro.id_curso is null".
+            " ) order by tabla, nombre";
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
