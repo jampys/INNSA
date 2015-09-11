@@ -103,7 +103,8 @@ class Comunicacion
 
         $f=new Factory();
         $obj_com=$f->returnsQuery();
-        $query="update cap_comunicacion set situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, comunico=:comunico where id_comunicacion = :id_comunicacion";
+        //$query="update cap_comunicacion set situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, comunico=:comunico where id_comunicacion = :id_comunicacion";
+        $query="update cap_comunicacion set situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso where id_comunicacion = :id_comunicacion";
         $obj_com->dpParse($query);
 
         $obj_com->dpBind(':situacion', $this->situacion);
@@ -112,7 +113,7 @@ class Comunicacion
         $obj_com->dpBind(':objetivo_3', $this->objetivo_3);
         $obj_com->dpBind(':indicadores_exito', $this->indicadores_exito);
         $obj_com->dpBind(':compromiso', $this->compromiso);
-        $obj_com->dpBind(':comunico', $this->comunico);
+        //$obj_com->dpBind(':comunico', $this->comunico);
         $obj_com->dpBind(':id_comunicacion', $this->id_comunicacion);
 
         $obj_com->dpExecute();
