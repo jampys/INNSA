@@ -351,7 +351,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Comunicación",
                 buttons: [{
                         click: function() {
                             if($("#form_comunicacion").valid()){ //OJO valid() devuelve un booleano
@@ -618,7 +618,7 @@
             <div class="block" id="forms">
                 <form id="form_comunicacion" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
