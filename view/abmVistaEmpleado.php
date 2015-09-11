@@ -264,8 +264,8 @@
                             "ev_l_break":$("#ev_l_break").val(),
                             "ev_l_hotel":$("#ev_l_hotel").val(),
                             "obj_1":$("#obj_1").val(),
-                            "obj_2":$("#obj_2").val(),
-                            "obj_3":$("#obj_3").val(),
+                            "obj_2":($("#obj_2").length >0)? $("#obj_2").val() : 'null', //Si obj_2 existe, envio el valor. Sino null
+                            "obj_3":($("#obj_3").length >0)? $("#obj_3").val() : 'null', //Si obj_3 existe, envio el valor. Sino null
                             "comentarios":$("#comentarios").val(),
 
                             //cambio estado asignacion a EVALUADA
@@ -283,10 +283,11 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(e.responseText);
 
                 },
                 ifModified:false,
