@@ -73,7 +73,9 @@
                     console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']);
                     //$("#objetivos").val(datas[0]['OBJETIVOS']);
-                    $("#objetivos").val(datas[0]['OBJETIVO_1']+'\n'+datas[0]['OBJETIVO_2']+'\n'+datas[0]['OBJETIVO_3']);
+                    $("#objetivos").val(datas[0]['OBJETIVO_1']+
+                            '\n'+((datas[0]['OBJETIVO_2'])? datas[0]['OBJETIVO_2']: "") + //Se valida que el objetivo_2 tenga datos
+                            '\n'+((datas[0]['OBJETIVO_3'])? datas[0]['OBJETIVO_3']: "")); ////Se valida que el objetivo_3 tenga datos
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']);
                     $("#compromiso").val(datas[0]['COMPROMISO']);
                     $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
@@ -394,7 +396,7 @@
                 autoOpen: false,
                 width: 680,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Evaluación",
                 buttons: {
                     "Guardar": function() {
                         if($("#form_evaluacion").valid()){
@@ -570,13 +572,26 @@
                 mejorar_desempenio: {
                     required: true,
                     maxlength: 250
+                },
+                comentarios: {
+                    maxlength: 250
                 }
 
             },
             messages:{
-                conceptos_importantes: "Ingrese los conceptos importantes",
-                aspectos_faltaron: "Ingrese los aspectos que faltaron",
-                mejorar_desempenio: "Ingrese la mejora de desempeño"
+                conceptos_importantes: {
+                    required: "Ingrese los conceptos importantes",
+                    maxlenth: "Máximo 250 caracteres"
+                },
+                aspectos_faltaron: {
+                    required: "Ingrese los aspectos que faltaron",
+                    maxlenth: "Máximo 250 caracteres"
+                },
+                mejorar_desempenio: {
+                    required: "Ingrese la mejora de desempeño",
+                    maxlenth: "Máximo 250 caracteres"
+                },
+                comentarios: "Máximo 250 caracteres"
             }
 
         });
@@ -753,7 +768,7 @@
             <div class="block" id="forms">
                 <form id="form_evaluacion" action="">
                     <fieldset>
-                        <legend>Datos Registro</legend>
+                        <!--<legend>Datos Registro</legend>-->
 
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
