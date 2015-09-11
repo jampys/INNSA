@@ -251,6 +251,7 @@ select{
 
 .spinners_objetivos .lab{
     float: left;
+    width: 90%; /* es decir, el 90% de su contenedor que es cbcheck */
     padding: 2px;
     clear: right;
     font-family: Arial;
