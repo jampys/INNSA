@@ -67,13 +67,14 @@
                     $.each(datas['planes'], function(indice, val){
                         
                         var comentarios= (datas['planes'][indice]['COMENTARIOS'])? datas['planes'][indice]['COMENTARIOS']: "";
+                        var viaticos= (datas['planes'][indice]['VIATICOS'])? datas['planes'][indice]['VIATICOS']: "";
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
                         '<td style="display: none">'+comentarios+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
-                        '<td style="text-align: center">'+datas['planes'][indice]['VIATICOS']+'</td>' +
+                        '<td style="text-align: center">'+viaticos+'</td>' +
                         //'<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         //'<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
                         '<td style="text-align: center"><a class="<?php  echo ($_SESSION['ACCESSLEVEL']==2)? "editar_plan": "link-desactivado"      ?>" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
