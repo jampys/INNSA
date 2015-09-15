@@ -158,13 +158,15 @@ class Cap_Plan
     { return $this->estado;}
 
     function getImporte()
-    { return $this->importe;}
+    {   $r=str_replace('.', ',', $this->importe);
+        return $r;}
 
     function getMoneda()
     { return $this->moneda;}
 
     function getTipoCambio()
-    { return $this->tipo_cambio;}
+    {   $r=str_replace('.', ',', $this->tipo_cambio);
+        return $r;}
 
     function getCantidad()
     { return $this->cantidad;}
@@ -194,7 +196,8 @@ class Cap_Plan
     { return $this->cantidad_participantes;}
 
     function getImporteTotal()
-    { return $this->importe_total;}
+    {   $r=str_replace('.', ',', $this->importe_total);
+        return $r;}
 
     function getIdTipoCurso()
     { return $this->id_tipo_curso;}
@@ -305,9 +308,9 @@ class Cap_Plan
         $obj_cp->dpBind(':unidad', $this->unidad);
         $obj_cp->dpBind(':prioridad', $this->prioridad);
         $obj_cp->dpBind(':estado', $this->estado);
-        $obj_cp->dpBind(':importe', $this->importe);
+        $obj_cp->dpBind(':importe', $this->getImporte());
         $obj_cp->dpBind(':moneda', $this->moneda);
-        $obj_cp->dpBind(':tipo_cambio', $this->tipo_cambio);
+        $obj_cp->dpBind(':tipo_cambio', $this->getTipoCambio());
         $obj_cp->dpBind(':forma_pago', $this->forma_pago);
         $obj_cp->dpBind(':forma_financiacion', $this->forma_financiacion);
         $obj_cp->dpBind(':profesor_1', $this->profesor_1);
@@ -353,9 +356,9 @@ class Cap_Plan
         $obj_cp->dpBind(':unidad', $this->unidad);
         $obj_cp->dpBind(':prioridad', $this->prioridad);
         $obj_cp->dpBind(':estado', $this->estado);
-        $obj_cp->dpBind(':importe', $this->importe);
+        $obj_cp->dpBind(':importe', $this->getImporte());
         $obj_cp->dpBind(':moneda', $this->moneda);
-        $obj_cp->dpBind(':tipo_cambio', $this->tipo_cambio);
+        $obj_cp->dpBind(':tipo_cambio', $this->getTipoCambio());
         $obj_cp->dpBind(':forma_pago', $this->forma_pago);
         $obj_cp->dpBind(':forma_financiacion', $this->forma_financiacion);
         $obj_cp->dpBind(':profesor_1', $this->profesor_1);

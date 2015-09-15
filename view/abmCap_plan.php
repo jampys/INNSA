@@ -554,7 +554,7 @@
 
             //calculo del total automaticamente
             $('#importe, #cantidad_participantes').on('blur', function() {
-                $('#importe_total').val($('#cantidad_participantes').val()*$('#importe').val());
+                $('#importe_total').val(($('#cantidad_participantes').val()*$('#importe').val()).toFixed(2)); //toFixed(2) redondea a 2 decimales
             });
 
             //llamada a funcion validar
@@ -980,7 +980,7 @@
                                     <label>Moneda: </label>
                                     <select name="moneda" id="moneda">
                                         <option value="">Seleccione la moneda</option>
-                                        <option value="$">ARS</option>
+                                        <option value="ARS">ARS</option>
                                         <option value="USD">USD</option>
                                     </select>
                                 </div>

@@ -25,7 +25,7 @@
             //globalOperacion=$(this).attr("media");
             globalOperacion='insert';
             $('#dialog').dialog('open');
-            $("#curso").attr("readonly", false);
+            //$("#curso").attr("readonly", false);
 
 
             //Rellenar el combo de periodos
@@ -68,6 +68,7 @@
                     <th>Curso</th>
                     <th>Período</th>
                     <th>Entidad</th>
+                    <th title="Cant. de colaboradores asignados">Cant.</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
                     <th>Duración</th>
@@ -75,7 +76,6 @@
                     <th>Estado</th>
                     <th>Importe</th>
                     <th>Moneda</th>
-                    <th title="Cant. de colaboradores asignados">Cant.</th>
                     <th>.</th>
 
                 </tr>
@@ -85,6 +85,7 @@
                     <th>Curso</th>
                     <th>Período</th>
                     <th>Entidad</th>
+                    <th>Cant.</th>
                     <th>Fecha desde</th>
                     <th>Fecha hasta</th>
                     <th>Duración</th>
@@ -92,7 +93,6 @@
                     <th>Estado</th>
                     <th>Importe</th>
                     <th>Moneda</th>
-                    <th>Cant.</th>
                     <th>.</th>
 
                 </tr>
@@ -103,6 +103,7 @@
                         <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 40);  ?></td>
                         <td><?php  echo $plan["PERIODO"] ?></td>
                         <td><?php  echo $plan["ENTIDAD"] ?></td>
+                        <td><?php  echo $plan["CANTIDAD"]; ?></td>
                         <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
                         <td><?php  echo $plan["DURACION"]; ?></td>
@@ -110,7 +111,6 @@
                         <td><?php  echo $plan["ESTADO"]; ?></td>
                         <td><?php  echo $plan["IMPORTE"]; ?></td>
                         <td><?php  echo $plan["MONEDA"]; ?></td>
-                        <td><?php  echo $plan["CANTIDAD"]; ?></td>
 
                         <?php if($plan['PERIODO']!=date('Y')){ ?>
 
