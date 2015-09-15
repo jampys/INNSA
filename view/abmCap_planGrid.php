@@ -30,10 +30,13 @@
 
             //Rellenar el combo de periodos
             var per=$.periodos();
-            $("#periodo").html('<option value="">Seleccione un periodo</option>');
+            $("#periodo").html('<option value="">Seleccione un período</option>');
             $.each(per, function(indice, val){
                 $("#periodo").append(new Option(val,val));
             });
+
+            //Despues de cargar el combo de periodos, selecciona por defecto el año vigente
+            $("#periodo option[value="+new Date().getFullYear()+"]").prop('selected', true);
 
             return false;
         });
