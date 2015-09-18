@@ -30,7 +30,17 @@ class Categoria
     public function getTemasByCategoria($id){
         $f=new Factory();
         $obj_cat=$f->returnsQuery();
-        $query="select * from temas where id_categoria = :id";
+        //$query="select * from temas where id_categoria = :id";
+        $query="(".
+" select id_tema, id_categoria, nombre, estado, 1 as orden".
+" from temas".
+" where id_categoria = :id and nombre not like upper('%otro%')".
+" union".
+" select id_tema, id_categoria, nombre, estado, 2 as orden".
+" from temas".
+" where id_categoria = :id and nombre like upper('%otro%')".
+" )".
+" order by orden, nombre asc";
         $obj_cat->dpParse($query);
         $obj_cat->dpBind(':id', $id);
         $obj_cat->dpExecute();
