@@ -95,7 +95,7 @@
     </tbody>
 
     <tfoot>
-    <tr>
+    <!--<tr>
         <th>Período</th>
         <th>Capacitación</th>
         <th>Cant. recursos</th>
@@ -108,7 +108,7 @@
         <th>Aprobar individual</th>
         <th>Aprobar todos</th>
     </tr>
-    <!--Muestra el total general -->
+    <!--Muestra el total general-->
     <tr>
         <th></th>
         <th></th>

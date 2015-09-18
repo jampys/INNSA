@@ -48,7 +48,7 @@ class Cap_Plan
                 " pc.caracter_actividad, pc.cantidad_participantes, pc.importe_total,".
                 " (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) as asignados".
                 " from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan = $id";*/
-        $query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH:MI') as fecha_hasta,".
+        $query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH24:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH24:MI') as fecha_hasta,".
             " pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.entidad entidad_plan, cu.*,".
             " pc.caracter_actividad, pc.cantidad_participantes, pc.importe_total, pc.id_tipo_curso,".
             " (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) as asignados".
