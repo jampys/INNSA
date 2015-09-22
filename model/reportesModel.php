@@ -233,7 +233,7 @@ class Reportes
         " and pch.id_curso = cu.id_curso".
         " and cu.id_tema = te.id_tema".
         " and te.id_categoria = ca.id_categoria".
-        " and pch.id_entidad = ec.id_entidad_capacitadora".
+        " and pch.id_entidad = ec.id_entidad_capacitadora (+)".
         //filtros
             " and cu.id_curso = $id_curso".
             " and cu.id_tema = $id_tema".
