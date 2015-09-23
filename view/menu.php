@@ -81,6 +81,7 @@
                     <li><a href="index.php?accion=administracion">Categorías y Temas</a></li>
                     <li><a href="index.php?accion=administracion&operacion=entidades">Entidades Capacitadoras</a></li>
                     <li><a href="index.php?accion=administracion&operacion=divisiones">Divisiones y funciones</a></li>
+                    <li><a href="index.php?accion=programa">Programas</a></li>
                 </ul>
             </li>
         <?   } ?>
