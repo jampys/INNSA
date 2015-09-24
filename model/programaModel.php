@@ -93,22 +93,18 @@ class Programa
         $obj_pro=$f->returnsQuery();
         $query="select * from programas";
         $obj_pro->executeQuery($query);
-        $obj_pro->executeQuery($query);
+        //$obj_pro->executeQuery($query);
         return $obj_pro->fetchAll(); // retorna todos los programas
     }
 
-    public function getEmpleadoById($id){
-        /*
-        $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        //$obj_emp->executeQuery("select * from empleados where id_empleado=$id");
-        $obj_emp->executeQuery("select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, division, to_char(fecha_ingreso,'DD/MM/YYYY') as fecha_ingreso, activo, email, cuil from empleados where id_empleado=$id");
-        return $obj_emp->fetchAll(); */
+    public function getProgramaById($id){
 
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $query="select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, to_char(fecha_ingreso,'DD/MM/YYYY')".
-            " as fecha_ingreso, activo, email, cuil, id_division as division from empleados where id_empleado = :id";
+        /*$query="select id_empleado, nombre, apellido, lugar_trabajo, n_legajo, empresa, funcion, to_char(fecha_ingreso,'DD/MM/YYYY')".
+            " as fecha_ingreso, activo, email, cuil, id_division as division from empleados where id_empleado = :id";*/
+        $query="select tipo_programa, periodo, nro_programa, estado, to_char(fecha_ingreso,'DD/MM/YYYY') as fecha_ingreso, to_char(fecha_evaluacion,'DD/MM/YYYY') as fecha_evaluacion,".
+                " to_char(fecha_preaprobacion,'DD/MM/YYYY') as fecha_preaprobacion, to_char(fecha_aprobacion,'DD/MM/YYYY') as fecha_aprobacion, contacto, email from programas where id_programa = :id";
         $obj_emp->dpParse($query);
         $obj_emp->dpBind(':id', $id);
         $obj_emp->dpExecute();
@@ -116,33 +112,25 @@ class Programa
     }
 
 
-    public function updateEmpleado(){
-        /*
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        //$query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo=$this->n_legajo, empresa='$this->empresa', funcion='$this->funcion', categoria='$this->categoria', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
-        $query="update empleados set apellido='$this->apellido', nombre='$this->nombre', lugar_trabajo='$this->lugar_trabajo', n_legajo='$this->n_legajo', empresa='$this->empresa', funcion='$this->funcion', division='$this->division', fecha_ingreso=to_date('$this->fecha_ingreso','DD/MM/YYYY'), activo=$this->activo, email='$this->email', cuil='$this->cuil'  where id_empleado = $this->id_empleado";
-        $obj_user->executeQuery($query);
-        return $obj_user->getAffect(); */
+    public function updatePrograma(){
 
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        $query="update empleados set apellido= :apellido, nombre= :nombre, lugar_trabajo= :lugar_trabajo, n_legajo= :n_legajo, empresa= :empresa, funcion= :funcion, ".
-            " id_division= :division, fecha_ingreso=to_date(:fecha_ingreso,'DD/MM/YYYY'), activo= :activo, email= :email, cuil= :cuil where id_empleado = :id_empleado";
+        $query="update programas set nro_programa= :nro_programa, periodo= :periodo, fecha_ingreso=to_date(:fecha_ingreso,'DD/MM/YYYY'), fecha_evaluacion=to_date(:fecha_evaluacion,'DD/MM/YYYY'),".
+                " fecha_preaprobacion=to_date(:fecha_preaprobacion,'DD/MM/YYYY'), fecha_aprobacion=to_date(:fecha_aprobacion,'DD/MM/YYYY'), tipo_programa= :tipo_programa, estado= :estado, contacto= :contacto, email= :email where id_programa = :id_programa";
         $obj_emp->dpParse($query);
 
-        $obj_emp->dpBind(':id_empleado', $this->id_empleado);
-        $obj_emp->dpBind(':apellido', $this->apellido);
-        $obj_emp->dpBind(':nombre', $this->nombre);
-        $obj_emp->dpBind(':lugar_trabajo', $this->lugar_trabajo);
-        $obj_emp->dpBind(':n_legajo', $this->n_legajo);
-        $obj_emp->dpBind(':empresa', $this->empresa);
-        $obj_emp->dpBind(':funcion', $this->funcion);
-        $obj_emp->dpBind(':division', $this->id_division);
-        $obj_emp->dpBind(':fecha_ingreso', $this->fecha_ingreso);
-        $obj_emp->dpBind(':activo', $this->activo);
-        $obj_emp->dpBind(':email', $this->email);
-        $obj_emp->dpBind(':cuil', $this->cuil);
+        $obj_emp->dpBind(':id_programa', $this->id_programa);
+        $obj_emp->dpBind(':nro_programa', $this->getNroPrograma());
+        $obj_emp->dpBind(':periodo', $this->getPeriodo());
+        $obj_emp->dpBind(':fecha_ingreso', $this->getFechaIngreso());
+        $obj_emp->dpBind(':fecha_evaluacion', $this->getFechaEvaluacion());
+        $obj_emp->dpBind(':fecha_preaprobacion', $this->getFechaPreaprobacion());
+        $obj_emp->dpBind(':fecha_aprobacion', $this->getFechaAprobacion());
+        $obj_emp->dpBind(':tipo_programa', $this->getTipoPrograma());
+        $obj_emp->dpBind(':estado', $this->getEstado());
+        $obj_emp->dpBind(':contacto', $this->getContacto());
+        $obj_emp->dpBind(':email', $this->getEmail());
 
         $obj_emp->dpExecute();
         return $obj_emp->getAffect();
@@ -181,32 +169,6 @@ class Programa
         $obj_cliente->executeQuery($query);
         return $obj_cliente->getAffect();
     }*/
-
-
-    public function getDivisiones(){
-        $f=new Factory();
-        $obj_emp=$f->returnsQuery();
-        $query="select * from division";
-        $obj_emp->executeQuery($query);
-        return $obj_emp->fetchAll(); // retorna todas las divisiones
-    }
-
-
-    public function availableLegajo($l, $e, $id){
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        $obj_user->executeQuery("select * from empleados where n_legajo = $l and empresa = $e and $id not in (select id_empleado from empleados where n_legajo = $l and id_empleado = $id)");
-
-        $r=$obj_user->fetchAll();
-        if($obj_user->getAffect()==0){
-            $output = true;
-        }
-        else{
-            $output = false;
-        }
-        return $output;
-    }
-
 
 
 

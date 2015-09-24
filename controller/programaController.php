@@ -38,33 +38,32 @@ switch($operacion){
 
     case 'update':
 
-        $contenido=$view->u->getEmpleadoById($_POST['id']);
+        $contenido=$view->p->getProgramaById($_POST['id']);
         print_r(json_encode($contenido));
         exit;
         break;
 
     case 'save':
-        $view->u->setIdEmpleado($_POST['id']);
-        $view->u->setApellido($_POST['apellido']);
-        $view->u->setNombre($_POST['nombre']);
-        $view->u->setLugarTrabajo($_POST['lugar_trabajo']);
-        $view->u->setNLegajo($_POST['n_legajo']);
-        $view->u->setEmpresa($_POST['empresa']);
-        $view->u->setFuncion($_POST['funcion']);
-        //$view->u->setCategoria($_POST['categoria']);
-        $view->u->setDivision($_POST['division']);
-        $view->u->setFechaIngreso($_POST['fecha_ingreso']);
-        $view->u->setActivo($_POST['activo']);
-        $view->u->setEmail($_POST['email']);
-        $view->u->setCuil($_POST['cuil']);
-        $rta=$view->u->updateEmpleado();
-        //$respuesta= ($rta > 0)? array ('response'=>'success','comment'=>'Empleado actualizado correctamente'):array ('response'=>'error','comment'=>'Error al modificar el empleado ');
+        $view->p->setIdPrograma($_POST['id']);
+        $view->p->setTipoPrograma($_POST['tipo_programa']);
+        $view->p->setPeriodo($_POST['periodo']);
+        $view->p->setNroPrograma($_POST['nro_programa']);
+        $view->p->setEstado($_POST['estado']);
+        $view->p->setFechaIngreso($_POST['fecha_ingreso']);
+        $view->p->setFechaEvaluacion($_POST['fecha_evaluacion']);
+        $view->p->setFechaPreaprobacion($_POST['fecha_preaprobacion']);
+        $view->p->setFechaAprobacion($_POST['fecha_aprobacion']);
+        $view->p->setEstado($_POST['estado']);
+        $view->p->setContacto($_POST['contacto']);
+        $view->p->setEmail($_POST['email']);
+        $rta=$view->p->updatePrograma();
+
         if($rta > 0){
-            $respuesta= array ('response'=>'success','comment'=>'Colaborador modificado correctamente');
+            $respuesta= array ('response'=>'success','comment'=>'Programa modificado correctamente');
             sQueryOracle::hacerCommit();
         }
         else{
-            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el colaborador');
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el programa');
             sQueryOracle::hacerRollback();
         }
 

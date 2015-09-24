@@ -95,7 +95,7 @@
                         <td><?php  echo $pro["FECHA_EVALUACION"]; ?></td>
                         <td><?php  echo $pro["FECHA_PREAPROBACION"]; ?></td>
                         <td><?php  echo $pro["FECHA_APROBACION"]; ?></td>
-                        <td class="center"><a href="" class="edit_link" id="<?php  echo $pro["ID_PROYECTO"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
+                        <td class="center"><a href="" class="edit_link" id="<?php  echo $pro["ID_PROGRAMA"];  ?>"><img title="Editar" src="public/img/Pencil-icon.png" width="15px" height="15px"></a></td>
                     </tr>
                 <?php }  ?>
 

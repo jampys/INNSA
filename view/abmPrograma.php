@@ -9,38 +9,35 @@
     var globalId;
 
 
-        function editar(id_empleado){
-            //alert(id_usuario);
+        function editar(id_programa){
 
             $.ajax({
                 url:"index.php",
-                data:{"accion":"empleado","operacion":"update","id":id_empleado},
+                data:{"accion":"programa","operacion":"update","id":id_programa},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                 $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
+                //$("#message").html("ha ocurrido un error");
+                    $("#message").html(e.responseText);
 
                 },
                 ifModified:false,
                 processData:true,
                 success:function(datas){
 
-                    $("#apellido").val(datas[0]['APELLIDO']);
-                    $("#nombre").val(datas[0]['NOMBRE']);
-                    $("#n_legajo").val(datas[0]['N_LEGAJO']);
-                    $("#cuil").val(datas[0]['CUIL']);
-                    $("#lugar_trabajo").val(datas[0]['LUGAR_TRABAJO']);
-                    $("#empresa").val(datas[0]['EMPRESA']);
-
-                    //$("#categoria").val(datas[0]['CATEGORIA']);
-                    $("#division").val(datas[0]['DIVISION']);
-                    $("#funcion").val(datas[0]['FUNCION']);
-                    $("#fecha").val(datas[0]['FECHA_INGRESO']);
-                    $("#activo").val(datas[0]['ACTIVO']);
+                    $("#tipo_programa").val(datas[0]['TIPO_PROGRAMA']);
+                    $("#periodo").val(datas[0]['PERIODO']);
+                    $("#nro_programa").val(datas[0]['NRO_PROGRAMA']);
+                    $("#estado").val(datas[0]['ESTADO']);
+                    $("#fecha_ingreso").val(datas[0]['FECHA_INGRESO']);
+                    $("#fecha_evaluacion").val(datas[0]['FECHA_EVALUACION']);
+                    $("#fecha_preaprobacion").val(datas[0]['FECHA_PREAPROBACION']);
+                    $("#fecha_aprobacion").val(datas[0]['FECHA_APROBACION']);
+                    $("#contacto").val(datas[0]['CONTACTO']);
                     $("#email").val(datas[0]['EMAIL']);
-                    cargarFunciones(datas[0]['FUNCION']);
+                    //cargarFunciones(datas[0]['FUNCION']);
 
                 },
                 type:"POST",
@@ -261,7 +258,7 @@
             },
             messages:{
                 tipo_programa: "Seleccione el tipo de programa",
-                periodo: "Seleccione el período",
+                periodo: "Seleccione el período"
                 /*contacto: "Ingrese el contacto",
                 email: {
                     required: "Ingrese el correo electrónico",
