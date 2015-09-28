@@ -942,7 +942,7 @@
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
-                                    <label>Título del curso en la entidad: </label><br/>
+                                    <label>Título de la capacitación en la entidad: </label><br/>
                                     <textarea name="objetivo" id="objetivo" rows="2"></textarea>
                                 </div>
                             </div>
@@ -977,21 +977,19 @@
 
 
                         <div class="sixteen_column section">
-                            <div class="eight column">
+                            <div class="four column">
                                 <div class="column_content">
                                     <label>Fecha desde: </label><br/>
                                     <input type="text" name="fecha_desde" id="fecha_desde">
                                 </div>
                             </div>
-                            <div class="eight column">
+
+                            <div class="four column">
                                 <div class="column_content">
                                     <label>Fecha hasta: </label>
                                     <input type="text" name="fecha_hasta" id="fecha_hasta">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="sixteen_column section">
 
                             <div class="four column">
                                 <div class="column_content">
@@ -1011,6 +1009,11 @@
                                 </div>
                             </div>
 
+
+                        </div>
+
+                        <div class="sixteen_column section">
+
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Carácter de la actividad: <img src="public/img/information-icon.png" width="12px" height="12px" title="
@@ -1022,6 +1025,12 @@
                                         <option value="ABIERTA">Abierta</option>
                                         <option value="CERRADA">Cerrada</option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="eight column">
+                                <div class="column_content">
+
                                 </div>
                             </div>
 
@@ -1039,14 +1048,18 @@
 
                             <div class="four column">
                                 <div class="column_content">
-                                    <label>Importe unitario: </label><br/>
+                                    <label>Importe unitario: <img src="public/img/information-icon.png" width="12px" height="12px" title="
+                                    Importe sin IVA
+                                    "></label>
                                     <input style="text-align: right" type="text" name="importe" id="importe"/>
                                 </div>
                             </div>
 
                             <div class="four column">
                                 <div class="column_content">
-                                    <label>Importe Total: </label><br/>
+                                    <label>Importe Total: <img src="public/img/information-icon.png" width="12px" height="12px" title="
+                                    Importe sin IVA
+                                    "></label>
                                     <input style="text-align: right" type="text" name="importe_total" id="importe_total"/>
                                 </div>
                             </div>
@@ -1055,7 +1068,7 @@
                                 <div class="column_content">
                                     <label>Moneda: </label>
                                     <select name="moneda" id="moneda">
-                                        <option value="">Seleccione la moneda</option>
+                                        <option value="">Noneda</option>
                                         <option value="ARS">ARS</option>
                                         <option value="USD">USD</option>
                                     </select>
@@ -1106,7 +1119,7 @@
                         </div>
 
                         <!-- seccion de programas y actividades -->
-                        <div style="background-color: rgba(147, 140, 178, 0.36); padding-left: 3px; padding-right: 1px">
+                        <div style="background-color: rgba(147, 140, 178, 0.36); margin-left: 5px; margin-right: 5px; padding-left: 4px; padding-right: 2px">
 
                             <div class="sixteen_column section">
                                 <div class="six_column">
