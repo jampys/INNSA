@@ -8,6 +8,47 @@
     var globalId;
 
 
+    //funcion que carga dinamicamente los programas de acuerdo al periodo seleccionado
+    function cargarProgramas(opcion){
+        var periodo=$("#periodo option:selected").val();
+
+        $.ajax({
+            url:"index.php",
+            data:{"accion":"programa","operacion":"programasByPeriodo","periodo":periodo},
+            contentType:"application/x-www-form-urlencoded",
+            dataType:"json",//xml,html,script,json
+            error:function(e){
+
+                $("#dialog-msn").dialog("open");
+                //$("#message").html("ha ocurrido un error");
+                $("#message").html(e.responseText);
+
+            },
+            ifModified:false,
+            processData:true,
+            success:function(datas){
+
+                $("#programa").html('<option value="">Seleccione el programa</option>');
+                $.each(datas, function(indice, val){
+                    $("#programa").append('<option value="'+datas[indice]["ID_PROGRAMA"]+'">'+datas[indice]["PERIODO"]+' '+datas[indice]["TIPO_PROGRAMA"]+' '+datas[indice]["NRO_PROGRAMA"]+' '+datas[indice]["FECHA_INGRESO"]+'</option>');
+                    //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
+
+
+                });
+                if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
+                    $("#tema").val(opcion);
+                }
+
+
+            },
+            type:"POST",
+            timeout:3000000,
+            crossdomain:true
+
+        });
+    }
+
+
         function editar(id_plan){
                 //alert(id_plan);
 
@@ -805,7 +846,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Periodo: </label>
-                                    <select name="periodo" id="periodo">
+                                    <select name="periodo" id="periodo" onchange="cargarProgramas()">
                                         <!--<option value="">Seleccione el periodo</option>
                                         <?php
                                         /*$periodos=Conexion::periodos();
@@ -1027,6 +1068,39 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- seccion de programas y actividades -->
+                        <div style="background-color: rgba(147, 140, 178, 0.36); padding-left: 3px; padding-right: 1px">
+
+                            <div class="sixteen_column section">
+                                <div class="six_column">
+                                    <div class="column_content">
+                                        <label>Programa: </label><br/>
+                                        <select name="programa" id="programa">
+                                            <!-- se genera dinamicamente de acuerdo al periodo seleccionado -->
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <div class="five column">
+                                    <div class="column_content">
+                                        <label>Porcentaje reintegrable: </label><br/>
+                                        <input type="text" name="porcentaje_reintegrable" id="porcentaje_reintegrable"/>
+                                    </div>
+                                </div>
+
+                                <div class="five column">
+                                    <div class="column_content">
+                                        <label>Nro. Actividad: </label><br/>
+                                        <input type="text" name="nro_actividad" id="nro_actividad"/>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
                         </div>
 
 

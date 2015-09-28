@@ -71,33 +71,26 @@ switch($operacion){
         exit;
         break;
 
-    case 'autocompletar_empleados':
+    /*case 'autocompletar_empleados':
         //$target= (isset($_POST['target']) && $_POST['target']=='BYUSER')? 'BYUSER': 'ALL';
         if(isset($_POST['target'])){ $target=$_POST['target']; }
         $rta=$view->u->autocompletarEmpleados($_POST['term'], $_SESSION['USER_ID_EMPLEADO'], $target);
         print_r(json_encode($rta));
         exit;
-        break;
+        break;*/
 
-    case 'refreshGrid':
-        $view->programas=$view->p->getProgramas();
-        include_once('view/abmProgramaGrid.php');
-        exit;
-        break;
-
-    /*
-    case 'getEmpleadoBySession':
-        $view->e=new User();
-        $rta=$view->e->getUsuarioById($_SESSION["ses_id"]);
+    case 'programasByPeriodo':
+        $periodo= ($_POST['periodo']!='')? $_POST['periodo'] : "periodo";
+        $rta=$view->p->getProgramasByPeriodo($periodo);
         print_r(json_encode($rta));
         exit;
-        break; */
+        break;
 
-    case 'AvailableLegajo':
+    /*case 'AvailableLegajo':
         $rta=$view->u->availableLegajo($_POST['n_legajo'], $_POST['empresa'], $_POST['id']);
         print_r(json_encode($rta));
         exit;
-        break;
+        break;*/
 
     default:
         $view->programas=$view->p->getProgramas();

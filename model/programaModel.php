@@ -161,6 +161,15 @@ class Programa
 
     }
 
+    public function getProgramasByPeriodo($periodo){
+        $f=new Factory();
+        $obj_pro=$f->returnsQuery();
+        $query="select * from programas where periodo = $periodo";
+        $obj_pro->executeQuery($query);
+        return $obj_pro->fetchAll(); // retorna todos los programas
+        //echo $query;
+    }
+
     /*
     function delete(){
         $f=new Factory();
