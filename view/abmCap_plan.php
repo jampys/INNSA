@@ -35,7 +35,7 @@
                 });
 
                 if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
-                    $("#tema").val(opcion);
+                    $("#programa").val(opcion);
                 }
 
 
@@ -68,8 +68,6 @@
                     $("#curso").val(datas['plan'][0]['NOMBRE']);
                     $("#curso_id").val(datas['plan'][0]['ID_CURSO']);
                     $("#periodo").val(datas['plan'][0]['PERIODO']);
-                    //carga los programas
-                    cargarProgramas();
                     $("#objetivo").val(datas['plan'][0]['OBJETIVO']);
                     $("#modalidad").val(datas['plan'][0]['MODALIDAD']);
                     $("#fecha_desde").val(datas['plan'][0]['FECHA_DESDE']);
@@ -92,6 +90,14 @@
                     $("#cantidad_participantes").val(datas['plan'][0]['CANTIDAD_PARTICIPANTES']);
                     $("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
                     $("#tipo_curso").val(datas['plan'][0]['ID_TIPO_CURSO']);
+
+                    //$("#programa").val(datas['plan'][0]['ID_PROGRAMA']);
+                    $("#porcentaje_reintegrable").val(datas['plan'][0]['PORCENTAJE_REINTEGRABLE']);
+                    $("#nro_actividad").val(datas['plan'][0]['NRO_ACTIVIDAD']);
+
+                    //carga los programas
+                    cargarProgramas(datas['plan'][0]['ID_PROGRAMA']);
+
 
                     //define si estos campos se puede editar o no
                     (datas['plan'][0]['MONEDA']=='USD')? $('#tipo_cambio').attr('readonly', false) : $('#tipo_cambio').attr('readonly', true);
@@ -187,6 +193,11 @@
                             "cantidad_participantes": $("#cantidad_participantes").val(),
                             "importe_total": $("#importe_total").val(),
                             "tipo_curso": $("#tipo_curso").val(),
+
+                            "programa": $("#programa").val(),
+                            "porcentaje_reintegrable": $("#porcentaje_reintegrable").val(),
+                            "nro_actividad": $("#nro_actividad").val(),
+
                             //nuevo curso
                             "nc_nombre": $('#asignar_plan').data('nc_nombre'),
                             //"nc_tipo_curso": $('#asignar_plan').data('nc_tipo_curso'),
@@ -221,7 +232,11 @@
                             "caracter_actividad": $("#caracter_actividad").val(),
                             "cantidad_participantes": $("#cantidad_participantes").val(),
                             "importe_total": $("#importe_total").val(),
-                            "tipo_curso": $("#tipo_curso").val()
+                            "tipo_curso": $("#tipo_curso").val(),
+
+                            "programa": $("#programa").val(),
+                            "porcentaje_reintegrable": $("#porcentaje_reintegrable").val(),
+                            "nro_actividad": $("#nro_actividad").val()
                         };
             }
 
@@ -674,6 +689,15 @@
                 },
                 tipo_curso: {
                     required: true
+                },
+                porcentaje_reintegrable: {
+                    required: function(){ return $('#programa').val().length>0;},
+                    number: true,
+                    range:[0, 100]
+                },
+                nro_actividad: {
+                    required: function(){ return $('#programa').val().length>0;},
+                    digits: true
                 }
 
             },
@@ -708,7 +732,17 @@
                 moneda: "Seleccione la moneda",
                 tipo_cambio: "Ingrese el tipo de cambio. Separe decimales con (.)",
                 comentarios: "Max. 150 caracteres",
-                tipo_curso: "Seleccione un tipo de actividad"
+                tipo_curso: "Seleccione un tipo de actividad",
+                porcentaje_reintegrable: {
+                    required: "Ingrese el % reintegrable",
+                    number: "Solo números",
+                    range: "Rango entre 0 y 100"
+                },
+                nro_actividad: {
+                    required: "Ingrese el Nro. actividad",
+                    digits: "Solo números enteros"
+                }
+
             }
 
         });
@@ -847,7 +881,7 @@
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Periodo: </label>
-                                    <select name="periodo" id="periodo" onchange="cargarProgramas()">
+                                    <select name="periodo" id="periodo" onchange="cargarProgramas(0)">
                                         <!--<option value="">Seleccione el periodo</option>
                                         <?php
                                         /*$periodos=Conexion::periodos();
@@ -1087,15 +1121,15 @@
 
                                 <div class="five column">
                                     <div class="column_content">
-                                        <label>Porcentaje reintegrable: </label><br/>
-                                        <input type="text" name="porcentaje_reintegrable" id="porcentaje_reintegrable"/>
+                                        <label>% reintegrable: </label><br/>
+                                        <input type="text" name="porcentaje_reintegrable" id="porcentaje_reintegrable" style="text-align: right"/>
                                     </div>
                                 </div>
 
                                 <div class="five column">
                                     <div class="column_content">
-                                        <label>Nro. Actividad: </label><br/>
-                                        <input type="text" name="nro_actividad" id="nro_actividad"/>
+                                        <label>Nro.: </label><br/>
+                                        <input type="text" name="nro_actividad" id="nro_actividad" style="text-align: right"/>
                                     </div>
                                 </div>
 

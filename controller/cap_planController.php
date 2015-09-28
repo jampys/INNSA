@@ -53,6 +53,10 @@ switch($operacion){
         $view->u->setImporteTotal($_POST['importe_total']);
         $view->u->setIdTipoCurso($_POST['tipo_curso']);
 
+        $view->u->setPrograma($_POST['programa']);
+        $view->u->setPorcentajeReintegrable($_POST['porcentaje_reintegrable']);
+        $view->u->setNroActividad($_POST['nro_actividad']);
+
         $rta=$view->u->insertCapPlan();
 
         if($rta > 0){
@@ -105,6 +109,10 @@ switch($operacion){
         $view->u->setCantidadParticipantes($_POST['cantidad_participantes']);
         $view->u->setImporteTotal($_POST['importe_total']);
         $view->u->setIdTipoCurso($_POST['tipo_curso']);
+
+        $view->u->setPrograma($_POST['programa']);
+        $view->u->setPorcentajeReintegrable($_POST['porcentaje_reintegrable']);
+        $view->u->setNroActividad($_POST['nro_actividad']);
 
         if(!$view->u->updateCapPlan()) $rta=0;
 
