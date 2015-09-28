@@ -31,10 +31,9 @@
                 $("#programa").html('<option value="">Seleccione el programa</option>');
                 $.each(datas, function(indice, val){
                     $("#programa").append('<option value="'+datas[indice]["ID_PROGRAMA"]+'">'+datas[indice]["PERIODO"]+' '+datas[indice]["TIPO_PROGRAMA"]+' '+datas[indice]["NRO_PROGRAMA"]+' '+datas[indice]["FECHA_INGRESO"]+'</option>');
-                    //$("#tema").append(new Option(datas[indice]["NOMBRE"],datas[indice]["ID_TEMA"] ));
-
 
                 });
+
                 if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
                     $("#tema").val(opcion);
                 }
@@ -69,6 +68,8 @@
                     $("#curso").val(datas['plan'][0]['NOMBRE']);
                     $("#curso_id").val(datas['plan'][0]['ID_CURSO']);
                     $("#periodo").val(datas['plan'][0]['PERIODO']);
+                    //carga los programas
+                    cargarProgramas();
                     $("#objetivo").val(datas['plan'][0]['OBJETIVO']);
                     $("#modalidad").val(datas['plan'][0]['MODALIDAD']);
                     $("#fecha_desde").val(datas['plan'][0]['FECHA_DESDE']);

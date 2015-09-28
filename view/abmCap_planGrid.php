@@ -37,6 +37,8 @@
 
             //Despues de cargar el combo de periodos, selecciona por defecto el año vigente
             $("#periodo option[value="+new Date().getFullYear()+"]").prop('selected', true);
+            //carga los programas del periodo vigente
+            cargarProgramas();
 
             return false;
         });

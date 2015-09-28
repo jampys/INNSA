@@ -80,7 +80,8 @@ switch($operacion){
         break;*/
 
     case 'programasByPeriodo':
-        $periodo= ($_POST['periodo']!='')? $_POST['periodo'] : "periodo";
+        //$periodo= ($_POST['periodo']!='')? $_POST['periodo'] : "periodo";
+        $periodo= ($_POST['periodo']!='')? $_POST['periodo'] : 9999;
         $rta=$view->p->getProgramasByPeriodo($periodo);
         print_r(json_encode($rta));
         exit;
