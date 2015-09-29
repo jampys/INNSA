@@ -87,11 +87,11 @@ switch($operacion){
         exit;
         break;
 
-    /*case 'AvailableLegajo':
-        $rta=$view->u->availableLegajo($_POST['n_legajo'], $_POST['empresa'], $_POST['id']);
-        print_r(json_encode($rta));
+    case 'refreshGrid':
+        $view->programas=$view->p->getProgramas();
+        include_once('view/abmProgramaGrid.php');
         exit;
-        break;*/
+        break;
 
     default:
         $view->programas=$view->p->getProgramas();

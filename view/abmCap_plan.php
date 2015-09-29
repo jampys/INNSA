@@ -116,7 +116,7 @@
                         '<td><input type="checkbox" id="check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
                         '<td>'+datas['empleados'][indice]['APELLIDO']+' '+datas['empleados'][indice]['NOMBRE']+'</td>' +
                         '<td><input type="text" class="emp_comentarios" value="'+comentarios+'" ></td>' +
-                        '<td><input style="text-align: right" type="text" class="emp_viaticos" value="'+viaticos+'" ></td>' +
+                        '<td style="padding-right: 9px"><input style="text-align: right" type="text" class="emp_viaticos" value="'+viaticos+'" ></td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
                         //'<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
@@ -780,17 +780,18 @@
     //validacion de inputs de tabla empleados
 
     //personalizo los metodos http://stackoverflow.com/questions/3247305/how-to-add-messages-to-a-class-with-addclassrules
-    $.validator.addMethod("cMaxLength", $.validator.methods.maxlength,
-        "Máximo 100 caracteres");
+    $.validator.addMethod("cMaxLength", $.validator.methods.maxlength, "Máximo 50 caracteres");
+    $.validator.addMethod("eDigits", $.validator.methods.digits, "Solo enteros");
+    $.validator.addMethod("eMaxLength", $.validator.methods.maxlength, "Máximo 4");
 
     //asigno metodos personalizados
     jQuery.validator.addClassRules({
         emp_comentarios: {
-            cMaxLength: 100
+            cMaxLength: 50
         },
         emp_viaticos: {
-            digits: true,
-            maxlength: 4
+            eDigits: true,
+            eMaxLength: 4
         }
     });
 
@@ -1141,7 +1142,7 @@
 
                                 <div class="five column">
                                     <div class="column_content">
-                                        <label>Nro.: </label><br/>
+                                        <label>Nro. actividad: </label><br/>
                                         <input type="text" name="nro_actividad" id="nro_actividad" style="text-align: right"/>
                                     </div>
                                 </div>
