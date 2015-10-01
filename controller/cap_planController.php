@@ -125,6 +125,8 @@ switch($operacion){
             $u->setIdPlan($v->id_plan);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
+            $u->setViaticos($v->viaticos);
+            $u->setPrograma($v->prog);
             $u->setEstado($v->estado);
 
             if($v->operacion=="insert") {if(!$u->insertAsignacionPlan($v->id_solicitud)) $rta=0;} //le paso parametro id_solicitud

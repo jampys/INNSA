@@ -117,6 +117,7 @@
                         '<td>'+datas['empleados'][indice]['APELLIDO']+' '+datas['empleados'][indice]['NOMBRE']+'</td>' +
                         '<td><input type="text" class="emp_comentarios" value="'+comentarios+'" ></td>' +
                         '<td style="padding-right: 9px"><input style="text-align: right" type="text" class="emp_viaticos" value="'+viaticos+'" ></td>' +
+                        '<td><input type="checkbox" id="prog_'+idCheck+'" name="prog_'+idCheck+'"></td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['SITUACION']+'</td>' +
                         //'<td style="display: none">'+datas['propuestas'][indice]['OBJETIVO_1']+'</td>' +
                         //'<td style="text-align: center"><a class="editar_curso" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
@@ -124,6 +125,7 @@
                         '</tr>');
 
                         $("#check_"+idCheck+"").prop('checked', ((typeof (datas['empleados'][indice]['ID_ASIGNACION']))!="undefined")? true:false);
+                        $("#prog_"+idCheck+"").prop('checked', (datas['empleados'][indice]['PROG']==1)? true:false);
                         //(datas['empleados'][indice]['ESTADO']=='AUTORIZADA' || datas['empleados'][indice]['ESTADO']=='APROBADA')? $('#table_empleados tbody tr td input').attr('disabled', 'disabled'): '';
                         (datas['empleados'][indice]['APROBADA']==1 || datas['empleados'][indice]['PERIODO']!= (new Date).getFullYear())? $("#table_empleados tbody tr:eq("+indice+") td input").attr('disabled', 'disabled'): '';
 
@@ -152,6 +154,7 @@
                 item['check']= ($(this).find('td').eq(0).find('[type=checkbox]').prop('checked'))? 1: 0;
                 item['comentarios']= $(this).find('td').eq(2).find('input').val();
                 item['viaticos']= $(this).find('td').eq(3).find('input').val();
+                item['prog']= ($(this).find('td').eq(4).find('[type=checkbox]').prop('checked'))? 1: 0;
                 item['estado'] = 'ASIGNADO';
                 // 4 posibles operaciones
                 if(item['id_asignacion']!='' && item['check']==1) item['operacion']='update';
@@ -1187,10 +1190,12 @@
                                     <table id="table_empleados" class="tablaSolicitud">
                                         <thead>
                                         <tr>
-                                            <td style="width: 10%">Check</td>
-                                            <td style="width: 40%">Apellido y nombre</td>
-                                            <td style="width: 40%">Comentarios</td>
+                                            <td style="width: 10%"><a href="#" title="Colaboradores asignados a la capacitación">Asig.</a></td>
+                                            <!--<td style="width: 10%">Asig.</td>-->
+                                            <td style="width: 35%">Apellido y nombre</td>
+                                            <td style="width: 35%">Comentarios</td>
                                             <td style="width: 10%">Viaticos</td>
+                                            <td style="width: 10%"><a href="#" title="Colaboradores incluidos en el programa seleccionado">Prog.</a></td>
                                         </tr>
                                         </thead>
                                         <tbody>

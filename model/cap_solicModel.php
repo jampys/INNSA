@@ -380,6 +380,7 @@ class Asignacion_plan{
     var $objetivo;
     var $comentarios;
     var $viaticos;
+    var $prog;
     var $id_solicitud;
     var $id_plan;
 
@@ -400,6 +401,9 @@ class Asignacion_plan{
 
     function getViaticos()
     { return $this->viaticos;}
+
+    function getPrograma()
+    { return $this->prog;}
 
     function getIdSolicitud()
     { return $this->id_solicitud;}
@@ -430,6 +434,9 @@ class Asignacion_plan{
 
     function setViaticos($val)
     {  $this->viaticos=$val;}
+
+    function setPrograma($val)
+    {  $this->prog=$val;}
 
     function setIdSolicitud($val)
     {  $this->id_solicitud=$val;}
@@ -543,13 +550,14 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
-        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, programa=:programa, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
         $obj_asig->dpParse($query);
 
         $obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->viaticos);
+        $obj_asig->dpBind(':programa', $this->prog);
         $obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
         $obj_asig->dpBind(':id_asignacion', $this->id_asignacion);
