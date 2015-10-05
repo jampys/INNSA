@@ -49,7 +49,8 @@ switch($operacion){
 
     case 'reportes3': //reporte para gerencia
         $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'pc.periodo';
-        $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+        //$lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+        $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'null';
 
         $view->planes=$view->u->getPlanesCapacitacion($periodo, $lugar_trabajo);
         $view->content="view/reportes3.php";

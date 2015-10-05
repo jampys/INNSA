@@ -345,7 +345,7 @@
 </script>
 
 
-<div class="box" style="width: 88%">
+<div class="box" style="width: 95%">
     <h2>
         <a href="#" id="toggle-list">Aprobación de capacitación</a>
     </h2>
@@ -449,9 +449,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
 
 
                     </fieldset>

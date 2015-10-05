@@ -159,32 +159,56 @@ class Reportes
             " and em.lugar_trabajo = $lugar_trabajo"; */
 
             /* para planes abiertos */
-        $query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, pc.caracter_actividad, pc.importe_total,".
-            " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as cantidad,".
-            " (pc.importe *pc.tipo_cambio) as unitario,".
-            " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) * pc.importe * pc.tipo_cambio as subtotal,".
-            " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) * pc.importe * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as total".
-            " ,((select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) - (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.aprobada = 1) ) as diferencia ".
-            " from plan_capacitacion pc, cursos cu, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
-            " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
-            " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
-            " and pc.periodo = $periodo".
-            " and em.lugar_trabajo = $lugar_trabajo".
-            " and pc.caracter_actividad = 'ABIERTA'".
-            " UNION ".
-            /* para planes cerrados */
-            " select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio, pc.caracter_actividad, pc.importe_total,".
-            " cantidad_participantes as cantidad,".
-            " ((pc.importe_total * pc.tipo_cambio)/pc.cantidad_participantes) as unitario,".
-            " pc.importe_total * pc.tipo_cambio as subtotal,".
-            " pc.importe_total * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as total".
-            " ,((select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) - (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.aprobada = 1) ) as diferencia ".
-            " from plan_capacitacion pc, cursos cu, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
-            " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
-            " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
-            " and pc.periodo = $periodo".
-            " and em.lugar_trabajo = $lugar_trabajo".
-            " and pc.caracter_actividad = 'CERRADA'";
+
+        $query="select
+                pc.id_plan,
+                pc.periodo,
+                pc.objetivo,
+                cantidadasignaciones(pc.id_plan, nvl($lugar_trabajo, null) ) as cantidad,
+                pc.fecha_desde,
+                pc.fecha_hasta,
+                /*pc.duracion,
+                pc.unidad,*/
+                pc.caracter_actividad as caracter,
+                /*pc.importe as precio_unitario,*/
+                pc.porcentaje_reintegrable,
+                pc.moneda,
+                pc.tipo_cambio,
+                pc.importe_total,
+                pro.tipo_programa,
+                (pc.importe *pc.tipo_cambio) as precio_unitario,
+                cantidadasignaciones(pc.id_plan, nvl($lugar_trabajo, null) ) * pc.importe * pc.tipo_cambio as subSViaticos,
+                cantidadasignaciones(pc.id_plan, nvl($lugar_trabajo, null) ) * pc.importe * pc.tipo_cambio + (select sum(nvl(apx.viaticos, 0))
+                                                                                          from asignacion_plan apx, solicitud_capacitacion scx, empleados em
+                                                                                          where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud
+                                                                                          and scx.id_empleado = em.id_empleado
+                                                                                          and em.lugar_trabajo = nvl($lugar_trabajo, em.lugar_trabajo)) as totCViaticos,
+
+                ((select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) - (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.aprobada = 1) ) as diferencia,
+
+                (select nvl(sum(pcx.importe * pcx.tipo_cambio * (nvl(pcx.porcentaje_reintegrable, 0)/100)), 0)
+                      from plan_capacitacion pcx, asignacion_plan apx, solicitud_capacitacion scx, empleados emx
+                      where pcx.id_plan = pc.id_plan
+                      and apx.id_plan = pcx.id_plan
+                      and apx.id_solicitud = scx.id_solicitud
+                      and scx.id_empleado = emx.id_empleado
+                      and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo)
+                      and apx.programa = 1) as total_reintegrable,
+
+                ((select count(*)
+                      from asignacion_plan apx, solicitud_capacitacion scx, empleados emx
+                      where apx.id_plan = pc.id_plan
+                      and apx.id_solicitud = scx.id_solicitud
+                      and scx.id_empleado = emx.id_empleado
+                      and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo)
+                      and apx.aprobada = 1) * pc.importe * pc.tipo_cambio) as total_aprobado
+
+            from plan_capacitacion pc, programas pro
+            /*where exists (select 1 from asignacion_plan apx where apx.id_plan = pc.id_plan)*/
+            where exists (select 1 from asignacion_plan apx, solicitud_capacitacion scx, empleados emx where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = emx.id_empleado and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo) )
+            and pc.id_programa = pro.id_programa
+            and pc.periodo = $periodo
+            and pc.caracter_actividad = 'ABIERTA'";
 
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
@@ -193,11 +217,11 @@ class Reportes
     public function getEmpleadosByPlan($lugar_trabajo, $id_plan){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $query="select em.apellido, em.nombre, em.lugar_trabajo, ap.viaticos, ap.id_asignacion, ap.aprobada".
-                " from empleados em, plan_capacitacion pc, asignacion_plan ap, solicitud_capacitacion sc".
-                " where pc.id_plan = ap.id_plan and ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
-                " and em.lugar_trabajo = $lugar_trabajo".
-                " and ap.id_plan = $id_plan";
+        $query="select em.apellido, em.nombre, em.lugar_trabajo, ap.viaticos, ap.id_asignacion, ap.aprobada, ap.programa
+                from empleados em, plan_capacitacion pc, asignacion_plan ap, solicitud_capacitacion sc
+                where pc.id_plan = ap.id_plan and ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado
+                and em.lugar_trabajo = nvl($lugar_trabajo, em.lugar_trabajo)
+                and ap.id_plan = $id_plan";
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
     }
