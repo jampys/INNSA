@@ -31,7 +31,7 @@ abstract class Conexion{
         return $cadena;
     }
 
-    public static function stringANumber($palabra)
+    public static function formatNumber($palabra)
     {
         $numero=str_replace(',', '.', $palabra);
         $numero=(float)$numero;

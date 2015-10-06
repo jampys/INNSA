@@ -105,16 +105,16 @@
                 <tbody>
                 <?php foreach ($view->cp as $plan) {?>
                     <tr class="odd gradeA">
-                        <td><?php  echo Conexion::corta_palabra($plan["NOMBRE"], 40);  ?></td>
+                        <td><?php  echo Conexion::corta_palabra($plan["OBJETIVO"], 50);  ?></td>
                         <td><?php  echo $plan["PERIODO"] ?></td>
                         <td><?php  echo $plan["ENTIDAD"] ?></td>
-                        <td><?php  echo $plan["CANTIDAD"]; ?></td>
+                        <td style="text-align: right"><?php  echo $plan["CANTIDAD"]; ?></td>
                         <td><?php  echo $plan["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $plan["FECHA_HASTA"]; ?></td>
-                        <td><?php  echo $plan["DURACION"]; ?></td>
+                        <td style="text-align: right"><?php  echo $plan["DURACION"]; ?></td>
                         <td><?php  echo $plan["UNIDAD"]; ?></td>
                         <td><?php  echo $plan["ESTADO"]; ?></td>
-                        <td><?php  echo $plan["IMPORTE"]; ?></td>
+                        <td style="text-align: right"><?php  echo Conexion::formatNumber($plan["IMPORTE"]); ?></td>
                         <td><?php  echo $plan["MONEDA"]; ?></td>
 
                         <?php if($plan['PERIODO']!=date('Y')){ ?>

@@ -38,11 +38,11 @@
             <td style="background-color: #FFD699"><?php  echo $plan["FECHA_DESDE"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["FECHA_HASTA"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["CARACTER"]; ?></td>
-            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["PRECIO_UNITARIO"]); ?></td>
-            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["SUBSVIATICOS"]); $sub_total_sin_viaticos+=$plan["SUBSVIATICOS"]; ?></td>
-            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["TOTCVIATICOS"]); $total_con_viaticos+=$plan["TOTCVIATICOS"]; ?></td>
-            <td style="background-color: #FFD699; text-align: right"><span title="Porcentaje <?php  echo $plan["TOTAL_REINTEGRABLE"]; ?> %"><?php  echo Conexion::stringANumber($plan["TOTAL_REINTEGRABLE"]); $total_reintegrable+=$plan["TOTAL_REINTEGRABLE"]; ?></span></td>
-            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["TOTAL_APROBADO"]); $total_aprobado+=$plan["TOTAL_APROBADO"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::formatNumber($plan["PRECIO_UNITARIO"]); ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::formatNumber($plan["SUBSVIATICOS"]); $sub_total_sin_viaticos+=$plan["SUBSVIATICOS"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::formatNumber($plan["TOTCVIATICOS"]); $total_con_viaticos+=$plan["TOTCVIATICOS"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><span title="Porcentaje <?php  echo $plan["TOTAL_REINTEGRABLE"]; ?> %"><?php  echo Conexion::formatNumber($plan["TOTAL_REINTEGRABLE"]); $total_reintegrable+=$plan["TOTAL_REINTEGRABLE"]; ?></span></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::formatNumber($plan["TOTAL_APROBADO"]); $total_aprobado+=$plan["TOTAL_APROBADO"]; ?></td>
             <td style="background-color: #FFD699; text-align: center" ><a href="#" title="Aprobar" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
             <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_todos_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
@@ -75,7 +75,7 @@
                             <td><?php  echo $repo["APELLIDO"]; ?></td>
                             <td><?php  echo $repo["NOMBRE"]; ?></td>
                             <td><?php  echo $repo["LUGAR_TRABAJO"]; ?></td>
-                            <td style="text-align: right"><?php  echo Conexion::stringANumber($repo["VIATICOS"]);  ?></td>
+                            <td style="text-align: right"><?php  echo Conexion::formatNumber($repo["VIATICOS"]);  ?></td>
                             <td><?php  echo ($repo["PROGRAMA"]==1)? $plan["TIPO_PROGRAMA"] : '';  ?></td>
                             <td class="center"><a href="javascript: void(0);" class="<?php echo $repo['APROBADA']==0? 'link-invisible': '' ?>" ><img title="<?php echo $repo['APROBADA']==0? 'No aprobada': 'Aprobada' ?>" src="public/img/Ok-icon.png" width="15px" height="15px"></a></td>
                         </tr>
@@ -123,10 +123,10 @@
         <th></th>
         <th></th>
         <th></th>
-        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($sub_total_sin_viaticos); ?></h6></th>
-        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($total_con_viaticos); ?></h6></th>
-        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($total_reintegrable); ?></h6></th>
-        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($total_aprobado); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::formatNumber($sub_total_sin_viaticos); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::formatNumber($total_con_viaticos); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::formatNumber($total_reintegrable); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::formatNumber($total_aprobado); ?></h6></th>
         <th></th>
         <th></th>
     </tr>
