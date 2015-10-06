@@ -31,6 +31,15 @@ abstract class Conexion{
         return $cadena;
     }
 
+    public static function stringANumber($palabra)
+    {
+        $numero=str_replace(',', '.', $palabra);
+        $numero=(float)$numero;
+        $numero=number_format($numero, 2, '.', '');
+
+        return $numero;
+    }
+
 }
 
 abstract class sQuery{

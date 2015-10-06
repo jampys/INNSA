@@ -34,15 +34,15 @@
         <tr class="odd gradeA">
             <td style="background-color: #FFD699"><?php  echo $plan["PERIODO"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["OBJETIVO"];  ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["CANTIDAD"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo $plan["CANTIDAD"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["FECHA_DESDE"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["FECHA_HASTA"]; ?></td>
             <td style="background-color: #FFD699"><?php  echo $plan["CARACTER"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["PRECIO_UNITARIO"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["SUBSVIATICOS"]; $sub_total_sin_viaticos+=$plan["SUBSVIATICOS"]; ?></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["TOTCVIATICOS"]; $total_con_viaticos+=$plan["TOTCVIATICOS"]; ?></td>
-            <td style="background-color: #FFD699"><span title="Porcentaje <?php  echo $plan["TOTAL_REINTEGRABLE"]; ?> %"><?php  echo $plan["TOTAL_REINTEGRABLE"]; $total_reintegrable+=$plan["TOTAL_REINTEGRABLE"]; ?></span></td>
-            <td style="background-color: #FFD699"><?php  echo $plan["TOTAL_APROBADO"]; $total_aprobado+=$plan["TOTAL_APROBADO"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["PRECIO_UNITARIO"]); ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["SUBSVIATICOS"]); $sub_total_sin_viaticos+=$plan["SUBSVIATICOS"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["TOTCVIATICOS"]); $total_con_viaticos+=$plan["TOTCVIATICOS"]; ?></td>
+            <td style="background-color: #FFD699; text-align: right"><span title="Porcentaje <?php  echo $plan["TOTAL_REINTEGRABLE"]; ?> %"><?php  echo Conexion::stringANumber($plan["TOTAL_REINTEGRABLE"]); $total_reintegrable+=$plan["TOTAL_REINTEGRABLE"]; ?></span></td>
+            <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::stringANumber($plan["TOTAL_APROBADO"]); $total_aprobado+=$plan["TOTAL_APROBADO"]; ?></td>
             <td style="background-color: #FFD699; text-align: center" ><a href="#" title="Aprobar" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
             <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_todos_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
@@ -58,12 +58,12 @@
 
                 ?>
 
-                <table border="1">
+                <table border="1" style="width: 80%">
                     <tr>
-                        <th style="width: 25%">Apellido</th>
-                        <th style="width: 25%">Nombre</th>
+                        <th style="width: 20%">Apellido</th>
+                        <th style="width: 20%">Nombre</th>
                         <th style="width: 15%">Lugar trabajo</th>
-                        <th style="width: 20%">Viaticos</th>
+                        <th style="width: 10%">Viáticos</th>
                         <th style="width: 20%">Programa</th>
                         <th style="width: 15%">Aprobado</th>
                     </tr>
@@ -75,8 +75,8 @@
                             <td><?php  echo $repo["APELLIDO"]; ?></td>
                             <td><?php  echo $repo["NOMBRE"]; ?></td>
                             <td><?php  echo $repo["LUGAR_TRABAJO"]; ?></td>
-                            <td><?php  echo $repo["VIATICOS"];  ?></td>
-                            <td><?php  echo ($repo["PROGRAMA"]==1)? $plan["TIPO_PROGRAMA"] : 'NO';  ?></td>
+                            <td style="text-align: right"><?php  echo Conexion::stringANumber($repo["VIATICOS"]);  ?></td>
+                            <td><?php  echo ($repo["PROGRAMA"]==1)? $plan["TIPO_PROGRAMA"] : '';  ?></td>
                             <td class="center"><a href="javascript: void(0);" class="<?php echo $repo['APROBADA']==0? 'link-invisible': '' ?>" ><img title="<?php echo $repo['APROBADA']==0? 'No aprobada': 'Aprobada' ?>" src="public/img/Ok-icon.png" width="15px" height="15px"></a></td>
                         </tr>
 
@@ -123,10 +123,10 @@
         <th></th>
         <th></th>
         <th></th>
-        <th><h6><?php echo $sub_total_sin_viaticos; ?></h6></th>
-        <th><h6><?php echo $total_con_viaticos; ?></h6></th>
-        <th><h6><?php echo $total_reintegrable; ?></h6></th>
-        <th><h6><?php echo $total_aprobado; ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($sub_total_sin_viaticos); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($total_con_viaticos); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($total_reintegrable); ?></h6></th>
+        <th style="text-align: right"><h6><?php echo Conexion::stringANumber($total_aprobado); ?></h6></th>
         <th></th>
         <th></th>
     </tr>

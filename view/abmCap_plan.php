@@ -88,7 +88,8 @@
 
                     $("#caracter_actividad").val(datas['plan'][0]['CARACTER_ACTIVIDAD']);
                     $("#cantidad_participantes").val(datas['plan'][0]['CANTIDAD_PARTICIPANTES']);
-                    $("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
+                    //$("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
+                    $("#importe_total").val(parseFloat(datas['plan'][0]['IMPORTE_TOTAL'].replace(/,/, '.')))
                     $("#tipo_curso").val(datas['plan'][0]['ID_TIPO_CURSO']);
 
                     //$("#programa").val(datas['plan'][0]['ID_PROGRAMA']);
