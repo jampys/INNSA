@@ -414,63 +414,38 @@ class Cap_Plan
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
 
-
-
-
-
-
-
-        $query= "select".
-            " (select id_asignacion from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan)  id_asignacion,".
-            " sc.id_solicitud,".
-            " sc.estado,".
-            " sc.periodo,".
-            " em.apellido,".
-            " em.nombre,".
-            " (select comentarios from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) comentarios,".
-            " (select viaticos from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) viaticos,".
-            " (select programa from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) prog,".
-            " (select aprobada from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) aprobada".
-            " from empleados em,".
-            " solicitud_capacitacion sc,".
-            " propuestas pro,".
-            " plan_capacitacion pc,".
-            " cursos cu".
-            " where em.id_empleado = sc.id_empleado".
-            " and sc.id_solicitud = pro.id_solicitud".
-            " and pro.id_curso = pc.id_curso".
-            " and pc.id_curso = cu.id_curso".
-            " and pc.id_plan = $id".
-            " UNION".
-
-            " select".
-            " (select id_asignacion from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan)  id_asignacion,".
-            " sc.id_solicitud,".
-            " sc.estado,".
-            " sc.periodo,".
-            " em.apellido,".
-            " em.nombre,".
-            " (select comentarios from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) comentarios,".
-            " (select viaticos from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) viaticos,".
-            " (select programa from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) prog,".
-            " (select aprobada from asignacion_plan where id_solicitud = sc.id_solicitud and id_plan = pc.id_plan) aprobada".
-            " from empleados em,".
-            " solicitud_capacitacion sc,".
-            " propuestas pro,".
-            " plan_capacitacion pc,".
-            " temas te,".
-            " cursos cu".
-            " where".
-            " em.id_empleado = sc.id_empleado".
-            " AND sc.id_solicitud = pro.id_solicitud".
-            " AND pro.id_tema = te.id_tema".
-            " AND pro.id_curso is null".
-            " AND EXISTS (SELECT 1 FROM cursos cur".
-            " WHERE cur.ID_TEMA = PRO.ID_TEMA".
-            " AND cur.ID_CURSO = PC.ID_CURSO".
-            " )".
-            " AND pc.id_curso = cu.id_curso".
-            " and pc.id_plan = $id";
+        $query="/*por curso */
+ select (select apx.id_asignacion
+        from asignacion_plan apx
+        where apx.id_plan = pc.id_plan
+        and apx.id_solicitud = sc.id_solicitud
+        ) as id_asignacion,
+sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre, ap.comentarios, ap.viaticos, ap.programa as prog, ap.aprobada
+from propuestas pro, plan_capacitacion pc, solicitud_capacitacion sc, empleados em, asignacion_plan ap
+where pc.id_curso = pro.id_curso
+and pro.id_solicitud = sc.id_solicitud
+and sc.id_empleado = em.id_empleado
+and pro.id_propuesta = ap.id_propuesta (+)
+and pc.id_plan = $id
+and not exists (select 1 from asignacion_plan apx
+                where apx.id_propuesta = pro.id_propuesta
+                and apx.id_plan <> $id )
+UNION
+/* por tema */
+ select
+ (select apx.id_asignacion from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.id_solicitud = sc.id_solicitud) as id_asignacion,
+sc.id_solicitud, sc.estado, sc.periodo, em.apellido, em.nombre,
+(select apx.comentarios from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.id_solicitud = sc.id_solicitud) as comentaios,
+(select apx.viaticos from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.id_solicitud = sc.id_solicitud) as viaticos,
+(select apx.programa from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.id_solicitud = sc.id_solicitud) as prog,
+(select apx.aprobada from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.id_solicitud = sc.id_solicitud) as aprobada
+from plan_capacitacion pc, propuestas pro, solicitud_capacitacion sc, empleados em, cursos cu
+where pc.id_curso = cu.id_curso
+and cu.id_tema = pro.id_tema
+and pro.id_solicitud = sc.id_solicitud
+and sc.id_empleado = em.id_empleado
+and pc.id_plan = $id
+and pro.id_curso is null";
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();

@@ -206,9 +206,10 @@ class Reportes
             from plan_capacitacion pc, programas pro
             /*where exists (select 1 from asignacion_plan apx where apx.id_plan = pc.id_plan)*/
             where exists (select 1 from asignacion_plan apx, solicitud_capacitacion scx, empleados emx where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = emx.id_empleado and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo) )
-            and pc.id_programa = pro.id_programa
+            and pc.id_programa = pro.id_programa (+)
             and pc.periodo = $periodo
             and pc.caracter_actividad = 'ABIERTA'";
+            /* FALTA AGREGAR EL UNION PARA LOS PROGRAMAS CERRADOS */
 
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
