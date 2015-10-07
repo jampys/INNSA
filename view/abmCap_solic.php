@@ -70,7 +70,7 @@
                         var viaticos= (datas['planes'][indice]['VIATICOS'])? datas['planes'][indice]['VIATICOS']: "";
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
-                        '<td>'+datas['planes'][indice]['NOMBRE']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
+                        '<td>'+datas['planes'][indice]['OBJETIVO']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
                         '<td style="display: none">'+comentarios+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
                         '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
@@ -382,7 +382,7 @@
                 autoOpen: false,
                 width: 500,
                 modal:true,
-                title:"Agignar capacitación",
+                title:"Detalle de capacitación",
                 buttons: {
                     "Guardar": function() {
                         if($("#form_plan").valid()){
@@ -1271,7 +1271,7 @@
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Solicitó - Gerencia de área: </label><br/>
+                                    <label>Solicitó: </label><br/>
                                     <input type="text" name="apr_solicito" id="apr_solicito" readonly/>
                                     <input type="hidden" name="apr_solicito_id" id="apr_solicito_id" readonly/>
                                 </div>
@@ -1442,7 +1442,7 @@
                             </div>
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Viaticos: </label><br/>
+                                    <label>Viáticos: </label><br/>
                                     <input type="text" name="np_viaticos" id="np_viaticos"/>
                                 </div>
                             </div>
