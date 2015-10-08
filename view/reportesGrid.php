@@ -62,7 +62,7 @@
 
                     foreach ($asignacion as $sol) {?>
                         <tr class="odd gradeA">
-                            <td style="width: 300px"><?php  echo $sol["NOMBRE"]; ?></td>
+                            <td style="width: 300px"><?php  echo $sol["OBJETIVO"]; ?></td>
                             <td style="width: 70px"><?php  echo $sol["MODALIDAD"]; ?></td>
                             <td style="width: 50px"><?php  echo $sol["FECHA_DESDE"];  ?></td>
                             <td style="width: 100px"><?php  echo $sol["ESTADO"]; ?></td>
