@@ -71,6 +71,15 @@ $(document).ready(function(){
     });
 
 
+    //funcion creada por dario para aplicar sobre un elemento y convertirlo en numero con 2 decimales
+    $.formatNumber = function (cad) {
+        if(!cad){ cad=0}//o typeof(cad)=='undefined'
+        if(typeof(cad)=='string'){cad=parseFloat(cad)}
+        return cad.toFixed(2);
+        //alert(cad.toFixed(2));
+    };
+
+
 
 
 });

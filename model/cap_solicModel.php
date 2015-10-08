@@ -400,7 +400,8 @@ class Asignacion_plan{
     { return $this->comentarios;}
 
     function getViaticos()
-    { return $this->viaticos;}
+    { $r=str_replace('.', ',', $this->viaticos);
+        return $r;}
 
     function getPrograma()
     { return $this->prog;}
@@ -530,7 +531,7 @@ class Asignacion_plan{
 
         //$obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
-        $obj_asig->dpBind(':viaticos', $this->viaticos);
+        $obj_asig->dpBind(':viaticos', $this->getViaticos());
         //$obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':estado', $this->estado);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
@@ -556,7 +557,7 @@ class Asignacion_plan{
 
         $obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
-        $obj_asig->dpBind(':viaticos', $this->viaticos);
+        $obj_asig->dpBind(':viaticos', $this->getViaticos());
         $obj_asig->dpBind(':programa', $this->prog);
         $obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':id_plan', $this->id_plan);

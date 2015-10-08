@@ -67,13 +67,14 @@
                     $.each(datas['planes'], function(indice, val){
                         
                         var comentarios= (datas['planes'][indice]['COMENTARIOS'])? datas['planes'][indice]['COMENTARIOS']: "";
-                        var viaticos= (datas['planes'][indice]['VIATICOS'])? datas['planes'][indice]['VIATICOS']: "";
+                        //var viaticos= (datas['planes'][indice]['VIATICOS'])? datas['planes'][indice]['VIATICOS']: "";
+                        var viaticos= $.formatNumber(datas['planes'][indice]['VIATICOS']);
 
                         $('#table_plan tbody').append('<tr id_plan='+datas['planes'][indice]['ID_PLAN']+' '+'id_asignacion='+datas['planes'][indice]['ID_ASIGNACION']+'>' +
                         '<td>'+datas['planes'][indice]['OBJETIVO']+" - "+datas['planes'][indice]['FECHA_DESDE']+" - "+datas['planes'][indice]['MODALIDAD']+'</td>' +
                         '<td style="display: none">'+comentarios+'</td>' +
                         '<td>'+datas['planes'][indice]['DURACION']+" "+datas['planes'][indice]['UNIDAD']+'</td>' +
-                        '<td>'+datas['planes'][indice]['MONEDA']+" "+datas['planes'][indice]['IMPORTE']+'</td>' +
+                        '<td>'+datas['planes'][indice]['MONEDA']+" "+ $.formatNumber(datas['planes'][indice]['IMPORTE'])+'</td>' +
                         '<td style="text-align: center">'+viaticos+'</td>' +
                         //'<td style="text-align: center"><a class="editar_plan" href="#"><img src="public/img/pencil-icon.png" width="15px" height="15px"></a></td>' +
                         //'<td style="text-align: center"><a class="eliminar_plan" href="#"><img src="public/img/delete-icon.png" width="15px" height="15px"></a></td>' +
@@ -396,12 +397,13 @@
                                 $('#table_plan tbody').find('tr').eq(row_index).attr('id_plan',$("#np_plan_capacitacion_id").val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(0).html($('#np_plan_capacitacion').val());
                                 $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(1).html($('#np_comentarios').val());
-                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(4).html($('#np_viaticos').val());
+                                //$('#table_plan tbody').find('tr').eq(row_index).find('td').eq(4).html($('#np_viaticos').val());
+                                $('#table_plan tbody').find('tr').eq(row_index).find('td').eq(4).html($.formatNumber($('#np_viaticos').val()));
                                 $("#form_plan")[0].reset();
                                 $(this).dialog("close");
 
                             }
-                            else{  //si se trata de un insert
+                            else{  //si se trata de un insert. ESTA FUNCIONALIDAD QUEDO EN DESUSO.
 
                                 //Se agrega fila a la tabla de planes
                                 //$('#table_plan tr:last').after('<tr>' +

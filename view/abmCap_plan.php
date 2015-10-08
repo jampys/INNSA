@@ -111,7 +111,8 @@
 
                         var idCheck=datas['empleados'][indice]['ID_ASIGNACION'];
                         var comentarios=(typeof(datas['empleados'][indice]['COMENTARIOS'])!='undefined')? datas['empleados'][indice]['COMENTARIOS']: '';
-                        var viaticos=(typeof(datas['empleados'][indice]['VIATICOS'])!='undefined')? datas['empleados'][indice]['VIATICOS']: '';
+                        //var viaticos=(typeof(datas['empleados'][indice]['VIATICOS'])!='undefined')? datas['empleados'][indice]['VIATICOS']: '';
+                        var viaticos= $.formatNumber(datas['empleados'][indice]['VIATICOS']);
 
                         $('#table_empleados tbody').append('<tr id_asignacion='+datas['empleados'][indice]['ID_ASIGNACION']+' id_solicitud="'+datas['empleados'][indice]['ID_SOLICITUD']+'">' +
                         '<td><input type="checkbox" id="check_'+idCheck+'" name="check_'+idCheck+'"></td>' +
