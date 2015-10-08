@@ -30,6 +30,8 @@
                 $("#periodo").append(new Option(val,val));
             });
 
+            $("#periodo option[value="+new Date().getFullYear()+"]").prop('selected', true);
+
             //codigo para setear automaticamente el apr_solicito
             /*
             $.ajax({
