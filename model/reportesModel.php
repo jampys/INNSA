@@ -147,19 +147,8 @@ class Reportes
     public function getPlanesCapacitacion($periodo, $lugar_trabajo){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        /*$query="select DISTINCT pc.id_plan, pc.periodo, cu.nombre, pc.duracion, pc.unidad, pc.importe, pc.moneda, pc.tipo_cambio,".
-            " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as cantidad,".
-            " (pc.importe *pc.tipo_cambio) as unitario,".
-            " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) * pc.importe * pc.tipo_cambio as subtotal,".
-            " (select count(*) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) * pc.importe * pc.tipo_cambio + (select sum(viaticos) from asignacion_plan apx, solicitud_capacitacion scx, empleados em where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = em.id_empleado and em.lugar_trabajo = $lugar_trabajo) as total".
-            " from plan_capacitacion pc, cursos cu, asignacion_plan ap, solicitud_capacitacion sc, empleados em".
-            " where ap.id_solicitud = sc.id_solicitud and sc.id_empleado = em.id_empleado".
-            " and pc.id_curso = cu.id_curso and ap.id_plan = pc.id_plan".
-            " and pc.periodo = $periodo".
-            " and em.lugar_trabajo = $lugar_trabajo"; */
 
             /* para planes abiertos */
-
         $query="select
                 pc.id_plan,
                 pc.periodo,
@@ -210,6 +199,7 @@ class Reportes
             and pc.periodo = $periodo
             and pc.caracter_actividad = 'ABIERTA'";
             /* FALTA AGREGAR EL UNION PARA LOS PROGRAMAS CERRADOS */
+
 
         $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
