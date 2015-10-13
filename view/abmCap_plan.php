@@ -89,11 +89,11 @@
                     $("#caracter_actividad").val(datas['plan'][0]['CARACTER_ACTIVIDAD']);
                     $("#cantidad_participantes").val(datas['plan'][0]['CANTIDAD_PARTICIPANTES']);
                     //$("#importe_total").val(datas['plan'][0]['IMPORTE_TOTAL']);
-                    $("#importe_total").val(parseFloat(datas['plan'][0]['IMPORTE_TOTAL'].replace(/,/, '.')))
+                    $("#importe_total").val(parseFloat(datas['plan'][0]['IMPORTE_TOTAL'].replace(/,/, '.')));
                     $("#tipo_curso").val(datas['plan'][0]['ID_TIPO_CURSO']);
 
                     //$("#programa").val(datas['plan'][0]['ID_PROGRAMA']);
-                    $("#porcentaje_reintegrable").val(datas['plan'][0]['PORCENTAJE_REINTEGRABLE']);
+                    $("#porcentaje_reintegrable").val(parseFloat(datas['plan'][0]['PORCENTAJE_REINTEGRABLE'].replace(/,/, '.')));
                     $("#nro_actividad").val(datas['plan'][0]['NRO_ACTIVIDAD']);
 
                     //carga los programas
@@ -1193,8 +1193,7 @@
                                         <thead>
                                         <tr>
                                             <td style="width: 10%"><a href="#" title="Colaboradores asignados a la capacitación">Asig.</a></td>
-                                            <!--<td style="width: 10%">Asig.</td>-->
-                                            <td style="width: 35%">Apellido y nombre</td>
+                                            <td style="width: 33%">Apellido y nombre</td>
                                             <td style="width: 35%">Comentarios</td>
                                             <td style="width: 10%">Viaticos</td>
                                             <td style="width: 10%"><a href="#" title="Colaboradores incluidos en el programa seleccionado">Prog.</a></td>

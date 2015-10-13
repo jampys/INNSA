@@ -153,7 +153,7 @@ class Reportes
                 pc.id_plan,
                 pc.periodo,
                 pc.objetivo,
-                cantidadasignaciones(pc.id_plan, nvl($lugar_trabajo, null) ) as cantidad,
+                cantidadasignaciones(pc.id_plan, $lugar_trabajo) as cantidad,
                 pc.fecha_desde,
                 pc.fecha_hasta,
                 /*pc.duracion,
@@ -166,8 +166,8 @@ class Reportes
                 pc.importe_total,
                 pro.tipo_programa,
                 (pc.importe *pc.tipo_cambio) as precio_unitario,
-                cantidadasignaciones(pc.id_plan, nvl($lugar_trabajo, null) ) * pc.importe * pc.tipo_cambio as subSViaticos,
-                cantidadasignaciones(pc.id_plan, nvl($lugar_trabajo, null) ) * pc.importe * pc.tipo_cambio + (select sum(nvl(apx.viaticos, 0))
+                cantidadasignaciones(pc.id_plan, $lugar_trabajo) * pc.importe * pc.tipo_cambio as subSViaticos,
+                cantidadasignaciones(pc.id_plan, $lugar_trabajo) * pc.importe * pc.tipo_cambio + (select sum(nvl(apx.viaticos, 0))
                                                                                           from asignacion_plan apx, solicitud_capacitacion scx, empleados em
                                                                                           where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud
                                                                                           and scx.id_empleado = em.id_empleado
@@ -197,8 +197,56 @@ class Reportes
             where exists (select 1 from asignacion_plan apx, solicitud_capacitacion scx, empleados emx where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud and scx.id_empleado = emx.id_empleado and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo) )
             and pc.id_programa = pro.id_programa (+)
             and pc.periodo = $periodo
-            and pc.caracter_actividad = 'ABIERTA'";
-            /* FALTA AGREGAR EL UNION PARA LOS PROGRAMAS CERRADOS */
+            and pc.caracter_actividad = 'ABIERTA'
+
+            UNION
+
+            /* para cerradas */
+select
+                pc.id_plan,
+                pc.periodo,
+                pc.objetivo,
+                pc.cantidad_participantes as cantidad,
+                pc.fecha_desde,
+                pc.fecha_hasta,
+                pc.caracter_actividad as caracter,
+                pc.porcentaje_reintegrable,
+                pc.moneda,
+                pc.tipo_cambio,
+                pc.importe_total,
+                pro.tipo_programa,
+                ((pc.importe_total * pc.tipo_cambio)/pc.cantidad_participantes) as precio_unitario,
+                pc.importe_total * pc.tipo_cambio as subSViaticos,
+                pc.importe_total * pc.tipo_cambio + (select sum(nvl(apx.viaticos, 0))
+                                                      from asignacion_plan apx, solicitud_capacitacion scx, empleados em
+                                                      where apx.id_plan = pc.id_plan and apx.id_solicitud = scx.id_solicitud
+                                                      and scx.id_empleado = em.id_empleado
+                                                      and em.lugar_trabajo = nvl($lugar_trabajo, em.lugar_trabajo)) as totCViaticos,
+
+                ((select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) - (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan and apx.aprobada = 1) ) as diferencia,
+
+                (select pcx.importe_total * pcx.tipo_cambio * (nvl(pcx.porcentaje_reintegrable, 0)/100)
+                      from plan_capacitacion pcx
+                      where pcx.id_plan = pc.id_plan) as total_reintegrable,
+
+                ((select count(*)
+                      from asignacion_plan apx, solicitud_capacitacion scx, empleados emx
+                      where apx.id_plan = pc.id_plan
+                      and apx.id_solicitud = scx.id_solicitud
+                      and scx.id_empleado = emx.id_empleado
+                      and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo)
+                      and apx.aprobada = 1) * pc.importe * pc.tipo_cambio) as total_aprobado
+
+            from plan_capacitacion pc, programas pro
+            where exists (select 1 from asignacion_plan apx, solicitud_capacitacion scx, empleados emx
+                                  where apx.id_plan = pc.id_plan
+                                  and apx.id_solicitud = scx.id_solicitud
+                                  and scx.id_empleado = emx.id_empleado
+                                  and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo) )
+            and pc.id_programa = pro.id_programa (+)
+            and pc.periodo = $periodo
+            and pc.caracter_actividad = 'CERRADA'";
+
 
 
         $obj_sp->executeQuery($query);
