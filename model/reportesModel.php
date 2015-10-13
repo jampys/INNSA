@@ -149,7 +149,7 @@ class Reportes
         $obj_sp=$f->returnsQuery();
 
             /* para planes abiertos */
-        $query="select
+        $query="(select
                 pc.id_plan,
                 pc.periodo,
                 pc.objetivo,
@@ -245,7 +245,8 @@ select
                                   and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo) )
             and pc.id_programa = pro.id_programa (+)
             and pc.periodo = $periodo
-            and pc.caracter_actividad = 'CERRADA'";
+            and pc.caracter_actividad = 'CERRADA')
+            order by fecha_desde";
 
 
 

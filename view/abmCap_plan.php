@@ -616,7 +616,14 @@
 
             //calculo del total automaticamente
             $('#importe, #cantidad_participantes').on('blur', function() {
-                $('#importe_total').val(($('#cantidad_participantes').val()*$('#importe').val()).toFixed(2)); //toFixed(2) redondea a 2 decimales
+
+                if($("#caracter_actividad option:selected").val()=='ABIERTA'){
+                    //$('#importe_total').val(($('#cantidad_participantes').val()*$('#importe').val()).toFixed(2)); //toFixed(2) redondea a 2 decimales
+                    $('#importe_total').val($.formatNumber($('#cantidad_participantes').val()*$('#importe').val()));
+                }
+                //$('#importe').val($.formatNumber($('#importe').val()));
+
+
             });
 
             //llamada a funcion validar
