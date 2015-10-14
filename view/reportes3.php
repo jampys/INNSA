@@ -101,11 +101,11 @@
                     //item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
 
                     item['status']=$(this).attr('status');
-                    if((item['status']=='undefined' || item['status']==0 ) && item['check']==1) item['operacion']='aprobar';
+                    if(item['status']=='undefined' && item['check']==1) item['operacion']='aprobar';
                     else if(item['status']==1 && item['check']=='null') item['operacion']='desaprobar';
-                    if((item['status']=='undefined' || item['status']==0 ) && item['check']=='null') item['operacion']='null';
+                    if(item['status']=='undefined' && item['check']=='null') item['operacion']='null';
                     else if(item['status']==1 && item['check']==1) item['operacion']='null';
-                    alert(item['operacion']);
+                    //alert(item['operacion']);
 
                     jsonObj.push(item);
                     //alert(item['id_plan']);
