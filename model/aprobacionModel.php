@@ -4,11 +4,12 @@ class Aprobacion{
 
 
 
-    public function aprobarPlanIndividualmente($status, $id_asignacion){
+    public function aprobarPlanIndividualmente($status, $id_asignacion, $estado){
 
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="update asignacion_plan set aprobada= $status where id_asignacion = $id_asignacion";
+        //$query="update asignacion_plan set aprobada= $status where id_asignacion = $id_asignacion";
+        $query="update asignacion_plan set aprobada = $status, estado = '$estado' where id_asignacion = $id_asignacion";
         $obj_cp->dpParse($query);
 
         //$obj_cp->dpBind(':id_curso', $this->id_curso);
@@ -79,6 +80,21 @@ class Aprobacion{
         return $obj_com->getAffect();
 
     }
+
+
+    public function deletePropuestaFromComunicacion($id_asignacion){
+
+        $f=new Factory();
+        $obj_com=$f->returnsQuery();
+        $query="delete from cap_comunicacion where id_asignacion = $id_asignacion";
+
+        $obj_com->executeQuery($query);
+        return $obj_com->getAffect();
+
+    }
+
+
+
 
 
 

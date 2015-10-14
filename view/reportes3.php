@@ -66,14 +66,15 @@
                     $.each(datas, function(indice, val){
 
                         var idCheck=datas[indice]['ID_ASIGNACION'];
+                        var status=datas[indice]['APROBADA'];
 
-                        $('#table_aprobar tbody').append('<tr id_asignacion='+idCheck+' operacion="">' +
+                        $('#table_aprobar tbody').append('<tr id_asignacion='+idCheck+' status='+status+' operacion="">' +
                         '<td>'+datas[indice]['APELLIDO']+' '+datas[indice]['NOMBRE']+'</td>' +
                         '<td><input type="checkbox" id="table_aprobar_check_'+idCheck+'" name="table_aprobar_check_'+idCheck+'"></td>' +
                         '</tr>');
 
                         $("#table_aprobar_check_"+idCheck+"").prop('checked', ((datas[indice]['APROBADA'])==1)? true:false);
-                        $("#table_aprobar_check_"+idCheck+"").attr('disabled', ((datas[indice]['APROBADA'])==1)? true:false);
+                        //$("#table_aprobar_check_"+idCheck+"").attr('disabled', ((datas[indice]['APROBADA'])==1)? true:false);
                     });
 
                 },
@@ -96,8 +97,16 @@
                     item = {};
                     item['id_asignacion']=$(this).attr('id_asignacion');
                     //item['id_plan']=globalId; //id_plan
-                    item['check']= ($(this).find('td').eq(1).find('[type=checkbox]').prop('checked'))? 1: 0;
-                    item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
+                    item['check']= ($(this).find('td').eq(1).find('[type=checkbox]').prop('checked'))? 1: 'null';
+                    //item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
+
+                    item['status']=$(this).attr('status');
+                    if((item['status']=='undefined' || item['status']==0 ) && item['check']==1) item['operacion']='aprobar';
+                    else if(item['status']==1 && item['check']=='null') item['operacion']='desaprobar';
+                    if((item['status']=='undefined' || item['status']==0 ) && item['check']=='null') item['operacion']='null';
+                    else if(item['status']==1 && item['check']==1) item['operacion']='null';
+                    alert(item['operacion']);
+
                     jsonObj.push(item);
                     //alert(item['id_plan']);
                 });
@@ -131,7 +140,8 @@
                 error:function(error){
                     //alert(error.responseText);
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(error.responseText);
 
                 },
                 ifModified:false,
@@ -156,14 +166,14 @@
         $(document).ready(function(){
 
 
-            //Si se chequea un checkbox
+            /*//Si se chequea un checkbox
             $(document).on("change", "input[name^='table_aprobar_check']", function() { //si hago check en un input que comience con table_aprobar_check
 
                 if(this.checked) {
                     $(this).closest('tr').attr('operacion', 'aprobar');
                 }
 
-            });
+            });*/
 
 
             $(document).tooltip();

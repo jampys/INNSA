@@ -44,8 +44,12 @@ switch($operacion){
         foreach ($vector as $v){
             $t=new Aprobacion();
             if($v->operacion=="aprobar") {
-                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion)) $rta=0;
+                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion, 'ASIGNADO')) $rta=0; // el check tiene un 1
                 if(!$t->copyPropuestaIntoComunicacion($v->id_asignacion)) $rta=0;
+            }
+            else if($v->operacion=="desaprobar") {
+                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion, 'ASIGNADO')) $rta=0; // el check tiene un 0
+                if(!$t->deletePropuestaFromComunicacion($v->id_asignacion)) $rta=0;
             }
 
         }
