@@ -229,13 +229,11 @@ select
                       from plan_capacitacion pcx
                       where pcx.id_plan = pc.id_plan) as total_reintegrable,
 
-                ((select count(*)
-                      from asignacion_plan apx, solicitud_capacitacion scx, empleados emx
-                      where apx.id_plan = pc.id_plan
-                      and apx.id_solicitud = scx.id_solicitud
-                      and scx.id_empleado = emx.id_empleado
-                      and emx.lugar_trabajo = nvl($lugar_trabajo, emx.lugar_trabajo)
-                      and apx.aprobada = 1) * pc.importe * pc.tipo_cambio) as total_aprobado
+                (
+                select (pcx.importe_total * pcx.tipo_cambio)
+                from plan_capacitacion pcx
+                where exists (select 1 from asignacion_plan apx where apx.id_plan = pcx.id_plan and apx.aprobada =1 and pcx.id_plan = pc.id_plan)
+                ) as total_aprobado
 
             from plan_capacitacion pc, programas pro
             where exists (select 1 from asignacion_plan apx, solicitud_capacitacion scx, empleados emx
