@@ -43,7 +43,14 @@
             <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::formatNumber($plan["TOTCVIATICOS"]); $total_con_viaticos+=$plan["TOTCVIATICOS"]; ?></td>
             <td style="background-color: #FFD699; text-align: right"><span title="<?php echo ($plan["PORCENTAJE_REINTEGRABLE"])? 'Porcentaje '.$plan["PORCENTAJE_REINTEGRABLE"].' %': ''; ?>"><?php  echo Conexion::formatNumber($plan["TOTAL_REINTEGRABLE"]); $total_reintegrable+=$plan["TOTAL_REINTEGRABLE"]; ?></span></td>
             <td style="background-color: #FFD699; text-align: right"><?php  echo Conexion::formatNumber($plan["TOTAL_APROBADO"]); $total_aprobado+=$plan["TOTAL_APROBADO"]; ?></td>
-            <td style="background-color: #FFD699; text-align: center" ><a href="#" title="Aprobar" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
+            <!--<td style="background-color: #FFD699; text-align: center" ><a href="#" title="Aprobar individual" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
+            <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_todos_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>-->
+            <?php
+            $hoy = time(); //o strtotime('now');
+            $fecha_capacitacion = DateTime::createFromFormat('d/m/y', $plan['FECHA_DESDE']);
+            $fecha_capacitacion = strtotime($fecha_capacitacion->format('y-m-d'));
+            ?>
+            <td style="background-color: #FFD699; text-align: center" ><a href="#" title="Aprobar individual" class="<?php  echo ( $fecha_capacitacion > $hoy )? 'aprobar_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
             <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_todos_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
         <tr class="oculta">

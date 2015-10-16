@@ -13,7 +13,7 @@ $s=$f->returnsQuery();
     " where co.id_asignacion = ap.id_asignacion".
     " and ap.id_asignacion = 301";*/
 
-$query="select DISTINCT periodo from plan_capacitacion";
+$query="select fecha_desde from plan_capacitacion";
 
 $s->executeQuery($query);
 $r=$s->fetchAll();
@@ -22,17 +22,17 @@ echo"<hr/>";
 echo 'Cantidad de filas afectadas:'.$s->getAffect();
 echo '<br/>';
 echo 'Liberacion de la consulta:'.$s->clean();
-print_r($r);
+//print_r($r);
 //exit;
 
 ?>
 
 
 
-<table border="1" width="60%" cellspacing="0">
+<table border="1" width="80%" cellspacing="0">
     <tr>
-        <td>ID</td>
-        <td>NOMBRE</td>
+        <td>Fecha</td>
+        <td>Fecha en segundos</td>
         <td>DESCRIPCION</td>
     </tr>
 
@@ -40,8 +40,15 @@ print_r($r);
         foreach ($r as $fila){
             ?>
             <tr>
-                <td><?php echo $fila['PERIODO']; ?></td>
-                <td><?php echo $fila['NOM']; ?></td>
+                <td><?php echo $fila['FECHA_DESDE']; ?></td>
+                <td><?php
+
+                    $date = DateTime::createFromFormat('d/m/y', $fila['FECHA_DESDE']);
+                    echo $date->format('y-m-d');
+                    //echo strtotime($date->format('y-m-d'));
+
+
+                    ?></td>
                 <td><?php echo $fila['OBJETIVO']; ?></td>
 
             </tr>
@@ -59,11 +66,20 @@ print_r($r);
 
 <hr/>
 
+
+
+
+
+
+
 <?php
-echo "El mes actual es".date("m");
-$periodos=Conexion::periodos();
-echo sizeof(Conexion::periodos());
-echo $periodos[0];
+$today=time();
+echo 'la fecha actual es: '.$today;
+?>
+<br/>
+<?php
+echo 'otra prueba';
+echo 'los segundos actuales son: '.(time()-(60*60*24));
 
 ?>
 
@@ -80,6 +96,8 @@ echo $periodos[0];
     }
     ?>
 </select>
+
+
 
 
 
