@@ -162,6 +162,50 @@
 
 
 
+        function generarVersion(){
+            //alert("<?php echo $sub_total_sin_viaticos ?>");
+
+            //debugger;
+
+            var data={  "accion":"version",
+                        "operacion":"generarVersion",
+                        //"sub_total_sin_viaticos":<?php echo $sub_total_sin_viaticos ?>,
+                        "nombre":$("#nombre").val(),
+                        "lugar_trabajo":$("#lugar_trabajo").val(),
+                        "moneda":"ARS"
+            };
+
+            $.ajax({
+                url:"index.php",
+                data:data,
+                contentType:"application/x-www-form-urlencoded",
+                dataType:"json",//xml,html,script,json
+                error:function(){
+
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html("ha ocurrido un error");
+
+                },
+                ifModified:false,
+                processData:true,
+                success:function(datas){
+
+                    $("#dialog-msn").dialog("open");
+                    $("#message").html(datas['comment']);
+
+                },
+                type:"POST",
+                timeout:3000000,
+                crossdomain:true
+
+            });
+
+        }
+
+
+
+
+
 
         $(document).ready(function(){
 
@@ -277,6 +321,38 @@
             });
 
 
+            //Ventana modal de confirmacion para la generacion de version del plan
+            $('#generar_version').dialog({
+                autoOpen: false,
+                width: 460,
+                modal:true,
+                title:"Generar versión del plan",
+                buttons: {
+                    "Aceptar": function() {
+
+                        generarVersion();
+                        //$(this).dialog("close");
+                        //Llamada ajax para refrescar la grilla
+                        //$('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, "lugar_trabajo": $('#lugar_trabajo').val(), filtro: "filtro"});
+
+
+                    },
+                    "Cancelar": function() {
+                        $(this).dialog("close");
+                    }
+                },
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+
+            });
+
+
 
             //Aca estaba el llamado al dialog link
 
@@ -294,6 +370,13 @@
                 globalOperacion='aprobar_plan_masivamente';
                 globalId=$(this).attr('id');
                 $('#password_clear').dialog('open');
+                return false;
+            });
+
+            $(document).on("click", ".generar_version", function(){
+                //globalOperacion='aprobar_plan_masivamente';
+                //globalId=$(this).attr('id');
+                $('#generar_version').dialog('open');
                 return false;
             });
 
@@ -419,6 +502,24 @@
 </div>
 
 
+<div class="sixteen_column section">
+
+    <div class="fourteen column">
+        <div class="column_content">
+
+        </div>
+    </div>
+
+    <div class="two column">
+        <div class="column_content" style="text-align: center">
+            <a href="#" title="Generar versión" class="generar_version"><img src="public/img/version-icon.png" width="30px" height="30px"></a>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <!-- AGREGADO NUEVO A BODY -->
 
@@ -480,6 +581,18 @@
     <div style='float: left; margin-top: 10px'><img src='public/img/warning-icon-yellow.png' width='30px' height='30px'></div>&nbsp;&nbsp;&nbsp;
     <div style='float: left; margin-left: 10px'>
         ¿Desea aprobar la capacitación para todos los colaboradores asignados?
+        <br/>
+    </div>
+
+</div>
+
+
+<!-- Contenido de la ventana modal de confirmacion de generacion de version del plan -->
+<div id="generar_version">
+
+    <div style='float: left; margin-top: 10px'><img src='public/img/warning-icon-yellow.png' width='30px' height='30px'></div>&nbsp;&nbsp;&nbsp;
+    <div style='float: left; margin-left: 10px; margin-top: 18px'>
+        ¿Desea generar una versión del plan de capacitación?
         <br/>
     </div>
 

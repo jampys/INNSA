@@ -51,7 +51,7 @@
             $fecha_capacitacion = strtotime($fecha_capacitacion->format('y-m-d'));
             ?>
             <td style="background-color: #FFD699; text-align: center" ><a href="#" title="Aprobar individual" class="<?php  echo ( $fecha_capacitacion > $hoy )? 'aprobar_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
-            <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="<?php  echo ($plan["DIFERENCIA"]!=0)? 'aprobar_todos_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
+            <td style="background-color: #FFD699; text-align: center" class="center"><a href="#" title="Aprobar a todos" class="<?php  echo ($plan["DIFERENCIA"]!=0 && $fecha_capacitacion > $hoy)? 'aprobar_todos_link' : 'link-desactivado';    ?>" id="<?php  echo $plan["ID_PLAN"];  ?>"><img src="public/img/check-icon.png" width="15px" height="15px"></a></td>
         </tr>
         <tr class="oculta">
             <td colspan="9">
