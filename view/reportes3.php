@@ -2,6 +2,8 @@
 
 <script type="text/javascript" language="JavaScript">
 
+
+
     $(document).ready(function(){
 
         // dataTable
@@ -163,16 +165,17 @@
 
 
         function generarVersion(){
-            //alert("<?php echo $sub_total_sin_viaticos ?>");
 
-            //debugger;
+            /*var my_var = <?php echo json_encode($_SESSION["ses_id"]); ?>;
+             console.log(my_var);*/
 
             var data={  "accion":"version",
-                        "operacion":"generarVersion",
-                        //"sub_total_sin_viaticos":<?php echo $sub_total_sin_viaticos ?>,
-                        "nombre":$("#nombre").val(),
-                        "lugar_trabajo":$("#lugar_trabajo").val(),
-                        "moneda":"ARS"
+                "operacion":"generarVersion",
+                "sub_total_sin_viaticos": $('#reportes tfoot tr:last').find('th').eq(7).text(),
+                "total_con_viaticos": $('#reportes tfoot tr:last').find('th').eq(8).text(),
+                "total_reintegrable": $('#reportes tfoot tr:last').find('th').eq(9).text(),
+                "total_aprobado": $('#reportes tfoot tr:last').find('th').eq(10).text(),
+                "moneda":"ARS"
             };
 
             $.ajax({
@@ -180,10 +183,11 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(e.responseText);
 
                 },
                 ifModified:false,
@@ -331,7 +335,7 @@
                     "Aceptar": function() {
 
                         generarVersion();
-                        //$(this).dialog("close");
+                        $(this).dialog("close");
                         //Llamada ajax para refrescar la grilla
                         //$('#reporte').load('index.php',{accion:"reportes", operacion: "reportes3", id_plan: globalId, "lugar_trabajo": $('#lugar_trabajo').val(), filtro: "filtro"});
 

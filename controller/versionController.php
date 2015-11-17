@@ -2,10 +2,8 @@
 if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
-require_once("model/cap_solicModel.php");
-require_once("model/comunicacionModel.php");
-require_once("model/aprobacionModel.php");
-$view->u=new Cap_Solic();
+require_once("model/versionModel.php");
+$view->u=new Version();
 
 
 switch($operacion){
@@ -14,17 +12,24 @@ switch($operacion){
     case 'generarVersion':
         $rta=1;
 
-        $t=new Aprobacion();
-        $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'lugar_trabajo';
-        if(!$t->copyPropuestaIntoComunicacionMasivamente($_POST['id_plan'], $lugar_trabajo)) $rta=0;
-        if(!$t->aprobarPlanMasivamente(1, $_POST['id_plan'], $lugar_trabajo)) $rta=0;
+        $view->u->setSubTotalSinViaticos($_POST['sub_total_sin_viaticos']);
+        $view->u->setTotalConViaticos($_POST['total_con_viaticos']);
+        $view->u->setTotalReintegrable($_POST['total_reintegrable']);
+        $view->u->setTotalAprobado($_POST['total_aprobado']);
+        $view->u->setMoneda($_POST['moneda']);
+        $view->u->setIdUsuario($_SESSION["ses_id"]);
+        //la fecha_version se hace desde el motor de BD
+
+        $rta=$id_plan_maestro_version=$view->u->insertVersion();
+
+        $rta=$id_plan_version = $view->u->insertPlanCapacitacionVersion($id_plan_maestro_version);
 
         if($rta > 0){
-            $respuesta = array ('response'=>'success','comment'=>'Plan aprobado correctamente');
+            $respuesta = array ('response'=>'success','comment'=>'Versión creada correctamente');
             sQueryOracle::hacerCommit();
         }
         else{
-            $respuesta = array ('response'=>'error','comment'=>'Error al aprobar el plan');
+            $respuesta = array ('response'=>'error','comment'=>'Error al crear la versión');
             sQueryOracle::hacerRollback();
         }
 

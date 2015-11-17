@@ -33,9 +33,9 @@ abstract class Conexion{
 
     public static function formatNumber($palabra)
     {
-        $numero=str_replace(',', '.', $palabra);
-        $numero=(float)$numero;
-        $numero=number_format($numero, 2, '.', '');
+        $numero=str_replace(',', '.', $palabra); //reemplaza la coma(,) por un punto(.)
+        $numero=(float)$numero; //lo convierte a float
+        $numero=number_format($numero, 2, '.', ''); //2 decimales, separacion decimal con punto (.), sin separacion de miles
 
         return $numero;
     }
