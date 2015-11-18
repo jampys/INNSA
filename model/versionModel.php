@@ -98,7 +98,16 @@ class Version
 
         oci_bind_by_name($topa,':id', $id, -1, SQLT_INT);
         $obj_ver->dpExecute();
-        return $id;
+        //return $id;
+        return $obj_ver->getAffect();
+
+        /*$f=new Factory();
+        $obj_ver=$f->returnsQuery();
+        $query="insert into plan_capacitacion_version (periodo, objetivo, modalidad, fecha_desde, fecha_hasta, duracion, unidad, prioridad, estado, importe, moneda, tipo_cambio, forma_pago, forma_financiacion, profesor_1, profesor_2, comentarios_plan, entidad, caracter_actividad, importe_total, cantidad_participantes, id_tipo_curso, id_programa, nro_actividad, porcentaje_reintegrable, id_plan, id_plan_maestro_version)".
+            " select periodo, objetivo, modalidad, fecha_desde, fecha_hasta, duracion, unidad, prioridad, estado, importe, moneda, tipo_cambio, forma_pago, forma_financiacion, profesor_1, profesor_2, comentarios_plan, entidad, caracter_actividad, importe_total, cantidad_participantes, id_tipo_curso, id_programa, nro_actividad, porcentaje_reintegrable, id_plan, $id_plan_maestro_version from plan_capacitacion";
+        $obj_ver->dpParse($query);
+        $obj_ver->dpExecute();
+        return $obj_ver->getAffect();*/
 
     }
 
