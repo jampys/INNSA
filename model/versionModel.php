@@ -66,13 +66,11 @@ class Version
             "values(SYSDATE, $this->id_usuario, $this->sub_total_sin_viaticos , $this->total_con_viaticos, $this->total_reintegrable, $this->total_aprobado, '$this->moneda')";
         $obj_emp->executeQuery($query);
         return $obj_emp->getAffect();*/
-
-        /*$f=new Factory();
+            
+        $f=new Factory();
         $obj_ver=$f->returnsQuery();
-        $query="insert into plan_maestro_version (fecha_version, id_usuario, subtotal_s_viaticos, total_c_viaticos, total_reintegrable, total_aprobado, moneda)".
-                " values (SYSDATE, :id_usuario, :subtotal_s_viaticos, :total_c_viaticos, :total_reintegrable, :total_aprobado, :moneda)".
-                " returning id_plan_maestro_version into :id";
-        $topo=$obj_ver->dpParse($query);
+        $query="CALL GENERARVERSION(:id_usuario, :subtotal_s_viaticos, :total_c_viaticos, :total_reintegrable, :total_aprobado, :moneda)";
+        $obj_ver->dpParse($query);
 
         $obj_ver->dpBind(':id_usuario', $this->getIdUsuario());
         $obj_ver->dpBind(':subtotal_s_viaticos', $this->getSubTotalSinViaticos());
@@ -81,25 +79,8 @@ class Version
         $obj_ver->dpBind(':total_aprobado', $this->getTotalAprobado());
         $obj_ver->dpBind(':moneda', $this->getMoneda());
 
-        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
         $obj_ver->dpExecute();
-        return $id;*/
 
-
-        //llamada a procedimiento almacenado
-        $a = $this->getIdUsuario();
-        $b = $this->getSubTotalSinViaticos();
-        $c = $this->getTotalConViaticos();
-        $d = $this->getTotalReintegrable();
-        $e = $this->getTotalAprobado();
-        $f = $this->getMoneda();
-
-        $consulta=oci_parse($conn, $sql);
-        oci_bind_by_name($consulta,':id',$id);
-
-        $conn=oci_connect('dario', 'dario', 'localhost');
-        $stmt    = oci_prepare($conn, 'CALL GENERARVERSION(?, ?, ?, ?, ?, ?)');
-        $éxito = oci_execute($stmt, array($a, $b, $c, $d, $e, $f));
 
     }
 
