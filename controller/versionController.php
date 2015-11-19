@@ -22,7 +22,7 @@ switch($operacion){
 
         $rta=$id_plan_maestro_version=$view->u->insertVersion();
 
-        $rta=$id_plan_version = $view->u->insertPlanCapacitacionVersion($id_plan_maestro_version);
+        //$rta=$id_plan_version = $view->u->insertPlanCapacitacionVersion($id_plan_maestro_version);
 
         if($rta > 0){
             $respuesta = array ('response'=>'success','comment'=>'Versión creada correctamente');
