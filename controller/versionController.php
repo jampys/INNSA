@@ -17,10 +17,12 @@ switch($operacion){
         $view->u->setTotalReintegrable($_POST['total_reintegrable']);
         $view->u->setTotalAprobado($_POST['total_aprobado']);
         $view->u->setMoneda($_POST['moneda']);
+        $view->u->setPeriodo($_POST['periodo']);
         $view->u->setIdUsuario($_SESSION["ses_id"]);
         //la fecha_version se hace desde el motor de BD
 
-        $rta=$id_plan_maestro_version=$view->u->insertVersion();
+        $rta=$view->u->insertVersion($rta);
+
 
         //$rta=$id_plan_version = $view->u->insertPlanCapacitacionVersion($id_plan_maestro_version);
 

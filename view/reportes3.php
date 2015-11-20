@@ -6,6 +6,9 @@
 
     $(document).ready(function(){
 
+        //En el combo periodo selecciona por defecto el año vigente
+        $("#periodo option[value="+new Date().getFullYear()+"]").prop('selected', true);
+
         // dataTable
         var uTable = $('#example').dataTable( {
             "columnDefs": [
@@ -175,7 +178,8 @@
                 "total_con_viaticos": $('#reportes tfoot tr:last').find('th').eq(8).text(),
                 "total_reintegrable": $('#reportes tfoot tr:last').find('th').eq(9).text(),
                 "total_aprobado": $('#reportes tfoot tr:last').find('th').eq(10).text(),
-                "moneda":"ARS"
+                "moneda":"ARS",
+                "periodo": $('#periodo').val()
             };
 
             $.ajax({
@@ -454,7 +458,7 @@
         <div class="column_content">
             <label>Período: </label><br/>
             <select name="periodo" id="periodo">
-                <option value="">Todos los períodos</option>
+                <!--<option value="">Todos los períodos</option>-->
                 <<?php
                 foreach ($periodos as $per){
                     ?>
