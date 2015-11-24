@@ -6,8 +6,12 @@ require_once("model/cap_planModel.php");
 require_once("model/cap_solicModel.php");
 require_once("model/administracionModel.php");
 require_once("model/cursoModel.php");
+require_once("model/reportesModel.php"); //para obtener los periodos del filtro
 $view->u=new Cap_Plan();
 $view->a=new EntidadCapacitadora();
+
+$view->r=new Reportes();
+$filtro_periodo=$view->r->getPeriodos();
 
 
 switch($operacion){
@@ -171,13 +175,13 @@ switch($operacion){
         break;
 
     case 'refreshGrid':
-        $view->cp=$view->u->getCapPlan();
+        $view->cp=$view->u->getCapPlan($_POST['periodo']);
         include_once('view/abmCap_planGrid.php');
         exit;
         break;
 
     default:
-        $view->cp=$view->u->getCapPlan();
+        $view->cp=$view->u->getCapPlan(date('Y'));
         $entidadesCapacitadoras=$view->a->getEntidadesCapacitadoras();
         $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
         //$view->cu=new Curso();

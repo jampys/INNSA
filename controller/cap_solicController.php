@@ -3,7 +3,11 @@ if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
 require_once("model/cap_solicModel.php");
+require_once("model/reportesModel.php"); //para obtener los periodos del filtro
 $view->u=new Cap_Solic();
+
+$view->r=new Reportes();
+$filtro_periodo=$view->r->getPeriodos();
 
 
 switch($operacion){
@@ -209,13 +213,13 @@ switch($operacion){
         break;
 
     case 'refreshGrid':
-        $view->cs=$view->u->getCapSolic();
+        $view->cs=$view->u->getCapSolic($_POST['periodo']);
         include_once('view/abmCap_solicGrid.php');
         exit;
         break;
 
     default:
-        $view->cs=$view->u->getCapSolic();
+        $view->cs=$view->u->getCapSolic(date('Y'));
         break;
 
 }

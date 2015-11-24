@@ -89,6 +89,8 @@
 
 
         <div class="block" id="list">
+
+
             <a href="javascript:void(0);" id="dialog_link">Agregar solicitud capacitación</a>
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                 <thead>

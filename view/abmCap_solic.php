@@ -286,6 +286,10 @@
             //Al hacer click en un link desactivado, evita que el foco se vaya para arriba
             $(document).on('click', '.link-desactivado',  function(e){e.preventDefault()});
 
+            $(document).on('change', '#filtro_periodo', function(){
+                $('#principal').load('index.php',{accion:"cap_solic", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
+            });
+
 
             // menu superfish
             $('#navigationTop').superfish();
@@ -332,7 +336,7 @@
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"cap_solic", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"cap_solic", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
                             }
                         }
                     },
@@ -1017,9 +1021,14 @@
 
 <body>
 
+<!--se realiza en include del filtro -->
+<?php require_once('filtro_periodos.php');?>
+</br>
+
 <div id="principal">
 
 <!-- Se incluye llamada a abmCapSolicGrid.php -->
+
     <?php require_once('abmCap_solicGrid.php');?>
 
 </div>

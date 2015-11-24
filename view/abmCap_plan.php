@@ -282,6 +282,10 @@
             // menu superfish
             $('#navigationTop').superfish();
 
+            $(document).on('change', '#filtro_periodo', function(){
+                $('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
+            });
+
 
             //Aca estaba llamada a dataTable
 
@@ -325,7 +329,7 @@
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"cap_plan", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
                             }
 
                         }
@@ -814,6 +818,10 @@
 
 
 <body>
+
+<!--se realiza en include del filtro -->
+<?php require_once('filtro_periodos.php');?>
+</br>
 
 <div id="principal">
 
