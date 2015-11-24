@@ -412,6 +412,7 @@ class Cap_Plan
 
 
     public function getEmpleadosByPlan($id){
+    /* ULTIMA MODIFICACION (para que soporte la convivencia de capacitaciones y asignaciones de periodos distintos... y los filtros) */
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
 
@@ -431,6 +432,8 @@ and pc.id_plan = $id
 and not exists (select 1 from asignacion_plan apx
                 where apx.id_propuesta = pro.id_propuesta
                 and apx.id_plan <> $id )
+and sc.periodo = pc.periodo
+
 UNION
 /* por tema */
  select
@@ -446,7 +449,8 @@ and cu.id_tema = pro.id_tema
 and pro.id_solicitud = sc.id_solicitud
 and sc.id_empleado = em.id_empleado
 and pc.id_plan = $id
-and pro.id_curso is null";
+and pro.id_curso is null
+and sc.periodo = pc.periodo";
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();

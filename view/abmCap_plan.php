@@ -129,7 +129,7 @@
                         $("#check_"+idCheck+"").prop('checked', ((typeof (datas['empleados'][indice]['ID_ASIGNACION']))!="undefined")? true:false);
                         $("#prog_"+idCheck+"").prop('checked', (datas['empleados'][indice]['PROG']==1)? true:false);
                         //(datas['empleados'][indice]['ESTADO']=='AUTORIZADA' || datas['empleados'][indice]['ESTADO']=='APROBADA')? $('#table_empleados tbody tr td input').attr('disabled', 'disabled'): '';
-                        (datas['empleados'][indice]['APROBADA']==1 || datas['empleados'][indice]['PERIODO']!= (new Date).getFullYear())? $("#table_empleados tbody tr:eq("+indice+") td input").attr('disabled', 'disabled'): '';
+                        (datas['empleados'][indice]['APROBADA']==1 || datas['empleados'][indice]['PERIODO']< (new Date).getFullYear())? $("#table_empleados tbody tr:eq("+indice+") td input").attr('disabled', 'disabled'): '';
 
                     });
 
