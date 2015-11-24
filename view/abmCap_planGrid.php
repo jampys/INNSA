@@ -117,7 +117,7 @@
                         <td style="text-align: right"><?php  echo Conexion::formatNumber($plan["IMPORTE"]); ?></td>
                         <td><?php  echo $plan["MONEDA"]; ?></td>
 
-                        <?php if($plan['PERIODO']!=date('Y')){ ?>
+                        <?php if($plan['PERIODO'] < date('Y')){ ?>
 
                             <td class="center"><a href="javascript: void(0);" class="view_link" id="<?php  echo $plan["ID_PLAN"];  ?>" target="<?php  echo $plan["PERIODO"];  ?>" ><img title="Ver" src="public/img/search-icon.png" width="15px" height="15px"></a></td>
 

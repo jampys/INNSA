@@ -93,7 +93,7 @@
                     $("#tipo_curso").val(datas['plan'][0]['ID_TIPO_CURSO']);
 
                     //$("#programa").val(datas['plan'][0]['ID_PROGRAMA']);
-                    $("#porcentaje_reintegrable").val(parseFloat(datas['plan'][0]['PORCENTAJE_REINTEGRABLE'].replace(/,/, '.')));
+                    if(datas['plan'][0]['PORCENTAJE_REINTEGRABLE'])$("#porcentaje_reintegrable").val(parseFloat(datas['plan'][0]['PORCENTAJE_REINTEGRABLE'].replace(/,/, '.')));
                     $("#nro_actividad").val(datas['plan'][0]['NRO_ACTIVIDAD']);
 
                     //carga los programas
