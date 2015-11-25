@@ -86,7 +86,7 @@ class Cap_Plan
     }
 
 
-    public function getCursosTemas($term, $target, $id_solicitud){ //Se al completar propuestas en la solicitud de capacitacion
+    public function getCursosTemas($term, $target, $id_solicitud, $periodo){ //Se al completar propuestas en la solicitud de capacitacion
         $query="";
         if($target=='ALL'){
             $query="select * from cursos where nombre like UPPER ('%".$term."%')";
@@ -99,24 +99,11 @@ class Cap_Plan
                 " left join plan_capacitacion pc on cu.id_curso = pc.id_curso and pc.fecha_desde >='".date('d/m/Y')."'".
                 " left join entidades_capacitadoras ec on pc.entidad = ec.id_entidad_capacitadora".
                 " where (cu.nombre like UPPER ('%".$term."%') OR te.nombre like UPPER ('%".$term."%'))".
+                " and pc.periodo = $periodo".
                 " UNION".
                 " select (SELECT 'TEMA' FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
                 " from temas te".
                 " where te.nombre like UPPER ('%".$term."%')";
-
-            /*$query="select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%CURSOS%') tabla,".
-                " cu.id_curso, cu.nombre, cu.id_tema, pc.periodo, pc.fecha_desde, pc.modalidad, ec.nombre entidad".
-                " from cursos cu".
-                " join temas te on cu.id_tema = te.id_tema".
-                " left join plan_capacitacion pc on cu.id_curso = pc.id_curso and pc.fecha_desde >='".date('d/m/Y')."'".
-                " left join entidades_capacitadoras ec on pc.entidad = ec.id_entidad_capacitadora".
-                " where (cu.nombre like UPPER ('%".$term."%') OR te.nombre like UPPER ('%".$term."%'))".
-                " and cu.id_curso not in(select prox.id_curso from propuestas prox, solicitud_capacitacion scx where prox.id_solicitud = scx.id_solicitud and prox.id_curso is not null and scx.id_solicitud = $id_solicitud)".
-                " UNION".
-                " select (SELECT TABLE_NAME FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
-                " from temas te".
-                " where te.nombre like UPPER ('%".$term."%')".
-                " and te.id_tema not in(select prox.id_tema from propuestas prox, solicitud_capacitacion scx where prox.id_solicitud = scx.id_solicitud and prox.id_curso is null and scx.id_solicitud = $id_solicitud)";*/
 
         }
         $f=new Factory();

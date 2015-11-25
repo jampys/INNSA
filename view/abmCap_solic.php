@@ -572,7 +572,7 @@
                         url: "index.php",
                         type: "POST",
                         dataType: "json",
-                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos_temas", "target":"BYPERIODO", "id_solicitud": globalId},
+                        data: { "term": request.term, "accion":"cap_plan", "operacion":"autocompletar_cursos_temas", "target":"BYPERIODO", "id_solicitud": globalId, "periodo": $('#periodo').val()},
                         success: function(data) {
 
                             jsonObjTemas = [];
