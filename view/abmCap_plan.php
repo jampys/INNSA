@@ -29,14 +29,39 @@
             success:function(datas){
 
                 $("#programa").html('<option value="">Seleccione el programa</option>');
-                $.each(datas, function(indice, val){
-                    $("#programa").append('<option value="'+datas[indice]["ID_PROGRAMA"]+'">'+datas[indice]["PERIODO"]+' '+datas[indice]["TIPO_PROGRAMA"]+' '+datas[indice]["NRO_PROGRAMA"]+' '+datas[indice]["FECHA_INGRESO"]+'</option>');
+                $.each(datas['programas'], function(indice, val){
+                    $("#programa").append('<option value="'+datas['programas'][indice]["ID_PROGRAMA"]+'">'+datas['programas'][indice]["PERIODO"]+' '+datas['programas'][indice]["TIPO_PROGRAMA"]+' '+datas['programas'][indice]["NRO_PROGRAMA"]+' '+datas['programas'][indice]["FECHA_INGRESO"]+'</option>');
 
                 });
 
                 if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
                     $("#programa").val(opcion);
                 }
+
+
+                //Agrego lo del otro combo
+                $("#curso_tema").html('<option value="">Seleccione el curso /tema</option>');
+                $("#curso_tema").append('<optgroup label="Cursos">');
+
+                $.each(datas, function(indice, val){
+                    //if ($cu['TABLA'] == 'CURSOS')
+                    $("#curso_tema").append('<option value="'+datas[indice]["IDS"]+'">'+datas[indice]["NOMBRE"]+'</option>');
+
+                });
+
+                $("#curso_tema").append('</optgroup>');
+                $("#curso_tema").append('<optgroup label="Temas">');
+
+                $.each(datas, function(indice, val){
+                    //if ($te['TABLA'] == 'TEMAS')
+                    $("#curso_tema").append('<option value="'+datas[indice]["IDS"]+'">'+datas[indice]["NOMBRE"]+'</option>');
+
+                });
+                $("#curso_tema").append('</optgroup>');
+                //fin agrego lo del otro comobo
+
+
+
 
 
             },
@@ -855,7 +880,7 @@
                                     <input type="hidden" name="curso_id" id="curso_id"/>-->
 
                                     <select name="curso_tema" id="curso_tema">
-                                        <option value="">Seleccione el curso /tema</option>
+                                        <!--<option value="">Seleccione el curso /tema</option>
                                         <optgroup label="Cursos">
                                         <?php foreach($cursosTemasSinAsignacion as $cu) {
                                             if ($cu['TABLA'] == 'CURSOS') {
@@ -877,7 +902,7 @@
                                                 }
                                                 }
                                             ?>
-                                        </optgroup>
+                                        </optgroup>-->
 
                                     </select>
 

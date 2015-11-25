@@ -183,7 +183,7 @@ switch($operacion){
     default:
         $view->cp=$view->u->getCapPlan(date('Y'));
         $entidadesCapacitadoras=$view->a->getEntidadesCapacitadoras();
-        $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
+        //$cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
         //$view->cu=new Curso();
         $tipo_curso=$view->u->getTipoCurso();
         break;

@@ -3,9 +3,9 @@ if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
 require_once("model/ProgramaModel.php");
-//require_once("model/userModel.php");
+require_once("model/cap_planModel.php");
 $view->p=new Programa();
-
+$view->u=new Cap_Plan();
 
 switch($operacion){
     case 'insert':
@@ -82,8 +82,10 @@ switch($operacion){
     case 'programasByPeriodo':
         //$periodo= ($_POST['periodo']!='')? $_POST['periodo'] : "periodo";
         $periodo= ($_POST['periodo']!='')? $_POST['periodo'] : 9999;
-        $rta=$view->p->getProgramasByPeriodo($periodo);
-        print_r(json_encode($rta));
+        $programas=$view->p->getProgramasByPeriodo($periodo);
+        $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
+        //print_r(json_encode($rta));
+        print_r(json_encode(array('programas'=>$programas, 'capacitaciones'=>$cursosTemasSinAsignacion)));
         exit;
         break;
 
