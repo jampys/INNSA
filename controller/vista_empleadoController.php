@@ -4,7 +4,11 @@ if(isset($_REQUEST['operacion']))
 
 require_once("model/cap_solicModel.php");
 require_once("model/comunicacionModel.php");
+require_once("model/reportesModel.php"); //para obtener los periodos del filtro
 $view->u=new Asignacion_plan();
+
+$view->r=new Reportes();
+$filtro_periodo=$view->r->getPeriodos();
 
 
 switch($operacion){
@@ -86,14 +90,14 @@ switch($operacion){
         break;
 
     case 'refreshGrid':
-        $view->asignacion=$view->u->getAsignacionPlanByUser($_SESSION["ses_id"]);
-        include_once('view/abmVistaEmpleado.php');
+        $view->asignacion=$view->u->getAsignacionPlanByUser($_SESSION["ses_id"], $_POST['periodo']);
+        include_once('view/abmVistaEmpleadoGrid.php');
         exit;
         break;
 
 
     default:
-        $view->asignacion=$view->u->getAsignacionPlanByUser($_SESSION["ses_id"]);
+        $view->asignacion=$view->u->getAsignacionPlanByUser($_SESSION["ses_id"], date('Y'));
         break;
 
 }

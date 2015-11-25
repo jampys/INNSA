@@ -311,6 +311,11 @@
 
             $(document).tooltip();
 
+            $(document).on('change', '#filtro_periodo', function(){
+                $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
+            });
+
+
             $( ".spinner" ).spinner({
                     max: 5,
                     min: 1
@@ -360,7 +365,7 @@
                             guardar();
                             $("#comunicacion").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
                             }
                         },
                         id: 'com_btn_guardar',
@@ -403,7 +408,7 @@
                         guardar();
                         $("#evaluacion").dialog("close");
                         //Llamada ajax para refrescar la grilla
-                        $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
                         }
 
                     },
@@ -445,7 +450,7 @@
                             guardar();
                             $("#dialog").dialog("close");
                             //Llamada ajax para refrescar la grilla
-                            $('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
+                            $('#principal').load('index.php',{accion:"vista_empleado", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
                         }
 
                     },
@@ -604,6 +609,10 @@
 
 
 <body>
+
+<!--se realiza en include del filtro -->
+<?php require_once('filtro_periodos.php');?>
+</br>
 
 <div id="principal">
 
