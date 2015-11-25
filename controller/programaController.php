@@ -83,7 +83,7 @@ switch($operacion){
         //$periodo= ($_POST['periodo']!='')? $_POST['periodo'] : "periodo";
         $periodo= ($_POST['periodo']!='')? $_POST['periodo'] : 9999;
         $programas=$view->p->getProgramasByPeriodo($periodo);
-        $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion();
+        $cursosTemasSinAsignacion=$view->u->getCursosTemasSinAsignacion($periodo);
         //print_r(json_encode($rta));
         print_r(json_encode(array('programas'=>$programas, 'capacitaciones'=>$cursosTemasSinAsignacion)));
         exit;

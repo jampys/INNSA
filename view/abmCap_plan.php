@@ -37,23 +37,28 @@
                 if(opcion!=0){ //si recibe un id (al ser una edicion => selecciona la opcion)
                     $("#programa").val(opcion);
                 }
+                else{
+                    //si cambio de periodo, se limpia el curso seleccionado, si existiera
+                    $('#curso').val('');
+                    $('#curso_id').val('');
+                }
 
 
                 //Agrego lo del otro combo
                 $("#curso_tema").html('<option value="">Seleccione el curso /tema</option>');
                 $("#curso_tema").append('<optgroup label="Cursos">');
 
-                $.each(datas, function(indice, val){
-                    //if ($cu['TABLA'] == 'CURSOS')
-                    $("#curso_tema").append('<option value="'+datas[indice]["IDS"]+'">'+datas[indice]["NOMBRE"]+'</option>');
+                $.each(datas['capacitaciones'], function(indice, val){
+                    if (datas['capacitaciones'][indice]['TABLA'] == 'CURSOS')
+                    $("#curso_tema").append('<option value="'+datas['capacitaciones'][indice]["IDS"]+'">'+datas['capacitaciones'][indice]["NOMBRE"]+'</option>');
 
                 });
 
                 $("#curso_tema").append('</optgroup>');
                 $("#curso_tema").append('<optgroup label="Temas">');
 
-                $.each(datas, function(indice, val){
-                    //if ($te['TABLA'] == 'TEMAS')
+                $.each(datas['capacitaciones'], function(indice, val){
+                    if (datas['capacitaciones'][indice]['TABLA'] == 'TEMAS')
                     $("#curso_tema").append('<option value="'+datas[indice]["IDS"]+'">'+datas[indice]["NOMBRE"]+'</option>');
 
                 });
@@ -872,6 +877,37 @@
                     <fieldset>
                         <!--<legend>Datos Registro</legend>-->
 
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Periodo: </label>
+                                    <select name="periodo" id="periodo" onchange="cargarProgramas(0)">
+                                        <!--<option value="">Seleccione el periodo</option>
+                                        <?php
+                                        /*$periodos=Conexion::periodos();
+                                        foreach ($periodos as $per){
+                                            ?>
+                                            <option value="<?php echo $per; ?>"><?php echo $per; ?></option>
+                                        <?php
+                                        }*/
+                                        ?>-->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Modalidad: </label>
+                                    <select name="modalidad" id="modalidad">
+                                        <option value="">Seleccione la modalidad</option>
+                                        <option value="PRESENCIAL">Presencial</option>
+                                        <option value="A DISTANCIA">A distancia</option>
+                                        <option value="E-LEARNING">E-Learning</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="sixteen_column section">
                             <div class="sixteen_column">
                                 <div class="column_content">
@@ -922,36 +958,6 @@
                             </div>
                         </div>
 
-
-                        <div class="sixteen_column section">
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Periodo: </label>
-                                    <select name="periodo" id="periodo" onchange="cargarProgramas(0)">
-                                        <!--<option value="">Seleccione el periodo</option>
-                                        <?php
-                                        /*$periodos=Conexion::periodos();
-                                        foreach ($periodos as $per){
-                                            ?>
-                                            <option value="<?php echo $per; ?>"><?php echo $per; ?></option>
-                                        <?php
-                                        }*/
-                                        ?>-->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="eight column">
-                                <div class="column_content">
-                                    <label>Modalidad: </label>
-                                    <select name="modalidad" id="modalidad">
-                                        <option value="">Seleccione la modalidad</option>
-                                        <option value="PRESENCIAL">Presencial</option>
-                                        <option value="A DISTANCIA">A distancia</option>
-                                        <option value="E-LEARNING">E-Learning</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
 
                         <div class="sixteen_column section">
