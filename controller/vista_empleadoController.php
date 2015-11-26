@@ -91,7 +91,8 @@ switch($operacion){
 
     case 'refreshGrid':
         $view->asignacion=$view->u->getAsignacionPlanByUser($_SESSION["ses_id"], $_POST['periodo']);
-        include_once('view/abmVistaEmpleadoGrid.php');
+        //include_once('view/abmVistaEmpleadoGrid.php');
+        include_once('view/abmVistaEmpleadoGrid.php');  //revisar
         exit;
         break;
 

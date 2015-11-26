@@ -487,8 +487,8 @@
 
 
             // evaluacion_link
-            //$(document).on("click", ".evaluacion_link", function(){
-            $('.evaluacion_link').on('click', function(e){
+            $(document).on("click", ".evaluacion_link", function(){
+            //$('.evaluacion_link').on('click', function(e){
                 //globalOperacion='evaluacion';
                 globalId=$(this).attr('id'); //id_asignacion
                 editarEvaluacion(globalId);
