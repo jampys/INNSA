@@ -7,7 +7,7 @@
     $(document).ready(function(){
 
         //En el combo periodo selecciona por defecto el año vigente
-        $("#periodo option[value="+new Date().getFullYear()+"]").prop('selected', true);
+        //$("#periodo option[value="+new Date().getFullYear()+"]").prop('selected', true); //lo hago directamente desde php
 
         // dataTable
         var uTable = $('#example').dataTable( {
@@ -462,7 +462,9 @@
                 <<?php
                 foreach ($periodos as $per){
                     ?>
-                    <option value="<?php echo $per["PERIODO"]; ?>"><?php echo $per["PERIODO"]; ?></option>
+                    <!--<option value="<?php echo $per["PERIODO"]; ?>"><?php echo $per["PERIODO"]; ?></option>-->
+                    <!-- trae los periodos que tienen las solicitudes y capacitaciones... y selecciona de ellos el periodo vigente -->
+                    <option value="<?php echo $per["PERIODO"]; ?>" <?php if ($per["PERIODO"] == date('Y') ) echo 'selected' ; ?>  ><?php echo $per["PERIODO"]; ?>
                 <?php
                 }
                 ?>

@@ -49,7 +49,8 @@ switch($operacion){
 
 
     case 'reportes3': //Aprobacion
-        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'pc.periodo';
+        //$periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'pc.periodo';
+        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : date('Y');
         //$lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
         $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'null';
 
