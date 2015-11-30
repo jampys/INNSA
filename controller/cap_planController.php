@@ -133,9 +133,12 @@ switch($operacion){
             $u->setPrograma($v->prog);
             $u->setEstado($v->estado);
 
-            if($v->operacion=="insert") {if(!$u->insertAsignacionPlan($v->id_solicitud)) $rta=0;} //le paso parametro id_solicitud
+            if($v->operacion=="insert") {
+                    $id_asignacion = $rta = $u->insertAsignacionPlan($v->id_solicitud); //le paso parametro id_solicitud y me devuelve el id_asignacion
+                    $u->generarEstadoAsignacion($id_asignacion, $_SESSION["ses_id"], 1, 'asignado', $rta); //1: estado asignado
+            }
             else if($v->operacion=="update") {if(!$u->updateAsignacionPlan()) $rta=0;}
-            else if($v->operacion=="delete") {if(!$u->deleteAsignacionPlan()) $rta=0;}
+            else if($v->operacion=="delete") {if(!$u->deleteAsignacionPlan()) $rta=0;} //se hace en la BD por CASCADE
             }
 
         if($rta>0){

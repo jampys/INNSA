@@ -503,51 +503,59 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        /*$query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)".
-                " values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan,".
-                " (select pro.id_propuesta".
-                " from propuestas pro, plan_capacitacion pc, cursos cu, temas te".
-                " where pro.id_solicitud = $id_solicitud".
-                " and ((pc.id_curso = pro.id_curso) OR (pc.id_curso = cu.id_curso and cu.id_tema = te.id_tema and te.id_tema = pro.id_tema ))".
-                " and pc.id_plan = :id_plan)".
-                " )"; */
-
-        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)".
-                " values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan,".
+        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, estado, id_plan, id_propuesta)
+                values($id_solicitud, :comentarios, :viaticos, :estado, :id_plan,
                     /* por curso */
-                    "(select pro.id_propuesta".
-                    " from propuestas pro, plan_capacitacion pc".
-                    " where pro.id_curso = pc.id_curso".
-                    " and pro.id_solicitud = $id_solicitud".
-                    " and pc.id_plan = :id_plan".
-                    " UNION".
+                    (select pro.id_propuesta
+                    from propuestas pro, plan_capacitacion pc
+                    where pro.id_curso = pc.id_curso
+                    and pro.id_solicitud = $id_solicitud
+                    and pc.id_plan = :id_plan
+                    UNION
                     /* por tema */
-                    " select pro.id_propuesta".
-                    " from propuestas pro, plan_capacitacion pc, cursos cu, temas te".
-                    " where pc.id_curso = cu.id_curso and cu.id_tema = te.id_tema and te.id_tema = pro.id_tema".
-                    " and pro.id_solicitud = $id_solicitud".
-                    " and pc.id_plan = :id_plan".
-                    " and NOT EXISTS(". /* por si existe alguna propuesta de curso, pero tambien la de tema */
-                            " select pro.id_propuesta".
-                            " from propuestas pro, plan_capacitacion pc".
-                            " where pro.id_curso = pc.id_curso".
-                            " and pro.id_solicitud = $id_solicitud".
-                            " and pc.id_plan = :id_plan".
-                            " )".
-                    " )".
-            " )";
+                    select pro.id_propuesta
+                    from propuestas pro, plan_capacitacion pc, cursos cu, temas te
+                    where pc.id_curso = cu.id_curso and cu.id_tema = te.id_tema and te.id_tema = pro.id_tema
+                    and pro.id_solicitud = $id_solicitud
+                    and pc.id_plan = :id_plan
+                    and NOT EXISTS( /* por si existe alguna propuesta de curso, pero tambien la de tema */
+                            select pro.id_propuesta
+                            from propuestas pro, plan_capacitacion pc
+                            where pro.id_curso = pc.id_curso
+                            and pro.id_solicitud = $id_solicitud
+                            and pc.id_plan = :id_plan)
+                    )
+              )
+              returning id_asignacion into :id";
 
-        $obj_asig->dpParse($query);
+        $topo = $obj_asig->dpParse($query);
 
-        //$obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->getViaticos());
-        //$obj_asig->dpBind(':reemplazo', $this->reemplazo);
         $obj_asig->dpBind(':estado', $this->estado);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
-
+        oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
         $obj_asig->dpExecute();
-        return $obj_asig->getAffect();
+        return $id; //id_asignacion que se pasa al procedimiento almacenado
+
+    }
+
+    public function generarEstadoAsignacion($id_asignacion, $id_usuario, $estado, $motivo, $resultado){
+        //llamada a procedimiento almacenado para insertar el estado de asignacion
+        $f=new Factory();
+        $obj_ver=$f->returnsQuery();
+        $query='BEGIN GENERARESTADOASIGNACION(:id_asignacion, :id_usuario, :estado, :motivo, :resultado); END;';
+        $topa = $obj_ver->dpParse($query);
+
+        $obj_ver->dpBind(':id_asignacion', $id_asignacion);
+        $obj_ver->dpBind(':id_usuario', $id_usuario);
+        $obj_ver->dpBind(':estado', $estado);
+        $obj_ver->dpBind(':motivo', $motivo);
+        oci_bind_by_name($topa,':resultado', $resultado, -1, SQLT_INT); //oci_bind_by_name($topa,':resultado', $resultado, 1);
+
+        $obj_ver->dpExecute();
+        return $resultado;
+
     }
 
 

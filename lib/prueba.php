@@ -100,5 +100,11 @@ echo 'los segundos actuales son: '.(time()-(60*60*24));
 
 
 
+<br/>
+<?php echo $_SESSION['USER_APELLIDO'] ?>
+
+
+
+
 
 
