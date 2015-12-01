@@ -187,7 +187,7 @@
                 item['comentarios']= $(this).find('td').eq(2).find('input').val();
                 item['viaticos']= $(this).find('td').eq(3).find('input').val();
                 item['prog']= ($(this).find('td').eq(4).find('[type=checkbox]').prop('checked'))? 1: 0;
-                item['estado'] = 'ASIGNADO';
+                //item['estado'] = 'ASIGNADO';
                 // 4 posibles operaciones
                 if(item['id_asignacion']!='' && item['check']==1) item['operacion']='update';
                 else if(item['id_asignacion']!='' && item['check']==0) item['operacion']='delete';
