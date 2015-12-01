@@ -129,7 +129,7 @@ switch($operacion){
             $u->setIdPlan($v->id_plan);
             $u->setComentarios($v->comentarios);
             $u->setViaticos($v->viaticos);
-            $u->setViaticos($v->viaticos);
+            //$u->setViaticos($v->viaticos);
             $u->setPrograma($v->prog);
             //$u->setEstado($v->estado);
             $u->setEstado(1); //1: estado asignado

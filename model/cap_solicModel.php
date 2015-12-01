@@ -543,16 +543,16 @@ class Asignacion_plan{
 
     }
 
-    public function generarEstadoAsignacion($id_asignacion, $id_usuario, $estado, $motivo, $resultado){
+    public function generarEstadoAsignacion($id_asignacion, $id_usuario, $nroOrden, $motivo, $resultado){
         //llamada a procedimiento almacenado para insertar el estado de asignacion
         $f=new Factory();
         $obj_ver=$f->returnsQuery();
-        $query='BEGIN GENERARESTADOASIGNACION(:id_asignacion, :id_usuario, :estado, :motivo, :resultado); END;';
+        $query='BEGIN GENERARESTADOASIGNACION(:id_asignacion, :id_usuario, :nroOrden, :motivo, :resultado); END;';
         $topa = $obj_ver->dpParse($query);
 
         $obj_ver->dpBind(':id_asignacion', $id_asignacion);
         $obj_ver->dpBind(':id_usuario', $id_usuario);
-        $obj_ver->dpBind(':estado', $estado);
+        $obj_ver->dpBind(':nroOrden', $nroOrden);
         $obj_ver->dpBind(':motivo', $motivo);
         oci_bind_by_name($topa,':resultado', $resultado, -1, SQLT_INT); //oci_bind_by_name($topa,':resultado', $resultado, 1);
 
@@ -572,11 +572,11 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
-        $query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, programa=:programa, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        //$query = "update asignacion_plan set objetivo=:objetivo, comentarios=:comentarios, viaticos=:viaticos, programa=:programa, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
+        $query = "update asignacion_plan set comentarios=:comentarios, viaticos=:viaticos, programa=:programa, reemplazo=:reemplazo, id_plan=:id_plan where id_asignacion=:id_asignacion";
         $obj_asig->dpParse($query);
 
-        $obj_asig->dpBind(':objetivo', $this->objetivo);
+        //$obj_asig->dpBind(':objetivo', $this->objetivo);
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->getViaticos());
         $obj_asig->dpBind(':programa', $this->prog);
