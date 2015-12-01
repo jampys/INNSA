@@ -53,7 +53,7 @@
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
                     <th>Colaborador</th>
-                    <th>Curso</th>
+                    <th>Capacitación</th>
                     <th>Fecha inicio</th>
                     <th>Modalidad</th>
                     <th>Estado</th>
@@ -67,7 +67,7 @@
                     <th>Fecha solicitud</th>
                     <th>Periodo</th>
                     <th>Colaborador</th>
-                    <th>Curso</th>
+                    <th>Capacitación</th>
                     <th>Fecha inicio</th>
                     <th>Modalidad</th>
                     <th>Estado</th>
@@ -82,7 +82,7 @@
                         <td><?php  echo $asig["FECHA_SOLICITUD"]; ?></td>
                         <td><?php  echo $asig["PERIODO"]; ?></td>
                         <td><?php  echo $asig["APELLIDO"]." ".$asig["NOMBRE"];  ?></td>
-                        <td><?php  echo $asig["NOMBRE_CURSO"]; ?></td>
+                        <td><?php  echo $asig["OBJETIVO"]; ?></td>
                         <td><?php  echo $asig["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $asig["MODALIDAD"]; ?></td>
                         <td><?php  echo $asig["ESTADO"]; ?></td>

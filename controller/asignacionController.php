@@ -13,7 +13,7 @@ $filtro_periodo=$view->r->getPeriodos();
 
 switch($operacion){
 
-    case 'insertComunicacion': //guarda una comunicacion nueva
+    case 'insertComunicacion': //guarda una comunicacion nueva. Se ha dejado de usar porque la comunicacion se copia de la propuesta cuando se aprueba la capacitacion
         $view->c=new Comunicacion();
         $view->c->setIdAsignacion($_POST['id']);
         $view->c->setSituacion($_POST['situacion']);

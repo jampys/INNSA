@@ -70,7 +70,7 @@
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
                 <thead>
                 <tr>
-                    <th>Curso</th>
+                    <th>Capacitación</th>
                     <th>Período</th>
                     <th>Entidad</th>
                     <th title="Cant. de colaboradores asignados">Cant.</th>
@@ -87,7 +87,7 @@
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>Curso</th>
+                    <th>Capacitación</th>
                     <th>Período</th>
                     <th>Entidad</th>
                     <th>Cant.</th>
