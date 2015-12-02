@@ -131,8 +131,7 @@ switch($operacion){
             $u->setViaticos($v->viaticos);
             //$u->setViaticos($v->viaticos);
             $u->setPrograma($v->prog);
-            //$u->setEstado($v->estado);
-            $u->setEstado(1); //1: estado asignado
+            //$u->setEstado(1); //1: estado asignado
 
             if($v->operacion=="insert") {
                     $id_asignacion = $rta = $u->insertAsignacionPlan($v->id_solicitud); //le paso parametro id_solicitud y me devuelve el id_asignacion
