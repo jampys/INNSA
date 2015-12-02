@@ -6,6 +6,8 @@ require_once("model/cap_solicModel.php");
 require_once("model/comunicacionModel.php");
 require_once("model/aprobacionModel.php");
 $view->u=new Cap_Solic();
+$view->c=new Asignacion_plan();
+
 
 
 switch($operacion){
@@ -44,12 +46,14 @@ switch($operacion){
         foreach ($vector as $v){
             $t=new Aprobacion();
             if($v->operacion=="aprobar") {
-                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion, 'ASIGNADO')) $rta=0; // el check tiene un 1
-                if(!$t->copyPropuestaIntoComunicacion($v->id_asignacion)) $rta=0;
+                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion, 1)) $rta=0; // el check tiene un 1
+                $view->c->generarEstadoAsignacion($v->id_asignacion, $_SESSION["ses_id"], 2, 'aprobado', $rta); //2: estado aprobado
+                //if(!$t->copyPropuestaIntoComunicacion($v->id_asignacion)) $rta=0;
             }
             else if($v->operacion=="desaprobar") {
-                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion, 'ASIGNADO')) $rta=0; // el check tiene un 0
-                if(!$t->deletePropuestaFromComunicacion($v->id_asignacion)) $rta=0;
+                if(!$t->aprobarPlanIndividualmente($v->check, $v->id_asignacion, 1)) $rta=0; // el check tiene un 0
+                $view->c->generarEstadoAsignacion($v->id_asignacion, $_SESSION["ses_id"], 1, 'desaprobado', $rta); //1: estado asignado
+                //if(!$t->deletePropuestaFromComunicacion($v->id_asignacion)) $rta=0;
             }
 
         }
@@ -73,7 +77,7 @@ switch($operacion){
 
         $t=new Aprobacion();
         $lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'lugar_trabajo';
-        if(!$t->copyPropuestaIntoComunicacionMasivamente($_POST['id_plan'], $lugar_trabajo)) $rta=0;
+        //if(!$t->copyPropuestaIntoComunicacionMasivamente($_POST['id_plan'], $lugar_trabajo)) $rta=0;
         if(!$t->aprobarPlanMasivamente(1, $_POST['id_plan'], $lugar_trabajo)) $rta=0;
 
         if($rta > 0){
@@ -90,13 +94,13 @@ switch($operacion){
         break;
 
     case 'refreshGrid':
-        $view->cs=$view->u->getCapSolic();
+        $view->cs=$view->u->getCapSolic(date('Y'));
         include_once('view/abmAutorizacion_aprobacionGrid.php');
         exit;
         break;
 
     default:
-        $view->cs=$view->u->getCapSolic();
+        $view->cs=$view->u->getCapSolic(date('Y'));
         break;
 
 }

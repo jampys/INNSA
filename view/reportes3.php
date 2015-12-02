@@ -106,9 +106,9 @@
                     //item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
 
                     item['status']=$(this).attr('status');
-                    if(item['status']=='undefined' && item['check']==1) item['operacion']='aprobar';
+                    if(item['status']== 0 && item['check']==1) item['operacion']='aprobar';
                     else if(item['status']==1 && item['check']=='null') item['operacion']='desaprobar';
-                    if(item['status']=='undefined' && item['check']=='null') item['operacion']='null';
+                    else if(item['status']== 0 && item['check']=='null') item['operacion']='null';
                     else if(item['status']==1 && item['check']==1) item['operacion']='null';
                     //alert(item['operacion']);
 
@@ -218,8 +218,8 @@
         $(document).ready(function(){
 
 
-            /*//Si se chequea un checkbox
-            $(document).on("change", "input[name^='table_aprobar_check']", function() { //si hago check en un input que comience con table_aprobar_check
+            //Si se chequea un checkbox
+            /*$(document).on("change", "input[name^='table_aprobar_check']", function() { //si hago check en un input que comience con table_aprobar_check
 
                 if(this.checked) {
                     $(this).closest('tr').attr('operacion', 'aprobar');
