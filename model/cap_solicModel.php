@@ -663,6 +663,22 @@ class Asignacion_plan{
     }
 
 
+    public function getEstadosByAsignacion($id){
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "select ea.id_asignacion, to_char(ea.fecha,'DD/MM/YYYY HH24:MI') as fecha, es.nombre as estado, em.apellido, em.nombre, ea.motivo
+                  from estado_asignacion ea, estados es, usuarios us, empleados em
+                  where ea.nro_orden = es.nro_orden
+                  and ea.id_usuario = us.id_usuario
+                  and us.id_empleado = em.id_empleado
+                  and id_asignacion = $id
+                  order by ea.fecha asc";
+        $obj_cp->executeQuery($query);
+        return $obj_cp->fetchAll();
+
+    }
+
+
 
 
 }

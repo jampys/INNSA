@@ -27,14 +27,30 @@
                 success:function(datas){
 
                     //lleno el select con los estados posibles de cambio
-                    $("#estado").html('<option value="">Ingrese un estado</option>');
+                    /*$("#estado").html('<option value="">Ingrese un estado</option>');
                     $.each(datas['estado_cambiar'], function(indice, val){
                         $("#estado").append(new Option(datas['estado_cambiar'][indice]["ESTADO"],datas['estado_cambiar'][indice]["ESTADO"] ));
 
                     });
 
                     $("#estado").val(datas['estado_actual'][0]['ESTADO']);
-                    $("#estado_cambio").val(datas['estado_actual'][0]['ESTADO_CAMBIO']);
+                    $("#estado_cambio").val(datas['estado_actual'][0]['ESTADO_CAMBIO']);*/
+
+
+
+                    $.each(datas['estados_asignacion'], function(indice, val){
+
+                        $('#table_estados tbody').append('<tr id_plan='+datas['estados_asignacion'][indice]['ID_ASIGNACION']+'>' +
+                        '<td>'+datas['estados_asignacion'][indice]['FECHA']+'</td>' +
+                        '<td>'+datas['estados_asignacion'][indice]['ESTADO']+'</td>' +
+                        '<td>'+datas['estados_asignacion'][indice]['APELLIDO']+' '+datas['estados_asignacion'][indice]['NOMBRE']+'</td>' +
+                        '<td>'+datas['estados_asignacion'][indice]['MOTIVO']+'</td>' +
+                        '</tr>');
+
+                    });
+
+
+
 
                 },
                 type:"POST",
@@ -364,7 +380,7 @@
             // Dialog mensaje
             $('#dialog-msn').dialog({
                 autoOpen: false,
-                width: 300,
+                width: 400,
                 modal:true,
                 title:"Alerta",
                 buttons: {
@@ -389,7 +405,7 @@
                 autoOpen: false,
                 width: 600,
                 modal:true,
-                title:"Agregar Registro",
+                title:"Editar estado asignación",
                 buttons: {
                     "Guardar": function() {
                         if($("#form").valid()){ //OJO valid() devuelve un booleano
@@ -403,6 +419,9 @@
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
+                        $('#table_estados tbody tr').each(function () { //para limpiar la tabla de estados asignacion
+                            $(this).remove();
+                        });
                         $(this).dialog("close");
                     }
                 },
@@ -655,6 +674,8 @@
     <p id="message"></p>
 </div>
 
+
+
 <!-- ui-dialog -->
 <div id="dialog" >
 
@@ -668,12 +689,52 @@
                 <form id="form" action="">
                     <fieldset>
                         <!--<legend>Datos Registro</legend>-->
+
+
+
                         <div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
-                                    <label>Estado: </label>
+                                    <label>Historial de cambios en la asignación: </label>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <table id="table_estados" class="tablaSolicitud">
+                                        <thead>
+                                        <tr>
+                                            <td style="width: 25%">Fecha</td>
+                                            <td style="width: 15%">Estado</td>
+                                            <td style="width: 30%">Usuario</td>
+                                            <td style="width: 30%">Motivo</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- el cuerpo se genera dinamicamente con javascript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Cambiar el estado: </label>
                                     <select name="estado" id="estado">
-                                        <!--Se genera directamente con javascript -->
+                                        <option value="">Seleccione un estado</option>
+                                        <option value=1>Asignado</option>
+                                        <option value=-1>Cancelado</option>
                                     </select>
                                 </div>
                             </div>

@@ -162,10 +162,9 @@ switch($operacion){
 
     case 'update': //carga en la ventana modal los datos del estado de una asignacion para editar
         $estado_actual=$view->u->getAsignacionPlanById($_POST['id']);
-        $estado_cambiar=$view->u->estadosCambio($_POST['id']);
-
-        print_r(json_encode(array('estado_actual'=>$estado_actual, 'estado_cambiar'=>$estado_cambiar)));
-        //print_r(json_encode($estado));
+        //$estado_cambiar=$view->u->estadosCambio($_POST['id']);
+        $estados_asignacion=$view->u->getEstadosByAsignacion($_POST['id']);
+        print_r(json_encode(array('estados_asignacion'=>$estados_asignacion, 'estado_actual'=>$estado_actual)));
         exit;
         break;
 
