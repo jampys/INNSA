@@ -4,39 +4,36 @@ class Aprobacion{
 
 
 
-    public function aprobarPlanIndividualmente($status, $id_asignacion, $estado){
+    public function aprobarPlanIndividualmente($status, $id_asignacion){
 
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        //$query="update asignacion_plan set aprobada= $status where id_asignacion = $id_asignacion";
-        $query="update asignacion_plan set aprobada = $status, estado = '$estado' where id_asignacion = $id_asignacion";
+        //$query="update asignacion_plan set aprobada = $status, estado = '$estado' where id_asignacion = $id_asignacion";
+        $query="update asignacion_plan set aprobada = $status where id_asignacion = $id_asignacion";
         $obj_cp->dpParse($query);
 
         //$obj_cp->dpBind(':id_curso', $this->id_curso);
-
         $obj_cp->dpExecute();
         return $obj_cp->getAffect();
     }
 
-    public function aprobarPlanMasivamente($status, $id_plan, $lugar_trabajo){
-
+    public function aprobarPlanMasivamente($id_plan, $lugar_trabajo, $id_usuario, $nroOrden, $motivo, $resultado){
+        //llama a procedimiento almacenado
         $f=new Factory();
-        $obj_cp=$f->returnsQuery();
-        //$query="update asignacion_plan set aprobada= $status where id_plan = $id_plan";
-        $query="update asignacion_plan set aprobada= $status where id_asignacion in".
-                    " (select ap.id_asignacion".
-                    " from asignacion_plan ap, solicitud_capacitacion sc, empleados em".
-                    " where ap.id_solicitud = sc.id_solicitud".
-                    " and sc.id_empleado = em.id_empleado".
-                    " and ap.id_plan = $id_plan".
-                    " and ap.aprobada is null".
-                    " and em.lugar_trabajo = $lugar_trabajo)";
-        $obj_cp->dpParse($query);
+        $obj_ver=$f->returnsQuery();
+        $query='BEGIN APROBARPLANMASIVAMENTE(:id_plan, :lugar_trabajo, :id_usuario, :nroOrden, :motivo, :resultado); END;';
+        $topa = $obj_ver->dpParse($query);
 
-        //$obj_cp->dpBind(':id_curso', $this->id_curso);
+        $obj_ver->dpBind(':id_plan', $id_plan);
+        $obj_ver->dpBind(':lugar_trabajo', $lugar_trabajo);
+        $obj_ver->dpBind(':id_usuario', $id_usuario);
+        $obj_ver->dpBind(':nroOrden', $nroOrden);
+        $obj_ver->dpBind(':motivo', $motivo);
+        oci_bind_by_name($topa,':resultado', $resultado, -1, SQLT_INT); //oci_bind_by_name($topa,':resultado', $resultado, 1);
 
-        $obj_cp->dpExecute();
-        return $obj_cp->getAffect();
+        $obj_ver->dpExecute();
+        return $resultado;
+
     }
 
 

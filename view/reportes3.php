@@ -102,13 +102,13 @@
                     item = {};
                     item['id_asignacion']=$(this).attr('id_asignacion');
                     //item['id_plan']=globalId; //id_plan
-                    item['check']= ($(this).find('td').eq(1).find('[type=checkbox]').prop('checked'))? 1: 'null';
+                    item['check']= ($(this).find('td').eq(1).find('[type=checkbox]').prop('checked'))? 1: 0;
                     //item['operacion']=$(this).attr('operacion'); //si es una aprobacion dice "aprobar", sino esta vacio "".
 
                     item['status']=$(this).attr('status');
                     if(item['status']== 0 && item['check']==1) item['operacion']='aprobar';
-                    else if(item['status']==1 && item['check']=='null') item['operacion']='desaprobar';
-                    else if(item['status']== 0 && item['check']=='null') item['operacion']='null';
+                    else if(item['status']==1 && item['check']==0) item['operacion']='desaprobar';
+                    else if(item['status']== 0 && item['check']==0) item['operacion']='null';
                     else if(item['status']==1 && item['check']==1) item['operacion']='null';
                     //alert(item['operacion']);
 
