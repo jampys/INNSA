@@ -49,6 +49,12 @@
 
                     });
 
+                    //alert(datas['datos_version'][0]['APELLIDO']);
+                    $("#last_version").val(datas['datos_version'][0]['VERSION_NRO']);
+                    $("#fecha_version").val(datas['datos_version'][0]['FECHA_VERSION']);
+                    $("#usuario_version").val(datas['datos_version'][0]['APELLIDO']+' '+datas['datos_version'][0]['NOMBRE']);
+                    $("#estado_version").val(datas['datos_version'][0]['ESTADO']);
+
 
 
 
@@ -744,6 +750,60 @@
                                     <textarea type="text" name="estado_cambio" id="estado_cambio" rows="5"/></textarea>
                                 </div>
                             </div>
+                        </div>
+
+
+
+                        <!-- SECCION CORRESPONDIENTE A LA VERSION -->
+
+                        <div style="background-color: rgba(147, 140, 178, 0.36); margin-left: 5px; margin-right: 5px; padding-left: 4px; padding-right: 2px">
+
+                        <div class="sixteen_column section">
+                            <div class="eight column">
+                                <div class="column_content">
+                                    <label>Versión: </label>
+                                </div>
+                            </div>
+                            <div class="eight column">
+                                <div class="column_content">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+                            <div class="three column">
+                                <div class="column_content">
+                                    <label>Nro versión: </label>
+                                    <input type="text" name="last_version" id="last_version" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="three column">
+                                <div class="column_content">
+                                    <label>Fecha: </label>
+                                    <input type="text" name="fecha_version" id="fecha_version" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="four column">
+                                <div class="column_content">
+                                    <label>Estado asignación: </label>
+                                    <input type="text" name="estado_version" id="estado_version" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="six column">
+                                <div class="column_content">
+                                    <label>Usuario: </label>
+                                    <input type="text" name="usuario_version" id="usuario_version" readonly/>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
                         </div>
 
 

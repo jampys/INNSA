@@ -678,6 +678,29 @@ class Asignacion_plan{
 
     }
 
+    public function getVersionByAsignacion($id){
+        $f = new Factory();
+        $obj_cp = $f->returnsQuery();
+        $query = "select pmv.version_nro, pmv.fecha_version, pmv.periodo, em.apellido, em.nombre, es.nombre as estado
+from plan_maestro_version pmv, plan_capacitacion_version pcv, usuarios us, empleados em, asignacion_plan ap, plan_capacitacion pc, asignacion_plan_version apv, estados es
+where pcv.id_plan_maestro_version = pmv.id_plan_maestro_version
+and pc.id_plan = ap.id_plan
+and ap.id_asignacion = $id
+and pcv.id_plan = pc.id_plan
+and pmv.version_nro = siguienteversion(pc.periodo)-1
+and pmv.id_usuario = us.id_usuario
+and us.id_empleado = em.id_empleado
+and apv.id_plan_version = pcv.id_plan_version
+and apv.id_asignacion = ap.id_asignacion
+and apv.estado = es.nro_orden";
+
+
+        $obj_cp->executeQuery($query);
+        return $obj_cp->fetchAll();
+
+    }
+
+
 
 
 
