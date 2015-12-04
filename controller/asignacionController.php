@@ -169,12 +169,27 @@ switch($operacion){
         break;
 
     case 'save': //Guarda la edicion del estado de la asignacion
-        $view->u->setIdAsignacion($_POST['id']);
-        $view->u->setEstado($_POST['estado']);
-        $view->u->setEstadoCambio($_POST['estado_cambio']);
+        $rta=1;
 
-        $rta=$view->u->updateEstadoAsignacionPlan();
-        print_r(json_encode($rta));
+        //$view->u->setIdAsignacion($_POST['id']);
+        //$view->u->setEstado($_POST['estado']);
+        //$view->u->setEstadoCambio($_POST['estado_cambio']);
+
+        //$rta=$view->u->updateEstadoAsignacionPlan();
+        $view->c=new Asignacion_plan();
+        $view->c->generarEstadoAsignacion($_POST['id'], $_SESSION["ses_id"], $_POST['estado'], $_POST['estado_cambio'], $rta);
+
+
+        if($rta > 0){
+            $respuesta= array ('response'=>'success','comment'=>'Estado modificado correctamente');
+            sQueryOracle::hacerCommit();
+        }
+        else{
+            $respuesta=array ('response'=>'error','comment'=>'Error al modificar el estado');
+            sQueryOracle::hacerRollback();
+        }
+
+        print_r(json_encode($respuesta));
         exit;
         break;
 

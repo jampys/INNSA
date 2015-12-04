@@ -589,7 +589,7 @@ class Asignacion_plan{
     }
 
 
-    public function updateEstadoAsignacionPlan(){
+    public function updateEstadoAsignacionPlan(){ //Funcion se dejaria de usar 03/12/15
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
         $query = "update asignacion_plan set estado='$this->estado', estado_cambio='$this->estado_cambio' where id_asignacion=$this->id_asignacion";

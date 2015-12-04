@@ -294,10 +294,11 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(e.responseText);
 
                 },
                 ifModified:false,
@@ -419,9 +420,6 @@
                     "Cancelar": function() {
                         $("#form")[0].reset(); //para limpiar los campos del formulario
                         $('#form').validate().resetForm(); //para limpiar los errores validate
-                        $('#table_estados tbody tr').each(function () { //para limpiar la tabla de estados asignacion
-                            $(this).remove();
-                        });
                         $(this).dialog("close");
                     }
                 },
@@ -436,6 +434,7 @@
                 close:function(){
                     $("#form")[0].reset(); //para limpiar los campos del formulario cuando sale con la x
                     $('#form').validate().resetForm(); //para limpiar los errores validate
+                    $('#table_estados tbody tr').each(function () { $(this).remove(); }); //para limpiar la tabla de estados asignacion
                 }
 
             });
