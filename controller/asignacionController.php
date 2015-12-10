@@ -13,7 +13,7 @@ $filtro_periodo=$view->r->getPeriodos();
 
 switch($operacion){
 
-    case 'insertComunicacion': //guarda una comunicacion nueva. Se ha dejado de usar porque la comunicacion se copia de la propuesta cuando se aprueba la capacitacion
+    case 'insertComunicacion': //guarda una comunicacion nueva.
         $view->c=new Comunicacion();
         $view->c->setIdAsignacion($_POST['id']);
         $view->c->setSituacion($_POST['situacion']);
@@ -22,7 +22,7 @@ switch($operacion){
         $view->c->setObjetivo3($_POST['objetivo_3']);
         $view->c->setIndicadoresExito($_POST['indicadores_exito']);
         $view->c->setCompromiso($_POST['compromiso']);
-        $view->c->setComunico($_POST['comunico']);
+        //$view->c->setComunico($_POST['comunico']);
         $rta=$view->c->insertComunicacion();
 
         if($rta > 0){
@@ -56,7 +56,7 @@ switch($operacion){
         $view->c->setObjetivo3($_POST['objetivo_3']);
         $view->c->setIndicadoresExito($_POST['indicadores_exito']);
         $view->c->setCompromiso($_POST['compromiso']);
-        $view->c->setComunico($_POST['comunico']);
+        //$view->c->setComunico($_POST['comunico']);
         $rta=$view->c->updateComunicacion();
 
         if($rta > 0){
@@ -128,20 +128,26 @@ switch($operacion){
             if(@mail($para, utf8_decode($asunto), $mensaje, $headers)){ //Si envia email (por mas que la direccion sea incorrecta y lo rebote)
 
                 //Poner en la comunicacion el id de quien comunico
-                $view->c->setIdComunicacion($_POST['id_comunicacion']);
-                $view->c->setComunico($_SESSION['USER_ID_EMPLEADO']);
+                //$view->c->setIdComunicacion($_POST['id_comunicacion']);
+                //$view->c->setComunico($_SESSION['USER_ID_EMPLEADO']);
                 //$rtax=$view->c->updateComunicacionComunicacion();
-                if(!$view->c->updateComunicacionComunicacion()) $rta=0;
+                //if(!$view->c->updateComunicacionComunicacion()) $rta=0;
 
                 //cambio la asignacion a COMUNICADA
-                $view->u->setIdAsignacion($_POST['id']);
-                $view->u->setEstado($_POST['estado']);
-                $view->u->setEstadoCambio($_POST['estado_cambio']);
+                //$view->u->setIdAsignacion($_POST['id']);
+                //$view->u->setEstado($_POST['estado']);
+                //$view->u->setEstadoCambio($_POST['estado_cambio']);
                 //$rta=$view->u->updateEstadoAsignacionPlan();
-                if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
+                //if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
+
+                //Inserto la transicion del estado en tabla estado asignacion
+                $lala = new Asignacion_plan();
+                $lala->generarEstadoAsignacion($_POST['id'], $_SESSION["ses_id"], 3, 'comunicado', $rta); //3: estado comunicado
+
 
             }
             else{ $rta=-1;}
+
 
         }
 
@@ -195,7 +201,8 @@ switch($operacion){
         break;
 
     case 'refreshGrid':
-        $view->asignacion=$view->u->getAsignacionPlan($_POST['periodo']);
+        $periodo= (!$_POST['periodo'])? date('Y') : $_POST['periodo'];
+        $view->asignacion=$view->u->getAsignacionPlan($periodo);
         include_once('view/abmAsignacionGrid.php');
         exit;
         break;

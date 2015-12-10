@@ -90,7 +90,9 @@
             success:function(datas){
 
                 if(datas[0]){ //si la consulta trae algun registro =>es una edicion
-                    globalOperacion='updateComunicacion';
+                    globalOperacion = (datas[0]['ID_COMUNICACION'])? 'updateComunicacion': 'insertComunicacion';
+                    //globalOperacion='updateComunicacion';
+                    //alert(globalOperacion);
                     $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
                     //console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']).change();
@@ -99,15 +101,14 @@
                     $("#objetivo_3").val(datas[0]['OBJETIVO_3']).change();
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']).change();
                     $("#compromiso").val(datas[0]['COMPROMISO']).change();
-                    //$("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
-                    //$("#comunico_id").val(datas[0]['COMUNICO']);
-                    $("#comunico").val((typeof (datas[0]['COMUNICO'])=='undefined')? 'NO COMUNICADO': datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']); //si todavia no se comunico
+                    /*$("#comunico").val((typeof (datas[0]['COMUNICO'])=='undefined')? 'NO COMUNICADO': datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']); //si todavia no se comunico
                     $("#comunico_id").val((typeof (datas[0]['COMUNICO'])=='undefined')? '': datas[0]['COMUNICO']); //si todavia no se comunico
-                    $("#notificado").val((datas[0]['NOTIFICADO']==1)? 'NOTIFICADO':'NO NOTIFICADO');
+                    $("#notificado").val((datas[0]['NOTIFICADO']==1)? 'NOTIFICADO':'NO NOTIFICADO');*/
 
                     //para bloquear o desbloquear botones y campos
                     //if(datas[0]['ESTADO']!='ASIGNADO' && datas[0]['ESTADO']!='COMUNICADO' ){
-                    if(!(datas[0]['ESTADO']=='ASIGNADO' || datas[0]['ESTADO']=='COMUNICADO' )){ //es igual a la expresion de arriba
+                    //if(!(datas[0]['ESTADO']==1 || datas[0]['ESTADO']==3 )){ //es igual a la expresion de arriba
+                    if(datas[0]['ESTADO']!= 2 && datas[0]['ESTADO']!= 3 ){
                         $("#form_comunicacion :input").attr("readonly", true);
                         $('#com_btn_guardar').attr('disabled', true);
                         $('#com_btn_send').attr('disabled', true);
@@ -327,14 +328,16 @@
 
         function enviarComunicacion(){
 
+            //alert($('#comunicacion').data('id_comunicacion'));
+
             var data={  "accion":"asignacion",
                         "operacion":"sendComunicacion",
                         "id":globalId, //id_asignacion
-                        "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
+                        "id_comunicacion": $('#comunicacion').data('id_comunicacion')
                         //"comunico":$("#comunico_id").val(), //tomo el user en PHP
                         //cambio estado a COMUNICADO
-                        "estado": "COMUNICADO",
-                        "estado_cambio": ""
+                        //"estado": "COMUNICADO",
+                        //"estado_cambio": ""
 
             };
 
@@ -343,11 +346,12 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                     $("#dialog-msn").dialog("open");
                     //$("#message").html("ha ocurrido un error");
-                    $("#message").html(datas['comment']);
+                    $("#message").html(e.responseText);
+                    //$("#message").html(datas['comment']);
 
                 },
                 ifModified:false,
@@ -882,7 +886,7 @@
                         </div>
 
 
-                        <div class="sixteen_column section">
+                        <!--<div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Comunicó: </label>
@@ -896,7 +900,7 @@
                                     <input type="text" name="notificado" id="notificado" readonly/>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
 
 

@@ -88,8 +88,16 @@ class Comunicacion
     public function getComunicacionByAsignacion($id){
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        //$obj_emp->executeQuery("select * from cap_comunicacion, empleados where cap_comunicacion.comunico = empleados.id_empleado and id_asignacion=$id");
-        $obj_emp->executeQuery("select * from cap_comunicacion co, empleados em, asignacion_plan ap where co.comunico = em.id_empleado (+) and co.id_asignacion = ap.id_asignacion and ap.id_asignacion=$id");
+        $query="select co.id_comunicacion, ap.id_asignacion, co.situacion, co.objetivo_1, co.objetivo_2, co.objetivo_3, co.indicadores_exito, co.compromiso, ap.estado
+                from cap_comunicacion co, asignacion_plan ap
+                where co.id_asignacion = ap.id_asignacion
+                and ap.id_asignacion=$id
+                UNION
+                select null, ap.id_asignacion, pro.situacion, pro.objetivo_1, pro.objetivo_2, pro.objetivo_3, pro.indicadores_exito, pro.compromiso, ap.estado
+                from propuestas pro, asignacion_plan ap
+                where ap.id_propuesta = pro.id_propuesta
+                and ap.id_asignacion = $id";
+        $obj_emp->executeQuery($query);
         return $obj_emp->fetchAll();
     }
 
@@ -103,7 +111,6 @@ class Comunicacion
 
         $f=new Factory();
         $obj_com=$f->returnsQuery();
-        //$query="update cap_comunicacion set situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso, comunico=:comunico where id_comunicacion = :id_comunicacion";
         $query="update cap_comunicacion set situacion=:situacion, objetivo_1=:objetivo_1, objetivo_2=:objetivo_2, objetivo_3=:objetivo_3, indicadores_exito=:indicadores_exito, compromiso=:compromiso where id_comunicacion = :id_comunicacion";
         $obj_com->dpParse($query);
 
@@ -152,8 +159,10 @@ class Comunicacion
 
         $f=new Factory();
         $obj_com=$f->returnsQuery();
-        $query="insert into cap_comunicacion(id_asignacion, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, comunico)".
-            "values(:id_asignacion, :situacion, :objetivo_1, :objetivo_2, :objetivo_3, :indicadores_exito, :compromiso, :comunico)";
+        /*$query="insert into cap_comunicacion(id_asignacion, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso, comunico)".
+            "values(:id_asignacion, :situacion, :objetivo_1, :objetivo_2, :objetivo_3, :indicadores_exito, :compromiso, :comunico)";*/
+        $query="insert into cap_comunicacion(id_asignacion, situacion, objetivo_1, objetivo_2, objetivo_3, indicadores_exito, compromiso)".
+            "values(:id_asignacion, :situacion, :objetivo_1, :objetivo_2, :objetivo_3, :indicadores_exito, :compromiso)";
         $obj_com->dpParse($query);
 
         $obj_com->dpBind(':id_asignacion', $this->id_asignacion);
@@ -163,7 +172,7 @@ class Comunicacion
         $obj_com->dpBind(':objetivo_3', $this->objetivo_3);
         $obj_com->dpBind(':indicadores_exito', $this->indicadores_exito);
         $obj_com->dpBind(':compromiso', $this->compromiso);
-        $obj_com->dpBind(':comunico', $this->comunico);
+        //$obj_com->dpBind(':comunico', $this->comunico);
 
         $obj_com->dpExecute();
         return $obj_com->getAffect();
@@ -193,13 +202,13 @@ class Comunicacion
         $f = new Factory();
         $obj_com = $f->returnsQuery();
         $query = "select pc.periodo, cu.nombre CURSO, em.apellido, em.nombre, em.email, pc.fecha_desde, pc.fecha_hasta".
-                " from plan_capacitacion pc, asignacion_plan ap, cursos cu, solicitud_capacitacion sc, empleados em, usuarios us".
-                " where ap.id_solicitud = sc.id_solicitud".
-                " and sc.id_empleado = em.id_empleado".
-                " and ap.id_plan = pc.id_plan".
-                " and pc.id_curso = cu.id_curso".
-                " and em.id_empleado = us.id_empleado".
-                " and ap.id_asignacion = $this->id_asignacion";
+        " from plan_capacitacion pc, asignacion_plan ap, cursos cu, solicitud_capacitacion sc, empleados em, usuarios us".
+        " where ap.id_solicitud = sc.id_solicitud".
+        " and sc.id_empleado = em.id_empleado".
+        " and ap.id_plan = pc.id_plan".
+        " and pc.id_curso = cu.id_curso".
+        " and em.id_empleado = us.id_empleado".
+        " and ap.id_asignacion = $this->id_asignacion";
 
 
         $obj_com->executeQuery($query);
