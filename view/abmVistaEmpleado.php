@@ -9,7 +9,7 @@
     var globalId;
 
 
-        function editar(id_asignacion){ //funcion que trae los datos del estado de una asignacion
+        /*function editar(id_asignacion){ //funcion que trae los datos del estado de una asignacion
 
             $.ajax({
                 url:"index.php",
@@ -43,7 +43,7 @@
 
             });
 
-        }
+        }*/
 
 
 
@@ -439,7 +439,7 @@
 
 
             // Dialog.... Contiene el modal donde se cambia el estado de una asignacion
-            $('#dialog').dialog({
+            /*$('#dialog').dialog({
                 autoOpen: false,
                 width: 600,
                 modal:true,
@@ -473,7 +473,7 @@
                     $('#form').validate().resetForm(); //para limpiar los errores validate
                 }
 
-            });
+            });*/
 
 
             // comunicacion_link
@@ -498,14 +498,14 @@
             });
 
             //Agregado para editar (cambiar de estado)
-            $(document).on("click", ".edit_link", function(){
+            /*$(document).on("click", ".edit_link", function(){
                 //globalOperacion=$(this).attr("media");
                 globalOperacion='edit';
                 globalId=$(this).attr('id');
                 editar(globalId); //le mando el id de la asignacion a editar que esta en el atributo id
                 $('#dialog').dialog('open');
                 return false;
-            });
+            });*/
 
 
             //hover states on the static widgets
@@ -927,9 +927,9 @@
 
 
 <!-- cambio de estado -->
-<div id="dialog" >
+<!--<div id="dialog" >
 
-    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel-->
+    <!-- <div class="grid_7">  se tuvo que modificar porque se achicaba solo el panel
     <div class="grid_7" style="width: 98%">
 
         <div class="clear"></div>
@@ -952,7 +952,7 @@
                                         <option value="NOTIFICADO">Notificado</option>
                                         <option value="EVALUADO">Evaluado</option>
                                         <option value="POST-EVALUADO">Post-Evaluado</option>-->
-                                        <!-- se carga dinamicamente  -->
+                                        <!-- se carga dinamicamente
                                     </select>
                                 </div>
                             </div>
@@ -975,7 +975,7 @@
 
     </div>
 
-</div>
+</div>-->
 
 
 
