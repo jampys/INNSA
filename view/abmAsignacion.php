@@ -108,7 +108,7 @@
                     //para bloquear o desbloquear botones y campos
                     //if(datas[0]['ESTADO']!='ASIGNADO' && datas[0]['ESTADO']!='COMUNICADO' ){
                     //if(!(datas[0]['ESTADO']==1 || datas[0]['ESTADO']==3 )){ //es igual a la expresion de arriba
-                    if(datas[0]['ESTADO']!= 2 && datas[0]['ESTADO']!= 3 ){
+                    if(datas[0]['ESTADO']==1 || datas[0]['ESTADO']>=3){
                         $("#form_comunicacion :input").attr("readonly", true);
                         $('#com_btn_guardar').attr('disabled', true);
                         $('#com_btn_send').attr('disabled', true);
@@ -360,7 +360,7 @@
 
                     $("#dialog-msn").dialog("open");
                     $("#message").html(datas['comment']);
-                    (datas['response']!='error')? $("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>') : '';
+                    //(datas['response']!='error')? $("#comunico").val('<?php //echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>') : '';
 
 
                 },
@@ -461,8 +461,11 @@
                         click: function() {
                                 enviarComunicacion();
                                 //seteo el comunicardor
-                                //$("#comunico").val('<?php echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
-                                //$("#comunico_id").val('<?php echo $_SESSION['USER_ID_EMPLEADO']; ?>');
+                                //$("#comunico").val('<?php //echo $_SESSION['USER_APELLIDO']." ".$_SESSION['USER_NOMBRE']; ?>');
+                                //$("#comunico_id").val('<?php //echo $_SESSION['USER_ID_EMPLEADO']; ?>');
+                                $("#comunicacion").dialog("close");
+                                //Llamada ajax para refrescar la grilla
+                                $('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
 
                         },
                         id: 'com_btn_send',
@@ -470,13 +473,13 @@
 
                     },
                     {
-                    click: function() {
-                        if($("#form_comunicacion").valid()){
-                        guardar();
-                        $("#comunicacion").dialog("close");
-                        //Llamada ajax para refrescar la grilla
-                        $('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid"});
-                        }
+                        click: function() {
+                            if($("#form_comunicacion").valid()){
+                            guardar();
+                            $("#comunicacion").dialog("close");
+                            //Llamada ajax para refrescar la grilla
+                            $('#principal').load('index.php',{accion:"asignacion", operacion: "refreshGrid", periodo: $("#filtro_periodo").val()});
+                            }
                     },
                     id: 'com_btn_guardar',
                     text: "Guardar"
