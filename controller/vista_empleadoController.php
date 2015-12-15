@@ -79,7 +79,7 @@ switch($operacion){
         exit;
         break;
 
-    case 'save':
+    /*case 'save': //no se usa mas esta funcionalidad 15/12/2015
         $view->u->setIdAsignacion($_POST['id']);
         $view->u->setEstado($_POST['estado']);
         $view->u->setEstadoCambio($_POST['estado_cambio']);
@@ -87,7 +87,7 @@ switch($operacion){
         $rta=$view->u->updateEstadoAsignacionPlan();
         print_r(json_encode($rta));
         exit;
-        break;
+        break; */
 
     case 'refreshGrid':
         $view->asignacion=$view->u->getAsignacionPlanByUser($_SESSION["ses_id"], $_POST['periodo']);

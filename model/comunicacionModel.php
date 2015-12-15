@@ -128,25 +128,23 @@ class Comunicacion
 
     }
 
-    public function updateComunicacionNotificacion(){ //Se actualiza la comunicacion a notificada
+    /*public function updateComunicacionNotificacion(){ //Se actualiza la comunicacion a notificada. Funcion se dejaria de utilizar 14/12/15
 
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="update cap_comunicacion set notificado=$this->notificado where id_comunicacion = $this->id_comunicacion";
         $obj_user->executeQuery($query);
         return $obj_user->getAffect();
+    }*/
 
-    }
-
-    public function updateComunicacionComunicacion(){ //Se actualiza la comunicacion... se settea el campo "comunico"
+    /*public function updateComunicacionComunicacion(){ //Se actualiza la comunicacion... se settea el campo "comunico"... Funcion se dejaria de usar 14/12/15
 
         $f=new Factory();
         $obj_user=$f->returnsQuery();
         $query="update cap_comunicacion set comunico=$this->comunico where id_comunicacion = $this->id_comunicacion";
         $obj_user->executeQuery($query);
         return $obj_user->getAffect();
-
-    }
+    }*/
 
     public function insertComunicacion(){
         /*

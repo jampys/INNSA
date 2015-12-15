@@ -73,17 +73,19 @@ switch($operacion){
         break;
 
 
-    case 'updateComunicacionNotificacion':
+    case 'updateComunicacionNotificacion': //Cuando el colaborador se notifica... tanto aceptando como cancelando
         $rta=1;
-        $view->c=new Comunicacion();
-        $view->c->setIdComunicacion($_POST['id_comunicacion']);
-        $view->c->setNotificado($_POST['notificado']);
+        //$view->c=new Comunicacion();
+        //$view->c->setIdComunicacion($_POST['id_comunicacion']);
+        //$view->c->setNotificado($_POST['notificado']);
         //cambio esta asignacion a NOTIFICADO
-        $view->u->setIdAsignacion($_POST['id']);
-        $view->u->setEstado($_POST['estado']);
-        $view->u->setEstadoCambio($_POST['estado_cambio']);
-        if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
-        if(!$view->c->updateComunicacionNotificacion()) $rta=0;
+        //$view->u->setIdAsignacion($_POST['id']);
+        //$view->u->setEstado($_POST['estado']);
+        //$view->u->setEstadoCambio($_POST['estado_cambio']);
+        //if(!$view->u->updateEstadoAsignacionPlan()) $rta=0;
+        //if(!$view->c->updateComunicacionNotificacion()) $rta=0;
+        $motivo= ($_POST['estado_cambio']=='')? 'notificado' : $_POST['estado_cambio'];
+        $view->u->generarEstadoAsignacion($_POST['id'], $_SESSION["ses_id"], $_POST['estado'], $motivo, $rta);
 
         if($rta > 0){
             $respuesta= array ('response'=>'success','comment'=>'Notificación enviada correctamente');

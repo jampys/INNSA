@@ -482,7 +482,7 @@ class Asignacion_plan{
     public function getAsignacionPlanByUser($id, $periodo){
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
-        $query = "select sc. periodo, cu.nombre NOMBRE_CURSO, pc.fecha_desde, pc.fecha_hasta, pc.duracion, pc.unidad, pc.modalidad, es.nro_orden, es.nombre as ESTADO, ap.id_asignacion
+        $query = "select sc. periodo, pc.objetivo, pc.fecha_desde, pc.fecha_hasta, pc.duracion, pc.unidad, pc.modalidad, es.nro_orden, es.nombre as ESTADO, ap.id_asignacion
                   from asignacion_plan ap, solicitud_capacitacion sc, empleados em, plan_capacitacion pc, cursos cu, usuarios us, estados es
                   where ap.id_solicitud = sc.id_solicitud
                   and sc.id_empleado = em.id_empleado
@@ -590,14 +590,13 @@ class Asignacion_plan{
     }
 
 
-    public function updateEstadoAsignacionPlan(){ //Funcion se dejaria de usar 03/12/15
+    /*public function updateEstadoAsignacionPlan(){ //Funcion se dejaria de usar 03/12/15
         $f = new Factory();
         $obj_cp = $f->returnsQuery();
         $query = "update asignacion_plan set estado='$this->estado', estado_cambio='$this->estado_cambio' where id_asignacion=$this->id_asignacion";
         $obj_cp->executeQuery($query);
         return $obj_cp->getAffect();
-
-    }
+    }*/
 
 
     function deleteAsignacionPlan(){

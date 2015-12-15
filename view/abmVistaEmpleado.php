@@ -70,25 +70,28 @@
                 if(datas[0]){ //si la consulta trae algun registro
                     globalOperacion='comunicacion';
                     $("#comunicacion").data('id_comunicacion',datas[0]['ID_COMUNICACION']);
-                    console.log( $('#comunicacion').data('id_comunicacion'));
+                    //console.log( $('#comunicacion').data('id_comunicacion'));
                     $("#situacion").val(datas[0]['SITUACION']).change();
                     $("#objetivos").val(datas[0]['OBJETIVO_1']+
                             '\n'+((datas[0]['OBJETIVO_2'])? datas[0]['OBJETIVO_2']: "") + //Se valida que el objetivo_2 tenga datos
                             '\n'+((datas[0]['OBJETIVO_3'])? datas[0]['OBJETIVO_3']: "")).change(); ////Se valida que el objetivo_3 tenga datos
                     $("#indicadores_exito").val(datas[0]['INDICADORES_EXITO']).change();
                     $("#compromiso").val(datas[0]['COMPROMISO']).change();
-                    $("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
-                    $("#comunico_id").val(datas[0]['COMUNICO']);
-                    $("#notificado").attr('checked', (datas[0]['NOTIFICADO']==1)? true:false);
+                    //$("#comunico").val(datas[0]['APELLIDO']+' '+datas[0]['NOMBRE']);
+                    //$("#comunico_id").val(datas[0]['COMUNICO']);
+                    //$("#notificado").attr('checked', (datas[0]['NOTIFICADO']==1)? true:false);
+                    $("#notificado").attr('checked', (datas[0]['ESTADO']>=4)? true:false);
                     $("#mensaje").val(datas[0]['ESTADO_CAMBIO']);
 
-                    var estado=(datas[0]['ESTADO']=='COMUNICADO' || datas[0]['ESTADO']=='NOTIFICADO' || datas[0]['ESTADO']=='EVALUADO' || datas[0]['ESTADO']=='POST-EVALUADO')? 'NOTIFICADO': 'CANCELADO';
+                    //var estado=(datas[0]['ESTADO']=='COMUNICADO' || datas[0]['ESTADO']=='NOTIFICADO' || datas[0]['ESTADO']=='EVALUADO' || datas[0]['ESTADO']=='POST-EVALUADO')? 'NOTIFICADO': 'CANCELADO';
+                    var estado=(datas[0]['ESTADO']>=3)? 4 : -1;
                     $("input:radio[name=group1][value="+estado+"]").attr("checked", "checked"); //selecciona en el radio button
-                    ($("input:radio[name=group1][value=CANCELADO]").attr("checked"))? $('#div-mensaje').show(): $('#div-mensaje').hide();
+                    ($("input:radio[name=group1][value = -1]").attr("checked"))? $('#div-mensaje').show(): $('#div-mensaje').hide();
 
                     /*si el empleado ya esta notificado (dio su conformidad con el check) el checkbox se inhabilita
                     para que no lo pueda volver a deltildar */
-                    if(datas[0]['NOTIFICADO']==1){
+                    //if(datas[0]['NOTIFICADO']==1){
+                    if(datas[0]['ESTADO']>= 4){
                         $("#notificado").attr("disabled", true);
                         $('#com_btn_guardar').attr('disabled', true);
                         $('input:radio[name=group1]').attr('disabled', true);
@@ -216,7 +219,7 @@
 
         function guardar(){
 
-            if(globalOperacion=="edit"){ //Se cambia el estado de la asignacion
+            if(globalOperacion=="edit"){ //Se cambia el estado de la asignacion. NO SE USA MAS ESTA FUNCIONALIDAD
 
                 var data={
                     "accion":"asignacion",
@@ -231,11 +234,11 @@
                 var data={  "accion":"asignacion",
                             "operacion":"updateComunicacionNotificacion",
                             "id_comunicacion": $('#comunicacion').data('id_comunicacion'),
-                            "notificado": $('#notificado').prop('checked')? 1:0,
+                            //"notificado": $('#notificado').prop('checked')? 1:0,
 
                             //cambio estado asignacion a NOTIFICADO
                             "id": globalId, //id_asignacion
-                            "estado": $("input:radio[name=group1]:checked").val(), //NOTIFICADO o CANCELADO
+                            "estado": $("input:radio[name=group1]:checked").val(), //NOTIFICADO (4) o CANCELADO(-1)
                             "estado_cambio": $("#mensaje").val()
 
 
@@ -268,8 +271,8 @@
                             "comentarios":$("#comentarios").val(),
 
                             //cambio estado asignacion a EVALUADA
-                            "estado": 'EVALUADO',
-                            "estado_cambio":''
+                            //"estado": 'EVALUADO',
+                            //"estado_cambio":''
 
                         };
 
@@ -524,7 +527,7 @@
 
             $("input:radio[name=group1]").click(function(){
 
-                if($("input:radio[name=group1]:checked").val()=="CANCELADO"){
+                if($("input:radio[name=group1]:checked").val()== -1){
                     $('#div-mensaje').show();
                 }
                 else{
@@ -543,7 +546,7 @@
         $('#form_comunicacion').validate({
             rules: {
                 mensaje: {
-                    required: function(){return $("input:radio[name=group1]:checked").val()=="CANCELADO" },
+                    required: function(){return $("input:radio[name=group1]:checked").val()== -1 },
                     maxlength: 250
                 },
                 notificado: {
@@ -688,7 +691,7 @@
                         </div>
 
 
-                        <div class="sixteen_column section">
+                        <!--<div class="sixteen_column section">
                             <div class="eight column">
                                 <div class="column_content">
                                     <label>Comunicó: </label>
@@ -700,7 +703,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
 
 
                         <div class="sixteen_column section">
@@ -724,11 +727,11 @@
                                 <div class="column_content">
                                     <div class="spinners">
                                         <div class="cbcheck">
-                                            <div class="check"><input type="radio" name="group1" value="NOTIFICADO" checked></div>
+                                            <div class="check"><input type="radio" name="group1" value= 4 checked></div>
                                             <div class="lab">Acepto</div>
                                         </div>
                                         <div class="cbcheck">
-                                            <div class="check"><input type="radio" name="group1" value="CANCELADO"></div>
+                                            <div class="check"><input type="radio" name="group1" value= -1></div>
                                             <div class="lab">Rechazo</div>
                                         </div>
                                     </div>

@@ -81,7 +81,7 @@
                 <?php foreach ($view->asignacion as $asig) {?>
                     <tr class="odd gradeA">
                         <td><?php  echo $asig["PERIODO"]; ?></td>
-                        <td><?php  echo $asig["NOMBRE_CURSO"]; ?></td>
+                        <td><?php  echo $asig["OBJETIVO"]; ?></td>
                         <td><?php  echo $asig["FECHA_DESDE"]; ?></td>
                         <td><?php  echo $asig["FECHA_HASTA"]; ?></td>
                         <td><?php  echo $asig["DURACION"].' '.$asig["UNIDAD"]; ?></td>

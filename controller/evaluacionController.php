@@ -36,10 +36,11 @@ switch($operacion){
 
         //cambio la asignacion a EVALUADO
         $view->a=new Asignacion_plan();
-        $view->a->setIdAsignacion($_POST['id_asignacion']);
-        $view->a->setEstado($_POST['estado']);
-        $view->a->setEstadoCambio($_POST['estado_cambio']);
-        if(!$view->a->updateEstadoAsignacionPlan()) $rta=0;
+        //$view->a->setIdAsignacion($_POST['id_asignacion']);
+        //$view->a->setEstado($_POST['estado']);
+        //$view->a->setEstadoCambio($_POST['estado_cambio']);
+        //if(!$view->a->updateEstadoAsignacionPlan()) $rta=0;
+        $view->a->generarEstadoAsignacion($_POST['id_asignacion'], $_SESSION["ses_id"], 5, 'evaluado', $rta); //5 evaluado
 
         if($rta > 0){
             $respuesta = array ('response'=>'success','comment'=>'Evaluación ingresada correctamente');

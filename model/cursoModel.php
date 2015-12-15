@@ -6,7 +6,7 @@ class Curso
     var $nombre;
     var $descripcion;
     var $comentarios;
-    var $entidad;
+    //var $entidad;
     var $id_tema;
     //var $id_tipo_curso;
 
@@ -36,7 +36,7 @@ class Curso
                                   "where cu.id_tema=te.id_tema".
                                   "and te.id_categoria=ca.id_categoria".
                                   "and cu.id_curso=$id"); */
-        $obj_user->executeQuery("select cu.nombre, cu.descripcion, cu.comentarios, cu.entidad, te.id_categoria, cu.id_tema, id_tipo_curso from cursos cu, temas te where cu.id_tema=te.id_tema and cu.id_curso=$id");
+        $obj_user->executeQuery("select cu.nombre, cu.descripcion, cu.comentarios, te.id_categoria, cu.id_tema, id_tipo_curso from cursos cu, temas te where cu.id_tema=te.id_tema and cu.id_curso=$id");
         return $obj_user->fetchAll();
     }
 
@@ -62,8 +62,8 @@ class Curso
     function getComentarios()
     { return $this->comentarios;}
 
-    function getEntidad()
-    { return $this->entidad;}
+    /*function getEntidad()
+    { return $this->entidad;}*/
 
     function getIdTema()
     { return $this->id_tema;}
@@ -84,8 +84,8 @@ class Curso
     function setComentarios($val)
     {  $this->comentarios=$val;}
 
-    function setEntidad($val)
-    {  $this->entidad=$val;}
+    /*function setEntidad($val)
+    {  $this->entidad=$val;}*/
 
     function setIdTema($val)
     {  $this->id_tema=$val;}
@@ -105,13 +105,13 @@ class Curso
 
         $f=new Factory();
         $obj_curso=$f->returnsQuery();
-        $query="update cursos set nombre = :nombre, descripcion = :descripcion, comentarios = :comentarios, entidad = :entidad, id_tema = :id_tema, id_tipo_curso = :id_tipo_curso where id_curso = :id_curso";
+        $query="update cursos set nombre = :nombre, descripcion = :descripcion, comentarios = :comentarios, id_tema = :id_tema, id_tipo_curso = :id_tipo_curso where id_curso = :id_curso";
         $obj_curso->dpParse($query);
 
         $obj_curso->dpBind(':nombre', $this->nombre);
         $obj_curso->dpBind(':descripcion', $this->descripcion);
         $obj_curso->dpBind(':comentarios', $this->comentarios);
-        $obj_curso->dpBind(':entidad', $this->entidad);
+        //$obj_curso->dpBind(':entidad', $this->entidad);
         $obj_curso->dpBind(':id_tema', $this->id_tema);
         $obj_curso->dpBind(':id_curso', $this->id_curso);
         $obj_curso->dpBind(':id_tipo_curso', $this->id_tipo_curso);
@@ -130,13 +130,13 @@ class Curso
 
         $f=new Factory();
         $obj_curso=$f->returnsQuery();
-        $query="insert into cursos(nombre, descripcion, comentarios, entidad, id_tema, id_tipo_curso) values(:nombre, :descripcion, :comentarios, :entidad, :id_tema, :id_tipo_curso)";
+        $query="insert into cursos(nombre, descripcion, comentarios, id_tema, id_tipo_curso) values(:nombre, :descripcion, :comentarios, :id_tema, :id_tipo_curso)";
         $obj_curso->dpParse($query);
 
         $obj_curso->dpBind(':nombre', $this->nombre);
         $obj_curso->dpBind(':descripcion', $this->descripcion);
         $obj_curso->dpBind(':comentarios', $this->comentarios);
-        $obj_curso->dpBind(':entidad', $this->entidad);
+        //$obj_curso->dpBind(':entidad', $this->entidad);
         $obj_curso->dpBind(':id_tema', $this->id_tema);
         $obj_curso->dpBind(':id_tipo_curso', $this->id_tipo_curso);
         $obj_curso->dpExecute();
@@ -148,14 +148,14 @@ class Curso
 
         $f=new Factory();
         $obj_curso=$f->returnsQuery();
-        $query="insert into cursos(nombre, descripcion, comentarios, entidad, id_tema, id_tipo_curso) values(:nombre, :descripcion, :comentarios, :entidad, :id_tema, :id_tipo_curso) returning id_curso into :id";
+        $query="insert into cursos(nombre, descripcion, comentarios, id_tema, id_tipo_curso) values(:nombre, :descripcion, :comentarios, :id_tema, :id_tipo_curso) returning id_curso into :id";
         $obj_curso->dpParse($query);
         $topo=$obj_curso->dpParse($query);
 
         $obj_curso->dpBind(':nombre', $this->nombre);
         $obj_curso->dpBind(':descripcion', $this->descripcion);
         $obj_curso->dpBind(':comentarios', $this->comentarios);
-        $obj_curso->dpBind(':entidad', $this->entidad);
+        //$obj_curso->dpBind(':entidad', $this->entidad);
         $obj_curso->dpBind(':id_tema', $this->id_tema);
         $obj_curso->dpBind(':id_tipo_curso', $this->id_tipo_curso);
 

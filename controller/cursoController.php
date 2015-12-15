@@ -11,7 +11,7 @@ switch($operacion){
         $view->u->setNombre($_POST['nombre']);
         $view->u->setDescripcion($_POST['descripcion']);
         $view->u->setComentarios($_POST['comentarios']);
-        $view->u->setEntidad($_POST['entidad']);
+        //$view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
         //$view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->insertCurso();
@@ -40,7 +40,7 @@ switch($operacion){
         $view->u->setNombre($_POST['nombre']);
         $view->u->setDescripcion($_POST['descripcion']);
         $view->u->setComentarios($_POST['comentarios']);
-        $view->u->setEntidad($_POST['entidad']);
+        //$view->u->setEntidad($_POST['entidad']);
         $view->u->setIdTema($_POST['tema']);
         //$view->u->setIdTipoCurso($_POST['tipo_curso']);
         $rta=$view->u->updateCurso();

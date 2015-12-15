@@ -70,7 +70,7 @@
                     $("#nombre").val(datas[0]['NOMBRE']);
                     $("#descripcion").val(datas[0]['DESCRIPCION']);
                     $("#comentarios").val(datas[0]['COMENTARIOS']);
-                    $("#entidad").val(datas[0]['ENTIDAD']);
+                    //$("#entidad").val(datas[0]['ENTIDAD']);
                     $("#categoria").val(datas[0]['ID_CATEGORIA']);
                     $("#tipo_curso").val(datas[0]['ID_TIPO_CURSO']);
                     cargarTemas(datas[0]['ID_TEMA']);
@@ -90,11 +90,11 @@
 
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
-                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
+                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
             }
             else if(globalOperacion=="edit"){ //se va a guardar un curso editado
                 var url="index.php";
-                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "entidad":$("#entidad").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
+                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
             }
             else if(globalOperacion=="delete"){
                 var url="index.php";

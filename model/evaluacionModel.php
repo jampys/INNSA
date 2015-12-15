@@ -231,9 +231,9 @@ class Evaluacion
 
         $f=new Factory();
         $obj_eva=$f->returnsQuery();
-        $query="insert into cap_evaluacion(id_asignacion, conceptos_importantes, aspectos_faltaron, mejorar_desempenio, fecha_evaluacion,".
+        $query="insert into cap_evaluacion(id_asignacion, conceptos_importantes, aspectos_faltaron, mejorar_desempenio,".
             " ev_i_dominio, ev_i_lenguaje, ev_i_claridad, ev_i_material, ev_i_consultas, ev_i_didactico, ev_i_participacion, ev_l_duracion, ev_l_comunicacion, ev_l_material, ev_l_break, ev_l_hotel, obj_1, obj_2, obj_3, comentarios)".
-            " values($this->id_asignacion, :conceptos_importantes, :aspectos_faltaron, :mejorar_desempenio, SYSDATE,".
+            " values($this->id_asignacion, :conceptos_importantes, :aspectos_faltaron, :mejorar_desempenio,".
             " $this->ev_i_dominio, $this->ev_i_lenguaje, $this->ev_i_claridad, $this->ev_i_material, $this->ev_i_consultas, $this->ev_i_didactico, $this->ev_i_participacion, $this->ev_l_duracion, $this->ev_l_comunicacion, $this->ev_l_material, $this->ev_l_break, $this->ev_l_hotel, $this->obj_1, $this->obj_2, $this->obj_3, :comentarios)";
         $obj_eva->dpParse($query);
 

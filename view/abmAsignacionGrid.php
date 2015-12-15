@@ -88,7 +88,7 @@
                         <td><?php  echo $asig["ESTADO"]; ?></td>
                         <td class="center"><a href="#" title="Edición" class="edit_link" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/state-icon.png" width="14px" height="14px"></a></td>
                         <td class="center"><a href="#" title="Comunicación" class="<?php echo ($asig["NRO_ORDEN"] < 0 ||$asig["APROBADA"]==0 )? 'link-desactivado' : 'comunicacion_link' ?>" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/Communication-icon.png" width="15px" height="15px"></a></td>
-                        <td class="center"><a href="#" title="Evaluación" class="<?php echo ($asig["NRO_ORDEN"] >= 4)? 'evaluacion_link' : 'link-desactivado'  ?>" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/tests-icon.png" width="15px" height="15px"></a></td>                    </tr>
+                        <td class="center"><a href="#" title="Evaluación" class="<?php echo ($asig["NRO_ORDEN"] >= 5)? 'evaluacion_link' : 'link-desactivado'  ?>" id="<?php  echo $asig["ID_ASIGNACION"];  ?>"><img src="public/img/tests-icon.png" width="15px" height="15px"></a></td>                    </tr>
                 <?php }  ?>
 
                 </tbody>
