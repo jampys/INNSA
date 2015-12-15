@@ -72,7 +72,7 @@
                     $("#comentarios").val(datas[0]['COMENTARIOS']);
                     //$("#entidad").val(datas[0]['ENTIDAD']);
                     $("#categoria").val(datas[0]['ID_CATEGORIA']);
-                    $("#tipo_curso").val(datas[0]['ID_TIPO_CURSO']);
+                    //$("#tipo_curso").val(datas[0]['ID_TIPO_CURSO']);
                     cargarTemas(datas[0]['ID_TEMA']);
                     //$("#tema option[value='datas[5]']").attr("selected", true);
 
@@ -90,11 +90,11 @@
 
             if(globalOperacion=="insert"){ //se va a guardar un curso nuevo
                 var url="index.php";
-                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
+                var data={"accion":"curso","operacion":"insert","nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "tema":$("#tema").val()};
             }
             else if(globalOperacion=="edit"){ //se va a guardar un curso editado
                 var url="index.php";
-                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "tema":$("#tema").val(), "tipo_curso":$("#tipo_curso").val()};
+                var data={"accion":"curso","operacion":"save", "id":globalId, "nombre":$("#nombre").val(),"descripcion":$("#descripcion").val(),"comentarios":$("#comentarios").val(), "tema":$("#tema").val()};
             }
             else if(globalOperacion=="delete"){
                 var url="index.php";
@@ -106,10 +106,11 @@
                 data:data,
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                     $("#dialog-msn").dialog("open");
-                    $("#message").html("ha ocurrido un error");
+                    //$("#message").html("ha ocurrido un error");
+                    $("#message").html(e.responseText);
 
                 },
                 ifModified:false,
@@ -363,9 +364,9 @@
                                     <label>Tipo de actividad: </label><br/>
                                     <select name="tipo_curso" id="tipo_curso">
                                         <option value="">Seleccione el tipo de actividad</option>
-                                        <?php foreach($tipo_curso as $tip){?>
-                                            <option value="<?php echo $tip['ID_TIPO_CURSO']?>"><?php echo $tip['NOMBRE']?></option>
-                                        <?php }?>
+                                        <?php //foreach($tipo_curso as $tip){?>
+                                            <option value="<?php //echo $tip['ID_TIPO_CURSO']?>"><?php //echo $tip['NOMBRE']?></option>
+                                        <?php// }?>
                                     </select>
                                 </div>
                             </div>
