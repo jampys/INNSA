@@ -201,22 +201,15 @@ class Cap_Solic
     public function getCapSolicById($id){
         $f=new Factory();
         $obj_cp=$f->returnsQuery();
-        $query="select sc.id_solicitud, sc.estado, sc.situacion_actual, sc.situacion_deseada, sc.objetivo_medible_1, sc.objetivo_medible_2, sc.objetivo_medible_3,".
-            " sc.periodo, em.id_empleado, em.apellido, em.nombre,".
-            " sc.dp_ingreso, sc.dp_crecimiento, sc.dp_promocion, sc.dp_futura_transfer, sc.dp_sustitucion_temp,".
-            " sc.di_nuevas_tecnicas, sc.di_crecimiento, sc.di_competencias_emp,".
-            " sc.rp_falta_comp, sc.rp_no_conformidad, sc.rp_req_externo,".
-            " (select emx.id_empleado from empleados emx where emx.id_empleado = sc.apr_solicito) as ID_SOLICITO,".
-            " (select emx.apellido from empleados emx where emx.id_empleado = sc.apr_solicito) as APELLIDO_SOLICITO,".
-            " (select emx.nombre from empleados emx where emx.id_empleado = sc.apr_solicito) as NOMBRE_SOLICITO,".
-            " (select emx.id_empleado from empleados emx where emx.id_empleado = sc.apr_autorizo) as ID_AUTORIZO,".
-            " (select emx.apellido from empleados emx where emx.id_empleado = sc.apr_autorizo) as APELLIDO_AUTORIZO,".
-            " (select emx.nombre from empleados emx where emx.id_empleado = sc.apr_autorizo) as NOMBRE_AUTORIZO,".
-            " (select emx.id_empleado from empleados emx where emx.id_empleado = sc.apr_aprobo) as ID_APROBO,".
-            " (select emx.apellido from empleados emx where emx.id_empleado = sc.apr_aprobo) as APELLIDO_APROBO,".
-            " (select emx.nombre from empleados emx where emx.id_empleado = sc.apr_aprobo) as NOMBRE_APROBO".
-            " from solicitud_capacitacion sc, empleados em".
-            " where sc.id_empleado = em.id_empleado and sc.id_solicitud=$id";
+        $query="select sc.id_solicitud, sc.estado, sc.situacion_actual, sc.situacion_deseada, sc.objetivo_medible_1, sc.objetivo_medible_2, sc.objetivo_medible_3,
+            sc.periodo, em.id_empleado, em.apellido, em.nombre,
+            sc.dp_ingreso, sc.dp_crecimiento, sc.dp_promocion, sc.dp_futura_transfer, sc.dp_sustitucion_temp,
+            sc.di_nuevas_tecnicas, sc.di_crecimiento, sc.di_competencias_emp,
+            sc.rp_falta_comp, sc.rp_no_conformidad, sc.rp_req_externo, emx.id_empleado as ID_SOLICITO, emx.apellido AS APELLIDO_SOLICITO, emx.nombre as NOMBRE_SOLICITO
+            from solicitud_capacitacion sc, empleados em, empleados emx
+            where sc.id_empleado = em.id_empleado
+            and sc.apr_solicito = emx.id_empleado
+            and sc.id_solicitud=$id";
 
         $obj_cp->executeQuery($query);
         return $obj_cp->fetchAll();
