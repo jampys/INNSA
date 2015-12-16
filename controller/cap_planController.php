@@ -50,6 +50,7 @@ switch($operacion){
         $view->u->setProfesor1($_POST['profesor_1']);
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
+        $view->u->setContenidos($_POST['contenidos']);
         $view->u->setEntidad($_POST['entidad']);
 
         $view->u->setCaracterActividad($_POST['caracter_actividad']);
@@ -107,6 +108,7 @@ switch($operacion){
         $view->u->setProfesor1($_POST['profesor_1']);
         $view->u->setProfesor2($_POST['profesor_2']);
         $view->u->setComentarios($_POST['comentarios']);
+        $view->u->setContenidos($_POST['contenidos']);
         $view->u->setEntidad($_POST['entidad']);
 
         $view->u->setCaracterActividad($_POST['caracter_actividad']);

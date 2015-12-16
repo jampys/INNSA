@@ -22,6 +22,7 @@ class Cap_Plan
     var $profesor_1;
     var $profesor_2;
     var $comentarios;
+    var $contenidos;
     var $entidad;
 
     var $caracter_actividad;
@@ -54,7 +55,7 @@ class Cap_Plan
             " (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) as asignados".
             " from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan = $id";*/
         $query="select pc.id_plan, pc.id_curso, pc.periodo, pc.objetivo, pc.modalidad, to_char(pc.fecha_desde,'DD/MM/YYYY HH24:MI') as fecha_desde, to_char(pc.fecha_hasta,'DD/MM/YYYY HH24:MI') as fecha_hasta,".
-            " pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.entidad entidad_plan, cu.*,".
+            " pc.duracion, pc.unidad, pc.prioridad, pc.estado, pc. importe, pc.moneda, pc.tipo_cambio, pc.forma_pago, pc.forma_financiacion, pc.profesor_1, pc.profesor_2, pc.comentarios_plan, pc.contenidos, pc.entidad entidad_plan, cu.*,".
             " pc.caracter_actividad, pc.cantidad_participantes, pc.importe_total, pc.id_tipo_curso, pc.id_programa, pc.porcentaje_reintegrable, pc.nro_actividad,".
             " (select count(*) from asignacion_plan apx where apx.id_plan = pc.id_plan) as asignados".
             " from plan_capacitacion pc, cursos cu where pc.id_curso=cu.id_curso and pc.id_plan = $id";
@@ -178,6 +179,9 @@ class Cap_Plan
     function getComentarios()
     { return $this->comentarios;}
 
+    function getContenidos()
+    { return $this->contenidos;}
+
     function getEntidad()
     { return $this->entidad;}
 
@@ -265,6 +269,9 @@ class Cap_Plan
     function setComentarios($val)
     {  $this->comentarios=$val;}
 
+    function setContenidos($val)
+    {  $this->contenidos=$val;}
+
     function setEntidad($val)
     {  $this->entidad=$val;}
 
@@ -306,7 +313,7 @@ class Cap_Plan
             " forma_financiacion = :forma_financiacion, profesor_1 = :profesor_1, profesor_2 = :profesor_2, comentarios_plan = :comentarios, entidad = :entidad, caracter_actividad = :caracter_actividad, cantidad_participantes = :cantidad_participantes, importe_total = :importe_total, id_tipo_curso = :id_tipo_curso where id_plan = :id_plan";*/
         $query="update plan_capacitacion set id_curso = :id_curso, periodo = :periodo, objetivo = :objetivo, modalidad = :modalidad, fecha_desde = TO_DATE( :fecha_desde,'DD/MM/YYYY HH24:MI'), fecha_hasta = TO_DATE( :fecha_hasta,'DD/MM/YYYY HH24:MI'),".
             " duracion = :duracion, unidad = :unidad, prioridad = :prioridad, estado = :estado, importe = :importe, moneda = :moneda, tipo_cambio = :tipo_cambio, forma_pago = :forma_pago,".
-            " forma_financiacion = :forma_financiacion, profesor_1 = :profesor_1, profesor_2 = :profesor_2, comentarios_plan = :comentarios, entidad = :entidad, caracter_actividad = :caracter_actividad, cantidad_participantes = :cantidad_participantes,".
+            " forma_financiacion = :forma_financiacion, profesor_1 = :profesor_1, profesor_2 = :profesor_2, comentarios_plan = :comentarios, contenidos = :contenidos, entidad = :entidad, caracter_actividad = :caracter_actividad, cantidad_participantes = :cantidad_participantes,".
             " importe_total = :importe_total, id_tipo_curso = :id_tipo_curso, id_programa = :programa, porcentaje_reintegrable = :porcentaje_reintegrable, nro_actividad = : nro_actividad where id_plan = :id_plan";
         $obj_cp->dpParse($query);
 
@@ -328,6 +335,7 @@ class Cap_Plan
         $obj_cp->dpBind(':profesor_1', $this->profesor_1);
         $obj_cp->dpBind(':profesor_2', $this->profesor_2);
         $obj_cp->dpBind(':comentarios', $this->comentarios);
+        $obj_cp->dpBind(':contenidos', $this->contenidos);
         $obj_cp->dpBind(':entidad', $this->entidad);
         $obj_cp->dpBind(':id_plan', $this->id_plan);
 
@@ -360,8 +368,8 @@ class Cap_Plan
         $obj_cp=$f->returnsQuery();
         /*$query="insert into plan_capacitacion (id_curso, periodo, objetivo, modalidad, fecha_desde, fecha_hasta, duracion, unidad, prioridad, estado, importe, moneda, tipo_cambio, forma_pago, forma_financiacion, profesor_1, profesor_2, comentarios_plan, entidad, caracter_actividad, cantidad_participantes, importe_total, id_tipo_curso)".
             " values(:id_curso, :periodo, :objetivo, :modalidad, TO_DATE(:fecha_desde,'DD/MM/YYYY HH24:MI'), TO_DATE(:fecha_hasta,'DD/MM/YYYY HH24:MI'), :duracion , :unidad, :prioridad, :estado, :importe, :moneda, :tipo_cambio, :forma_pago, :forma_financiacion, :profesor_1, :profesor_2, :comentarios, :entidad, :caracter_actividad, :cantidad_participantes, :importe_total, :id_tipo_curso)";*/
-        $query="insert into plan_capacitacion (id_curso, periodo, objetivo, modalidad, fecha_desde, fecha_hasta, duracion, unidad, prioridad, estado, importe, moneda, tipo_cambio, forma_pago, forma_financiacion, profesor_1, profesor_2, comentarios_plan, entidad, caracter_actividad, cantidad_participantes, importe_total, id_tipo_curso, id_programa, porcentaje_reintegrable, nro_actividad)".
-            " values(:id_curso, :periodo, :objetivo, :modalidad, TO_DATE(:fecha_desde,'DD/MM/YYYY HH24:MI'), TO_DATE(:fecha_hasta,'DD/MM/YYYY HH24:MI'), :duracion , :unidad, :prioridad, :estado, :importe, :moneda, :tipo_cambio, :forma_pago, :forma_financiacion, :profesor_1, :profesor_2, :comentarios, :entidad, :caracter_actividad, :cantidad_participantes, :importe_total, :id_tipo_curso, :programa, :porcentaje_reintegrable, :nro_actividad)";
+        $query="insert into plan_capacitacion (id_curso, periodo, objetivo, modalidad, fecha_desde, fecha_hasta, duracion, unidad, prioridad, estado, importe, moneda, tipo_cambio, forma_pago, forma_financiacion, profesor_1, profesor_2, comentarios_plan, contenidos, entidad, caracter_actividad, cantidad_participantes, importe_total, id_tipo_curso, id_programa, porcentaje_reintegrable, nro_actividad)".
+            " values(:id_curso, :periodo, :objetivo, :modalidad, TO_DATE(:fecha_desde,'DD/MM/YYYY HH24:MI'), TO_DATE(:fecha_hasta,'DD/MM/YYYY HH24:MI'), :duracion , :unidad, :prioridad, :estado, :importe, :moneda, :tipo_cambio, :forma_pago, :forma_financiacion, :profesor_1, :profesor_2, :comentarios, :contenidos, :entidad, :caracter_actividad, :cantidad_participantes, :importe_total, :id_tipo_curso, :programa, :porcentaje_reintegrable, :nro_actividad)";
         $obj_cp->dpParse($query);
 
         $obj_cp->dpBind(':id_curso', $this->id_curso);
@@ -382,6 +390,7 @@ class Cap_Plan
         $obj_cp->dpBind(':profesor_1', $this->profesor_1);
         $obj_cp->dpBind(':profesor_2', $this->profesor_2);
         $obj_cp->dpBind(':comentarios', $this->comentarios);
+        $obj_cp->dpBind(':contenidos', $this->contenidos);
         $obj_cp->dpBind(':entidad', $this->entidad);
 
         $obj_cp->dpBind(':caracter_actividad', $this->getCaracterActividad());

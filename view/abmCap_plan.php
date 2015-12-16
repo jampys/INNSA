@@ -114,6 +114,7 @@
                     $("#profesor_1").val(datas['plan'][0]['PROFESOR_1']);
                     $("#profesor_2").val(datas['plan'][0]['PROFESOR_2']);
                     $("#comentarios").val(datas['plan'][0]['COMENTARIOS_PLAN']);
+                    $("#contenidos").val(datas['plan'][0]['CONTENIDOS']);
                     $("#entidad").val(datas['plan'][0]['ENTIDAD_PLAN']);
 
                     $("#caracter_actividad").val(datas['plan'][0]['CARACTER_ACTIVIDAD']);
@@ -223,6 +224,7 @@
                             "profesor_1":$("#profesor_1").val(),
                             "profesor_2":$("#profesor_2").val(),
                             "comentarios":$("#comentarios").val(),
+                            "contenidos":$("#contenidos").val(),
                             "entidad":$("#entidad").val(),
                             "caracter_actividad": $("#caracter_actividad").val(),
                             "cantidad_participantes": $("#cantidad_participantes").val(),
@@ -263,6 +265,7 @@
                             "profesor_1":$("#profesor_1").val(),
                             "profesor_2":$("#profesor_2").val(),
                             "comentarios":$("#comentarios").val(),
+                            "contenidos":$("#contenidos").val(),
                             "entidad":$("#entidad").val(),
                             "caracter_actividad": $("#caracter_actividad").val(),
                             "cantidad_participantes": $("#cantidad_participantes").val(),
@@ -1226,6 +1229,16 @@
                                 <div class="column_content">
                                     <label>Comentarios: </label>
                                     <textarea type="text" name="comentarios" id="comentarios" rows="2"/></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sixteen_column section">
+
+                            <div class="sixteen_column">
+                                <div class="column_content">
+                                    <label>Contenidos: </label>
+                                    <textarea type="text" name="contenidos" id="contenidos" rows="2"/></textarea>
                                 </div>
                             </div>
                         </div>
