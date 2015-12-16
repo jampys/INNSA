@@ -27,7 +27,7 @@ switch($operacion){
         $a=new Reportes();
         $ejeCursos=$a->getCursos();
         $ejeEmpleados=$a->getEmpleadosActivos();
-        $cuerpo=$a->getEstadoAsignacion1();
+        $cuerpo=$a->getEstadoAsignacion();
         $view->content="view/reportes1.php";
         break;
 

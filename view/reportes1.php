@@ -356,13 +356,13 @@ $ejeEmpleados=array('empleado1', 'empleado2', 'empleado3', 'empleado4', 'emplead
                                     $cont=$i;
                                     while($cuerpo[$cont]['ID_EMPLEADO']==$e['ID_EMPLEADO'] && $cuerpo[$cont]['ID_CURSO']==$c['ID_CURSO']){
 
-                                        if($cuerpo[$cont]['ESTADO']=='EVALUADO' || $cuerpo[$cont]['ESTADO']=='POST-EVALUADO'){
+                                        if($cuerpo[$cont]['NRO_ORDEN']>=5){ // mayor que 5
                                             $icon='green';
                                         }
-                                        else if($cuerpo[$cont]['ESTADO']=='ASIGNADO' || $cuerpo[$cont]['ESTADO']=='COMUNICADO' || $cuerpo[$cont]['ESTADO']=='NOTIFICADO'){
+                                        else if($cuerpo[$cont]['ESTADO']>=1){ //entre 1 y 4
                                             $icon='yellow';
                                         }
-                                        else if($cuerpo[$cont]['ESTADO']=='CANCELADO' || $cuerpo[$cont]['ESTADO']=='SUSPENDIDO'){
+                                        else if($cuerpo[$cont]['ESTADO']<0){ //menor 0
                                             $icon='red';
                                         }
 

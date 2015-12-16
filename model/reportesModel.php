@@ -36,47 +36,23 @@ class Reportes
     }*/
 
 
-    //NO SE USA
-    public function getEstadoAsignacion($id_empleado, $id_curso){
-        $f=new Factory();
-        $obj_user=$f->returnsQuery();
-        $query="select ap.estado ESTADO".
-                " from asignacion_plan ap, plan_capacitacion pc, cursos cu, solicitud_capacitacion sc".
-                " where ap.id_plan = pc.id_plan".
-                " and pc.id_curso = cu.id_curso".
-                " and ap.id_solicitud = sc.id_solicitud".
-                " and sc.id_empleado = $id_empleado".
-                " and cu.id_curso = $id_curso";
-        $obj_user->executeQuery($query);
-        if($obj_user->getAffect()>0){
-            return $obj_user->fetchAll();
-        }
-        else{
-            return 0;
-        }
 
-    }
-
-
-
-    public function getEstadoAsignacion1(){
+    public function getEstadoAsignacion(){
 
         $f=new Factory();
         $obj_user=$f->returnsQuery();
-        /*$query="select sc.id_empleado, pc.id_curso, ap.estado".
-            " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
-            " where ap.id_solicitud = sc.id_solicitud".
-            " and ap.id_plan = pc.id_plan".
-            " UNION".
-            " select ah.id_empleado, ah.id_curso, ah.estado from asignacion_plan_historico ah";*/
-        $query="(select sc.id_empleado, pc.id_curso, ap.estado, pc.periodo, pc.fecha_desde".
-                " from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc".
-                " where ap.id_solicitud = sc.id_solicitud".
-                " and ap.id_plan = pc.id_plan".
-                " UNION".
-                " select aph.id_empleado, pch.id_curso, aph.estado, pch.periodo, pch.fecha_desde".
-                " from asignacion_plan_historico aph, solicitud_capacitacion sc, plan_capacitacion_historico pch".
-                " where aph.id_plan_historico = pch.id_plan_historico) order by id_empleado asc";
+        $query="(
+                    select sc.id_empleado, pc.id_curso, es.nro_orden, es.nombre as ESTADO, pc.periodo, pc.fecha_desde
+                    from asignacion_plan ap, solicitud_capacitacion sc, plan_capacitacion pc, estados es
+                    where ap.id_solicitud = sc.id_solicitud
+                    and ap.id_plan = pc.id_plan
+                    and ap.estado = es.nro_orden
+                    UNION
+                    select aph.id_empleado, pch.id_curso, es.nro_orden, es.nombre as ESTADO, pch.periodo, pch.fecha_desde
+                    from asignacion_plan_historico aph, solicitud_capacitacion sc, plan_capacitacion_historico pch, estados es
+                    where aph.id_plan_historico = pch.id_plan_historico
+                    and aph.estado = es.nro_orden
+                ) order by id_empleado asc";
         $obj_user->executeQuery($query);
         return $obj_user->fetchAll();
 
@@ -269,8 +245,8 @@ select
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
         $query="(".
-        " select em.apellido, em.nombre, em.lugar_trabajo, pc.objetivo as capacitacion, pc.periodo, pc.fecha_desde, te.nombre as tema, ca.nombre as categoria, pc.modalidad, ec.nombre as entidad, tc.nombre as tipo_curso, ap.estado".
-" from empleados em, asignacion_plan ap, plan_capacitacion pc, solicitud_capacitacion sc, cursos cu, categorias ca, temas te, entidades_capacitadoras ec, tipo_curso tc".
+        " select em.apellido, em.nombre, em.lugar_trabajo, pc.objetivo as capacitacion, pc.periodo, pc.fecha_desde, te.nombre as tema, ca.nombre as categoria, pc.modalidad, ec.nombre as entidad, tc.nombre as tipo_curso, es.nro_orden, es.nombre as estado".
+" from empleados em, asignacion_plan ap, plan_capacitacion pc, solicitud_capacitacion sc, cursos cu, categorias ca, temas te, entidades_capacitadoras ec, tipo_curso tc, estados es".
 " where em.id_empleado = sc.id_empleado".
         " and sc.id_solicitud = ap.id_solicitud".
         " and ap.id_plan = pc.id_plan".
@@ -279,6 +255,7 @@ select
         " and te.id_categoria = ca.id_categoria".
         " and pc.entidad = ec.id_entidad_capacitadora".
         " and pc.id_tipo_curso = tc.id_tipo_curso".
+            " and ap.estado = es.nro_orden".
         //filtros
         " and cu.id_curso = $id_curso".
         " and cu.id_tema = $id_tema".
@@ -288,14 +265,15 @@ select
 
 " UNION".
 
-" select em.apellido, em.nombre, em.lugar_trabajo, pch.objetivo as capacitacion, pch.periodo, pch.fecha_desde, te.nombre as tema, ca.nombre as categoria, pch.modalidad, ec.nombre as entidad, null, aph.estado".
-" from empleados em, asignacion_plan_historico aph, plan_capacitacion_historico pch, cursos cu, categorias ca, temas te, entidades_capacitadoras ec".
+" select em.apellido, em.nombre, em.lugar_trabajo, pch.objetivo as capacitacion, pch.periodo, pch.fecha_desde, te.nombre as tema, ca.nombre as categoria, pch.modalidad, ec.nombre as entidad, null, es.nro_orden, es.nombre as estado".
+" from empleados em, asignacion_plan_historico aph, plan_capacitacion_historico pch, cursos cu, categorias ca, temas te, entidades_capacitadoras ec, estados es".
 " where em.id_empleado = aph.id_empleado".
         " and aph.id_plan_historico = pch.id_plan_historico".
         " and pch.id_curso = cu.id_curso".
         " and cu.id_tema = te.id_tema".
         " and te.id_categoria = ca.id_categoria".
         " and pch.id_entidad = ec.id_entidad_capacitadora (+)".
+            " and aph.estado = es.nro_orden".
         //filtros
             " and cu.id_curso = $id_curso".
             " and cu.id_tema = $id_tema".

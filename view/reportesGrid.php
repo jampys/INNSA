@@ -56,6 +56,7 @@
                         <th>Comunic</th>
                         <th>Nofif</th>
                         <th>Eval</th>
+                        <th>P. Eval</th>
                     </tr>
 
                     <?php
@@ -66,11 +67,10 @@
                             <td style="width: 70px"><?php  echo $sol["MODALIDAD"]; ?></td>
                             <td style="width: 50px"><?php  echo $sol["FECHA_DESDE"];  ?></td>
                             <td style="width: 100px"><?php  echo $sol["ESTADO"]; ?></td>
-                            <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='COMUNICADO' || $sol["ESTADO"]=='NOTIFICADO' || $sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="14px" height="14px">': ''; ?></td>
-                            <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='NOTIFICADO' || $sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
-                            <td style="width: 40px; text-align: center"><?php  echo ($sol["ESTADO"]=='EVALUADO')? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
-
-
+                            <td style="width: 40px; text-align: center"><?php  echo ($sol["NRO_ORDEN"]>=3)? '<img src="public/img/Ok-icon.png" width="14px" height="14px">': ''; ?></td>
+                            <td style="width: 40px; text-align: center"><?php  echo ($sol["NRO_ORDEN"]>=4)? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
+                            <td style="width: 40px; text-align: center"><?php  echo ($sol["NRO_ORDEN"]>=5)? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
+                            <td style="width: 40px; text-align: center"><?php  echo ($sol["NRO_ORDEN"]>=6)? '<img src="public/img/Ok-icon.png" width="15px" height="15px">' : ''; ?></td>
 
                         </tr>
 
