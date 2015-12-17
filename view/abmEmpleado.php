@@ -57,10 +57,11 @@
                 data:{"accion":"empleado","operacion":"update","id":id_empleado},
                 contentType:"application/x-www-form-urlencoded",
                 dataType:"json",//xml,html,script,json
-                error:function(){
+                error:function(e){
 
                 $("#dialog-msn").dialog("open");
-                $("#message").html("ha ocurrido un error");
+                //$("#message").html("ha ocurrido un error");
+                    $("#message").html(e.responseText);
 
                 },
                 ifModified:false,
