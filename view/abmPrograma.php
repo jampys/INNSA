@@ -311,7 +311,7 @@
                                         <option value="0">Seleccione el tipo programa</option>
                                         <option value="SEPYME">SEPYME</option>
                                         <option value="PYMES PAE">PYMES PAE</option>
-                                        <option value="UTN">UTN</option>
+                                        <option value="DESCUENTO">DESCUENTO</option>
                                     </select>
                                 </div>
                             </div>

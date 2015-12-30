@@ -97,10 +97,9 @@ class Cap_Plan
                 " cu.id_curso, cu.nombre, cu.id_tema, pc.periodo, pc.fecha_desde, pc.modalidad, ec.nombre entidad".
                 " from cursos cu".
                 " join temas te on cu.id_tema = te.id_tema".
-                " left join plan_capacitacion pc on cu.id_curso = pc.id_curso and pc.fecha_desde >='".date('d/m/Y')."'".
+                " left join plan_capacitacion pc on cu.id_curso = pc.id_curso and pc.fecha_desde >='".date('d/m/Y')."' and pc.periodo = $periodo".
                 " left join entidades_capacitadoras ec on pc.entidad = ec.id_entidad_capacitadora".
                 " where (cu.nombre like UPPER ('%".$term."%') OR te.nombre like UPPER ('%".$term."%'))".
-                " and pc.periodo = $periodo".
                 " UNION".
                 " select (SELECT 'TEMA' FROM user_tables WHERE table_name LIKE '%TEMAS%') tabla, null, te.nombre, te.id_tema, null, null, null, null".
                 " from temas te".

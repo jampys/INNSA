@@ -500,8 +500,8 @@ class Asignacion_plan{
 
         $f=new Factory();
         $obj_asig=$f->returnsQuery();
-        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, id_plan, id_propuesta)
-                values($id_solicitud, :comentarios, :viaticos, :id_plan,
+        $query="insert into asignacion_plan (id_solicitud, comentarios, viaticos, programa, id_plan, id_propuesta)
+                values($id_solicitud, :comentarios, :viaticos, :programa, :id_plan,
                     /* por curso */
                     (select pro.id_propuesta
                     from propuestas pro, plan_capacitacion pc
@@ -529,6 +529,7 @@ class Asignacion_plan{
 
         $obj_asig->dpBind(':comentarios', $this->comentarios);
         $obj_asig->dpBind(':viaticos', $this->getViaticos());
+        $obj_asig->dpBind(':programa', $this->prog);
         //$obj_asig->dpBind(':estado', $this->estado);
         $obj_asig->dpBind(':id_plan', $this->id_plan);
         oci_bind_by_name($topo,':id', $id, -1, SQLT_INT);
