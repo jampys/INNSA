@@ -59,7 +59,7 @@
 
                 $.each(datas['capacitaciones'], function(indice, val){
                     if (datas['capacitaciones'][indice]['TABLA'] == 'TEMAS')
-                    $("#curso_tema").append('<option value="'+datas[indice]["IDS"]+'">'+datas[indice]["NOMBRE"]+'</option>');
+                    $("#curso_tema").append('<option value="'+datas['capacitaciones'][indice]["IDS"]+'">'+datas['capacitaciones'][indice]["NOMBRE"]+'</option>');
 
                 });
                 $("#curso_tema").append('</optgroup>');
