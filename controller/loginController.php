@@ -115,7 +115,7 @@ switch($operacion){
             //Cabecera que especifica que es un HMTL
             $headers = 'From: INNSA Capacitacion <no-reply@innsa.com>' . "\r\n";
             $headers.= 'MIME-Version: 1.0' . "\r\n";
-            $headers.= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $headers.= 'Content-type: text/html; charset=utf-8' . "\r\n";
 
             if(!@mail($para, utf8_decode($asunto), $mensaje, $headers)) $rta=-1; //envia email (por mas que la direccion sea incorrecta y lo rebote)
 
