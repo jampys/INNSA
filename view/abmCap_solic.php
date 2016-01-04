@@ -950,7 +950,8 @@
                     required: function(item){return $('#nc_reemplazo').val().length>0;}
                 },
                 nc_curso_id:{
-                    required: function(item){return $('#nc_curso').val().length>0 && $('#nc_tema_id').val().length<0 ;}
+                    //required: function(item){return $('#nc_curso').val().length>0 && $('#nc_tema_id').val().length<0 ;}
+                    required: function(item){return ($('#nc_curso').val().length>0 && $('#nc_tema_id').val().length ==0) ;}
                 },
                 nc_situacion: {
                     required: true,
