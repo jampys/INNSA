@@ -21,7 +21,6 @@ class Empleado
     public static function getEmpleados(){
         $f=new Factory();
         $obj_emp=$f->returnsQuery();
-        //$obj_emp->executeQuery("select * from empleados");
         $query="select em.*, di.nombre DIVISION, fu.nombre FUNCION from empleados em, division di, funciones fu".
                 " where em.id_division = di.id_division (+) and em.funcion = fu.id_funcion (+)";
         $obj_emp->executeQuery($query);
