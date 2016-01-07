@@ -173,7 +173,7 @@
             </div>
 
             <div id="footer">
-                &copy; Desarrollado por Web DP 2014 - <?php echo date("Y");?>
+                &copy; Desarrollado por Innovisión 2015 - <?php echo date("Y");?>
             </div>
 
 
