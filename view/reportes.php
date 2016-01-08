@@ -54,7 +54,7 @@
         <div class="column_content">
             <label>Período: </label><br/>
             <select name="periodo" id="periodo">
-                <option value="">Todos los períodos</option>
+                <!--<option value="">Todos los períodos</option>-->
                 <<?php
                 foreach ($periodos as $per){
                     ?>
