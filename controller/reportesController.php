@@ -2,9 +2,9 @@
 if(isset($_REQUEST['operacion']))
 {$operacion=$_REQUEST['operacion'];}
 
-//require_once("model/cap_solicModel.php");
+require_once("model/cap_solicModel.php");
 require_once("model/reportesModel.php");
-//$view->u=new Cap_Solic();
+$view->s=new Cap_Solic();
 $view->u=new Reportes();
 
 //traigo los periordos de la BD
@@ -95,7 +95,7 @@ switch($operacion){
 
 
     default: //reportes de solicitudes de capacitacion
-        $view->solicitud=$view->u->getCapSolic();
+        $view->solicitud=$view->s->getCapSolic(date('Y'));
         $view->content="view/reportes.php";
         break;
 

@@ -27,13 +27,13 @@ class Reportes
     }
 
 
-
+    /*Metodo repetido (esta en cap_solicModel.php) SE DEBE BORRAR
     public static function getCapSolic(){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
         $obj_sp->executeQuery("select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, em.lugar_trabajo, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado");
         return $obj_sp->fetchAll(); // retorna todas las solicitudes de capacitacion
-    }
+    }*/
 
 
     //NO SE USA

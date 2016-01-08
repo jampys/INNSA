@@ -188,7 +188,12 @@ class Cap_Solic
     public static function getCapSolic($periodo){
         $f=new Factory();
         $obj_sp=$f->returnsQuery();
-        $obj_sp->executeQuery("select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE from solicitud_capacitacion sc, empleados em, empleados emx where sc.id_empleado=em.id_empleado and sc.apr_solicito=emx.id_empleado and sc.periodo = $periodo");
+        $query="select sc.*, em.apellido EMPLEADO_APELLIDO, em.nombre EMPLEADO_NOMBRE, emx.apellido SOLICITO_APELLIDO, emx.nombre SOLICITO_NOMBRE, em.lugar_trabajo
+                from solicitud_capacitacion sc, empleados em, empleados emx
+                where sc.id_empleado=em.id_empleado
+                and sc.apr_solicito=emx.id_empleado
+                and sc.periodo = $periodo";
+        $obj_sp->executeQuery($query);
         return $obj_sp->fetchAll();
     }
 

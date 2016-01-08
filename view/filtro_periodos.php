@@ -9,13 +9,14 @@
                 <<?php
                 foreach ($filtro_periodo as $per){
                     ?>
-                    <option value="<?php echo $per["PERIODO"]; ?>"><?php echo $per["PERIODO"]; ?></option>
+                    <!-- trae los periodos que tienen las solicitudes y capacitaciones... y selecciona de ellos el periodo vigente -->
+                    <option value="<?php echo $per["PERIODO"]; ?>" <?php if ($per["PERIODO"] == date('Y') ) echo 'selected' ; ?>  ><?php echo $per["PERIODO"]; ?>
                 <?php
                 }
                 ?>
-</select>
-</div>
-</div>
+            </select>
+        </div>
+    </div>
 
 <div class="twelve column">
     <div class="column_content">
@@ -25,4 +26,7 @@
 
 
 </div>
+
+
+
 
