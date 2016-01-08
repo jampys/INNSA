@@ -55,13 +55,13 @@
         <div class="column_content">
             <label>Período: </label><br/>
             <select name="periodo" id="periodo">
-                <option value="">Todos los períodos</option>
-                <!--<option value="2014">2014</option>
-                <option value="2015">2015</option>-->
+                <!--<option value="">Todos los períodos</option>-->
                 <?php
                 foreach ($periodos as $per){
                     ?>
-                    <option value="<?php echo $per["PERIODO"]; ?>"><?php echo $per["PERIODO"]; ?></option>
+                    <!--<option value="<?php echo $per["PERIODO"]; ?>"><?php echo $per["PERIODO"]; ?></option>-->
+                    <!-- trae los periodos que tienen las solicitudes y capacitaciones... y selecciona de ellos el periodo vigente -->
+                    <option value="<?php echo $per["PERIODO"]; ?>" <?php if ($per["PERIODO"] == date('Y') ) echo 'selected' ; ?>  ><?php echo $per["PERIODO"]; ?>
                 <?php
                 }
                 ?>

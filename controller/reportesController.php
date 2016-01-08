@@ -33,8 +33,9 @@ switch($operacion){
 
 
     case 'reportes2': //reporte cursos propuestos con asignacion pendiente
-        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'periodo';
-        //$lugar_trabajo= ($_POST['lugar_trabajo']!='')? "'".$_POST['lugar_trabajo']."'" : 'em.lugar_trabajo';
+
+        //$periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : 'periodo';
+        $periodo= ($_POST['periodo']!='')? "'".$_POST['periodo']."'" : date('Y');
 
         $view->cursos=$view->u->getCursosPropuestosByFiltro($periodo);
         $view->content="view/reportes2.php";
